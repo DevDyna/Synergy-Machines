@@ -33,6 +33,24 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         }
 
         @Override
+        protected void containerTick() {
+                super.containerTick();
+                var be = this.menu.getBlockEntity();
+                if (be == null || be.getLevel() == null)
+                        return;
+
+                be.setChanged();
+
+                if (!be.getLevel().isClientSide())
+                        be.getLevel().sendBlockUpdated(
+                                        be.getBlockPos(),
+                                        be.getBlockState(),
+                                        be.getBlockState(),
+                                        3);
+
+        }
+
+        @Override
         protected Identifier background() {
                 return x.rl(MODULE_ID, "textures/gui/container/" + menu.getMachine().id() + ".png");
         }
