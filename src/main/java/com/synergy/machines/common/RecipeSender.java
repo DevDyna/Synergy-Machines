@@ -11,6 +11,7 @@ public class RecipeSender {
     public static void onDatapackSync(OnDatapackSyncEvent event) {
         if (ModAddonUtil.checkMod("jei")) {
             Material.getAllMachineTypes().forEach(m -> event.sendRecipes(m.recipe().getType()));
+            // event.sendRecipes(RecipeType.SMELTING);
         }
 
     }
