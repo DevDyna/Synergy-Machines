@@ -1,6 +1,5 @@
 package com.synergy.machines;
 
-import com.synergy.machines.init.builders.alloy_smelter.AlloySmelterMenu;
 import com.synergy.machines.init.builders.alloy_smelter.AlloySmelterScreen;
 import com.synergy.machines.init.builders.caster.CasterScreen;
 import com.synergy.machines.init.builders.compressor.CompressorScreen;
