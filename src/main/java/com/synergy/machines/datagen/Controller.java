@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-import com.devdyna.cakesticklib.CakeStickLib;
 import com.synergy.machines.datagen.client.*;
 import com.synergy.machines.datagen.server.*;
 import com.synergy.machines.datagen.server.DataAdvancement.DataAdvancementGenerator;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.*;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -28,8 +26,8 @@ public class Controller {
         CompletableFuture<HolderLookup.Provider> provider = e.getLookupProvider();
         var output = gen.getPackOutput();
 
-        e.createDatapackRegistryObjects(new RegistrySetBuilder(),
-                Set.of("minecraft", MODULE_ID, CakeStickLib.MODULE_ID));
+        // e.createDatapackRegistryObjects(new RegistrySetBuilder(),
+        //         Set.of("minecraft", MODULE_ID, CakeStickLib.MODULE_ID));
 
         // client
 
