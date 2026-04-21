@@ -17,6 +17,7 @@ import com.synergy.machines.Common;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
@@ -79,6 +80,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
         protected void renderUpgradesLabel(GuiGraphicsExtractor guiGraphics, int xo, int yo) {
                 guiGraphics.blit(
+                                RenderPipelines.GUI_TEXTURED,
                                 x.rl(MODULE_ID, "textures/gui/container/upgrade_slots.png"),
                                 getLeftPos() + xo,
                                 getTopPos() + yo,
@@ -97,6 +99,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
         protected void renderLeftLabel(GuiGraphicsExtractor guiGraphics) {
                 guiGraphics.blit(
+                                RenderPipelines.GUI_TEXTURED,
                                 x.rl(MODULE_ID, "textures/gui/container/left_label.png"),
                                 getLeftPos() - 30,
                                 getTopPos(),
@@ -107,65 +110,82 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
         protected void renderEnergyStorage(GuiGraphicsExtractor guiGraphics, int xo, int yo) {
 
+                int x0 = getLeftPos() + xo;
+                int y0 = getTopPos() + yo;
+
                 guiGraphics.blit(
+                                RenderPipelines.GUI_TEXTURED,
                                 x.rl(MODULE_ID, "textures/gui/container/energy.png"),
-                                getLeftPos() + xo,
-                                getTopPos() + yo,
+                                x0, y0,
                                 0, 0,
                                 18, 72,
                                 36, 72);
 
                 if (getMaxEnergy() > 0 && getEnergyStored() > 0) {
 
-                        int slice = (getEnergyStored() * 72) / getMaxEnergy();
+                        int slice = Math.min(72, (getEnergyStored() * 72) / getMaxEnergy());
 
                         guiGraphics.blit(
+                                        RenderPipelines.GUI_TEXTURED,
                                         x.rl(MODULE_ID, "textures/gui/container/energy.png"),
-                                        getLeftPos() + xo,
-                                        getTopPos() + yo + (72 - slice),
-                                        18, 72 - slice,
-                                        18, slice,
-                                        36, 72);
+                                        x0,
+                                        y0 + (72 - slice),
+                                        18,
+                                        72 - slice,
+                                        18,
+                                        slice,
+                                        36,
+                                        72);
                 }
-
         }
 
         protected void renderFluidTank(GuiGraphicsExtractor guiGraphics, int xo, int yo) {
 
-                guiGraphics.blit(x.rl(MODULE_ID, "textures/gui/container/fluid_widget.png"),
-                                getLeftPos() + xo,
-                                getTopPos() + yo,
+                int x0 = getLeftPos() + xo;
+                int y0 = getTopPos() + yo;
+
+                guiGraphics.blit(
+                                RenderPipelines.GUI_TEXTURED,
+                                x.rl(MODULE_ID, "textures/gui/container/fluid_widget.png"),
+                                x0, y0,
                                 0, 0,
                                 18, 72,
                                 36, 72);
 
-                if (getMaxFluidAmount() > 0 && getFluidAmount() > 0)
+                if (getMaxFluidAmount() > 0 && getFluidAmount() > 0) {
                         FluidGUITank.of()
                                         .setFluid(getFluid())
                                         .setMaxCapacity(getMaxFluidAmount())
                                         .setAmount(getFluidAmount())
-                                        .size(72, 16)
-                                        .offset(getLeftPos() + xo + 1, getTopPos() + yo - 1)
+                                        .size(16, 70)
+                                        .offset(x0 + 1, y0 + 1)
                                         .render(guiGraphics);
+                }
 
-                guiGraphics.blit(x.rl(MODULE_ID, "textures/gui/container/fluid_widget.png"),
-                                getLeftPos() + xo,
-                                getTopPos() + yo,
+                guiGraphics.blit(
+                                RenderPipelines.GUI_TEXTURED,
+                                x.rl(MODULE_ID, "textures/gui/container/fluid_widget.png"),
+                                x0, y0,
                                 18, 0,
                                 18, 72,
                                 36, 72);
-
         }
 
         @Override
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
 
+                guiGraphics.blit(
+                                RenderPipelines.GUI_TEXTURED,
+                                background(),
+                                getLeftPos(),
+                                getTopPos(),
+                                0, 0,
+                                175, 165,
+                                256, 256);
+                this.renderArrow(guiGraphics);
+
                 renderUpgradesLabel(guiGraphics, 172, 0);
-
-                super.extractBackground(guiGraphics, mouseX, mouseY, a);
-
                 renderTickProgress(guiGraphics, 68, 70);
-
                 renderEnergyStorage(guiGraphics, 8, 5);
         }
 
@@ -288,10 +308,10 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
         public int getConfigLimits(UpgradeType type) {
                 return switch (type) {
-                        case UpgradeType.ENERGY ->   Common.MACHINE_MAX_ENERGY_EFFICIENCY_UPGRADES_TYPE.get();
-                        case UpgradeType.SPEED ->  Common.MACHINE_MAX_SPEED_UPGRADES_TYPE.get();
-                        case UpgradeType.LUCK ->  Common.MACHINE_MAX_LUCK_UPGRADES_TYPE.get();
-                        case UpgradeType.FLUID ->  Common.MACHINE_MAX_FLUID_UPGRADES_TYPE.get();
+                        case UpgradeType.ENERGY -> Common.MACHINE_MAX_ENERGY_EFFICIENCY_UPGRADES_TYPE.get();
+                        case UpgradeType.SPEED -> Common.MACHINE_MAX_SPEED_UPGRADES_TYPE.get();
+                        case UpgradeType.LUCK -> Common.MACHINE_MAX_LUCK_UPGRADES_TYPE.get();
+                        case UpgradeType.FLUID -> Common.MACHINE_MAX_FLUID_UPGRADES_TYPE.get();
                         default -> 0;
                 };
         }
