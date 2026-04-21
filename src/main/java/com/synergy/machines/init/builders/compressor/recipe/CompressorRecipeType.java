@@ -66,7 +66,7 @@ public class CompressorRecipeType extends BaseMachineRecipeType<BiItemInput> {
 
                 SizedIngredient.NESTED_CODEC.fieldOf("input").forGetter(CompressorRecipeType::getInputItem),
                 SizedIngredient.NESTED_CODEC.optionalFieldOf("plate", null)
-                        .forGetter(r -> (r.getCatalystItem() == null || x.getItems(r.getCatalystItem()).isEmpty())
+                        .forGetter(r -> (r.getCatalystItem() == null)
                                 ? null
                                 : r.getCatalystItem()),
                 Codec.BOOL.fieldOf("consume_catalyst").forGetter(CompressorRecipeType::consumeCatalyst),
