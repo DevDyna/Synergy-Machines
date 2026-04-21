@@ -3,7 +3,6 @@ package com.synergy.machines.api.machine;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.level.material.Fluid;
 
 public class FluidGUITank {
@@ -53,44 +52,43 @@ public class FluidGUITank {
 
     public void render(GuiGraphicsExtractor guiGraphics) {
 
-        // var still = IClientFluidTypeExtensions.of(fluid).;
+        var fluidStack = com.devdyna.cakesticklib.api.utils.x.fluid(fluid);
+        var color = Minecraft.getInstance().getModelManager().getFluidStateModelSet().get(fluid.defaultFluidState())
+                .fluidTintSource().colorAsStack(fluidStack);
+        var sprite = Minecraft.getInstance().getModelManager().getFluidStateModelSet().get(fluid.defaultFluidState())
+                .stillMaterial().sprite();
 
-        // if (still != null) {
-        TextureAtlasSprite sprite = Minecraft.getInstance().getModelManager().getFluidStateModelSet()
-                .get(fluid.defaultFluidState()).stillMaterial().sprite();
+        if (sprite == null)
+            return;
+
+        int filled = (int) ((amount / (float) max) * h);
+        if (filled <= 0)
+            return;
 
         int xTank = x;
-        int yTank = y + h;
+        int yTank = y + h - filled;
 
-        int color = Minecraft.getInstance().getModelManager().getFluidStateModelSet().get(fluid.defaultFluidState())
-                .fluidTintSource().color(fluid.defaultFluidState());
-        // float r = ((color >> 16) & 0xFF) / 255f;
-        // float g = ((color >> 8) & 0xFF) / 255f;
-        // float b = (color & 0xFF) / 255f;
-        // guiGraphics.setColor(r, g, b, 1f);
+        int texSize = 16;
 
-        int remaining = ((amount * h) / max) - 2;
+        for (int dy = 0; dy < filled; dy += texSize) {
 
-        while (remaining > 0) {
-            int renderHeight = Math.min(16, remaining);
-            yTank -= renderHeight;
+            int renderH = Math.min(texSize, filled - dy);
 
-            // RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            // RenderSystem.setShaderColor(r, g, b, 1f);
-            // RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
+            float v0 = sprite.getV((float) 0 / texSize);
+            float u0 = sprite.getU(0);
 
-            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,
+            guiGraphics.blit(
+                    RenderPipelines.GUI_TEXTURED,
                     sprite.atlasLocation(),
                     xTank,
-                    yTank,
+                    yTank + dy,
+                    u0, v0,
                     w,
-                    renderHeight,
+                    renderH,
+                    texSize,
+                    70,
                     color);
-
-            remaining -= renderHeight;
         }
-
-        // guiGraphics.setColor(1f, 1f, 1f, 1f);
-        // }
     }
+
 }
