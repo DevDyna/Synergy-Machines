@@ -4,7 +4,6 @@ import static com.synergy.machines.Main.MODULE_ID;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.Nullable;
 
 import com.devdyna.cakesticklib.api.gui.BaseScreen;
@@ -13,6 +12,7 @@ import com.devdyna.cakesticklib.api.utils.StringUtil;
 import com.devdyna.cakesticklib.api.utils.UpgradeComponents;
 import com.devdyna.cakesticklib.api.utils.UpgradeComponents.UpgradeType;
 import com.devdyna.cakesticklib.api.utils.x;
+import com.synergy.machines.Common;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -287,11 +287,11 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         public static final List<UpgradeType> DEFAULT_UPGRADES = List.of(UpgradeType.ENERGY, UpgradeType.SPEED);
 
         public int getConfigLimits(UpgradeType type) {
-                return switch (type) {//TODO
-                        case UpgradeType.ENERGY -> 16; // Common.MACHINE_MAX_ENERGY_EFFICIENCY_UPGRADES_TYPE.get();
-                        case UpgradeType.SPEED -> 4;// Common.MACHINE_MAX_SPEED_UPGRADES_TYPE.get();
-                        case UpgradeType.LUCK -> 4; // Common.MACHINE_MAX_LUCK_UPGRADES_TYPE.get();
-                        case UpgradeType.FLUID -> 4; // Common.MACHINE_MAX_FLUID_UPGRADES_TYPE.get();
+                return switch (type) {
+                        case UpgradeType.ENERGY ->   Common.MACHINE_MAX_ENERGY_EFFICIENCY_UPGRADES_TYPE.get();
+                        case UpgradeType.SPEED ->  Common.MACHINE_MAX_SPEED_UPGRADES_TYPE.get();
+                        case UpgradeType.LUCK ->  Common.MACHINE_MAX_LUCK_UPGRADES_TYPE.get();
+                        case UpgradeType.FLUID ->  Common.MACHINE_MAX_FLUID_UPGRADES_TYPE.get();
                         default -> 0;
                 };
         }
