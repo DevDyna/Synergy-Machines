@@ -3,7 +3,6 @@ package com.synergy.machines.datagen.client;
 import static com.synergy.machines.Main.MODULE_ID;
 
 import com.synergy.machines.init.Material;
-import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
