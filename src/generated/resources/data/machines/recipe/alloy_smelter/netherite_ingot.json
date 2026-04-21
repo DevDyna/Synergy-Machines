@@ -1,0 +1,16 @@
+{
+  "type": "machines:alloy_smelter",
+  "energy": 500,
+  "left": {
+    "count": 1,
+    "ingredient": "minecraft:gold_ingot"
+  },
+  "output": {
+    "id": "minecraft:netherite_ingot"
+  },
+  "right": {
+    "count": 1,
+    "ingredient": "minecraft:netherite_scrap"
+  },
+  "ticks": 100
+}

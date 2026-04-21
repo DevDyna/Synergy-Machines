@@ -1,0 +1,12 @@
+{
+  "type": "machines:electric_furnace",
+  "energy": 500,
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:raw_iron"
+  },
+  "output": {
+    "id": "minecraft:iron_ingot"
+  },
+  "ticks": 100
+}

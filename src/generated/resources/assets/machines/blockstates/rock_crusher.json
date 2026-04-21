@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "machines:block/rock_crusher",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "machines:block/rock_crusher",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "machines:block/rock_crusher",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "machines:block/rock_crusher",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "machines:block/rock_crusher"
+    },
+    "facing=west": {
+      "model": "machines:block/rock_crusher",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

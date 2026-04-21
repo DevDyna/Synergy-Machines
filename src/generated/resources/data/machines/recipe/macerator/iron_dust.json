@@ -1,0 +1,19 @@
+{
+  "type": "machines:macerator",
+  "energy": 500,
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:raw_iron"
+  },
+  "output": {
+    "count": 2,
+    "id": "cakesticklib:iron_dust"
+  },
+  "secondary_item": {
+    "chance": 0.25,
+    "item": {
+      "id": "cakesticklib:iron_dust"
+    }
+  },
+  "ticks": 100
+}

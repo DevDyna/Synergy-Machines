@@ -1,0 +1,10 @@
+{
+  "block.machines.alloy_smelter": "Alloy Smelter",
+  "block.machines.casting_factory": "Casting Factory",
+  "block.machines.compressor": "Compressor",
+  "block.machines.electric_furnace": "Electric Furnace",
+  "block.machines.electric_melter": "Electric Melter",
+  "block.machines.extractor": "Extractor",
+  "block.machines.macerator": "Macerator",
+  "block.machines.rock_crusher": "Rock Crusher"
+}
