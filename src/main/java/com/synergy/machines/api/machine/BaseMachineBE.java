@@ -164,8 +164,8 @@ public abstract class BaseMachineBE extends MachineBE implements MachineItemAuto
     }
 
     @Override
-    public ItemStacksResourceHandler getItemStorage() {
-        return getData(zHandlers.ITEM_STORAGE);
+    public int getSlots() {
+        return getMachineSlots();
     }
 
     @Override
