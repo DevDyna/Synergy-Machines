@@ -32,7 +32,7 @@ public class Controller {
         // client
 
         // providerGen(e, g, new DataBlockModelState(po, f));
-        e.addProvider(new DataModel(output));
+        // e.addProvider(new DataModel(output));
         e.addProvider(new DataLang(output));
 
         // server
