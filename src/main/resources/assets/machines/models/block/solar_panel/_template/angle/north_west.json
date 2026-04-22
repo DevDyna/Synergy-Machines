@@ -1,0 +1,23 @@
+{
+  "format_version": "1.21.6",
+  "credit": "Made with Blockbench",
+  "texture_size": [32, 32],
+  "textures": {
+    "case": "machines:block/solar_panel/case"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [1, 3.5, 1],
+      "rotation": { "angle": 0, "axis": "y", "origin": [-14, 0, 2] },
+      "faces": {
+        "up": { "uv": [0, 0, 1, 1], "texture": "#panel" },
+        "down": { "uv": [14, 14, 15, 15], "rotation": 180, "texture": "#case" }
+      }
+    }
+  ],
+  "groups": [
+    0,
+    { "name": "group", "origin": [0, 0, 0], "color": 0, "children": [] }
+  ]
+}

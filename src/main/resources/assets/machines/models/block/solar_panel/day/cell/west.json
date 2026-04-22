@@ -1,0 +1,6 @@
+{
+  "parent": "machines:block/solar_panel/_template/cell/west",
+  "textures": {
+    "panel": "machines:block/solar_panel/panel/day"
+  }
+}
