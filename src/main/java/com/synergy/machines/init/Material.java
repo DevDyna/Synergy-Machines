@@ -21,6 +21,7 @@ public class Material {
                 zMachines.register(bus);
         }
 
+        // TODO
         public static List<MachineType<?, ?, ?, ?>> getAllMachineTypes() {
 
                 List<MachineType<?, ?, ?, ?>> types = new ArrayList<>();
@@ -37,8 +38,10 @@ public class Material {
                 return types;
         }
 
-        public static Block[] getBlocks(){
-                return getAllMachineTypes().stream().map(MachineType::block).map(DeferredHolder::get).toArray(Block[]::new);
+        // TODO
+        public static Block[] getBlocks() {
+                return getAllMachineTypes().stream().map(MachineType::block).map(DeferredHolder::get)
+                                .toArray(Block[]::new);
         }
 
 }
