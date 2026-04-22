@@ -3,6 +3,7 @@ package com.synergy.machines.api.machine;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.level.material.Fluid;
 
 public class FluidGUITank {
@@ -14,10 +15,6 @@ public class FluidGUITank {
     private int y;
     private int h;
     private int w;
-
-    public FluidGUITank() {
-
-    }
 
     public static FluidGUITank of() {
         return new FluidGUITank();
@@ -39,9 +36,9 @@ public class FluidGUITank {
         return this;
     }
 
-    public FluidGUITank size(int h, int w) {
-        this.h = h;
+    public FluidGUITank size(int w, int h) {
         this.w = w;
+        this.h = h;
         return this;
     }
 
@@ -52,11 +49,18 @@ public class FluidGUITank {
 
     public void render(GuiGraphicsExtractor guiGraphics) {
 
+        if (fluid == null || max <= 0 || amount <= 0)
+            return;
+
         var fluidStack = com.devdyna.cakesticklib.api.utils.x.fluid(fluid);
-        var color = Minecraft.getInstance().getModelManager().getFluidStateModelSet().get(fluid.defaultFluidState())
-                .fluidTintSource().colorAsStack(fluidStack);
-        var sprite = Minecraft.getInstance().getModelManager().getFluidStateModelSet().get(fluid.defaultFluidState())
-                .stillMaterial().sprite();
+
+        var model = Minecraft.getInstance()
+                .getModelManager()
+                .getFluidStateModelSet()
+                .get(fluid.defaultFluidState());
+
+        TextureAtlasSprite sprite = model.stillMaterial().sprite();
+        int color = model.fluidTintSource().colorAsStack(fluidStack);
 
         if (sprite == null)
             return;
@@ -66,29 +70,31 @@ public class FluidGUITank {
             return;
 
         int xTank = x;
-        int yTank = y + h - filled;
+        int yTank = y + (h - filled);
 
-        int texSize = 16;
+        final int tileSize = 16;
 
-        for (int dy = 0; dy < filled; dy += texSize) {
+        float u0 = sprite.getU0();
 
-            int renderH = Math.min(texSize, filled - dy);
+        for (int dy = 0; dy < filled; dy += tileSize) {
 
-            float v0 = sprite.getV((float) 0 / texSize);
-            float u0 = sprite.getU(0);
+            int renderH = Math.min(tileSize, filled - dy);
+
+            float v0 = sprite.getV0();
 
             guiGraphics.blit(
                     RenderPipelines.GUI_TEXTURED,
                     sprite.atlasLocation(),
                     xTank,
                     yTank + dy,
-                    u0, v0,
+                    u0,
+                    v0,
                     w,
                     renderH,
-                    texSize,
-                    70,
-                    color);
+                    tileSize,
+                    tileSize,
+                    color
+            );
         }
     }
-
 }
