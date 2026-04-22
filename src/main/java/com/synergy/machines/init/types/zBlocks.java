@@ -4,6 +4,9 @@ import static com.synergy.machines.Main.MODULE_ID;
 
 import java.util.function.Function;
 
+import com.synergy.machines.init.builders.solar_panel.day.DaySolarPanelBlock;
+import com.synergy.machines.init.builders.solar_panel.night.NightSolarPanelBlock;
+
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
@@ -22,7 +25,8 @@ public class zBlocks {
     public static final DeferredRegister.Blocks zBlockItem = DeferredRegister.createBlocks(MODULE_ID);
     public static final DeferredRegister.Blocks zBlockFluids = DeferredRegister.createBlocks(MODULE_ID);
 
-    
+    public static DeferredHolder<Block,Block> SOLAR_PANEL_DAY = registerItemBlock("solar_panel_day", p -> new DaySolarPanelBlock(p));
+    public static DeferredHolder<Block,Block> SOLAR_PANEL_NIGHT = registerItemBlock("solar_panel_night", p -> new NightSolarPanelBlock(p));
 
     public static DeferredHolder<Block, Block> registerItemBlock(String blockname,
             Function<BlockBehaviour.Properties, ? extends Block> sup) {
