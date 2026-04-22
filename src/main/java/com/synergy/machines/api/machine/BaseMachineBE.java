@@ -12,6 +12,7 @@ import com.devdyna.cakesticklib.api.utils.UpgradeComponents.UpgradeType;
 import com.devdyna.cakesticklib.setup.registry.zLibrary.zComponents;
 import com.devdyna.cakesticklib.setup.registry.zLibrary.zHandlers;
 import com.mojang.logging.LogUtils;
+import com.synergy.machines.Common;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.RecipeRegister;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
@@ -236,13 +237,6 @@ public abstract class BaseMachineBE extends MachineBE implements MachineItemAuto
     }
 
     protected void tick() {
-        // if (Common.DISABLE_MACHINE_DROP_WHEN_CORRUPTED.get()) {
-        // tickBoth();
-        // if (level.isClientSide())
-        // tickClient();
-        // else
-        // tickServer();
-        // } else {
         try {
             tickBoth();
             if (level.isClientSide())
@@ -250,7 +244,7 @@ public abstract class BaseMachineBE extends MachineBE implements MachineItemAuto
             else
                 tickServer();
 
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             // catch potential crashes
             if (level.getBlockEntity(getBlockPos()) instanceof BaseMachineBE) {
                 LogUtils.getLogger().error(
@@ -262,7 +256,6 @@ public abstract class BaseMachineBE extends MachineBE implements MachineItemAuto
                 level.destroyBlock(getBlockPos(), true);
             }
         }
-        // }
 
     }
 
@@ -412,57 +405,47 @@ public abstract class BaseMachineBE extends MachineBE implements MachineItemAuto
 
     public int getTypeLimiter(UpgradeType type) {
         if (type.equals(UpgradeType.SPEED))
-            return 4;// Common.MACHINE_MAX_SPEED_UPGRADES_TYPE.get();
+            return Common.MACHINE_MAX_SPEED_UPGRADES_TYPE.get();
         if (type.equals(UpgradeType.ENERGY))
-            return 16;// Common.MACHINE_MAX_ENERGY_EFFICIENCY_UPGRADES_TYPE.get();
+            return Common.MACHINE_MAX_ENERGY_EFFICIENCY_UPGRADES_TYPE.get();
         if (type.equals(UpgradeType.LUCK))
-            return 4;// Common.MACHINE_MAX_LUCK_UPGRADES_TYPE.get();
+            return Common.MACHINE_MAX_LUCK_UPGRADES_TYPE.get();
         if (type.equals(UpgradeType.FLUID))
-            return 4;// Common.MACHINE_MAX_FLUID_UPGRADES_TYPE.get();
+            return Common.MACHINE_MAX_FLUID_UPGRADES_TYPE.get();
         return Integer.MAX_VALUE;
     }
 
     public int calculateMaxProgress(int base) {
         var upgrades = getValues(UpgradeType.SPEED);
         float sum = upgrades == null ? 0 : upgrades.stream().mapToInt(Integer::intValue).sum();
-        return // Common.MACHINE_MAX_SPEED_UPGRADES_TYPE.get() == 0 ? base:
-               // Math.max(Common.MACHINE_MINIMAL_TICK_DELAY.get(),
-        (int) (base - (base * sum / 100))
-        // )
-        ;
+        return Common.MACHINE_MAX_SPEED_UPGRADES_TYPE.get() == 0 ? base
+                : Math.max(Common.MACHINE_MINIMAL_TICK_DELAY.get(),
+                        (int) (base - (base * sum / 100)));
     }
 
     private int calculateFEUsage(int base) {
         var upgrades = getValues(UpgradeType.ENERGY);
         float sum = upgrades == null ? 0 : upgrades.stream().mapToInt(Integer::intValue).sum();
-        return // Common.MACHINE_MAX_ENERGY_EFFICIENCY_UPGRADES_TYPE.get() == 0 ? base:
-        // Math.max(Common.MACHINE_MINIMAL_FE_COST.get(),
-        (int) (base + (base * sum / 100))
-        // )
-        ;
+        return Common.MACHINE_MAX_ENERGY_EFFICIENCY_UPGRADES_TYPE.get() == 0 ? base
+                : Math.max(Common.MACHINE_MINIMAL_FE_COST.get(),
+                        (int) (base + (base * sum / 100)));
     }
 
     public int calculateMBUsage(int base) {
         var upgrades = getValues(UpgradeType.FLUID);
         float sum = upgrades == null ? 0 : upgrades.stream().mapToInt(Integer::intValue).sum();
-        return // Common.MACHINE_MAX_FLUID_UPGRADES_TYPE.get() == 0 ? base:
-        // Math.max(Common.MACHINE_MINIMAL_FLUID_COST.get(),
-        (int) (base + (base * sum / 100f))
-        // )
-        ;
+        return Common.MACHINE_MAX_FLUID_UPGRADES_TYPE.get() == 0 ? base
+                : Math.max(Common.MACHINE_MINIMAL_FLUID_COST.get(),
+                        (int) (base + (base * sum / 100f)));
     }
 
     public boolean calculateSecondarySuccess(float base) {
         var upgrades = getValues(UpgradeType.LUCK);
         float sum = upgrades == null ? 0 : upgrades.stream().mapToInt(Integer::intValue).sum();
-        return // Common.MACHINE_MAX_LUCK_UPGRADES_TYPE.get() == 0 ? false
-               // :
-        level.getRandom().nextFloat() <
-        // Math.min(
-        // Common.MACHINE_MAXIMAL_LUCK.get(),
-                (base + (sum / 100)
-                // )
-                );
+        return Common.MACHINE_MAX_LUCK_UPGRADES_TYPE.get() == 0 ? false
+                : level.getRandom().nextFloat() < Math.min(
+                        Common.MACHINE_MAXIMAL_LUCK.get(),
+                        (base + (sum / 100)));
     }
 
     /**
@@ -520,15 +503,7 @@ public abstract class BaseMachineBE extends MachineBE implements MachineItemAuto
         getAutomationItemStorage().set(index, resource, amount);
     }
 
-    // /**
-    // * CLIENT ONLY
-    // */
-    // public static <T extends Recipe<I>, I extends RecipeInput>
-    // Optional<RecipeHolder<T>> getRecipes(RecipeType<T> r) {
-    // return
-    // Minecraft.getInstance().level.getServer().getRecipeManager().getRecipeFor(r);
-    // }
-
+    // TODO move to another class
     public static <T extends BaseMachineRecipeType<I>, I extends RecipeInput> Optional<RecipeHolder<T>> getRecipes(
             Level level, MachineType<?, ?, ?, T> m, I input) {
         return level.getServer().getRecipeManager().getRecipeFor(m.recipe().getType(), input, level);
@@ -543,23 +518,5 @@ public abstract class BaseMachineBE extends MachineBE implements MachineItemAuto
             RecipeRegister<T> m, I input) {
         return level.getServer().getRecipeManager().getRecipeFor(m.getType(), input, level).get().value();
     }
-
-    // public static <T extends Recipe<I>, I extends RecipeInput>
-    // List<RecipeHolder<T>> getRecipes(RecipeRegister<T> r) {
-    // return getRecipes(r.getType());
-    // }
-
-    // public static <T extends BaseMachineRecipeType<I>, I extends RecipeInput>
-    // List<RecipeHolder<T>> getRecipes(
-    // MachineType<?, ?, ?, T> r) {
-    // return getRecipes(r.recipe().getType());
-    // }
-
-    // public static <T extends Recipe<I>, I extends RecipeInput> void
-    // registerCategory(IRecipeRegistration i,
-    // RecipeRegister<T> r) {
-    // i.addRecipes(mezz.jei.api.recipe.RecipeType.createFromVanilla(r.getType()),
-    // getRecipes(r.getType()));
-    // }
 
 }
