@@ -1,3 +1,5 @@
-# CakeStickLib Template implementation
+# Synergy : Machines
+A complete game overhaul of automation using mono-block functional machines to produce , assemble and process resources
 
-This template include a functional CakeStickLib Plugin , a configured DataGen and a pre-set Jei Plugin
+
+This project is a standalone port of Synergy Industrial Machines
