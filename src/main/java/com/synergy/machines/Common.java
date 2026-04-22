@@ -1,6 +1,5 @@
 package com.synergy.machines;
 
-
 import com.devdyna.cakesticklib.api.utils.StringUtil;
 import com.synergy.machines.api.machine.BaseMachineBE;
 
@@ -14,12 +13,16 @@ public class Common {
         private static final ModConfigSpec.Builder qCOMMON = new ModConfigSpec.Builder();
 
         public static void register(ModContainer c) {
-               industrial_machines();
+                industrial_machines();
 
                 c.registerConfig(ModConfig.Type.COMMON, qCOMMON.build());
         }
 
-        // ic4
+        public static IntValue SOLAR_PANEL_FE_GEN;// 16
+        public static IntValue SOLAR_PANEL_MAX_FE;// 10k
+        public static BooleanValue SOLAR_PANEL_DISABLE_CHECK_SEE_SKY;// false
+        public static BooleanValue SOLAR_PANEL_DISABLE_DAYTIME;// false
+
         public static IntValue MACHINE_MAX_FE;// 100k
 
         public static BooleanValue ENABLE_SHIFT_INVERT_MACHINE_PLACEMENT;
@@ -45,10 +48,18 @@ public class Common {
         public static IntValue MACHINE_FURNACE_PROCESS_VANILLA_MIN_TICK_DELAY;// 20
         public static IntValue MACHINE_FURNACE_PROCESS_VANILLA_PERCENTUAGE_TICK_DELAY;// 50%
 
-        
-
         private static void industrial_machines() {
-                qCOMMON.comment("Industrial-Machines").push("3-industrialmachines");
+
+                qCOMMON.comment("Machines").push("machines");
+
+                decor.simple("Solar Panel");
+
+                SOLAR_PANEL_FE_GEN = number("FE production every tick",
+                                "solar_panel_fe_gen", 256);
+                SOLAR_PANEL_MAX_FE = number("FE Capacity",
+                                "solar_panel_fe_max", 10_000);
+                SOLAR_PANEL_DISABLE_CHECK_SEE_SKY = bool("Disable condition to see the sky",
+                                "solar_panel_disable_seesky");
 
                 decor.simple("Base Machine and Upgrades");
 
@@ -106,10 +117,6 @@ public class Common {
 
                 qCOMMON.pop();
         }
-
-
-
-
 
         private static BooleanValue bool(String c, String k, boolean b) {
                 return qCOMMON
