@@ -15,10 +15,6 @@ public class IndustrialUpgrade extends Item {
         super(properties);
     }
 
-    public IndustrialUpgrade() {
-        this(new Item.Properties());
-    }
-
     @Override
     public InteractionResult useOn(UseOnContext c) {
         var level = c.getLevel();
