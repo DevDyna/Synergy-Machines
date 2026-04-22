@@ -6,5 +6,15 @@
   "block.machines.electric_melter": "Electric Melter",
   "block.machines.extractor": "Extractor",
   "block.machines.macerator": "Macerator",
-  "block.machines.rock_crusher": "Rock Crusher"
+  "block.machines.rock_crusher": "Rock Crusher",
+  "block.machines.solar_panel_day": "Solar Panel (Daytime)",
+  "block.machines.solar_panel_night": "Solar Panel (Nighttime)",
+  "item.machines.energy_upgrade": "Energy Upgrade",
+  "item.machines.fluid_upgrade": "Fluid Upgrade",
+  "item.machines.luck_upgrade": "Luck Upgrade",
+  "item.machines.speed_upgrade": "Speed Upgrade",
+  "machines.screen.modifier.energy": "§7Energy Modifier §7[§f§a%s§7]",
+  "machines.screen.modifier.fluid": "§7Fluid Modifier §7[§f§a%s§7]",
+  "machines.screen.modifier.luck": "§7Luck Modifier §7[§f§a%s§7]",
+  "machines.screen.modifier.speed": "§7Speed Modifier §7[§f§a%s§7]"
 }
