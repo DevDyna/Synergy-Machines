@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.init.Material;
+import com.synergy.machines.init.types.zBlocks;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -17,15 +18,20 @@ public class DataLootBlock extends BlockLootSubProvider {
                 super(Set.of(), FeatureFlags.DEFAULT_FLAGS, l);
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         protected Iterable<Block> getKnownBlocks() {
 
-                return (List<Block>) Material.getAllMachineTypes()
-                                .stream()
+                List<Block> blocks = new ArrayList<>();
+
+                Material.getAllMachineTypes().stream()
                                 .map(MachineType::block)
                                 .map(DeferredHolder::get)
-                                .toList();
+                                .forEach(blocks::add);
+
+                blocks.add(zBlocks.SOLAR_PANEL_DAY.get());
+                blocks.add(zBlocks.SOLAR_PANEL_NIGHT.get());
+
+                return blocks;
         }
 
         @Override
@@ -34,6 +40,9 @@ public class DataLootBlock extends BlockLootSubProvider {
                                 .map(MachineType::block)
                                 .map(DeferredHolder::get)
                                 .forEach(this::dropSelf);
+
+                dropSelf(zBlocks.SOLAR_PANEL_DAY.get());
+                dropSelf(zBlocks.SOLAR_PANEL_NIGHT.get());
         }
 
 }
