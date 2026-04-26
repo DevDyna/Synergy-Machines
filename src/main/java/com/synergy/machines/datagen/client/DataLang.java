@@ -21,22 +21,13 @@ public class DataLang extends LanguageProvider {
         @Override
         protected void addTranslations() {
 
-                Material.getAllMachineTypes().forEach(m -> addBlock(m.block(), named(m.block(), MODULE_ID)));
+                Material.getAllMachineTypes().forEach(m -> {
+                        addBlock(m.block(), named(m.block(), MODULE_ID));
+                        add(MODULE_ID + ".jei." + m.id(), named(m.item(), MODULE_ID) + " Recipes");
+                });
 
                 addBlock(zBlocks.SOLAR_PANEL_DAY, "Solar Panel (Daytime)");
                 addBlock(zBlocks.SOLAR_PANEL_NIGHT, "Solar Panel (Nighttime)");
-
-                addItem(zItems.ENERGY_UPGRADE, named(zItems.ENERGY_UPGRADE, MODULE_ID));
-                addItem(zItems.SPEED_UPGRADE, named(zItems.SPEED_UPGRADE, MODULE_ID));
-                addItem(zItems.FLUID_UPGRADE, named(zItems.FLUID_UPGRADE, MODULE_ID));
-                addItem(zItems.LUCK_UPGRADE, named(zItems.LUCK_UPGRADE, MODULE_ID));
-
-                add(MODULE_ID + ".screen.upgrades", "Supported Upgrades:");
-
-                add(MODULE_ID + ".screen.modifier.energy", TIP_COLOR + "Energy Modifier §7[§f§a%s§7]");
-                add(MODULE_ID + ".screen.modifier.speed", TIP_COLOR + "Speed Modifier §7[§f§a%s§7]");
-                add(MODULE_ID + ".screen.modifier.luck", TIP_COLOR + "Luck Modifier §7[§f§a%s§7]");
-                add(MODULE_ID + ".screen.modifier.fluid", TIP_COLOR + "Fluid Modifier §7[§f§a%s§7]");
 
         }
 
