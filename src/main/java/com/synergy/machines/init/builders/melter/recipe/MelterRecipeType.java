@@ -17,12 +17,12 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 @SuppressWarnings("null")
 public class MelterRecipeType extends BaseMachineRecipeType<MonoItemInput> {
 
-    public MelterRecipeType(int ticks, int energy, SizedIngredient input, FluidStack fluid) {
+    public MelterRecipeType(int ticks, int energy, SizedIngredient input, FluidStackTemplate fluid) {
         this.input = input;
         this.ticks = ticks;
         this.energy = energy;
@@ -30,7 +30,7 @@ public class MelterRecipeType extends BaseMachineRecipeType<MonoItemInput> {
     }
 
     public static MelterRecipeType of(int ticks, int energy, SizedIngredient input,
-            FluidStack fluid) {
+            FluidStackTemplate fluid) {
         return new MelterRecipeType(ticks, energy, input, fluid);
     }
 
@@ -59,7 +59,7 @@ public class MelterRecipeType extends BaseMachineRecipeType<MonoItemInput> {
 
             SizedIngredient.NESTED_CODEC.fieldOf("input").forGetter(MelterRecipeType::getInputItem),
 
-            FluidStack.CODEC.fieldOf("fluid").forGetter(MelterRecipeType::getFluidOutput))
+            FluidStackTemplate.CODEC.fieldOf("fluid").forGetter(MelterRecipeType::getFluidOutput))
             .apply(inst, MelterRecipeType::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, MelterRecipeType> STREAM_CODEC = StreamCodec
@@ -68,7 +68,7 @@ public class MelterRecipeType extends BaseMachineRecipeType<MonoItemInput> {
                     ByteBufCodecs.INT, MelterRecipeType::getTime,
                     ByteBufCodecs.INT, MelterRecipeType::getEnergy,
                     SizedIngredient.STREAM_CODEC, MelterRecipeType::getInputItem,
-                    FluidStack.STREAM_CODEC, MelterRecipeType::getFluidOutput,
+                    FluidStackTemplate.STREAM_CODEC, MelterRecipeType::getFluidOutput,
                     (ticks, energy, input, c) -> new MelterRecipeType(
                             ticks,
                             energy,

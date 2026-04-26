@@ -11,13 +11,13 @@ import com.synergy.machines.init.types.zMachines;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
 
 @SuppressWarnings({ "null" })
 public class MelterRecipeBuilder extends BaseMachineRecipeBuilder<MelterRecipeBuilder>
-        implements FluidAttach.Any.SimpleFluidAttach<MelterRecipeBuilder> {
+        implements FluidAttach.Output.OutputFluid<MelterRecipeBuilder> {
 
     private MelterRecipeBuilder() {
         this.criteria = new LinkedHashMap<String, Criterion<?>>();
@@ -45,7 +45,7 @@ public class MelterRecipeBuilder extends BaseMachineRecipeBuilder<MelterRecipeBu
     }
 
     @Override
-    public MelterRecipeBuilder fluid(FluidStack fluid) {
+    public MelterRecipeBuilder output(FluidStackTemplate fluid) {
         this.fluid_output = fluid;
         return getBuilder();
     }

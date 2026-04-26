@@ -2,12 +2,11 @@ package com.synergy.machines.init.builders.extractor.recipe;
 
 import java.util.LinkedHashMap;
 
-
 import net.minecraft.advancements.Criterion;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 import com.devdyna.cakesticklib.api.recipe.ChanceOutputItem;
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
@@ -17,10 +16,9 @@ import com.synergy.machines.api.machine.recipe.BaseMachineRecipeBuilder;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
 import com.synergy.machines.init.types.zMachines;
 
-
 @SuppressWarnings({ "null" })
 public class ExtractorRecipeBuilder extends BaseMachineRecipeBuilder<ExtractorRecipeBuilder>
-        implements FluidAttach.Any.SimpleFluidAttach<ExtractorRecipeBuilder>,
+        implements FluidAttach.Output.OutputFluid<ExtractorRecipeBuilder>,
         ItemAttach.Output.SecondaryOutputItem<ExtractorRecipeBuilder> {
 
     private ExtractorRecipeBuilder() {
@@ -47,14 +45,14 @@ public class ExtractorRecipeBuilder extends BaseMachineRecipeBuilder<ExtractorRe
     }
 
     @Override
-    public ExtractorRecipeBuilder fluid(FluidStack fluid) {
-        this.fluid_output = fluid;
+    public ExtractorRecipeBuilder secondary(ItemStackTemplate secondary, float chance) {
+        this.optional_output_item = ChanceOutputItem.of(secondary, chance);
         return getBuilder();
     }
 
     @Override
-    public ExtractorRecipeBuilder secondary(ItemStackTemplate secondary, float chance) {
-        this.optional_output_item = ChanceOutputItem.of(secondary, chance);
+    public ExtractorRecipeBuilder output(FluidStackTemplate f) {
+        this.fluid_output = f;
         return getBuilder();
     }
 

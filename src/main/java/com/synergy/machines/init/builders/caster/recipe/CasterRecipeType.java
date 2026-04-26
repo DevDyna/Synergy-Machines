@@ -58,7 +58,7 @@ public class CasterRecipeType extends BaseMachineRecipeType<ItemFluidInput> {
 
     @Override
     public SizedFluidIngredient getRecipeFluidInput(ItemFluidInput recipe) {
-        return x.fluidSized(recipe.input());
+        return x.fluidSized(recipe.input().getFluid(),recipe.input().amount());
     }
 
     public static final RecipeSerializer<CasterRecipeType> serializer() {
@@ -73,7 +73,7 @@ public class CasterRecipeType extends BaseMachineRecipeType<ItemFluidInput> {
                 SizedFluidIngredient.CODEC.fieldOf("input_fluid").forGetter(CasterRecipeType::getFluidInput),
 
                 SizedIngredient.NESTED_CODEC.optionalFieldOf("input_item",null)
-                        .forGetter(r->(r.getInputItem() == null || x.getItems(r.getInputItem()).isEmpty()) ? null : r.getInputItem()),
+                        .forGetter(r->(r.getInputItem() == null || r.getInputItem().ingredient().isEmpty()) ? null : r.getInputItem()),
                 Codec.BOOL.fieldOf("consume_item").forGetter(CasterRecipeType::consumeCatalyst),
                 ItemStackTemplate.CODEC.fieldOf("output").forGetter(CasterRecipeType::getOutputItem)
 

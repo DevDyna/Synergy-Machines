@@ -56,7 +56,7 @@ public class RockCrusherRecipeType extends BaseMachineRecipeType<ItemFluidInput>
 
     @Override
     public SizedFluidIngredient getRecipeFluidInput(ItemFluidInput recipe) {
-        return x.fluidSized(recipe.input());
+        return x.fluidSized(recipe.input().getFluid(),recipe.input().amount());
     }
 
     public static final RecipeSerializer<RockCrusherRecipeType> serializer() {

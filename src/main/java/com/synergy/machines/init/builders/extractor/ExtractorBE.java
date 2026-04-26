@@ -64,7 +64,7 @@ public class ExtractorBE extends BaseMachineBE implements FluidTankStorage {
                 return cancel();
 
         if (!(checkTank(getFluidStorage().getResource(0).toStack(getFluidStorage().getAmountAsInt(0)),
-                recipe.getFluidOutput().copy(), getTankCapacity())))
+                recipe.getFluidOutput().create(), getTankCapacity())))
             return cancel();
 
         if (!calculateAndConsumeFE(recipe.getEnergy()))
@@ -88,7 +88,7 @@ public class ExtractorBE extends BaseMachineBE implements FluidTankStorage {
                     && calculateSecondarySuccess(recipe.getSecondaryOutputItem().chance()))
                 updateOutputSlot(getOutput(), recipe.getSecondaryOutputItem().item().create(), OUTPUT_SLOT);
 
-        if (!recipe.getFluidOutput().isEmpty()) {
+        if (recipe.getFluidOutput() != null) {
 
             try (var tx = Transaction.openRoot()) {
                 getFluidStorage().insert(getFluidStorage().getResource(0), recipe.getFluidInput().amount(), tx);

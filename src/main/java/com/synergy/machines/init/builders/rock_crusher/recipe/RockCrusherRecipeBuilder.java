@@ -11,7 +11,7 @@ import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.advancements.Criterion;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
@@ -56,18 +56,21 @@ public class RockCrusherRecipeBuilder extends BaseMachineRecipeBuilder<RockCrush
         return getBuilder();
     }
 
-    public RockCrusherRecipeBuilder addResult(ItemStack item, float chance) {
+    public RockCrusherRecipeBuilder addResult(ItemStackTemplate item, float chance) {
         if (this.result.size() < 9)
-            this.result.add(ChanceOutputItem.of(x.itemTemplate(item.getItem(),item.count()), chance));
+            this.result.add(ChanceOutputItem.of(item, chance));
         return this;
     }
 
     public RockCrusherRecipeBuilder addResult(Item item, float chance) {
-        return addResult(x.item(item), chance);
+        return addResult(x.itemTemplate(item), chance);
     }
+
     public RockCrusherRecipeBuilder addResult(Item item,int count, float chance) {
-        return addResult(x.item(item,count), chance);
+        return addResult(x.itemTemplate(item,count), chance);
     }
+
+  
 
 
 

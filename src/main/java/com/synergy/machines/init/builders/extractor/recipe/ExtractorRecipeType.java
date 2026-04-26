@@ -18,13 +18,13 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 @SuppressWarnings("null")
 public class ExtractorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
 
     public ExtractorRecipeType(int ticks, int energy, SizedIngredient input,
-            ChanceOutputItem secondary, FluidStack fluid) {
+            ChanceOutputItem secondary, FluidStackTemplate fluid) {
         this.input = input;
         this.ticks = ticks;
         this.optional_output_item = secondary;
@@ -33,7 +33,7 @@ public class ExtractorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
     }
 
     public static ExtractorRecipeType of(int ticks, int energy, SizedIngredient input,
-            ChanceOutputItem secondary, FluidStack fluid) {
+            ChanceOutputItem secondary, FluidStackTemplate fluid) {
         return new ExtractorRecipeType(ticks, energy, input, secondary, fluid);
     }
 
@@ -64,7 +64,7 @@ public class ExtractorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
 
                 ChanceOutputItem.CODEC.optionalFieldOf("secondary_item")
                         .forGetter(r -> ChanceOutputItem.optional(r.getSecondaryOutputItem())),
-                FluidStack.CODEC.optionalFieldOf("optional_fluid", FluidStack.EMPTY)
+                FluidStackTemplate.CODEC.optionalFieldOf("optional_fluid", null)
                         .forGetter(r -> optionalCodec(r.getFluidOutput())))
                 .apply(inst, (ticks, energy, input, secondary,fluid) -> new ExtractorRecipeType(
                         ticks,
@@ -82,8 +82,8 @@ public class ExtractorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
 
                         ByteBufCodecs.optional(ChanceOutputItem.STREAM_CODEC),
                         r -> ChanceOutputItem.optional(r.getSecondaryOutputItem()),
-                        ByteBufCodecs.optional(FluidStack.STREAM_CODEC),
-                        r -> (r.getFluidOutput() == null || r.getFluidOutput().isEmpty())
+                        ByteBufCodecs.optional(FluidStackTemplate.STREAM_CODEC),
+                        r -> (r.getFluidOutput() == null || r.getFluidOutput().fluid() == null)
                                 ? Optional.empty()
                                 : Optional.of(r.getFluidOutput()),
                         (ticks, energy, input, secondary,fluid) -> new ExtractorRecipeType(
