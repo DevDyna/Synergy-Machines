@@ -1,12 +1,12 @@
 package com.synergy.machines.compat.jei.categories;
 
 
+import com.devdyna.cakesticklib.api.compat.jei.JEIFluidTankHelper;
 import com.devdyna.cakesticklib.api.primitive.Size;
 import com.devdyna.cakesticklib.api.recipe.ChanceOutputItem;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.compat.jei.categories.api.BaseMachineRecipeCategory;
-import com.synergy.machines.compat.jei.categories.api.JEIFluidTankHelper;
 import com.synergy.machines.init.builders.rock_crusher.recipe.RockCrusherRecipeType;
 import com.synergy.machines.init.types.zMachines;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;

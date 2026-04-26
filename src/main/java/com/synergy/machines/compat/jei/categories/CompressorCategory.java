@@ -2,6 +2,7 @@ package com.synergy.machines.compat.jei.categories;
 
 import static com.synergy.machines.Main.MODULE_ID;
 
+import com.devdyna.cakesticklib.CakeStickLib;
 import com.devdyna.cakesticklib.api.compat.jei.ImageJei;
 import com.devdyna.cakesticklib.api.primitive.Size;
 import com.devdyna.cakesticklib.api.utils.x;
@@ -53,7 +54,7 @@ public class CompressorCategory extends BaseMachineRecipeCategory<CompressorReci
 
                 if (!recipe.consumeCatalyst())
                         catalyst.addRichTooltipCallback(
-                                        (v, t) -> t.add(Component.translatable(MODULE_ID + ".jei.tip.dont_consume")));
+                                        (v, t) -> t.add(Component.translatable(CakeStickLib.MODULE_ID + ".ui.dont_consume")));
 }
                 builder.addOutputSlot(74, 21).add(recipe.getOutputItem());
 

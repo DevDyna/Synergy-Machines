@@ -1,11 +1,11 @@
 package com.synergy.machines.compat.jei.categories;
-import static com.synergy.machines.Main.MODULE_ID;
 
+import com.devdyna.cakesticklib.CakeStickLib;
+import com.devdyna.cakesticklib.api.compat.jei.JEIFluidTankHelper;
 import com.devdyna.cakesticklib.api.primitive.Size;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.compat.jei.categories.api.BaseMachineRecipeCategory;
-import com.synergy.machines.compat.jei.categories.api.JEIFluidTankHelper;
 import com.synergy.machines.init.builders.caster.recipe.CasterRecipeType;
 import com.synergy.machines.init.types.zMachines;
 
@@ -52,7 +52,7 @@ public class CasterCategory extends BaseMachineRecipeCategory<CasterRecipeType> 
 
                         if (!recipe.consumeCatalyst())
                                 item.addRichTooltipCallback(
-                                                (v, t) -> t.add(Component.translatable(MODULE_ID + ".jei.tip.dont_consume")));
+                                                (v, t) -> t.add(Component.translatable(CakeStickLib.MODULE_ID + ".ui.dont_consume")));
                 }
 
                 builder.addOutputSlot(81 + 21, 5).add(recipe.getOutputItem());

@@ -1,11 +1,11 @@
 package com.synergy.machines.compat.jei.categories;
 
 
+import com.devdyna.cakesticklib.api.compat.jei.JEIFluidTankHelper;
 import com.devdyna.cakesticklib.api.primitive.Size;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.compat.jei.categories.api.BaseMachineRecipeCategory;
-import com.synergy.machines.compat.jei.categories.api.JEIFluidTankHelper;
 import com.synergy.machines.init.builders.extractor.recipe.ExtractorRecipeType;
 import com.synergy.machines.init.types.zMachines;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -50,9 +50,9 @@ public class ExtractorCategory extends BaseMachineRecipeCategory<ExtractorRecipe
                 if (recipe.hasSecondaryOutput())
                         builder.addOutputSlot(81, 5).add(recipe.getSecondaryOutputItem().item());
 
-                if (recipe.getFluidOutput() != null && !recipe.getFluidOutput().isEmpty())
+                if (recipe.getFluidOutput() != null)
                         JEIFluidTankHelper.of()
-                                        .fluid(recipe.getFluidOutput())
+                                        .fluid(recipe.getFluidOutput().create())
                                         .offset(102, 21)
                                         .build((x, y) -> builder.addOutputSlot(x, y));
 
