@@ -23,6 +23,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 @SuppressWarnings("null")
@@ -43,7 +44,7 @@ public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Re
     public boolean consumeCatalyst;
     public SizedFluidIngredient fluid_input;
     public SizedFluidIngredient optional_fluid_input;
-    public FluidStack fluid_output;
+    public FluidStackTemplate fluid_output;
 
     public boolean consumeCatalyst() {
         return consumeCatalyst;
@@ -73,7 +74,7 @@ public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Re
         return optional_input;
     }
 
-    public FluidStack getFluidOutput() {
+    public FluidStackTemplate getFluidOutput() {
         return fluid_output;
     }
 
@@ -220,10 +221,15 @@ public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Re
                 ? FluidStack.EMPTY
                 : f;
     }
+    public static FluidStackTemplate optionalCodec(FluidStackTemplate f) {
+        return (f == null || f.fluid().value() == null)
+                ? null
+                : f;
+    }
 
-    public static ItemStack optionalCodec(ItemStack i) {
-        return (i == null || i.isEmpty())
-                ? ItemStack.EMPTY
+    public static ItemStackTemplate optionalCodec(ItemStackTemplate i) {
+        return (i == null || i.item().value() == null)
+                ? null
                 : i;
     }
 
