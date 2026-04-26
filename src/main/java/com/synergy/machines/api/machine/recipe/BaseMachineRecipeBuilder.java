@@ -23,6 +23,7 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.core.Holder;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -36,6 +37,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -60,7 +62,7 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
     // protected float chance;
     protected boolean consumeCatalyst = false;
     protected SizedFluidIngredient fluid_input;
-    protected FluidStack fluid_output = FluidStack.EMPTY;
+    protected FluidStackTemplate fluid_output;
 
     public T input(SizedIngredient input) {
         this.input = input;
@@ -127,14 +129,14 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
 
         if (this instanceof SimpleFluidAttach
                 && fluid_output != null
-                && !fluid_output.isEmpty())
-            return x.rl(MODULE_ID,getMachinePath() + x.path(fluid_output.getFluid()) + extra);
+                && fluid_output.fluid().value() != null)
+            return x.rl(MODULE_ID,getMachinePath() + x.path(fluid_output.fluid().value()) + extra);
 
         if (ChanceOutputItem.itemValid(optional_output_item))
-            return x.rl(MODULE_ID,getMachinePath() + x.path(optional_output_item.item().create()) + extra);
+            return x.rl(MODULE_ID,getMachinePath() + x.path(optional_output_item.item().item().value()) + extra);
 
-        if (input != null && x.getItems(input).size() > 0)
-            return x.rl(MODULE_ID,getMachinePath() + x.path(x.getItems(input).getFirst()) + extra);
+        if (input != null && !input.ingredient().isEmpty())
+            return x.rl(MODULE_ID,getMachinePath() + x.path(input.ingredient().getValues().get(0).value()) + extra);
 
         throw new IllegalStateException("No valid ID found for " + getMachine().id());
 
