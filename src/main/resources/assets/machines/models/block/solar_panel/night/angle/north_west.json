@@ -1,5 +1,5 @@
 {
-  "parent": "machines:block/solar_panel/_template/angle/noth_west",
+  "parent": "machines:block/solar_panel/_template/angle/north_west",
   "textures": {
     "panel": "machines:block/solar_panel/panel/night"
   }
