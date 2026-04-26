@@ -2,31 +2,25 @@ package com.synergy.machines.api.machine;
 
 import static com.synergy.machines.Main.MODULE_ID;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 
 import com.devdyna.cakesticklib.api.gui.BaseScreen;
+import com.devdyna.cakesticklib.api.gui.ScreenUpgradable;
 import com.devdyna.cakesticklib.api.primitive.Pos;
 import com.devdyna.cakesticklib.api.utils.StringUtil;
-import com.devdyna.cakesticklib.api.utils.UpgradeComponents;
-import com.devdyna.cakesticklib.api.utils.UpgradeComponents.UpgradeType;
+import com.devdyna.cakesticklib.api.utils.UpgradeSlotBuilder;
 import com.devdyna.cakesticklib.api.utils.x;
-import com.synergy.machines.Common;
-
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 
 @SuppressWarnings("null")
-public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseScreen<T> {
+public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseScreen<T> implements ScreenUpgradable {
 
         public BaseMachineScreen(T menu, Inventory playerInventory, Component title) {
                 super(menu, playerInventory, title);
@@ -224,10 +218,6 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
         }
 
-        public boolean hasShiftDown() {
-                return Minecraft.getInstance().hasShiftDown();
-        }
-
         private void renderDualTooltip(GuiGraphicsExtractor graphics, String first, String second, int x, int y, int x0,
                         int y0, int mouseX,
                         int mouseY) {
@@ -272,26 +262,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
                 renderEnergyTooltip(graphics, 8, 5, 18, 72, mouseX, mouseY);
 
-                if (menu.getSlot(BaseMachineBE.SLOT_UPGRADE_1).getItem().isEmpty())
-                        if (Pos.of(getLeftPos() + 179, getTopPos() + 7).setSize(18, 18).test(mouseX, mouseY))
-                                graphics.setComponentTooltipForNextFrame(font, calculateTooltipUpgrades(), mouseX,
-                                                mouseY);
-
-                if (menu.getSlot(BaseMachineBE.SLOT_UPGRADE_2).getItem().isEmpty())
-                        if (Pos.of(getLeftPos() + 179, getTopPos() + 7 + 18).setSize(18, 18).test(mouseX, mouseY))
-                                graphics.setComponentTooltipForNextFrame(font, calculateTooltipUpgrades(), mouseX,
-                                                mouseY);
-
-                if (menu.getSlot(BaseMachineBE.SLOT_UPGRADE_3).getItem().isEmpty())
-                        if (Pos.of(getLeftPos() + 179, getTopPos() + 7 + 18 + 18).setSize(18, 18).test(mouseX, mouseY))
-                                graphics.setComponentTooltipForNextFrame(font, calculateTooltipUpgrades(), mouseX,
-                                                mouseY);
-
-                if (menu.getSlot(BaseMachineBE.SLOT_UPGRADE_4).getItem().isEmpty())
-                        if (Pos.of(getLeftPos() + 179, getTopPos() + 7 + 18 + 18 + 18).setSize(18, 18).test(mouseX,
-                                        mouseY))
-                                graphics.setComponentTooltipForNextFrame(font, calculateTooltipUpgrades(), mouseX,
-                                                mouseY);
+                renderToolTips(graphics, mouseX, mouseY);
 
         }
 
@@ -301,51 +272,22 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                 defaultToolTipColor.getRGB(), false);
         }
 
-        private List<Component> calculateTooltipUpgrades() {
-                List<Component> result = new ArrayList<>();
-
-                result.add(Component.translatable(MODULE_ID + ".screen.upgrades"));
-                for (UpgradeType upgrade : validUpgrades())
-                        result.add(Component
-                                        .translatable(MODULE_ID + ".screen.modifier." + upgrade.name().toLowerCase(),
-                                                        getConfigLimits(upgrade))
-                                        .withStyle(getConfigLimits(upgrade) > getInstalledUpgradesOnSlots(upgrade)
-                                                        ? ChatFormatting.GREEN
-                                                        : (getConfigLimits(upgrade) < getInstalledUpgradesOnSlots(
-                                                                        upgrade) ? ChatFormatting.RED
-                                                                                        : ChatFormatting.YELLOW)));
-
-                return result;
-        }
-
-        public List<UpgradeType> validUpgrades() {
-                return DEFAULT_UPGRADES;
-        }
-
-        public static final List<UpgradeType> DEFAULT_UPGRADES = List.of(UpgradeType.ENERGY, UpgradeType.SPEED);
-
-        public int getConfigLimits(UpgradeType type) {
-                return switch (type) {
-                        case UpgradeType.ENERGY -> Common.MACHINE_MAX_ENERGY_EFFICIENCY_UPGRADES_TYPE.get();
-                        case UpgradeType.SPEED -> Common.MACHINE_MAX_SPEED_UPGRADES_TYPE.get();
-                        case UpgradeType.LUCK -> Common.MACHINE_MAX_LUCK_UPGRADES_TYPE.get();
-                        case UpgradeType.FLUID -> Common.MACHINE_MAX_FLUID_UPGRADES_TYPE.get();
-                        default -> 0;
-                };
-        }
-
-        public int getInstalledUpgradesOnSlots(UpgradeType type) {
-                return List.of(
-                                BaseMachineBE.SLOT_UPGRADE_1,
-                                BaseMachineBE.SLOT_UPGRADE_2,
-                                BaseMachineBE.SLOT_UPGRADE_3,
-                                BaseMachineBE.SLOT_UPGRADE_4)
-                                .stream()
-                                .map(menu::getSlot)
-                                .map(Slot::getItem)
-                                .filter(item -> UpgradeComponents.has(item, type))
-                                .mapToInt(ItemStack::getCount)
-                                .sum();
+        @Override
+        public UpgradeSlotBuilder getSlotBuilder() {
+                return UpgradeSlotBuilder
+                                .of()
+                                .set(0, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_1).getItem(),
+                                                Pos.of(getLeftPos() + 179, getTopPos() + 7)
+                                                                .setSize(18, 18))
+                                .set(1, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_2).getItem(),
+                                                Pos.of(getLeftPos() + 179, getTopPos() + 25)
+                                                                .setSize(18, 18))
+                                .set(2, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_3).getItem(),
+                                                Pos.of(getLeftPos() + 179, getTopPos() + 43)
+                                                                .setSize(18, 18))
+                                .set(3, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_4).getItem(),
+                                                Pos.of(getLeftPos() + 179, getTopPos() + 61)
+                                                                .setSize(18, 18));
         }
 
 }
