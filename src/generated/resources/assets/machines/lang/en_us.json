@@ -9,12 +9,12 @@
   "block.machines.rock_crusher": "Rock Crusher",
   "block.machines.solar_panel_day": "Solar Panel (Daytime)",
   "block.machines.solar_panel_night": "Solar Panel (Nighttime)",
-  "item.machines.energy_upgrade": "Energy Upgrade",
-  "item.machines.fluid_upgrade": "Fluid Upgrade",
-  "item.machines.luck_upgrade": "Luck Upgrade",
-  "item.machines.speed_upgrade": "Speed Upgrade",
-  "machines.screen.modifier.energy": "§7Energy Modifier §7[§f§a%s§7]",
-  "machines.screen.modifier.fluid": "§7Fluid Modifier §7[§f§a%s§7]",
-  "machines.screen.modifier.luck": "§7Luck Modifier §7[§f§a%s§7]",
-  "machines.screen.modifier.speed": "§7Speed Modifier §7[§f§a%s§7]"
+  "machines.jei.alloy_smelter": "Alloy Smelter Recipes",
+  "machines.jei.casting_factory": "Casting Factory Recipes",
+  "machines.jei.compressor": "Compressor Recipes",
+  "machines.jei.electric_furnace": "Electric Furnace Recipes",
+  "machines.jei.electric_melter": "Electric Melter Recipes",
+  "machines.jei.extractor": "Extractor Recipes",
+  "machines.jei.macerator": "Macerator Recipes",
+  "machines.jei.rock_crusher": "Rock Crusher Recipes"
 }

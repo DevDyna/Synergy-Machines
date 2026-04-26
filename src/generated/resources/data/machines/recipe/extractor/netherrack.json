@@ -1,0 +1,19 @@
+{
+  "type": "machines:extractor",
+  "energy": 500,
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:magma_block"
+  },
+  "optional_fluid": {
+    "amount": 250,
+    "id": "minecraft:lava"
+  },
+  "secondary_item": {
+    "chance": 0.5,
+    "item": {
+      "id": "minecraft:netherrack"
+    }
+  },
+  "ticks": 100
+}

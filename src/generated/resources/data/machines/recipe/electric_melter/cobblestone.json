@@ -1,0 +1,13 @@
+{
+  "type": "machines:electric_melter",
+  "energy": 5000,
+  "fluid": {
+    "amount": 125,
+    "id": "minecraft:lava"
+  },
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:cobblestone"
+  },
+  "ticks": 400
+}

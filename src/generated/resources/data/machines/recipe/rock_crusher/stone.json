@@ -1,0 +1,33 @@
+{
+  "type": "machines:rock_crusher",
+  "energy": 1500,
+  "input_fluid": {
+    "amount": 125,
+    "ingredient": "minecraft:water"
+  },
+  "input_item": {
+    "count": 1,
+    "ingredient": "minecraft:stone"
+  },
+  "result": [
+    {
+      "chance": 0.25,
+      "item": {
+        "id": "minecraft:raw_copper"
+      }
+    },
+    {
+      "chance": 0.15,
+      "item": {
+        "id": "minecraft:raw_gold"
+      }
+    },
+    {
+      "chance": 0.28,
+      "item": {
+        "id": "minecraft:raw_iron"
+      }
+    }
+  ],
+  "ticks": 120
+}

@@ -1,0 +1,17 @@
+{
+  "type": "machines:casting_factory",
+  "consume_item": false,
+  "energy": 500,
+  "input_fluid": {
+    "amount": 1000,
+    "ingredient": "minecraft:water"
+  },
+  "input_item": {
+    "count": 1,
+    "ingredient": "minecraft:cobblestone"
+  },
+  "output": {
+    "id": "minecraft:mossy_cobblestone"
+  },
+  "ticks": 10
+}
