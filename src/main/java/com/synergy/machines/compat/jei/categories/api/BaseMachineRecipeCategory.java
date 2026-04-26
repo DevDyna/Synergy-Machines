@@ -33,7 +33,7 @@ public abstract class BaseMachineRecipeCategory<R extends BaseMachineRecipeType<
 
     @Override
     public String getTraslationKey() {
-        return MODULE_ID + ".jei.machine." + getMachine().id();
+        return MODULE_ID + ".jei." + getMachine().id();
     }
 
     @Override
