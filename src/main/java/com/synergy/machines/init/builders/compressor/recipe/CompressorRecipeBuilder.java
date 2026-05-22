@@ -9,6 +9,7 @@ import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
 import com.synergy.machines.init.types.zMachines;
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
 import net.minecraft.advancements.Criterion;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
@@ -17,12 +18,13 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient;
 public class CompressorRecipeBuilder extends BaseMachineRecipeBuilder<CompressorRecipeBuilder>
         implements ItemAttach.Input.CatalystItem<CompressorRecipeBuilder> {
 
-    private CompressorRecipeBuilder() {
+    private CompressorRecipeBuilder(HolderLookup.Provider p) {
+        super(p);
         this.criteria = new LinkedHashMap<String, Criterion<?>>();
     }
 
-    public static CompressorRecipeBuilder of() {
-        return new CompressorRecipeBuilder();
+    public static CompressorRecipeBuilder of(HolderLookup.Provider p) {
+        return new CompressorRecipeBuilder(p);
     }
 
     @Override

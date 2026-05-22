@@ -2,7 +2,7 @@ package com.synergy.machines.init.builders.extractor.recipe;
 
 import java.util.Optional;
 
-import com.devdyna.cakesticklib.api.recipe.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

@@ -79,7 +79,7 @@ public class CompressorRecipeType extends BaseMachineRecipeType<BiItemInput> {
                         ByteBufCodecs.INT, CompressorRecipeType::getEnergy,
                         SizedIngredient.STREAM_CODEC, CompressorRecipeType::getInputItem,
                         ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC),
-                        r -> (r.getCatalystItem() == null || x.getItems(r.getCatalystItem()).isEmpty())
+                        r -> (r.getCatalystItem() == null || x.getItemStacksFromIngredient(r.getCatalystItem()).isEmpty())
                                 ? Optional.empty()
                                 : Optional.of(r.getCatalystItem()),
                         ByteBufCodecs.BOOL, CompressorRecipeType::consumeCatalyst,

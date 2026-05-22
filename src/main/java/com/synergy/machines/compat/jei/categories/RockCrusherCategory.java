@@ -3,7 +3,7 @@ package com.synergy.machines.compat.jei.categories;
 
 import com.devdyna.cakesticklib.api.compat.jei.JEIFluidTankHelper;
 import com.devdyna.cakesticklib.api.primitive.Size;
-import com.devdyna.cakesticklib.api.recipe.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.compat.jei.categories.api.BaseMachineRecipeCategory;
@@ -47,8 +47,8 @@ public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRe
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, RockCrusherRecipeType recipe, IFocusGroup focuses) {
 
-                if (recipe.getInputItem() != null && !x.getItems(recipe.getInputItem()).isEmpty())
-                        builder.addInputSlot(2 + 21, 5 + 28).addItemStacks(x.getItems(recipe.getInputItem()));
+                if (recipe.getInputItem() != null && !x.getItemStacksFromIngredient(recipe.getInputItem()).isEmpty())
+                        builder.addInputSlot(2 + 21, 5 + 28).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
 
                 for (ChanceOutputItem output : recipe.getResult())
                         builder.addOutputSlot(68 - 1 + (recipe.getResult().indexOf(output) % 3 * (18 + 1)),

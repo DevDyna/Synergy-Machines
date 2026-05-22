@@ -2,7 +2,6 @@ package com.synergy.machines.init.builders.rock_crusher.recipe;
 
 import java.util.*;
 
-import com.devdyna.cakesticklib.api.recipe.ChanceOutputItem;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeBuilder;
@@ -10,12 +9,14 @@ import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.advancements.Criterion;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
 import com.devdyna.cakesticklib.api.utils.x;
 
 @SuppressWarnings({ "null" })
@@ -24,15 +25,16 @@ public class RockCrusherRecipeBuilder extends BaseMachineRecipeBuilder<RockCrush
 
     private List<ChanceOutputItem> result;
 
-    private RockCrusherRecipeBuilder() {
+    private RockCrusherRecipeBuilder(HolderLookup.Provider p) {
+        super(p);
         this.energy = 1500;
         this.ticks = 120;
         this.criteria = new LinkedHashMap<String, Criterion<?>>();
         this.result = new ArrayList<>(9);
     }
 
-    public static RockCrusherRecipeBuilder of() {
-        return new RockCrusherRecipeBuilder();
+    public static RockCrusherRecipeBuilder of(HolderLookup.Provider p) {
+        return new RockCrusherRecipeBuilder(p);
     }
 
     @Override

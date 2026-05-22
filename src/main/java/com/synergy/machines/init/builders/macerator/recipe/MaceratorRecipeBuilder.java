@@ -9,24 +9,26 @@ import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.advancements.Criterion;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 
-import com.devdyna.cakesticklib.api.recipe.ChanceOutputItem;
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
 
 
 @SuppressWarnings({ "null" })
 public class MaceratorRecipeBuilder extends BaseMachineRecipeBuilder<MaceratorRecipeBuilder>
         implements ItemAttach.Output.SecondaryOutputItem<MaceratorRecipeBuilder> {
 
-    private MaceratorRecipeBuilder() {
+    private MaceratorRecipeBuilder(HolderLookup.Provider p) {
+        super(p);
         this.criteria = new LinkedHashMap<String, Criterion<?>>();
     }
 
-    public static MaceratorRecipeBuilder of() {
-        return new MaceratorRecipeBuilder();
+    public static MaceratorRecipeBuilder of(HolderLookup.Provider p) {
+        return new MaceratorRecipeBuilder(p);
     }
 
     @Override

@@ -88,7 +88,7 @@ public class CasterRecipeType extends BaseMachineRecipeType<ItemFluidInput> {
                         SizedFluidIngredient.STREAM_CODEC, CasterRecipeType::getFluidInput,
 
                         ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC),
-                        r -> (r.getInputItem() == null || x.getItems(r.getInputItem()).isEmpty())
+                        r -> (r.getInputItem() == null || x.getItemStacksFromIngredient(r.getInputItem()).isEmpty())
                                 ? Optional.empty()
                                 : Optional.of(r.getInputItem()),
 

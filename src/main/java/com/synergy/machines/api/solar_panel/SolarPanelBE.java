@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.devdyna.cakesticklib.api.aspect.logic.EnergyProvider;
 import com.devdyna.cakesticklib.api.aspect.templates.TickingBE;
-import com.devdyna.cakesticklib.setup.registry.zLibrary.zHandlers;
+import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.Common;
 
 import net.minecraft.core.BlockPos;
@@ -61,7 +61,7 @@ public abstract class SolarPanelBE extends TickingBE implements EnergyProvider {
 
     @Override
     public EnergyHandler getEnergyStorage() {
-        return getData(zHandlers.ENERGY_STORAGE);
+        return getData(LibHandlers.ENERGY_STORAGE);
     }
 
     @Override

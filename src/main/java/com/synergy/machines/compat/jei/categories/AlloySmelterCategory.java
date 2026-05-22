@@ -43,8 +43,8 @@ public class AlloySmelterCategory extends BaseMachineRecipeCategory<AlloySmelter
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, AlloySmelterRecipeType recipe, IFocusGroup focuses) {
 
-        builder.addInputSlot(2, 5).addItemStacks(x.getItems(recipe.getInputItem()));
-        builder.addInputSlot(22, 5).addItemStacks(x.getItems(recipe.getCatalystItem()));
+        builder.addInputSlot(2, 5).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
+        builder.addInputSlot(22, 5).addItemStacks(x.getItemStacksFromIngredient(recipe.getCatalystItem()));
         builder.addOutputSlot(87, 6).add(recipe.getOutputItem());
 
     }

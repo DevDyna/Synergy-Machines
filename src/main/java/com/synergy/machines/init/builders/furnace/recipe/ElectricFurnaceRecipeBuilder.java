@@ -9,18 +9,20 @@ import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.advancements.Criterion;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 
 @SuppressWarnings({ "null" })
 public class ElectricFurnaceRecipeBuilder extends BaseMachineRecipeBuilder<ElectricFurnaceRecipeBuilder> {
 
-    private ElectricFurnaceRecipeBuilder() {
+    private ElectricFurnaceRecipeBuilder(HolderLookup.Provider p) {
+        super(p);
         this.criteria = new LinkedHashMap<String, Criterion<?>>();
     }
 
-    public static ElectricFurnaceRecipeBuilder of() {
-        return new ElectricFurnaceRecipeBuilder();
+    public static ElectricFurnaceRecipeBuilder of(HolderLookup.Provider p) {
+        return new ElectricFurnaceRecipeBuilder(p);
     }
 
     @Override

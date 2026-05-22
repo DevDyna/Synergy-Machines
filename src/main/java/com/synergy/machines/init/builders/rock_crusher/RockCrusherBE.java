@@ -3,9 +3,9 @@ package com.synergy.machines.init.builders.rock_crusher;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import com.devdyna.cakesticklib.api.recipe.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
 import com.devdyna.cakesticklib.api.utils.ArrayUtils;
-import com.devdyna.cakesticklib.setup.registry.zLibrary.zHandlers;
+import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.ExtraMachineSlots;
 import com.synergy.machines.api.machine.FluidTankStorage;
@@ -130,7 +130,7 @@ public class RockCrusherBE extends BaseMachineBE implements FluidTankStorage, Ex
 
     @Override
     public FluidStacksResourceHandler getFluidStorage() {
-        return getData(zHandlers.FLUID_STORAGE);
+        return getData(LibHandlers.FLUID_STORAGE);
     }
 
     @Override

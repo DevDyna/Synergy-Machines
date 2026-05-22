@@ -3,13 +3,14 @@ package com.synergy.machines.init.builders.extractor.recipe;
 import java.util.LinkedHashMap;
 
 import net.minecraft.advancements.Criterion;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
-import com.devdyna.cakesticklib.api.recipe.ChanceOutputItem;
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeBuilder;
@@ -21,12 +22,13 @@ public class ExtractorRecipeBuilder extends BaseMachineRecipeBuilder<ExtractorRe
         implements FluidAttach.Output.OutputFluid<ExtractorRecipeBuilder>,
         ItemAttach.Output.SecondaryOutputItem<ExtractorRecipeBuilder> {
 
-    private ExtractorRecipeBuilder() {
+    private ExtractorRecipeBuilder(HolderLookup.Provider p) {
+        super(p);
         this.criteria = new LinkedHashMap<String, Criterion<?>>();
     }
 
-    public static ExtractorRecipeBuilder of() {
-        return new ExtractorRecipeBuilder();
+    public static ExtractorRecipeBuilder of(HolderLookup.Provider p) {
+        return new ExtractorRecipeBuilder(p);
     }
 
     @Override

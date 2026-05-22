@@ -2,7 +2,7 @@ package com.synergy.machines.init.builders.rock_crusher.recipe;
 
 import java.util.List;
 
-import com.devdyna.cakesticklib.api.recipe.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;

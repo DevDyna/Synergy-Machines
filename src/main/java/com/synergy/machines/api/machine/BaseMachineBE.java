@@ -6,8 +6,8 @@ import java.util.Optional;
 import com.devdyna.cakesticklib.api.aspect.logic.*;
 import com.devdyna.cakesticklib.api.aspect.templates.MachineBE;
 import com.devdyna.cakesticklib.api.recipe.recipeType.BaseRecipeType;
-import com.devdyna.cakesticklib.setup.registry.zLibrary.zComponents;
-import com.devdyna.cakesticklib.setup.registry.zLibrary.zHandlers;
+import com.devdyna.cakesticklib.setup.registry.LibComponents;
+import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.mojang.logging.LogUtils;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.RecipeRegister;
@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.transfer.StacksResourceHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStackResourceHandler;
@@ -184,7 +185,7 @@ public abstract class BaseMachineBE extends MachineBE implements MachineItemAuto
 
     @Override
     public EnergyHandler getEnergyStorage() {
-        return getData(zHandlers.ENERGY_STORAGE);
+        return getData(LibHandlers.ENERGY_STORAGE);
     }
 
     @Override
@@ -363,11 +364,9 @@ public abstract class BaseMachineBE extends MachineBE implements MachineItemAuto
         return true;
     }
 
+    @Deprecated
     public void updateOutputSlot(ItemStack stack, ItemStack slotStack, int slotIndex) {
-        if (stack.isEmpty())
-            setStackInSlot(slotIndex, slotStack);
-        else if (ItemStack.isSameItemSameComponents(stack, slotStack))
-            stack.grow(slotStack.getCount());
+
     }
 
     public List<Integer> getUpgradeSlots() {
@@ -412,8 +411,8 @@ public abstract class BaseMachineBE extends MachineBE implements MachineItemAuto
     // }
 
     @Override
-    public ItemStackResourceHandler getUpgradeItemStorage() {
-        return null;//TODO
+    public ItemStacksResourceHandler getUpgradeItemStorage() {
+        return getItemStorage();
     }
 
     // public int calculateMaxProgress(int base) {
@@ -469,7 +468,7 @@ public abstract class BaseMachineBE extends MachineBE implements MachineItemAuto
         var upgrade = item.copy();
         upgrade.setCount(1);
 
-        if (!upgrade.has(zComponents.UPGRADE_COMPONENTS))
+        if (!upgrade.has(LibComponents.UPGRADE_COMPONENTS))
             return false;
 
         for (int index = 0; index < MAX_UPGRADE_SLOTS; index++) {

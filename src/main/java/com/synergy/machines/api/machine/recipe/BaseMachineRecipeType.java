@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-import com.devdyna.cakesticklib.api.recipe.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
@@ -132,7 +132,7 @@ public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Re
 
         // primary item is present
         if (getRecipeInput(r) != null && getInputItem() != null)
-            if (!x.getItems(getInputItem()).isEmpty()) {
+            if (!x.getItemStacksFromIngredient(getInputItem()).isEmpty()) {
 
                 // primary item dont match
                 if (!getInputItem().test(getRecipeInput(r)))
@@ -145,23 +145,23 @@ public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Re
 
         // primary fluid is present
         if (getFluidInput() != null && getRecipeFluidInput(r) != null)
-            if (!x.getFluids(getFluidInput()).isEmpty())
-                if (!x.getFluids(getRecipeFluidInput(r))
+            if (!x.getFluidStacksFromIngredient(getFluidInput()).isEmpty())
+                if (!x.getFluidStacksFromIngredient(getRecipeFluidInput(r))
                         .stream()
                         .anyMatch(i -> getFluidInput().test(i)))
                     return false;
 
         // secondary fluid is present
         if (getOptionalFluidInput() != null && getRecipeFluidInput2(r) != null)
-            if (!x.getFluids(getOptionalFluidInput()).isEmpty())
-                if (!x.getFluids(getRecipeFluidInput2(r))
+            if (!x.getFluidStacksFromIngredient(getOptionalFluidInput()).isEmpty())
+                if (!x.getFluidStacksFromIngredient(getRecipeFluidInput2(r))
                         .stream()
                         .anyMatch(i -> getOptionalFluidInput().test(i)))
                     return false;
 
         // secondary item input is present
         if (getCatalystItem() != null && getRecipeInput2(r) != null)
-            if (!x.getItems(getCatalystItem()).isEmpty()) {
+            if (!x.getItemStacksFromIngredient(getCatalystItem()).isEmpty()) {
 
                 // secondary item input dont match
                 if (getCatalystItem().count() > getRecipeInput2(r).getCount())

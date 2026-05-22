@@ -1,7 +1,5 @@
 package com.synergy.machines.api.machine.recipe;
 
-
-
 import static com.synergy.machines.Main.MODULE_ID;
 
 import java.util.Arrays;
@@ -11,9 +9,8 @@ import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
-import com.devdyna.cakesticklib.api.recipe.ChanceOutputItem;
-
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.FluidAttach.Any.SimpleFluidAttach;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
@@ -24,6 +21,7 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -47,17 +45,21 @@ import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
 public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilder<T>> extends BaseRecipeBuilder
         implements ItemAttach.Input.ItemCounted<T>, ItemAttach.Output.SimpleOutputItem<T> {
 
+    protected BaseMachineRecipeBuilder(Provider provider) {
+        super(provider);
+    }
+
     public abstract MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<? extends RecipeInput>> getMachine();
 
     protected int ticks = BaseMachineBE.DEFAULT_TICK_DURATION;
     protected int energy = BaseMachineBE.DEFAULT_FE_COST;
     protected SizedIngredient input;
-    protected SizedIngredient optional_input ;
+    protected SizedIngredient optional_input;
     protected ItemStackTemplate output;
     // @Deprecated
     // protected ItemStack optional_output = ItemStack.EMPTY;
     protected @Nullable ChanceOutputItem optional_output_item;
-    protected SizedIngredient extra_input ;
+    protected SizedIngredient extra_input;
     // @Deprecated
     // protected float chance;
     protected boolean consumeCatalyst = false;
@@ -93,8 +95,8 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
     public T unlockedBy() {
         return unlockedBy(MODULE_ID, InventoryChangeTrigger.TriggerInstance
                 .hasItems(this.input == null
-                        ? new Item[] { x.getFluids(this.fluid_input).getFirst().getFluid().getBucket() }
-                        : x.getItems(input).stream()
+                        ? new Item[] { x.getFluidStacksFromIngredient(fluid_input).getFirst().getFluid().getBucket() }
+                        : x.getItemStacksFromIngredient(input).stream()
                                 .map(ItemStack::getItem)
                                 .toArray(Item[]::new)));
     }
@@ -108,15 +110,13 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
         return getBuilder();
     }
 
-  
-
     private String suffix = "";
 
     public String getMachinePath() {
-        return getMachine().id() + "/"+suffix;
+        return getMachine().id() + "/" + suffix;
     }
 
-    public T defineSuffix(String s){
+    public T defineSuffix(String s) {
         this.suffix = s;
         return getBuilder();
     }
@@ -125,18 +125,18 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
     public Identifier getSuffix(String extra) {
 
         if (output != null && output.item().value() != null)
-            return x.rl(MODULE_ID,getMachinePath() + x.path(output.item().value()) + extra);
+            return x.rl(MODULE_ID, getMachinePath() + x.name(output.item().value()) + extra);
 
         if (this instanceof SimpleFluidAttach
                 && fluid_output != null
                 && fluid_output.fluid().value() != null)
-            return x.rl(MODULE_ID,getMachinePath() + x.path(fluid_output.fluid().value()) + extra);
+            return x.rl(MODULE_ID, getMachinePath() + x.name(fluid_output.fluid().value()) + extra);
 
         if (ChanceOutputItem.itemValid(optional_output_item))
-            return x.rl(MODULE_ID,getMachinePath() + x.path(optional_output_item.item().item().value()) + extra);
+            return x.rl(MODULE_ID, getMachinePath() + x.name(optional_output_item.item().item().value()) + extra);
 
         if (input != null && !input.ingredient().isEmpty())
-            return x.rl(MODULE_ID,getMachinePath() + x.path(input.ingredient().getValues().get(0).value()) + extra);
+            return x.rl(MODULE_ID, getMachinePath() + x.name(input.ingredient().getValues().get(0).value()) + extra);
 
         throw new IllegalStateException("No valid ID found for " + getMachine().id());
 

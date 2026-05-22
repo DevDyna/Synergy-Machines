@@ -2,7 +2,7 @@ package com.synergy.machines.init.builders.extractor;
 
 import javax.annotation.Nullable;
 
-import com.devdyna.cakesticklib.setup.registry.zLibrary.zHandlers;
+import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.FluidTankStorage;
 import com.synergy.machines.api.recipeinputs.MonoItemInput;
@@ -113,7 +113,7 @@ public class ExtractorBE extends BaseMachineBE implements FluidTankStorage {
 
     @Override
     public FluidStacksResourceHandler getFluidStorage() {
-        return getData(zHandlers.FLUID_STORAGE);
+        return getData(LibHandlers.FLUID_STORAGE);
     }
 
     @Override
