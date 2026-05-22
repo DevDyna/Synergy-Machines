@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 @SuppressWarnings("null")
@@ -87,18 +88,16 @@ public class CasterBE extends BaseMachineBE implements FluidTankStorage {
                 new ItemFluidInput(getFluidStorage().getResource(0).toStack(getFluidStorage().getAmountAsInt(0)),
                         getInput()));
 
-        updateOutputSlot(getOutput(), recipe.getOutputItem().create(), OUTPUT_SLOT);
 
-        // getFluidStorage().drain(recipe.getFluidInput().amount(),
-        // FluidAction.EXECUTE);
+        updateItem(getItemStorage(), ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT, recipe.getOutputItem().count(),false);
 
-        try (var tx = Transaction.openRoot()) {
-            getFluidStorage().extract(getFluidStorage().getResource(0), recipe.getFluidInput().amount(), tx);
-            tx.commit();
-        }
+        updateFluid(getFluidStorage(), getFluidStorage().getResource(0), 0, recipe.getFluidInput().amount(),true);
+
+        
 
         if (!getInput().isEmpty() && recipe.consumeCatalyst())
-            getInput().shrink(recipe.getInputItem().count());
+            updateItem(getItemStorage(), getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
+                recipe.getInputItem().count(),true);
     }
 
     @Override

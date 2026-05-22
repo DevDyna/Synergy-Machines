@@ -15,6 +15,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 @SuppressWarnings("null")
 public class CompressorBE extends BaseMachineBE implements ExtraMachineSlots {
@@ -76,12 +77,16 @@ public class CompressorBE extends BaseMachineBE implements ExtraMachineSlots {
         var recipe = getUnsafeRecipes(level, zMachines.COMPRESSOR,
                 new BiItemInput(getInput(), getPlateSlot()));
 
-        updateOutputSlot(getOutput(), recipe.getOutputItem().create(), OUTPUT_SLOT);
+        updateItem(getItemStorage(), ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT,
+                recipe.getOutputItem().count(),false);
 
         if (recipe.consumeCatalyst())
-            getPlateSlot().shrink(recipe.getCatalystItem().count());
+            updateItem(getItemStorage(), getItemStorage().getResource(PLATE_SLOT), PLATE_SLOT,
+                    recipe.getCatalystItem().count(),true);
 
-        getInput().shrink(recipe.getInputItem().count());
+        updateItem(getItemStorage(), getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
+                recipe.getInputItem().count(),true);
+
     }
 
     @Override

@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 @SuppressWarnings("null")
 public class AlloySmelterBE extends BaseMachineBE implements ExtraMachineSlots {
@@ -108,10 +109,15 @@ public class AlloySmelterBE extends BaseMachineBE implements ExtraMachineSlots {
 
         recipe = saved_recipe.get().value();
 
-        updateOutputSlot(getOutput(), recipe.getOutputItem().create(), OUTPUT_SLOT);
+        updateItem(getItemStorage(), ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT,
+                recipe.getOutputItem().count(),false);
 
-        getInput().shrink(recipe.getInputItem().count());
-        getSecondaryInput().shrink(recipe.getCatalystItem().count());
+        updateItem(getItemStorage(), getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
+                recipe.getInputItem().count(),true);
+
+        updateItem(getItemStorage(), getItemStorage().getResource(SECONDARY_INPUT), SECONDARY_INPUT,
+                recipe.getCatalystItem().count(),true);
+
     }
 
     @Override
@@ -123,7 +129,5 @@ public class AlloySmelterBE extends BaseMachineBE implements ExtraMachineSlots {
     public SlotBuilder getSlotTypes() {
         return SlotBuilder.of(1).set(SECONDARY_INPUT, SlotType.INPUT);
     }
-
-    
 
 }

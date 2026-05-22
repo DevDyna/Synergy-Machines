@@ -20,7 +20,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
-import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 @SuppressWarnings("null")
 public class RockCrusherBE extends BaseMachineBE implements FluidTankStorage, ExtraMachineSlots {
@@ -111,16 +111,14 @@ public class RockCrusherBE extends BaseMachineBE implements FluidTankStorage, Ex
         for (ChanceOutputItem result : recipe.getResult())
             if (result != null)
                 if (!result.item().create().isEmpty() && calculateSecondarySuccess(result.chance()))
-                    updateOutputSlot(getStackInSlot(recipe.getResult().indexOf(result) + 5),
-                            result.item().create(), recipe.getResult().indexOf(result) + 5);
+                    updateItem(getItemStorage(),ItemResource.of(result.item()), recipe.getResult().indexOf(result) +INPUT_SLOT + 1, result.item().count(),false);
+                
+                
 
-        try (var tx = Transaction.openRoot()) {
-            getFluidStorage().extract(getFluidStorage().getResource(0),
-                    calculateMBUsage(recipe.getFluidInput().amount()), tx);
-            tx.commit();
-        }
+        updateFluid(getFluidStorage(),getFluidStorage().getResource(0), 0, calculateMBUsage(recipe.getFluidInput().amount()),true);
 
-        getInput().shrink(recipe.getInputItem().count());
+       updateItem(getItemStorage(),getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(),true);
+
     }
 
     @Override

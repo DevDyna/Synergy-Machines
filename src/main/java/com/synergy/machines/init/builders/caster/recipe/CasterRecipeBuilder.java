@@ -9,6 +9,7 @@ import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
 import com.synergy.machines.init.types.zMachines;
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
 import net.minecraft.advancements.Criterion;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
@@ -17,13 +18,14 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 public class CasterRecipeBuilder extends BaseMachineRecipeBuilder<CasterRecipeBuilder>
         implements ItemAttach.Input.OptionalConsume<CasterRecipeBuilder>, FluidAttach.Input.SizedFluid<CasterRecipeBuilder> {
 
-    private CasterRecipeBuilder() {
+    private CasterRecipeBuilder(HolderLookup.Provider p) {
+        super(p);
         this.criteria = new LinkedHashMap<String, Criterion<?>>();
         this.ticks = 10;
     }
 
-    public static CasterRecipeBuilder of() {
-        return new CasterRecipeBuilder();
+    public static CasterRecipeBuilder of(HolderLookup.Provider p) {
+        return new CasterRecipeBuilder(p);
     }
 
     @Override

@@ -21,6 +21,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 @SuppressWarnings("null")
 public class ElectricFurnaceBE extends BaseMachineBE {
@@ -107,9 +108,8 @@ public class ElectricFurnaceBE extends BaseMachineBE {
     @Override
     public void endProgress() {
 
-        updateOutputSlot(getOutput(), recipeHolder.result_item, OUTPUT_SLOT);
-
-        getInput().shrink(1);
+        updateItem(getItemStorage(), ItemResource.of(recipeHolder.result_item), OUTPUT_SLOT, recipeHolder.result_item.count(),false);
+        updateItem(getItemStorage(), getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, 1,true);
     }
 
     @Override

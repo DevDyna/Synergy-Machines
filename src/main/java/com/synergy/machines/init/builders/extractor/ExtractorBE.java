@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 @SuppressWarnings("null")
@@ -44,7 +45,7 @@ public class ExtractorBE extends BaseMachineBE implements FluidTankStorage {
     public boolean initProgress() {
 
         // if (getFluidStorage() == null)
-        //     return cancel();
+        // return cancel();
 
         if (getInput().isEmpty())
             return cancel();
@@ -86,23 +87,15 @@ public class ExtractorBE extends BaseMachineBE implements FluidTankStorage {
         if (recipe.getSecondaryOutputItem() != null)
             if (!recipe.getSecondaryOutputItem().item().create().isEmpty()
                     && calculateSecondarySuccess(recipe.getSecondaryOutputItem().chance()))
-                updateOutputSlot(getOutput(), recipe.getSecondaryOutputItem().item().create(), OUTPUT_SLOT);
+                updateItem(getItemStorage(), ItemResource.of(recipe.getSecondaryOutputItem().item()), OUTPUT_SLOT,
+                        recipe.getSecondaryOutputItem().item().count(),false);
 
-        if (recipe.getFluidOutput() != null) {
+        if (recipe.getFluidOutput() != null)
 
-            try (var tx = Transaction.openRoot()) {
-                getFluidStorage().insert(getFluidStorage().getResource(0), recipe.getFluidInput().amount(), tx);
-                tx.commit();
-            }
+            updateFluid(getFluidStorage(), getFluidStorage().getResource(0), 0, recipe.getFluidOutput().amount(),false);
 
-            // if (getFluidStorage().isEmpty())
-            // getFluidStorage().setFluid(recipe.getFluidOutput().copy());
-            // else if (FluidStack.isSameFluidSameComponents(recipe.getFluidOutput().copy(),
-            // getFluidStorage().getFluid()))
-            // getFluidStorage().fill(recipe.getFluidOutput().copy(), FluidAction.EXECUTE);
-        }
-
-        getInput().shrink(recipe.getInputItem().count());
+        updateItem(getItemStorage(), getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
+                recipe.getInputItem().count(),true);
 
     }
 

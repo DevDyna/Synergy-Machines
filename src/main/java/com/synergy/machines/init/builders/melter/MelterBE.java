@@ -44,7 +44,7 @@ public class MelterBE extends BaseMachineBE implements FluidTankStorage {
     public boolean initProgress() {
 
         // if (getFluidStorage() == null)
-        //     return cancel();
+        // return cancel();
 
         if (getInput().isEmpty())
             return cancel();
@@ -80,17 +80,11 @@ public class MelterBE extends BaseMachineBE implements FluidTankStorage {
 
         var recipe = getUnsafeRecipes(level, zMachines.ELECTRIC_MELTER, new MonoItemInput(getInput()));
 
-        if (!recipe.getFluidOutput().create().isEmpty()) {
-            // getFluidStorage().drain(recipe.getFluidInput().amount(),
-            // FluidAction.EXECUTE);
+        if (!recipe.getFluidOutput().create().isEmpty())
+            updateFluid(getFluidStorage(),getFluidStorage().getResource(0), 0, recipe.getFluidOutput().amount(),false);
 
-            try (var tx = Transaction.openRoot()) {
-                getFluidStorage().insert(getFluidStorage().getResource(0), recipe.getFluidInput().amount(), tx);
-                tx.commit();
-            }
-        }
+        updateItem(getItemStorage(),getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(),true);
 
-        getInput().shrink(recipe.getInputItem().count());
     }
 
     @Override

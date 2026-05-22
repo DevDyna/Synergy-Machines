@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 @SuppressWarnings("null")
 public class MaceratorBE extends BaseMachineBE implements ExtraMachineSlots {
@@ -85,14 +86,16 @@ public class MaceratorBE extends BaseMachineBE implements ExtraMachineSlots {
 
         var recipe = getUnsafeRecipes(level, zMachines.MACERATOR, new MonoItemInput(getInput()));
 
-        updateOutputSlot(getOutput(), recipe.getOutputItem().create(), OUTPUT_SLOT);
+
+        updateItem(getItemStorage(), ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT, recipe.getOutputItem().count(),false);
 
         if (recipe.getSecondaryOutputItem() != null)
             if (!recipe.getSecondaryOutputItem().item().create().isEmpty()
                     && calculateSecondarySuccess(recipe.getSecondaryOutputItem().chance()))
-                updateOutputSlot(getSecondarySlot(), recipe.getSecondaryOutputItem().item().create(), SECONDARY_SLOT);
+                    updateItem(getItemStorage(), ItemResource.of(recipe.getSecondaryOutputItem().item()), SECONDARY_SLOT, recipe.getSecondaryOutputItem().item().count(),false);
 
-        getInput().shrink(recipe.getInputItem().count());
+
+        updateItem(getItemStorage(), getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(),true);
     }
 
     @Override
