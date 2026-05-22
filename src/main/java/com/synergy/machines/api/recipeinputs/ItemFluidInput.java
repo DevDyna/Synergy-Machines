@@ -3,7 +3,7 @@ package com.synergy.machines.api.recipeinputs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.fluids.FluidStack;
-
+@Deprecated
 public record ItemFluidInput(FluidStack input,ItemStack item) implements RecipeInput {
 
     @Override
