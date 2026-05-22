@@ -91,7 +91,7 @@ public class Common {
                                 "min_fe_cost", 5);
 
                 MACHINE_MINIMAL_FLUID_COST = number("Minimal Fluid cost based on upgrade installed",
-                                "min_mb_cost", 0);
+                                "min_mb_cost", 0,0);
                 MACHINE_MAXIMAL_LUCK = number("Maximal Secondary Chance based on upgrade installed",
                                 "max_luck", 100);
 
