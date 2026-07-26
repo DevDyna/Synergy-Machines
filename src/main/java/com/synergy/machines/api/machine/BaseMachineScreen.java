@@ -290,18 +290,18 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                                                 .setSize(18, 18));
         }
 
-        //TODO update api
-        protected void renderArrow(GuiGraphicsExtractor guiGraphics) {
+        // //TODO update api
+        // protected void renderArrow(GuiGraphicsExtractor guiGraphics) {
 
-                if (this.arrow() != null && this.whenAnimateArrow())
+        //         if (this.arrow() != null && this.whenAnimateArrow())
 
-                        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,
-                                        Identifier.withDefaultNamespace("container/furnace/burn_progress"),
-                                        24, 16,
-                                        0, 0,
-                                        getLeftPos() + 79 - 4, getTopPos() + 34,
-                                        getScaledArrowProgress(), 16);
+        //                 guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,
+        //                                 Identifier.withDefaultNamespace("container/furnace/burn_progress"),
+        //                                 24, 16,
+        //                                 0, 0,
+        //                                 getLeftPos() + 79 - 4, getTopPos() + 34,
+        //                                 getScaledArrowProgress(), 16);
 
-        }
+        // }
 
 }
