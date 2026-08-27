@@ -9,7 +9,6 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 
-@SuppressWarnings("null")
 public class DataEntityTag extends EntityTypeTagsProvider {
 
         public DataEntityTag(PackOutput output, CompletableFuture<Provider> provider) {

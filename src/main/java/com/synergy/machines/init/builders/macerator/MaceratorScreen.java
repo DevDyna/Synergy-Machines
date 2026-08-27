@@ -9,7 +9,6 @@ import com.synergy.machines.api.machine.BaseMachineScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-@SuppressWarnings("null")
 public class MaceratorScreen extends BaseMachineScreen<MaceratorMenu> {
 
     public MaceratorScreen(MaceratorMenu menu, Inventory playerInventory, Component title) {

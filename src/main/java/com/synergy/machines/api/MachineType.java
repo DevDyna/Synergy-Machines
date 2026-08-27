@@ -18,7 +18,6 @@ import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.network.IContainerFactory;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-@SuppressWarnings("null")
 public class MachineType<BLOCK extends BaseMachineBlock, BE extends BaseMachineBE, MENU extends BaseMachineMenu, RECIPE extends BaseMachineRecipeType<?>> {
 
     private final String id;

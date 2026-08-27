@@ -31,7 +31,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 /**
  * Utility class to create fluids
  */
-@SuppressWarnings("null")
 public class FluidRegister {
 
     private int color;

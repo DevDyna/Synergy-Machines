@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-@SuppressWarnings("null")
 public class RockCrusherBlock extends BaseMachineBlock implements BucketInteraction {
 
     public RockCrusherBlock(Properties p) {

@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-@SuppressWarnings("null")
 public class CompressorScreen extends BaseMachineScreen<CompressorMenu> {
 
     public CompressorScreen(CompressorMenu menu, Inventory playerInventory, Component title) {

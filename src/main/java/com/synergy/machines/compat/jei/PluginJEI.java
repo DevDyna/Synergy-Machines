@@ -142,7 +142,6 @@ public class PluginJEI implements IModPlugin {
                                 getRecipes(zMachines.ROCK_CRUSHER.recipe().getType()));
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         public void registerGuiHandlers(IGuiHandlerRegistration r) {
 
@@ -182,7 +181,6 @@ public class PluginJEI implements IModPlugin {
                                 });
         }
 
-        @SuppressWarnings("unused")
         private <C extends RecipeInput, T extends Recipe<C>> List<RecipeHolder<T>> getRecipes(RecipeType<T> type) {
                 return List.copyOf(Client.getRecipeCollector().byType(type));
         }

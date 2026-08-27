@@ -14,7 +14,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
-@SuppressWarnings({ "null" })
 public class AlloySmelterRecipeBuilder extends BaseMachineRecipeBuilder<AlloySmelterRecipeBuilder>
         implements ItemAttach.Input.DoubleItemCounted<AlloySmelterRecipeBuilder> {
 

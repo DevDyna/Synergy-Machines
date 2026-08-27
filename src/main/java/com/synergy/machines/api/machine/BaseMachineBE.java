@@ -54,7 +54,6 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
  * <br/>
  * credit: @DevDyna
  */
-@SuppressWarnings("null")
 public abstract class BaseMachineBE extends MachineBE
         implements MachineItemAutomation, EnergyBlock, UpgradeInstallable {
 
@@ -290,6 +289,8 @@ public abstract class BaseMachineBE extends MachineBE
         setChanged();
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
     }
+
+    
 
     /**
      * Return false to cancel

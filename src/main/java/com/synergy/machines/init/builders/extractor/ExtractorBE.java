@@ -2,10 +2,10 @@ package com.synergy.machines.init.builders.extractor;
 
 import javax.annotation.Nullable;
 
+import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.FluidTankStorage;
-import com.synergy.machines.api.recipeinputs.MonoItemInput;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.core.BlockPos;
@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 @SuppressWarnings("null")
 public class ExtractorBE extends BaseMachineBE implements FluidTankStorage {
@@ -52,7 +51,7 @@ public class ExtractorBE extends BaseMachineBE implements FluidTankStorage {
 
         progress_cancel = false;
 
-        var r = getRecipes(level, zMachines.EXTRACTOR, new MonoItemInput(getInput()));
+        var r = getRecipes(level, zMachines.EXTRACTOR, new ItemInput.simple(getInput()));
 
         // no recipe
         if (r.isEmpty())
@@ -82,7 +81,7 @@ public class ExtractorBE extends BaseMachineBE implements FluidTankStorage {
     @Override
     public void endProgress() {
 
-        var recipe = getUnsafeRecipes(level, zMachines.EXTRACTOR, new MonoItemInput(getInput()));
+        var recipe = getUnsafeRecipes(level, zMachines.EXTRACTOR, new ItemInput.simple(getInput()));
 
         if (recipe.getSecondaryOutputItem() != null)
             if (!recipe.getSecondaryOutputItem().item().create().isEmpty()

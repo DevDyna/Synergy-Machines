@@ -1,12 +1,12 @@
 package com.synergy.machines.init.builders.furnace.recipe;
 
+import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
-import com.synergy.machines.api.recipeinputs.MonoItemInput;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -18,7 +18,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
 @SuppressWarnings("null")
-public class ElectricFurnaceRecipeType extends BaseMachineRecipeType<MonoItemInput> {
+public class ElectricFurnaceRecipeType extends BaseMachineRecipeType<ItemInput.simple> {
 
     public ElectricFurnaceRecipeType(int ticks, int energy, SizedIngredient input,
             ItemStackTemplate output) {
@@ -34,13 +34,13 @@ public class ElectricFurnaceRecipeType extends BaseMachineRecipeType<MonoItemInp
     }
 
     @Override
-    public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<MonoItemInput>> getMachine() {
+    public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<ItemInput.simple>> getMachine() {
         return zMachines.ELECTRIC_FURNACE;
     }
 
     @Override
-    public ItemStack getRecipeInput(MonoItemInput recipe) {
-        return recipe.input();
+    public ItemStack getRecipeInput(ItemInput.simple recipe) {
+        return recipe.item();
     }
 
     public static final RecipeSerializer<ElectricFurnaceRecipeType> serializer() {

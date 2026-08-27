@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-@SuppressWarnings("null")
 public class CasterBlock extends BaseMachineBlock implements BucketInteraction {
 
     public CasterBlock(Properties p) {

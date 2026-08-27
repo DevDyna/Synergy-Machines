@@ -3,7 +3,7 @@ package com.synergy.machines.compat.jei.categories;
 
 import com.devdyna.cakesticklib.api.compat.jei.JEIFluidTankHelper;
 import com.devdyna.cakesticklib.api.primitive.Size;
-import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.compat.jei.categories.api.BaseMachineRecipeCategory;
@@ -23,7 +23,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-@SuppressWarnings("null")
 public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRecipeType> {
 
         public RockCrusherCategory(IGuiHelper h) {
@@ -50,7 +49,7 @@ public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRe
                 if (recipe.getInputItem() != null && !x.getItemStacksFromIngredient(recipe.getInputItem()).isEmpty())
                         builder.addInputSlot(2 + 21, 5 + 28).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
 
-                for (ChanceOutputItem output : recipe.getResult())
+                for (ChanceOutput.Item output : recipe.getResult())
                         builder.addOutputSlot(68 - 1 + (recipe.getResult().indexOf(output) % 3 * (18 + 1)),
                                         9 + (recipe.getResult().indexOf(output) / 3 * 24)).add(output.item());
 
@@ -78,7 +77,7 @@ public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRe
                 var stack = guiGraphics.pose();
                 stack.pushMatrix();
                 stack.scale(0.6F, 0.6F);
-                for (ChanceOutputItem output : recipe.getResult())
+                for (ChanceOutput.Item output : recipe.getResult())
                         guiGraphics.text(font, ((int) (output.chance() * 100)) + "%",
                                         68 + 10 + 10 + 10 + 5 + 5 + 5 + 2 + 10
                                                         + (recipe.getResult().indexOf(output) % 3 * (20 + 12 + 1)),

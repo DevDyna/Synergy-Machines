@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-@SuppressWarnings("null")
 public class CompressorBE extends BaseMachineBE implements ExtraMachineSlots {
 
     public static final int PLATE_SLOT = 6;

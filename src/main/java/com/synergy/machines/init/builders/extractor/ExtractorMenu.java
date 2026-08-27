@@ -14,7 +14,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-@SuppressWarnings("null")
 public class ExtractorMenu extends BaseMachineMenu {
 
     public ExtractorMenu(int c, Inventory i, FriendlyByteBuf d) {

@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
-@Deprecated
+
 public record BiItemInput(ItemStack first,ItemStack second) implements RecipeInput {
 
     @Override

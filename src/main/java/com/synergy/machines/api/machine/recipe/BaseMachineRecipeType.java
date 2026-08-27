@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
@@ -26,7 +26,6 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidStackTemplate;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
-@SuppressWarnings("null")
 public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Recipe<T> {
 
     public int ticks;
@@ -37,7 +36,7 @@ public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Re
     @Deprecated
     public ItemStackTemplate optional_output;
 
-    public @Nullable ChanceOutputItem optional_output_item;
+    public @Nullable ChanceOutput.Item optional_output_item;
     // public SizedIngredient extra_input;
     @Deprecated
     public float chance;
@@ -66,7 +65,7 @@ public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Re
         return output;
     }
 
-    public @Nullable ChanceOutputItem getSecondaryOutputItem() {
+    public @Nullable ChanceOutput.Item getSecondaryOutputItem() {
         return optional_output_item;
     }
 
@@ -99,7 +98,7 @@ public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Re
     // }
 
     public boolean hasSecondaryOutput() {
-        return ChanceOutputItem.valid(optional_output_item);
+        return ChanceOutput.Item.valid(optional_output_item);
     }
 
     @Deprecated

@@ -2,14 +2,14 @@ package com.synergy.machines.init.builders.extractor.recipe;
 
 import java.util.Optional;
 
-import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
-import com.synergy.machines.api.recipeinputs.MonoItemInput;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -20,11 +20,10 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
-@SuppressWarnings("null")
-public class ExtractorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
+public class ExtractorRecipeType extends BaseMachineRecipeType<ItemInput.simple> {
 
     public ExtractorRecipeType(int ticks, int energy, SizedIngredient input,
-            ChanceOutputItem secondary, FluidStackTemplate fluid) {
+            ChanceOutput.Item secondary, FluidStackTemplate fluid) {
         this.input = input;
         this.ticks = ticks;
         this.optional_output_item = secondary;
@@ -33,7 +32,7 @@ public class ExtractorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
     }
 
     public static ExtractorRecipeType of(int ticks, int energy, SizedIngredient input,
-            ChanceOutputItem secondary, FluidStackTemplate fluid) {
+            ChanceOutput.Item secondary, FluidStackTemplate fluid) {
         return new ExtractorRecipeType(ticks, energy, input, secondary, fluid);
     }
 
@@ -43,13 +42,13 @@ public class ExtractorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
     // }
 
     @Override
-    public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<MonoItemInput>> getMachine() {
+    public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<ItemInput.simple>> getMachine() {
         return zMachines.EXTRACTOR;
     }
 
     @Override
-    public ItemStack getRecipeInput(MonoItemInput recipe) {
-        return recipe.input();
+    public ItemStack getRecipeInput(ItemInput.simple recipe) {
+        return recipe.item();
     }
 
     public static final RecipeSerializer<ExtractorRecipeType> serializer() {
@@ -62,8 +61,8 @@ public class ExtractorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
 
                 SizedIngredient.NESTED_CODEC.fieldOf("input").forGetter(ExtractorRecipeType::getInputItem),
 
-                ChanceOutputItem.CODEC.optionalFieldOf("secondary_item")
-                        .forGetter(r -> ChanceOutputItem.optional(r.getSecondaryOutputItem())),
+                ChanceOutput.Item.CODEC.optionalFieldOf("secondary_item")
+                        .forGetter(r -> ChanceOutput.Item.optional(r.getSecondaryOutputItem())),
                 FluidStackTemplate.CODEC.optionalFieldOf("optional_fluid", null)
                         .forGetter(r -> optionalCodec(r.getFluidOutput())))
                 .apply(inst, (ticks, energy, input, secondary,fluid) -> new ExtractorRecipeType(
@@ -80,8 +79,8 @@ public class ExtractorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
                         ByteBufCodecs.INT, ExtractorRecipeType::getEnergy,
                         SizedIngredient.STREAM_CODEC, ExtractorRecipeType::getInputItem,
 
-                        ByteBufCodecs.optional(ChanceOutputItem.STREAM_CODEC),
-                        r -> ChanceOutputItem.optional(r.getSecondaryOutputItem()),
+                        ByteBufCodecs.optional(ChanceOutput.Item.STREAM_CODEC),
+                        r -> ChanceOutput.Item.optional(r.getSecondaryOutputItem()),
                         ByteBufCodecs.optional(FluidStackTemplate.STREAM_CODEC),
                         r -> (r.getFluidOutput() == null || r.getFluidOutput().fluid() == null)
                                 ? Optional.empty()

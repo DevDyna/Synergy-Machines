@@ -13,7 +13,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 
-@SuppressWarnings({ "null" })
 public class ElectricFurnaceRecipeBuilder extends BaseMachineRecipeBuilder<ElectricFurnaceRecipeBuilder> {
 
     private ElectricFurnaceRecipeBuilder(HolderLookup.Provider p) {

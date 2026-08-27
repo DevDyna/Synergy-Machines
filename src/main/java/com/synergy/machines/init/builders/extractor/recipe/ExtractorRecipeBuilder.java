@@ -4,23 +4,21 @@ import java.util.LinkedHashMap;
 
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
-import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeBuilder;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
 import com.synergy.machines.init.types.zMachines;
 
-@SuppressWarnings({ "null" })
 public class ExtractorRecipeBuilder extends BaseMachineRecipeBuilder<ExtractorRecipeBuilder>
         implements FluidAttach.Output.OutputFluid<ExtractorRecipeBuilder>,
-        ItemAttach.Output.SecondaryOutputItem<ExtractorRecipeBuilder> {
+        ItemAttach.Output.ItemOutputChance<ExtractorRecipeBuilder> {
 
     private ExtractorRecipeBuilder(HolderLookup.Provider p) {
         super(p);
@@ -47,8 +45,8 @@ public class ExtractorRecipeBuilder extends BaseMachineRecipeBuilder<ExtractorRe
     }
 
     @Override
-    public ExtractorRecipeBuilder secondary(ItemStackTemplate secondary, float chance) {
-        this.optional_output_item = ChanceOutputItem.of(secondary, chance);
+    public ExtractorRecipeBuilder output(ChanceOutput.Item item) {
+        this.optional_output_item = item;
         return getBuilder();
     }
 

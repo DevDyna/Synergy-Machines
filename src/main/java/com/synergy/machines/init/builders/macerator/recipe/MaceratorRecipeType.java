@@ -1,7 +1,8 @@
 package com.synergy.machines.init.builders.macerator.recipe;
 
 
-import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -10,7 +11,6 @@ import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.BaseMachineBlock;
 import com.synergy.machines.api.machine.BaseMachineMenu;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
-import com.synergy.machines.api.recipeinputs.MonoItemInput;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -21,11 +21,10 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
-@SuppressWarnings("null")
-public class MaceratorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
+public class MaceratorRecipeType extends BaseMachineRecipeType<ItemInput.simple> {
 
     public MaceratorRecipeType(int ticks, int energy, SizedIngredient input,
-            ItemStackTemplate output, ChanceOutputItem secondary) {
+            ItemStackTemplate output, ChanceOutput.Item secondary) {
         this.input = input;
         this.ticks = ticks;
         this.output = output;
@@ -34,7 +33,7 @@ public class MaceratorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
     }
 
     public static MaceratorRecipeType of(int ticks, int energy, SizedIngredient input,
-            ItemStackTemplate output, ChanceOutputItem secondary) {
+            ItemStackTemplate output, ChanceOutput.Item secondary) {
         return new MaceratorRecipeType(ticks, energy, input, output, secondary);
     }
 
@@ -44,13 +43,13 @@ public class MaceratorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
     // }
 
     @Override
-    public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<MonoItemInput>> getMachine() {
+    public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<ItemInput.simple>> getMachine() {
         return zMachines.MACERATOR;
     }
 
     @Override
-    public ItemStack getRecipeInput(MonoItemInput recipe) {
-        return recipe.input();
+    public ItemStack getRecipeInput(ItemInput.simple recipe) {
+        return recipe.item();
     }
 
     public static final RecipeSerializer<MaceratorRecipeType> serializer() {
@@ -63,8 +62,8 @@ public class MaceratorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
 
                 SizedIngredient.NESTED_CODEC.fieldOf("input").forGetter(MaceratorRecipeType::getInputItem),
                 ItemStackTemplate.CODEC.fieldOf("output").forGetter(MaceratorRecipeType::getOutputItem),
-                ChanceOutputItem.CODEC.optionalFieldOf("secondary_item")
-                        .forGetter(r -> ChanceOutputItem.optional(r.getSecondaryOutputItem())))
+                ChanceOutput.Item.CODEC.optionalFieldOf("secondary_item")
+                        .forGetter(r -> ChanceOutput.Item.optional(r.getSecondaryOutputItem())))
                 .apply(inst, (ticks, energy, input, output, secondary) -> new MaceratorRecipeType(
                         ticks,
                         energy,
@@ -78,8 +77,8 @@ public class MaceratorRecipeType extends BaseMachineRecipeType<MonoItemInput> {
                         ByteBufCodecs.INT, MaceratorRecipeType::getEnergy,
                         SizedIngredient.STREAM_CODEC, MaceratorRecipeType::getInputItem,
                         ItemStackTemplate.STREAM_CODEC, MaceratorRecipeType::getOutputItem,
-                        ByteBufCodecs.optional(ChanceOutputItem.STREAM_CODEC),
-                        r -> ChanceOutputItem.optional(r.getSecondaryOutputItem()),
+                        ByteBufCodecs.optional(ChanceOutput.Item.STREAM_CODEC),
+                        r -> ChanceOutput.Item.optional(r.getSecondaryOutputItem()),
                         (ticks, energy, input, output, secondary) -> new MaceratorRecipeType(
                                 ticks,
                                 energy,

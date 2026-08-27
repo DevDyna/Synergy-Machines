@@ -14,7 +14,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
-@SuppressWarnings("null")
 public class ExtractorScreen extends BaseMachineScreen<ExtractorMenu> {
 
     public ExtractorScreen(ExtractorMenu menu, Inventory playerInventory, Component title) {

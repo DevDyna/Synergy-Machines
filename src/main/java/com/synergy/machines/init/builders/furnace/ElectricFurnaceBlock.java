@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-@SuppressWarnings("null")
 public class ElectricFurnaceBlock extends BaseMachineBlock {
 
     public ElectricFurnaceBlock(Properties p) {

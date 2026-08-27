@@ -10,7 +10,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-@SuppressWarnings("null")
 public class RockCrusherScreen extends BaseMachineScreen<RockCrusherMenu> {
 
         public RockCrusherScreen(RockCrusherMenu menu, Inventory playerInventory, Component title) {

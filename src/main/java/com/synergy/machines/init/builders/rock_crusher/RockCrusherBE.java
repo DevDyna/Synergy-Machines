@@ -3,7 +3,7 @@ package com.synergy.machines.init.builders.rock_crusher;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.devdyna.cakesticklib.api.utils.ArrayUtils;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-@SuppressWarnings("null")
 public class RockCrusherBE extends BaseMachineBE implements FluidTankStorage, ExtraMachineSlots {
 
     public static final int OUTPUT_EXTRA_1 = 6;
@@ -108,7 +107,7 @@ public class RockCrusherBE extends BaseMachineBE implements FluidTankStorage, Ex
                 new ItemFluidInput(getFluidStorage().getResource(0).toStack(getFluidStorage().getAmountAsInt(0)),
                         getInput()));
 
-        for (ChanceOutputItem result : recipe.getResult())
+        for (ChanceOutput.Item result : recipe.getResult())
             if (result != null)
                 if (!result.item().create().isEmpty() && calculateSecondarySuccess(result.chance()))
                     updateItem(getItemStorage(),ItemResource.of(result.item()), recipe.getResult().indexOf(result) +INPUT_SLOT + 1, result.item().count(),false);

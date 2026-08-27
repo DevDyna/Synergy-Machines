@@ -16,7 +16,6 @@ import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
 
-@SuppressWarnings({ "null" })
 public class MelterRecipeBuilder extends BaseMachineRecipeBuilder<MelterRecipeBuilder>
         implements FluidAttach.Output.OutputFluid<MelterRecipeBuilder> {
 

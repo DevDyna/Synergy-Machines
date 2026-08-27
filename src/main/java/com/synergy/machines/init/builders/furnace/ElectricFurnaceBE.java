@@ -3,9 +3,9 @@ package com.synergy.machines.init.builders.furnace;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
+import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
 import com.synergy.machines.Common;
 import com.synergy.machines.api.machine.BaseMachineBE;
-import com.synergy.machines.api.recipeinputs.MonoItemInput;
 import com.synergy.machines.init.builders.furnace.recipe.ElectricFurnaceRecipeType;
 import com.synergy.machines.init.types.zMachines;
 
@@ -57,7 +57,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
 
         Optional<RecipeHolder<ElectricFurnaceRecipeType>> r = level.getServer().getRecipeManager()
                 .getRecipeFor(zMachines.ELECTRIC_FURNACE.recipe().getType(),
-                        new MonoItemInput(getInput()), level);
+                        new ItemInput.simple(getInput()), level);
 
         Optional<RecipeHolder<SmeltingRecipe>> r2 = level.getServer().getRecipeManager()
                 .getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(getInput()), level);

@@ -14,7 +14,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
-@SuppressWarnings({ "null" })
 public class CasterRecipeBuilder extends BaseMachineRecipeBuilder<CasterRecipeBuilder>
         implements ItemAttach.Input.OptionalConsume<CasterRecipeBuilder>, FluidAttach.Input.SizedFluid<CasterRecipeBuilder> {
 

@@ -17,9 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.transaction.Transaction;
 
-@SuppressWarnings("null")
 public class CasterBE extends BaseMachineBE implements FluidTankStorage {
 
     public CasterBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {

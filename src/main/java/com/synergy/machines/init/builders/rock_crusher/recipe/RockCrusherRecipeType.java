@@ -2,7 +2,7 @@ package com.synergy.machines.init.builders.rock_crusher.recipe;
 
 import java.util.List;
 
-import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -24,10 +24,10 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 @SuppressWarnings("null")
 public class RockCrusherRecipeType extends BaseMachineRecipeType<ItemFluidInput> {
 
-    private List<ChanceOutputItem> result;
+    private List<ChanceOutput.Item> result;
 
     public RockCrusherRecipeType(int ticks, int energy, SizedFluidIngredient fluid, SizedIngredient input,
-            List<ChanceOutputItem> result) {
+            List<ChanceOutput.Item> result) {
         this.input = input;
         this.ticks = ticks;
         this.energy = energy;
@@ -36,11 +36,11 @@ public class RockCrusherRecipeType extends BaseMachineRecipeType<ItemFluidInput>
     }
 
     public static RockCrusherRecipeType of(int ticks, int energy, SizedFluidIngredient fluid, SizedIngredient input,
-            List<ChanceOutputItem> result) {
+            List<ChanceOutput.Item> result) {
         return new RockCrusherRecipeType(ticks, energy, fluid, input, result);
     }
 
-    public List<ChanceOutputItem> getResult() {
+    public List<ChanceOutput.Item> getResult() {
         return result;
     }
 
@@ -70,7 +70,7 @@ public class RockCrusherRecipeType extends BaseMachineRecipeType<ItemFluidInput>
 
                 SizedFluidIngredient.CODEC.fieldOf("input_fluid").forGetter(RockCrusherRecipeType::getFluidInput),
                 SizedIngredient.NESTED_CODEC.fieldOf("input_item").forGetter(RockCrusherRecipeType::getInputItem),
-                ChanceOutputItem.CODEC.listOf().fieldOf("result").forGetter(RockCrusherRecipeType::getResult))
+                ChanceOutput.Item.CODEC.listOf().fieldOf("result").forGetter(RockCrusherRecipeType::getResult))
                 .apply(inst, RockCrusherRecipeType::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, RockCrusherRecipeType> STREAM_CODEC = StreamCodec
@@ -79,7 +79,7 @@ public class RockCrusherRecipeType extends BaseMachineRecipeType<ItemFluidInput>
                         ByteBufCodecs.INT, RockCrusherRecipeType::getEnergy,
                         SizedFluidIngredient.STREAM_CODEC, RockCrusherRecipeType::getFluidInput,
                         SizedIngredient.STREAM_CODEC, RockCrusherRecipeType::getInputItem,
-                        ChanceOutputItem.STREAM_CODEC.apply(ByteBufCodecs.list(9)), RockCrusherRecipeType::getResult,
+                        ChanceOutput.Item.STREAM_CODEC.apply(ByteBufCodecs.list(9)), RockCrusherRecipeType::getResult,
                         RockCrusherRecipeType::new);
 
        

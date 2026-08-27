@@ -10,7 +10,7 @@ import java.util.function.Function;
 import javax.annotation.Nullable;
 
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.FluidAttach.Any.SimpleFluidAttach;
-import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
@@ -58,7 +58,7 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
     protected ItemStackTemplate output;
     // @Deprecated
     // protected ItemStack optional_output = ItemStack.EMPTY;
-    protected @Nullable ChanceOutputItem optional_output_item;
+    protected @Nullable ChanceOutput.Item optional_output_item;
     protected SizedIngredient extra_input;
     // @Deprecated
     // protected float chance;
@@ -121,6 +121,7 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
         return getBuilder();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public Identifier getSuffix(String extra) {
 
@@ -132,7 +133,7 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
                 && fluid_output.fluid().value() != null)
             return x.rl(MODULE_ID, getMachinePath() + x.name(fluid_output.fluid().value()) + extra);
 
-        if (ChanceOutputItem.itemValid(optional_output_item))
+        if (ChanceOutput.Item.itemValid(optional_output_item))
             return x.rl(MODULE_ID, getMachinePath() + x.name(optional_output_item.item().item().value()) + extra);
 
         if (input != null && !input.ingredient().isEmpty())

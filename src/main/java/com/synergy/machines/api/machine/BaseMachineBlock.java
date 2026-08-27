@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MapColor;
 
-@SuppressWarnings("null")
 public abstract class BaseMachineBlock extends MachineBlock {
 
     public static EnumProperty<Direction> FACING = BlockStateProperties.FACING;

@@ -23,7 +23,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-@SuppressWarnings("null")
 public class CasterCategory extends BaseMachineRecipeCategory<CasterRecipeType> {
 
         public CasterCategory(IGuiHelper h) {

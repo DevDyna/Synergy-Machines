@@ -16,14 +16,13 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
-import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.devdyna.cakesticklib.api.utils.x;
 
-@SuppressWarnings({ "null" })
 public class RockCrusherRecipeBuilder extends BaseMachineRecipeBuilder<RockCrusherRecipeBuilder>
         implements FluidAttach.Input.SizedFluid<RockCrusherRecipeBuilder> {
 
-    private List<ChanceOutputItem> result;
+    private List<ChanceOutput.Item> result;
 
     private RockCrusherRecipeBuilder(HolderLookup.Provider p) {
         super(p);
@@ -60,7 +59,7 @@ public class RockCrusherRecipeBuilder extends BaseMachineRecipeBuilder<RockCrush
 
     public RockCrusherRecipeBuilder addResult(ItemStackTemplate item, float chance) {
         if (this.result.size() < 9)
-            this.result.add(ChanceOutputItem.of(item, chance));
+            this.result.add(ChanceOutput.Item.of(item, chance));
         return this;
     }
 

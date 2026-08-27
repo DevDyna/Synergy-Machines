@@ -10,7 +10,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ItemTagsProvider;
 
-@SuppressWarnings("null")
 public class DataItemTag extends ItemTagsProvider {
 
         public DataItemTag(PackOutput o, CompletableFuture<HolderLookup.Provider> p,

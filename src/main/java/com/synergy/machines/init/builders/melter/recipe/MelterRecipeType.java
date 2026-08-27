@@ -1,5 +1,6 @@
 package com.synergy.machines.init.builders.melter.recipe;
 
+import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -8,7 +9,6 @@ import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.BaseMachineBlock;
 import com.synergy.machines.api.machine.BaseMachineMenu;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
-import com.synergy.machines.api.recipeinputs.MonoItemInput;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -20,7 +20,7 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 @SuppressWarnings("null")
-public class MelterRecipeType extends BaseMachineRecipeType<MonoItemInput> {
+public class MelterRecipeType extends BaseMachineRecipeType<ItemInput.simple> {
 
     public MelterRecipeType(int ticks, int energy, SizedIngredient input, FluidStackTemplate fluid) {
         this.input = input;
@@ -40,13 +40,13 @@ public class MelterRecipeType extends BaseMachineRecipeType<MonoItemInput> {
     }
 
     @Override
-    public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<MonoItemInput>> getMachine() {
+    public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<ItemInput.simple>> getMachine() {
         return zMachines.ELECTRIC_MELTER;
     }
 
     @Override
-    public ItemStack getRecipeInput(MonoItemInput recipe) {
-        return recipe.input();
+    public ItemStack getRecipeInput(ItemInput.simple recipe) {
+        return recipe.item();
     }
 
     public static final RecipeSerializer<MelterRecipeType> serializer() {

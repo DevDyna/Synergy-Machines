@@ -10,17 +10,14 @@ import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
-import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutputItem;
+import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 
-
-@SuppressWarnings({ "null" })
 public class MaceratorRecipeBuilder extends BaseMachineRecipeBuilder<MaceratorRecipeBuilder>
-        implements ItemAttach.Output.SecondaryOutputItem<MaceratorRecipeBuilder> {
+        implements ItemAttach.Output.ItemOutputChance<MaceratorRecipeBuilder> {
 
     private MaceratorRecipeBuilder(HolderLookup.Provider p) {
         super(p);
@@ -41,9 +38,10 @@ public class MaceratorRecipeBuilder extends BaseMachineRecipeBuilder<MaceratorRe
         return zMachines.MACERATOR;
     }
 
-    public MaceratorRecipeBuilder secondary(ItemStackTemplate secondary, float chance) {
-        this.optional_output_item = ChanceOutputItem.of(secondary, chance);
-        return getBuilder();
+    @Override
+    public MaceratorRecipeBuilder output(ChanceOutput.Item item) {
+        this.optional_output_item = item;
+        return this;
     }
 
     @Override

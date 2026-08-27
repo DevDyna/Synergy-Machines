@@ -36,7 +36,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators{
                 MaceratorRecipeBuilder.of(registries)
                                 .input(Items.RAW_IRON)
                                 .output(LibItems.IRON_DUST, 2)
-                                .secondary(LibItems.IRON_DUST, 1, 0.25f)
+                                .output(LibItems.IRON_DUST, 1, 0.25f)
                                 .unlockedBy(MODULE_ID, has(Items.RAW_IRON))
                                 .save(output);
 
@@ -69,7 +69,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators{
                 ExtractorRecipeBuilder.of(registries)
                                 .input(Items.MAGMA_BLOCK)
                                 .output(Fluids.LAVA, 250)
-                                .secondary(Items.NETHERRACK, 0.5f)
+                                .output(Items.NETHERRACK, 0.5f)
                                 .unlockedBy(MODULE_ID, has(Items.MAGMA_BLOCK))
                                 .save(output);
 

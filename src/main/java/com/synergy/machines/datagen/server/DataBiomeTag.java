@@ -8,7 +8,6 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
 
-@SuppressWarnings("null")
 public class DataBiomeTag extends BiomeTagsProvider {
 
         public DataBiomeTag(PackOutput o, CompletableFuture<Provider> p) {

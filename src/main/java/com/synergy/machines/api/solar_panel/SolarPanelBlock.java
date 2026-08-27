@@ -27,7 +27,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-@SuppressWarnings("null")
+@SuppressWarnings("deprecation")
 public abstract class SolarPanelBlock extends TickingBlock implements Connectable {
 
     public SolarPanelBlock(Properties p) {
@@ -70,6 +70,7 @@ public abstract class SolarPanelBlock extends TickingBlock implements Connectabl
         updateOnDestroy(l, p, s);
     }
 
+    
     @Override
     public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
         updateOnNeighborChanged(state, (Level) level, pos, level.getBlockState(neighbor).getBlock(), neighbor, false);
@@ -87,7 +88,7 @@ public abstract class SolarPanelBlock extends TickingBlock implements Connectabl
     }
 
     @Override
-    public Boolean whenConnect(Level level, BlockPos basePos, BlockPos neighborPos, BlockState baseState,
+    public Boolean whenConnect(@Nullable Level level, BlockPos basePos, BlockPos neighborPos, BlockState baseState,
             BlockState neighborState) {
         return neighborState.is(this);
     }

@@ -22,7 +22,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-@SuppressWarnings("null")
 public class MelterCategory extends BaseMachineRecipeCategory<MelterRecipeType> {
 
         public MelterCategory(IGuiHelper h) {

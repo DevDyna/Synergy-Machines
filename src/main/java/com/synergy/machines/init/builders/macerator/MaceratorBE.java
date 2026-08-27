@@ -3,9 +3,9 @@ package com.synergy.machines.init.builders.macerator;
 import java.util.List;
 import javax.annotation.Nullable;
 
+import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.ExtraMachineSlots;
-import com.synergy.machines.api.recipeinputs.MonoItemInput;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.core.BlockPos;
@@ -55,7 +55,7 @@ public class MaceratorBE extends BaseMachineBE implements ExtraMachineSlots {
 
         progress_cancel = false;
 
-        var r = getRecipes(level, zMachines.MACERATOR, new MonoItemInput(getInput()));
+        var r = getRecipes(level, zMachines.MACERATOR, new ItemInput.simple(getInput()));
 
         // no recipe
         if (r.isEmpty())
@@ -84,7 +84,7 @@ public class MaceratorBE extends BaseMachineBE implements ExtraMachineSlots {
     @Override
     public void endProgress() {
 
-        var recipe = getUnsafeRecipes(level, zMachines.MACERATOR, new MonoItemInput(getInput()));
+        var recipe = getUnsafeRecipes(level, zMachines.MACERATOR, new ItemInput.simple(getInput()));
 
 
         updateItem(getItemStorage(), ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT, recipe.getOutputItem().count(),false);
