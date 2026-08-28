@@ -24,7 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
 
-public class DataRecipe extends RecipeProvider implements RecipeGenerators{
+public class DataRecipe extends RecipeProvider implements RecipeGenerators {
 
         protected DataRecipe(Provider registries, RecipeOutput output) {
                 super(registries, output);
@@ -82,6 +82,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators{
                 RockCrusherRecipeBuilder.of(registries)
                                 .fluid(Fluids.WATER, 125)
                                 .input(Items.STONE)
+                                .addResult(Items.COBBLESTONE, 2,1f)
                                 .addResult(Items.RAW_COPPER, 0.25f)
                                 .addResult(Items.RAW_GOLD, 0.15f)
                                 .addResult(Items.RAW_IRON, 0.28f)
@@ -110,7 +111,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators{
 
         @Override
         public HolderGetter<Item> getItems() {
-               return items;
+                return items;
         }
 
         @Override
