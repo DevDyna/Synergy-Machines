@@ -4,6 +4,7 @@ package com.synergy.machines.compat.jei.categories;
 import com.devdyna.cakesticklib.api.compat.jei.JEIFluidTankHelper;
 import com.devdyna.cakesticklib.api.primitive.Size;
 import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
+import com.devdyna.cakesticklib.api.utils.ColorUtils;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.compat.jei.categories.api.BaseMachineRecipeCategory;
@@ -16,7 +17,6 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -68,9 +68,7 @@ public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRe
 
                 arrow.draw(guiGraphics, 43 - 1, 35);
 
-                guiGraphics.text(font,
-                                Component.literal(
-                                                recipe.getTime() + " ticks"),
+                guiGraphics.text(font, recipe.getTime() + " ticks",
                                 24 - 10 - 10, 15,
                                 defaultToolTipColor.getRGB(), false);
 
@@ -79,12 +77,12 @@ public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRe
                 stack.scale(0.6F, 0.6F);
                 for (ChanceOutput.Item output : recipe.getResult())
                         guiGraphics.text(font, ((int) (output.chance() * 100)) + "%",
-                                        68 + 10 + 10 + 10 + 5 + 5 + 5 + 2 + 10
+                                        68 + 10 + 10 + 10 + 5 + 5 + 5 + 2 + 10-20
                                                         + (recipe.getResult().indexOf(output) % 3 * (20 + 12 + 1)),
                                         26 + 10 + 10 - 5 + 2 + 1
                                                         + (recipe.getResult().indexOf(output) / 3
                                                                         * (24 + 10 + 10 - 2 - 2)),
-                                        0xFFFFFF);
+                                        ColorUtils.WHITE.getRGB());
                 stack.popMatrix();
 
         }
