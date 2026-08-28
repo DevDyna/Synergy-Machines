@@ -2,14 +2,12 @@ package com.synergy.machines.api.machine;
 
 import java.util.List;
 import java.util.Optional;
-
 import com.devdyna.cakesticklib.api.aspect.logic.*;
 import com.devdyna.cakesticklib.api.aspect.templates.MachineBE;
 import com.devdyna.cakesticklib.api.recipe.recipeType.BaseRecipeType;
 import com.devdyna.cakesticklib.api.utils.UpgradeComponents.UpgradeType;
 import com.devdyna.cakesticklib.setup.registry.LibComponents;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
-import com.mojang.logging.LogUtils;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.RecipeRegister;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
@@ -181,8 +179,7 @@ public abstract class BaseMachineBE extends MachineBE
 
     @Override
     protected void loadAdditional(ValueInput input) {
-        if (input.getInt("progress").isPresent())
-            progress = input.getInt("progress").get();
+        input.getInt("progress").ifPresent(v -> progress = v);
         super.loadAdditional(input);
     }
 
@@ -225,44 +222,31 @@ public abstract class BaseMachineBE extends MachineBE
         return false;
     }
 
-    private boolean toggle = false;
+    // private boolean toggle = false;
 
-    protected void update(boolean v) {
-        if (v != toggle) {
-            toggle = !toggle;
-            level.setBlockAndUpdate(getBlockPos(),
-                    getBlockState().setValue(BaseMachineBlock.ENABLED, v));
+    protected void update(boolean enabled) {
+        if (level == null || isRemoved()) {
+            return;
         }
 
-    }
+        BlockState state = level.getBlockState(getBlockPos());
 
-    protected void tick() {
-        try {
-            tickBoth();
-            if (level.isClientSide())
-                tickClient();
-            else
-                tickServer();
-
-        } catch (Exception e) {
-            // catch potential crashes
-            if (level.getBlockEntity(getBlockPos()) instanceof BaseMachineBE) {
-                LogUtils.getLogger().error(
-                        "BlockEntity at " + getBlockPos() + " has invalid data -> Broken to prevent crash");
-                LogUtils.getLogger().error("Contact Mod Author and report this as BUG");
-                LogUtils.getLogger().error(e.getMessage());
-                e.printStackTrace();
-                level.removeBlockEntity(getBlockPos());
-                level.destroyBlock(getBlockPos(), true);
-            }
+        if (!(state.getBlock() instanceof BaseMachineBlock)) {
+            return;
         }
 
+        // if (enabled != state.getValue(BaseMachineBlock.ENABLED)) {
+        // level.setBlockAndUpdate(
+        // getBlockPos(),
+        // state.setValue(BaseMachineBlock.ENABLED, enabled));
+        // }
     }
 
     public void tickBoth() {
     }
 
     public void tickClient() {
+        // level.setBlocksDirty(getBlockPos(), getBlockState(), getBlockState());
     }
 
     @Deprecated
@@ -293,11 +277,11 @@ public abstract class BaseMachineBE extends MachineBE
 
         progress = 0;
 
-        setChanged();
-        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-    }
+        
 
-    
+        // setChanged();
+        // level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+    }
 
     /**
      * Return false to cancel
