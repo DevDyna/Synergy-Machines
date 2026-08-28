@@ -6,12 +6,8 @@ import javax.annotation.Nullable;
 
 import com.devdyna.cakesticklib.api.aspect.logic.Connectable;
 import com.devdyna.cakesticklib.api.aspect.templates.TickingBlock;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Util;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -30,6 +26,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 @SuppressWarnings("deprecation")
 public abstract class SolarPanelBlock extends TickingBlock implements Connectable {
 
+    public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
+    public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
+    public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
+    public static final BooleanProperty EAST = BlockStateProperties.EAST;
+    public static final BooleanProperty WEST = BlockStateProperties.WEST;
+
     public SolarPanelBlock(Properties p) {
         super(p
                 .strength(1.0f)
@@ -45,7 +47,7 @@ public abstract class SolarPanelBlock extends TickingBlock implements Connectabl
 
     @Override
     protected void createBlockStateDefinition(Builder<Block, BlockState> b) {
-        b.add(BlockStateProperties.ENABLED);
+        b.add(ENABLED);
         PropByDir().values().forEach(b::add);
     }
 
@@ -53,11 +55,11 @@ public abstract class SolarPanelBlock extends TickingBlock implements Connectabl
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState()
-                .setValue(BlockStateProperties.ENABLED, false)
-                .setValue(BlockStateProperties.NORTH, false)
-                .setValue(BlockStateProperties.SOUTH, false)
-                .setValue(BlockStateProperties.EAST, false)
-                .setValue(BlockStateProperties.WEST, false);
+                .setValue(ENABLED, false)
+                .setValue(NORTH, false)
+                .setValue(SOUTH, false)
+                .setValue(EAST, false)
+                .setValue(WEST, false);
     }
 
     @Override
@@ -70,7 +72,6 @@ public abstract class SolarPanelBlock extends TickingBlock implements Connectabl
         updateOnDestroy(l, p, s);
     }
 
-    
     @Override
     public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
         updateOnNeighborChanged(state, (Level) level, pos, level.getBlockState(neighbor).getBlock(), neighbor, false);
@@ -79,12 +80,11 @@ public abstract class SolarPanelBlock extends TickingBlock implements Connectabl
 
     @Override
     public Map<Direction, BooleanProperty> PropByDir() {
-        return ImmutableMap.copyOf(Util.make(Maps.newEnumMap(Direction.class), (e) -> {
-            e.put(Direction.NORTH, BlockStateProperties.NORTH);
-            e.put(Direction.EAST, BlockStateProperties.EAST);
-            e.put(Direction.SOUTH, BlockStateProperties.SOUTH);
-            e.put(Direction.WEST, BlockStateProperties.WEST);
-        }));
+        return Map.of(
+                Direction.NORTH, NORTH,
+                Direction.EAST, EAST,
+                Direction.SOUTH, SOUTH,
+                Direction.WEST, WEST);
     }
 
     @Override
