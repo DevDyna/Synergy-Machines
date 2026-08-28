@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.devdyna.cakesticklib.api.aspect.logic.*;
 import com.devdyna.cakesticklib.api.aspect.templates.MachineBE;
 import com.devdyna.cakesticklib.api.recipe.recipeType.BaseRecipeType;
+import com.devdyna.cakesticklib.api.utils.UpgradeComponents.UpgradeType;
 import com.devdyna.cakesticklib.setup.registry.LibComponents;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.mojang.logging.LogUtils;
@@ -283,6 +284,12 @@ public abstract class BaseMachineBE extends MachineBE
         }
 
         endProgress();
+
+        //TODO API : null check
+        if (!getValues(UpgradeType.EJECT).isEmpty())
+            tryToEject(getItemStorage(), false, getOutputSlotIndex()
+                    .stream().mapToInt(Integer::intValue)
+                    .toArray());
 
         progress = 0;
 
