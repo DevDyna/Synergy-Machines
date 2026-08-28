@@ -25,8 +25,8 @@ public class zBlocks {
     public static final DeferredRegister.Blocks zBlockItem = DeferredRegister.createBlocks(MODULE_ID);
     public static final DeferredRegister.Blocks zBlockFluids = DeferredRegister.createBlocks(MODULE_ID);
 
-    public static DeferredHolder<Block,Block> SOLAR_PANEL_DAY = registerItemBlock("solar_panel_day", p -> new DaySolarPanelBlock(p));
-    public static DeferredHolder<Block,Block> SOLAR_PANEL_NIGHT = registerItemBlock("solar_panel_night", p -> new NightSolarPanelBlock(p));
+    public static final DeferredHolder<Block,Block> SOLAR_PANEL = registerItemBlock("solar_panel", p -> new DaySolarPanelBlock(p));
+    public static final DeferredHolder<Block,Block> LUNAR_PANEL = registerItemBlock("lunar_panel", p -> new NightSolarPanelBlock(p));
 
     public static DeferredHolder<Block, Block> registerItemBlock(String blockname,
             Function<BlockBehaviour.Properties, ? extends Block> sup) {

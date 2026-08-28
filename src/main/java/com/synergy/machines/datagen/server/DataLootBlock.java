@@ -2,6 +2,7 @@ package com.synergy.machines.datagen.server;
 
 import java.util.*;
 
+import com.devdyna.cakesticklib.api.utils.ArrayUtils;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.init.Material;
 import com.synergy.machines.init.types.zBlocks;
@@ -28,10 +29,7 @@ public class DataLootBlock extends BlockLootSubProvider {
                                 .map(DeferredHolder::get)
                                 .forEach(blocks::add);
 
-                blocks.add(zBlocks.SOLAR_PANEL_DAY.get());
-                blocks.add(zBlocks.SOLAR_PANEL_NIGHT.get());
-
-                return blocks;
+                return ArrayUtils.concat(blocks, zBlocks.LUNAR_PANEL.get(), zBlocks.SOLAR_PANEL.get());
         }
 
         @Override
@@ -41,8 +39,8 @@ public class DataLootBlock extends BlockLootSubProvider {
                                 .map(DeferredHolder::get)
                                 .forEach(this::dropSelf);
 
-                dropSelf(zBlocks.SOLAR_PANEL_DAY.get());
-                dropSelf(zBlocks.SOLAR_PANEL_NIGHT.get());
+                dropSelf(zBlocks.SOLAR_PANEL.get());
+                dropSelf(zBlocks.LUNAR_PANEL.get());
         }
 
 }

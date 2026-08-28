@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class DaySolarPanelBE extends SolarPanelBE{
 
     public DaySolarPanelBE( BlockPos arg1, BlockState arg2) {
-        super(zBlockEntities.SOLAR_PANEL_DAY.get(), arg1, arg2);
+        super(zBlockEntities.SOLAR_PANEL.get(), arg1, arg2);
     }
 
     @Override

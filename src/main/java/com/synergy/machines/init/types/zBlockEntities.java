@@ -21,10 +21,10 @@ public class zBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> zTiles = DeferredRegister
             .create(BuiltInRegistries.BLOCK_ENTITY_TYPE, MODULE_ID);
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DaySolarPanelBE>> SOLAR_PANEL_DAY = RegistryUtils
-            .createBlockEntity("solar_panel_day", zTiles, DaySolarPanelBE::new, zBlocks.SOLAR_PANEL_DAY);
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DaySolarPanelBE>> SOLAR_PANEL = RegistryUtils
+            .createBlockEntity("solar_panel", zTiles, DaySolarPanelBE::new, zBlocks.SOLAR_PANEL);
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<NightSolarPanelBE>> SOLAR_PANEL_NIGHT = RegistryUtils
-            .createBlockEntity("solar_panel_night", zTiles, NightSolarPanelBE::new, zBlocks.SOLAR_PANEL_NIGHT);
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<NightSolarPanelBE>> LUNAR_PANEL = RegistryUtils
+            .createBlockEntity("lunar_panel", zTiles, NightSolarPanelBE::new, zBlocks.LUNAR_PANEL);
 
 }

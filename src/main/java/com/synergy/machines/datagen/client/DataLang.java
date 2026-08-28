@@ -26,8 +26,8 @@ public class DataLang extends LanguageProvider {
                         add(MODULE_ID + ".jei." + m.id(), named(m.item(), MODULE_ID) + " Recipes");
                 });
 
-                addBlock(zBlocks.SOLAR_PANEL_DAY, "Solar Panel (Daytime)");
-                addBlock(zBlocks.SOLAR_PANEL_NIGHT, "Solar Panel (Nighttime)");
+                addBlock(zBlocks.SOLAR_PANEL, "Solar Panel");
+                addBlock(zBlocks.LUNAR_PANEL, "Lunar Panel");
 
         }
 

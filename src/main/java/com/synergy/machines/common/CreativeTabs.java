@@ -1,5 +1,6 @@
 package com.synergy.machines.common;
 
+import com.devdyna.cakesticklib.api.CreativeTabUtils;
 import com.synergy.machines.init.Material;
 import com.synergy.machines.init.types.zBlocks;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -14,8 +15,8 @@ public class CreativeTabs {
 
             Material.getAllMachineTypes().forEach(m -> event.accept(m.item().get()));
 
-            event.accept(zBlocks.SOLAR_PANEL_DAY.get());
-            event.accept(zBlocks.SOLAR_PANEL_NIGHT.get());
+            CreativeTabUtils.accept(event, zBlocks.SOLAR_PANEL.get().asItem(), zBlocks.LUNAR_PANEL.get().asItem());
+
         }
 
     }
