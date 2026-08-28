@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "machines:solar_panel_day"
+          "name": "machines:lunar_panel"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "machines:blocks/solar_panel_day"
+  "random_sequence": "machines:blocks/lunar_panel"
 }

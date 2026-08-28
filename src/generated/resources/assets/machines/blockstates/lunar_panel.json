@@ -1,0 +1,190 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/night/core_cell"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/side"
+      },
+      "when": {
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/side",
+        "y": 90
+      },
+      "when": {
+        "east": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/side",
+        "y": 180
+      },
+      "when": {
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/side",
+        "y": 270
+      },
+      "when": {
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/side_half_alt"
+      },
+      "when": {
+        "east": "false",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/side_half",
+        "y": 90
+      },
+      "when": {
+        "east": "true",
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/side_half",
+        "y": 180
+      },
+      "when": {
+        "east": "false",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/side_half_alt",
+        "y": 270
+      },
+      "when": {
+        "north": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/side_half"
+      },
+      "when": {
+        "north": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/side_half_alt",
+        "y": 90
+      },
+      "when": {
+        "east": "true",
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/side_half_alt",
+        "y": 180
+      },
+      "when": {
+        "south": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/side_half",
+        "y": 270
+      },
+      "when": {
+        "south": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/night/cell/north"
+      },
+      "when": {
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/night/cell/east"
+      },
+      "when": {
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/night/cell/south"
+      },
+      "when": {
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/night/cell/west"
+      },
+      "when": {
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/night/angle/north_east"
+      },
+      "when": {
+        "east": "true",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/night/angle/north_west"
+      },
+      "when": {
+        "north": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/night/angle/south_east"
+      },
+      "when": {
+        "east": "true",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "machines:block/solar_panel/night/angle/south_west"
+      },
+      "when": {
+        "south": "true",
+        "west": "true"
+      }
+    }
+  ]
+}

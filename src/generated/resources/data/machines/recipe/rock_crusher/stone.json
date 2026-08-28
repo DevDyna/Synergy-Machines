@@ -11,6 +11,13 @@
   },
   "result": [
     {
+      "chance": 1.0,
+      "item": {
+        "count": 2,
+        "id": "minecraft:cobblestone"
+      }
+    },
+    {
       "chance": 0.25,
       "item": {
         "id": "minecraft:raw_copper"

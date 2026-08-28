@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "machines:block/machine/frame/basic/bottom",
+    "east": "machines:block/machine/frame/basic/side",
+    "north": "machines:block/machine/processing/macerator/off",
+    "particle": "machines:block/machine/frame/basic/side",
+    "south": "machines:block/machine/frame/basic/side",
+    "up": "machines:block/machine/frame/basic/top",
+    "west": "machines:block/machine/frame/basic/side"
+  }
+}

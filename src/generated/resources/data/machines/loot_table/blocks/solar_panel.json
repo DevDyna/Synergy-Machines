@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "machines:solar_panel_night"
+          "name": "machines:solar_panel"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "machines:blocks/solar_panel_night"
+  "random_sequence": "machines:blocks/solar_panel"
 }

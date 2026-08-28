@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "enabled=false,facing=down": {
+      "model": "machines:block/alloy_smelter/off",
+      "x": 90
+    },
+    "enabled=false,facing=east": {
+      "model": "machines:block/alloy_smelter/off",
+      "y": 90
+    },
+    "enabled=false,facing=north": {
+      "model": "machines:block/alloy_smelter/off"
+    },
+    "enabled=false,facing=south": {
+      "model": "machines:block/alloy_smelter/off",
+      "y": 180
+    },
+    "enabled=false,facing=up": {
+      "model": "machines:block/alloy_smelter/off",
+      "x": 270
+    },
+    "enabled=false,facing=west": {
+      "model": "machines:block/alloy_smelter/off",
+      "y": 270
+    },
+    "enabled=true,facing=down": {
+      "model": "machines:block/alloy_smelter/on",
+      "x": 90
+    },
+    "enabled=true,facing=east": {
+      "model": "machines:block/alloy_smelter/on",
+      "y": 90
+    },
+    "enabled=true,facing=north": {
+      "model": "machines:block/alloy_smelter/on"
+    },
+    "enabled=true,facing=south": {
+      "model": "machines:block/alloy_smelter/on",
+      "y": 180
+    },
+    "enabled=true,facing=up": {
+      "model": "machines:block/alloy_smelter/on",
+      "x": 270
+    },
+    "enabled=true,facing=west": {
+      "model": "machines:block/alloy_smelter/on",
+      "y": 270
+    }
+  }
+}
