@@ -1,7 +1,7 @@
 package com.synergy.machines;
 
 import com.devdyna.cakesticklib.api.utils.StringUtil;
-import com.synergy.machines.api.machine.BaseMachineBE;
+import com.synergy.machines.api.machine.recipe.BaseMachineRecipeBuilder;
 
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
@@ -104,13 +104,13 @@ public class Common {
                                 "machine_furnace_disable_vanilla");
 
                 MACHINE_FURNACE_PROCESS_VANILLA_FE_COST = number("Vanilla Recipe Base FE consumed every tick",
-                                "machine_furnace_vanilla_fe_cost", BaseMachineBE.DEFAULT_FE_COST);
+                                "machine_furnace_vanilla_fe_cost", BaseMachineRecipeBuilder.DEFAULT_FE_COST);
 
                 DISABLE_MACHINE_FURNACE_VANILLA_TICK_REDUCER = bool("Disable Vanilla Recipe Tick Reducer",
                                 "machine_furnace_vanilla_disable_tick_reducer");
 
                 MACHINE_FURNACE_PROCESS_VANILLA_MIN_TICK_DELAY = number("Vanilla Recipe Mininal Tick Delay",
-                                "machine_furnace_vanilla_min_tick_delay", BaseMachineBE.DEFAULT_TICK_DURATION);
+                                "machine_furnace_vanilla_min_tick_delay", BaseMachineRecipeBuilder.DEFAULT_TICK_DURATION);
                 MACHINE_FURNACE_PROCESS_VANILLA_PERCENTUAGE_TICK_DELAY = number(
                                 "Vanilla Recipe Tick Delay reduction of total Tick Delay",
                                 "machine_furnace_vanilla_percentuage_tick_delay", 50, 0, 100);
