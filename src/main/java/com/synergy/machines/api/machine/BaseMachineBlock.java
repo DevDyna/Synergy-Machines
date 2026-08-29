@@ -2,27 +2,36 @@ package com.synergy.machines.api.machine;
 
 import javax.annotation.Nullable;
 
-import com.devdyna.cakesticklib.api.aspect.templates.MachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.phys.BlockHitResult;
 
-public abstract class BaseMachineBlock extends MachineBlock {
+public abstract class BaseMachineBlock extends Block implements EntityBlock {
 
-    public static EnumProperty<Direction> FACING = BlockStateProperties.FACING;
-    public static BooleanProperty ENABLED = BlockStateProperties.ENABLED;
+    public final static EnumProperty<Direction> FACING = BlockStateProperties.FACING;
+    public final static BooleanProperty ENABLED = BlockStateProperties.ENABLED;
 
     public BaseMachineBlock(Properties p) {
         super(p
@@ -62,6 +71,51 @@ public abstract class BaseMachineBlock extends MachineBlock {
             level.addParticle(ParticleTypes.SMOKE, x + offX, y, z + offZ, 0, 0, 0);
 
         }
+    }
+
+    @Override
+    public InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hitResult) {
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+            BlockHitResult hitResult) {
+
+        if (level.getBlockEntity(pos) instanceof BaseMachineBE be) {
+            var click = onClickAction(state, level, pos, player);
+            if (click != null)
+                return click;
+            player.openMenu(new SimpleMenuProvider(be, be.getContainerName()), pos);
+            return InteractionResult.SUCCESS;
+        }
+        return super.useWithoutItem(state, level, pos, player, hitResult);
+    }
+
+    /**
+     * Event to allow to set animations or events when menu was opened
+     * <br/>
+     * <br/>
+     * return true to cancel menu open
+     */
+    public InteractionResult onClickAction(BlockState state, Level level, BlockPos pos, Player player) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l, BlockState s,
+            BlockEntityType<T> ty) {
+        return (lvl, pos, b, t) -> {
+            if (t instanceof BaseMachineBE be) {
+                be.tickBoth();
+                if (l.isClientSide())
+                    be.tickClient();
+                else
+                    be.tickServer();
+            }
+        };
     }
 
 }

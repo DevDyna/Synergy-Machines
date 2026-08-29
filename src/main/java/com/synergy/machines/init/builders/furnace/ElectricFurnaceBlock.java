@@ -1,13 +1,10 @@
 package com.synergy.machines.init.builders.furnace;
 
-import java.util.function.Function;
-
 import javax.annotation.Nullable;
 
 import com.synergy.machines.api.machine.BaseMachineBlock;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -23,9 +20,6 @@ public class ElectricFurnaceBlock extends BaseMachineBlock {
         return new ElectricFurnaceBE(arg0, arg1);
     }
 
-    @Override
-    protected Function<Properties, Block> getFactory() {
-        return ElectricFurnaceBlock::new;
-    }
+    
 
 }
