@@ -77,7 +77,7 @@ public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRe
                 stack.scale(0.6F, 0.6F);
                 for (ChanceOutput.Item output : recipe.getResult())
                         guiGraphics.text(font, ((int) (output.chance() * 100)) + "%",
-                                        68 + 10 + 10 + 10 + 5 + 5 + 5 + 2 + 10-20
+                                        68 + 10 + 10 + 10 + 5 + 5 + 5 + 2 + 10-10
                                                         + (recipe.getResult().indexOf(output) % 3 * (20 + 12 + 1)),
                                         26 + 10 + 10 - 5 + 2 + 1
                                                         + (recipe.getResult().indexOf(output) / 3
