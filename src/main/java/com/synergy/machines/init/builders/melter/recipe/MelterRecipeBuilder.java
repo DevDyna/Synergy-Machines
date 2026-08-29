@@ -22,8 +22,8 @@ public class MelterRecipeBuilder extends BaseMachineRecipeBuilder<MelterRecipeBu
     private MelterRecipeBuilder(HolderLookup.Provider p) {
         super(p);
         this.criteria = new LinkedHashMap<String, Criterion<?>>();
-        this.energy = BaseMachineBE.DEFAULT_FE_COST * 10;
-        this.ticks = BaseMachineBE.DEFAULT_TICK_DURATION * 4;
+        this.energy = DEFAULT_FE_COST * 10;
+        this.ticks = DEFAULT_TICK_DURATION * 4;
     }
 
     public static MelterRecipeBuilder of(HolderLookup.Provider p) {

@@ -51,8 +51,11 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
 
     public abstract MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<? extends RecipeInput>> getMachine();
 
-    protected int ticks = BaseMachineBE.DEFAULT_TICK_DURATION;
-    protected int energy = BaseMachineBE.DEFAULT_FE_COST;
+    public static final int DEFAULT_TICK_DURATION = 100;
+    public static final int DEFAULT_FE_COST = 500;
+
+    protected int ticks = DEFAULT_TICK_DURATION;
+    protected int energy = DEFAULT_FE_COST;
     protected SizedIngredient input;
     protected SizedIngredient optional_input;
     protected ItemStackTemplate output;
