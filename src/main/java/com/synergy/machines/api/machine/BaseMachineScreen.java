@@ -18,6 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseScreen<T> implements ScreenUpgradable {
 
@@ -49,8 +50,8 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         }
 
         @Override
-        protected @Nullable Identifier arrow() {
-                return x.rl("minecraft", "textures/gui/sprites/container/furnace/burn_progress.png");
+        protected @Nullable Identifier arrow() {// TODO API : move to api
+                return Identifier.withDefaultNamespace("container/furnace/burn_progress");
         }
 
         protected boolean whenAnimateArrow() {
@@ -79,6 +80,10 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
         protected Fluid getFluid() {
                 return menu.getFluid();
+        }
+
+        protected FluidStack getFluidStack() {
+                return menu.getFluidStack();
         }
 
         protected int getMaxFluidAmount() {
@@ -163,7 +168,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                 18, 72,
                                 36, 72);
 
-                if (getMaxFluidAmount() > 0 && getFluidAmount() > 0) {
+                if (getMaxFluidAmount() > 0 && getFluidAmount() > 0 && getFluid() != null) {
                         FluidGUITank.of()
                                         .setFluid(getFluid())
                                         .setMaxCapacity(getMaxFluidAmount())
@@ -203,16 +208,17 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         public void renderFluidTooltip(GuiGraphicsExtractor graphics, int x, int y, int x0, int y0, int mouseX,
                         int mouseY) {
 
-                renderDualTooltip(graphics, (hasShiftDown() ? getFluidAmount()
+                renderDualTooltip(graphics, Component.literal((hasShiftDown() ? getFluidAmount()
                                 : StringUtil.getFormatNoRound()
                                                 .format(getFluidAmount()))
                                 + " mB / " +
                                 (hasShiftDown() ? getMaxFluidAmount()
                                                 : StringUtil.getFormatNoRound()
                                                                 .format(getMaxFluidAmount()))
-                                + " mB",
-                                "Fluid: " + getFluid().getFluidType()
-                                                .getDescription().getString(),
+                                + " mB"), Component
+                                                .literal(
+                                                                "Fluid: ")
+                                                .append(getFluidStack().getHoverName()),
                                 x, y, x0, y0, mouseX, mouseY);
 
         }
@@ -220,12 +226,20 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         private void renderDualTooltip(GuiGraphicsExtractor graphics, String first, String second, int x, int y, int x0,
                         int y0, int mouseX,
                         int mouseY) {
+                renderDualTooltip(graphics, Component.literal(first), Component.literal(second), x, y, x0, y0, mouseX,
+                                mouseY);
+        }
+
+        private void renderDualTooltip(GuiGraphicsExtractor graphics, Component first, Component second, int x, int y,
+                        int x0,
+                        int y0, int mouseX,
+                        int mouseY) {
                 if (Pos.of(getLeftPos() + x, getTopPos() + y).setSize(x0, y0).test(mouseX, mouseY))
 
                         graphics.setComponentTooltipForNextFrame(font,
                                         List.of(
-                                                        Component.literal(first),
-                                                        Component.literal(second)),
+                                                        first,
+                                                        second),
                                         mouseX,
                                         mouseY);
         }
@@ -289,18 +303,17 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                                                 .setSize(18, 18));
         }
 
-        // //TODO update api
-        // protected void renderArrow(GuiGraphicsExtractor guiGraphics) {
+        // TODO update api
+        protected void renderArrow(GuiGraphicsExtractor guiGraphics) {
 
-        //         if (this.arrow() != null && this.whenAnimateArrow())
+                if (this.arrow() != null && this.whenAnimateArrow())
+                        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,
+                                        Identifier.withDefaultNamespace("container/furnace/burn_progress"),
+                                        24, 16,
+                                        0, 0,
+                                        getLeftPos() + 79 - 4 - 1, getTopPos() + 34,
+                                        getScaledArrowProgress(), 16);
 
-        //                 guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,
-        //                                 Identifier.withDefaultNamespace("container/furnace/burn_progress"),
-        //                                 24, 16,
-        //                                 0, 0,
-        //                                 getLeftPos() + 79 - 4, getTopPos() + 34,
-        //                                 getScaledArrowProgress(), 16);
-
-        // }
+        }
 
 }

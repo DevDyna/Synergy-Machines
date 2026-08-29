@@ -48,12 +48,12 @@ public class MaceratorBE extends BaseMachineBE implements ExtraMachineSlots {
     }
 
     @Override
-    public boolean initProgress() {
+    public boolean init() {
 
         if (getInput().isEmpty())
             return cancel();
 
-        progress_cancel = false;
+        enableProgress();
 
         var r = getRecipes(level, zMachines.MACERATOR, new ItemInput.simple(getInput()));
 
@@ -63,39 +63,38 @@ public class MaceratorBE extends BaseMachineBE implements ExtraMachineSlots {
 
         var recipe = r.get().value();
 
+        if (!checkSlot(getOutput(), recipe.getOutputItem().create()))
+            return cancel();
+
         if (recipe.getSecondaryOutputItem() != null)
             if (!checkSlot(getSecondarySlot(), recipe.getSecondaryOutputItem().item().create()))
                 return cancel();
-
-        if (!checkSlot(getOutput(), recipe.getOutputItem().create()))
-            return cancel();
 
         if (!calculateAndConsumeFE(recipe.getEnergy()))
             return cancel();
 
         update(true);
 
-        this.maxProgress = calculateMaxProgress(recipe.getTime());
+        setMaxProgress(calculateMaxProgress(recipe.getTime()));
 
         return true;
 
     }
 
     @Override
-    public void endProgress() {
+    public void result() {
 
         var recipe = getUnsafeRecipes(level, zMachines.MACERATOR, new ItemInput.simple(getInput()));
 
-
-        updateItem(getItemStorage(), ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT, recipe.getOutputItem().count(),false);
+        updateResource(ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT, recipe.getOutputItem().count(), false);
 
         if (recipe.getSecondaryOutputItem() != null)
             if (!recipe.getSecondaryOutputItem().item().create().isEmpty()
                     && calculateSecondarySuccess(recipe.getSecondaryOutputItem().chance()))
-                    updateItem(getItemStorage(), ItemResource.of(recipe.getSecondaryOutputItem().item()), SECONDARY_SLOT, recipe.getSecondaryOutputItem().item().count(),false);
+                updateResource(ItemResource.of(recipe.getSecondaryOutputItem().item()), SECONDARY_SLOT,
+                        recipe.getSecondaryOutputItem().item().count(), false);
 
-
-        updateItem(getItemStorage(), getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(),true);
+        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(), true);
     }
 
     @Override

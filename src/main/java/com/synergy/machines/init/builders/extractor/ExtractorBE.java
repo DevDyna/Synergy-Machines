@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
-import com.synergy.machines.api.machine.FluidTankStorage;
+import com.synergy.machines.api.machine.TypedFluidStorage;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.core.BlockPos;
@@ -19,7 +19,7 @@ import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
 @SuppressWarnings("null")
-public class ExtractorBE extends BaseMachineBE implements FluidTankStorage {
+public class ExtractorBE extends BaseMachineBE implements TypedFluidStorage {
 
     public ExtractorBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -41,7 +41,7 @@ public class ExtractorBE extends BaseMachineBE implements FluidTankStorage {
     }
 
     @Override
-    public boolean initProgress() {
+    public boolean init() {
 
         // if (getFluidStorage() == null)
         // return cancel();
@@ -49,7 +49,7 @@ public class ExtractorBE extends BaseMachineBE implements FluidTankStorage {
         if (getInput().isEmpty())
             return cancel();
 
-        progress_cancel = false;
+        enableProgress();
 
         var r = getRecipes(level, zMachines.EXTRACTOR, new ItemInput.simple(getInput()));
 
@@ -72,29 +72,29 @@ public class ExtractorBE extends BaseMachineBE implements FluidTankStorage {
 
         update(true);
 
-        this.maxProgress = calculateMaxProgress(recipe.getTime());
+        setMaxProgress(calculateMaxProgress(recipe.getTime()));
 
         return true;
 
     }
 
     @Override
-    public void endProgress() {
+    public void result() {
 
         var recipe = getUnsafeRecipes(level, zMachines.EXTRACTOR, new ItemInput.simple(getInput()));
 
         if (recipe.getSecondaryOutputItem() != null)
             if (!recipe.getSecondaryOutputItem().item().create().isEmpty()
                     && calculateSecondarySuccess(recipe.getSecondaryOutputItem().chance()))
-                updateItem(getItemStorage(), ItemResource.of(recipe.getSecondaryOutputItem().item()), OUTPUT_SLOT,
-                        recipe.getSecondaryOutputItem().item().count(),false);
+                updateResource(ItemResource.of(recipe.getSecondaryOutputItem().item()), OUTPUT_SLOT,
+                        recipe.getSecondaryOutputItem().item().count(), false);
 
         if (recipe.getFluidOutput() != null)
 
-            updateFluid(getFluidStorage(), getFluidStorage().getResource(0), 0, recipe.getFluidOutput().amount(),false);
+            updateResource(getFluidStorage().getResource(0), 0, recipe.getFluidOutput().amount(), false);
 
-        updateItem(getItemStorage(), getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
-                recipe.getInputItem().count(),true);
+        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
+                recipe.getInputItem().count(), true);
 
     }
 

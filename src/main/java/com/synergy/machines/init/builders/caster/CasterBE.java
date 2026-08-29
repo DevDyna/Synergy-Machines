@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
-import com.synergy.machines.api.machine.FluidTankStorage;
+import com.synergy.machines.api.machine.TypedFluidStorage;
 import com.synergy.machines.api.recipeinputs.ItemFluidInput;
 import com.synergy.machines.init.types.zMachines;
 
@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-public class CasterBE extends BaseMachineBE implements FluidTankStorage {
+public class CasterBE extends BaseMachineBE implements TypedFluidStorage {
 
     public CasterBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -40,7 +40,7 @@ public class CasterBE extends BaseMachineBE implements FluidTankStorage {
     }
 
     @Override
-    public boolean initProgress() {
+    public boolean init() {
 
         if (getFluidStorage() == null)
             return cancel();
@@ -48,7 +48,7 @@ public class CasterBE extends BaseMachineBE implements FluidTankStorage {
         if (getFluidStorage().getAmountAsInt(0) <= 0)
             return cancel();
 
-        progress_cancel = false;
+        enableProgress();
 
         var r = getRecipes(level, zMachines.CASTING_FACTORY,
                 new ItemFluidInput(getFluidStorage().getResource(0).toStack(getFluidStorage().getAmountAsInt(0)),
@@ -73,29 +73,26 @@ public class CasterBE extends BaseMachineBE implements FluidTankStorage {
 
         update(true);
 
-        this.maxProgress = calculateMaxProgress(recipe.getTime());
+        setMaxProgress(calculateMaxProgress(recipe.getTime()));
 
         return true;
 
     }
 
     @Override
-    public void endProgress() {
+    public void result() {
 
         var recipe = getUnsafeRecipes(level, zMachines.CASTING_FACTORY,
                 new ItemFluidInput(getFluidStorage().getResource(0).toStack(getFluidStorage().getAmountAsInt(0)),
                         getInput()));
 
+        updateResource(ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT, recipe.getOutputItem().count(), false);
 
-        updateItem(getItemStorage(), ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT, recipe.getOutputItem().count(),false);
-
-        updateFluid(getFluidStorage(), getFluidStorage().getResource(0), 0, recipe.getFluidInput().amount(),true);
-
-        
+        updateResource(getFluidStorage().getResource(0), 0, recipe.getFluidInput().amount(), true);
 
         if (!getInput().isEmpty() && recipe.consumeCatalyst())
-            updateItem(getItemStorage(), getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
-                recipe.getInputItem().count(),true);
+            updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
+                    recipe.getInputItem().count(), true);
     }
 
     @Override

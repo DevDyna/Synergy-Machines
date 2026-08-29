@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
-import com.synergy.machines.api.machine.FluidTankStorage;
+import com.synergy.machines.api.machine.TypedFluidStorage;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.core.BlockPos;
@@ -15,9 +15,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 
-public class MelterBE extends BaseMachineBE implements FluidTankStorage {
+public class MelterBE extends BaseMachineBE implements TypedFluidStorage {
 
     public MelterBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -25,7 +26,7 @@ public class MelterBE extends BaseMachineBE implements FluidTankStorage {
 
     @Override
     public int getMachineSlots() {
-        return MAX_UPGRADE_SLOTS + 1;
+        return UPGRADES_SIZE + 1;
     }
 
     public MelterBE(BlockPos pos, BlockState blockState) {
@@ -39,7 +40,7 @@ public class MelterBE extends BaseMachineBE implements FluidTankStorage {
     }
 
     @Override
-    public boolean initProgress() {
+    public boolean init() {
 
         // if (getFluidStorage() == null)
         // return cancel();
@@ -47,7 +48,7 @@ public class MelterBE extends BaseMachineBE implements FluidTankStorage {
         if (getInput().isEmpty())
             return cancel();
 
-        progress_cancel = false;
+        enableProgress();
 
         var r = getRecipes(level, zMachines.ELECTRIC_MELTER, new ItemInput.simple(getInput()));
 
@@ -57,7 +58,7 @@ public class MelterBE extends BaseMachineBE implements FluidTankStorage {
 
         var recipe = r.get().value();
 
-        if (!checkTank(getFluidStorage().getResource(0).toStack(getFluidStorage().getAmountAsInt(0)),
+        if (!checkTank(getAsStack(0),
                 recipe.getFluidOutput().create(), getTankCapacity())) {
             return cancel();
         }
@@ -67,21 +68,21 @@ public class MelterBE extends BaseMachineBE implements FluidTankStorage {
 
         update(true);
 
-        this.maxProgress = calculateMaxProgress(recipe.getTime());
+        setMaxProgress(calculateMaxProgress(recipe.getTime()));
 
         return true;
 
     }
 
     @Override
-    public void endProgress() {
+    public void result() {
 
         var recipe = getUnsafeRecipes(level, zMachines.ELECTRIC_MELTER, new ItemInput.simple(getInput()));
 
         if (!recipe.getFluidOutput().create().isEmpty())
-            updateFluid(getFluidStorage(),getFluidStorage().getResource(0), 0, recipe.getFluidOutput().amount(),false);
+            updateResource(FluidResource.of(recipe.getFluidOutput().create()), 0, recipe.getFluidOutput().amount(),false);
 
-        updateItem(getItemStorage(),getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(),true);
+        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(),true);
 
     }
 

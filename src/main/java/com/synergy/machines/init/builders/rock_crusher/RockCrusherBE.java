@@ -8,7 +8,7 @@ import com.devdyna.cakesticklib.api.utils.ArrayUtils;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.ExtraMachineSlots;
-import com.synergy.machines.api.machine.FluidTankStorage;
+import com.synergy.machines.api.machine.TypedFluidStorage;
 import com.synergy.machines.api.recipeinputs.ItemFluidInput;
 import com.synergy.machines.init.types.zMachines;
 
@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-public class RockCrusherBE extends BaseMachineBE implements FluidTankStorage, ExtraMachineSlots {
+public class RockCrusherBE extends BaseMachineBE implements TypedFluidStorage, ExtraMachineSlots {
 
     public static final int OUTPUT_EXTRA_1 = 6;
     public static final int OUTPUT_EXTRA_2 = 7;
@@ -58,7 +58,7 @@ public class RockCrusherBE extends BaseMachineBE implements FluidTankStorage, Ex
     }
 
     @Override
-    public boolean initProgress() {
+    public boolean init() {
 
         if (getFluidStorage() == null)
             return cancel();
@@ -66,7 +66,7 @@ public class RockCrusherBE extends BaseMachineBE implements FluidTankStorage, Ex
         if (getFluidStorage().getAmountAsInt(0) <= 0)
             return cancel();
 
-        progress_cancel = false;
+        enableProgress();
 
         var r = getRecipes(level, zMachines.ROCK_CRUSHER,
                 new ItemFluidInput(getFluidStorage().getResource(0).toStack(getFluidStorage().getAmountAsInt(0)),
@@ -94,14 +94,14 @@ public class RockCrusherBE extends BaseMachineBE implements FluidTankStorage, Ex
 
         update(true);
 
-        this.maxProgress = calculateMaxProgress(recipe.getTime());
+        setMaxProgress(calculateMaxProgress(recipe.getTime()));
 
         return true;
 
     }
 
     @Override
-    public void endProgress() {
+    public void result() {
 
         var recipe = getUnsafeRecipes(level, zMachines.ROCK_CRUSHER,
                 new ItemFluidInput(getFluidStorage().getResource(0).toStack(getFluidStorage().getAmountAsInt(0)),
@@ -110,13 +110,12 @@ public class RockCrusherBE extends BaseMachineBE implements FluidTankStorage, Ex
         for (ChanceOutput.Item result : recipe.getResult())
             if (result != null)
                 if (!result.item().create().isEmpty() && calculateSecondarySuccess(result.chance()))
-                    updateItem(getItemStorage(),ItemResource.of(result.item()), recipe.getResult().indexOf(result) +INPUT_SLOT + 1, result.item().count(),false);
-                
-                
+                    updateResource(ItemResource.of(result.item()), recipe.getResult().indexOf(result) + INPUT_SLOT + 1,
+                            result.item().count(), false);
 
-        updateFluid(getFluidStorage(),getFluidStorage().getResource(0), 0, calculateMBUsage(recipe.getFluidInput().amount()),true);
+        updateResource(getFluidStorage().getResource(0), 0, calculateMBUsage(recipe.getFluidInput().amount()), true);
 
-       updateItem(getItemStorage(),getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(),true);
+        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(), true);
 
     }
 

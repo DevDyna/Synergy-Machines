@@ -41,12 +41,12 @@ public class CompressorBE extends BaseMachineBE implements ExtraMachineSlots {
     }
 
     @Override
-    public boolean initProgress() {
+    public boolean init() {
 
         if (getInput().isEmpty())
             return cancel();
 
-        progress_cancel = false;
+        enableProgress();
 
         var r = getRecipes(level, zMachines.COMPRESSOR, new BiItemInput(getInput(), getPlateSlot()));
 
@@ -64,27 +64,27 @@ public class CompressorBE extends BaseMachineBE implements ExtraMachineSlots {
 
         update(true);
 
-        this.maxProgress = calculateMaxProgress(recipe.getTime());
+        setMaxProgress(calculateMaxProgress(recipe.getTime()));
 
         return true;
 
     }
 
     @Override
-    public void endProgress() {
+    public void result() {
 
         var recipe = getUnsafeRecipes(level, zMachines.COMPRESSOR,
                 new BiItemInput(getInput(), getPlateSlot()));
 
-        updateItem(getItemStorage(), ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT,
-                recipe.getOutputItem().count(),false);
+        updateResource(ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT,
+                recipe.getOutputItem().count(), false);
 
         if (recipe.consumeCatalyst())
-            updateItem(getItemStorage(), getItemStorage().getResource(PLATE_SLOT), PLATE_SLOT,
-                    recipe.getCatalystItem().count(),true);
+            updateResource(getItemStorage().getResource(PLATE_SLOT), PLATE_SLOT,
+                    recipe.getCatalystItem().count(), true);
 
-        updateItem(getItemStorage(), getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
-                recipe.getInputItem().count(),true);
+        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
+                recipe.getInputItem().count(), true);
 
     }
 

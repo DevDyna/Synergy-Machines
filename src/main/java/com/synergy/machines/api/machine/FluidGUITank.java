@@ -3,7 +3,6 @@ package com.synergy.machines.api.machine;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.level.material.Fluid;
 
 public class FluidGUITank {
@@ -49,52 +48,49 @@ public class FluidGUITank {
 
     public void render(GuiGraphicsExtractor guiGraphics) {
 
-        if (fluid == null || max <= 0 || amount <= 0)
+        if (fluid == null || max <= 0 || amount <= 0 || h <= 0 || w <= 0)
             return;
 
-        var fluidStack = com.devdyna.cakesticklib.api.utils.x.fluid(fluid);
-
-        var model = Minecraft.getInstance()
+        var fluidModel = Minecraft.getInstance()
                 .getModelManager()
                 .getFluidStateModelSet()
                 .get(fluid.defaultFluidState());
 
-        TextureAtlasSprite sprite = model.stillMaterial().sprite();
-        int color = model.fluidTintSource().colorAsStack(fluidStack);
+        var sprite = fluidModel.stillMaterial().sprite();
 
         if (sprite == null)
             return;
 
         int filled = (int) ((amount / (float) max) * h);
+
         if (filled <= 0)
             return;
 
-        int xTank = x;
-        int yTank = y + (h - filled);
+        int currentY = y + h;
 
-        final int tileSize = 16;
+        int tint = fluidModel.fluidTintSource() != null
+                ? fluidModel.fluidTintSource().colorAsStack(
+                        com.devdyna.cakesticklib.api.utils.x.fluid(fluid))
+                : -1;
 
-        float u0 = sprite.getU0();
+        int remaining = filled;
 
-        for (int dy = 0; dy < filled; dy += tileSize) {
+        while (remaining > 0) {
 
-            int renderH = Math.min(tileSize, filled - dy);
+            int drawHeight = Math.min(16, remaining);
 
-            float v0 = sprite.getV0();
+            currentY -= drawHeight;
 
-            guiGraphics.blit(
+            guiGraphics.blitSprite(
                     RenderPipelines.GUI_TEXTURED,
-                    sprite.atlasLocation(),
-                    xTank,
-                    yTank + dy,
-                    u0,
-                    v0,
+                    sprite,
+                    x,
+                    currentY,
                     w,
-                    renderH,
-                    tileSize,
-                    tileSize,
-                    color
-            );
+                    drawHeight,
+                    tint | 0xFF000000);
+
+            remaining -= drawHeight;
         }
     }
 }

@@ -48,12 +48,12 @@ public class ElectricFurnaceBE extends BaseMachineBE {
     private MixedRecipeHolder recipeHolder;
 
     @Override
-    public boolean initProgress() {
+    public boolean init() {
 
         if (getInput().isEmpty())
             return cancel();
 
-        progress_cancel = false;
+        enableProgress();
 
         Optional<RecipeHolder<ElectricFurnaceRecipeType>> r = level.getServer().getRecipeManager()
                 .getRecipeFor(zMachines.ELECTRIC_FURNACE.recipe().getType(),
@@ -66,8 +66,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
         SmeltingRecipe smelting = null;
 
         if (r.isEmpty()) {
-            if (r2.isEmpty() || Common.DISABLE_MACHINE_FURNACE_PROCESS_VANILLA.get() 
-            )
+            if (r2.isEmpty() || Common.DISABLE_MACHINE_FURNACE_PROCESS_VANILLA.get())
                 return cancel();
 
             smelting = r2.get().value();
@@ -82,9 +81,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
 
                 (r.isEmpty()
                         ? Common.MACHINE_FURNACE_PROCESS_VANILLA_FE_COST.get()
-                    : 
-                        electric.getEnergy()
-                        ),
+                        : electric.getEnergy()),
 
                 (r.isEmpty()
                         ? smelting.assemble(new SingleRecipeInput(getInput())).copy()
@@ -99,17 +96,17 @@ public class ElectricFurnaceBE extends BaseMachineBE {
 
         update(true);
 
-        this.maxProgress = calculateMaxProgress(recipeHolder.tick_delay);
+        setMaxProgress(calculateMaxProgress(recipeHolder.tick_delay));
 
         return true;
 
     }
 
     @Override
-    public void endProgress() {
+    public void result() {
 
-        updateItem(getItemStorage(), ItemResource.of(recipeHolder.result_item), OUTPUT_SLOT, recipeHolder.result_item.count(),false);
-        updateItem(getItemStorage(), getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, 1,true);
+        updateResource(ItemResource.of(recipeHolder.result_item), OUTPUT_SLOT, recipeHolder.result_item.count(), false);
+        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, 1, true);
     }
 
     @Override
