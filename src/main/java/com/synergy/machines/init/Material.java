@@ -19,6 +19,8 @@ public class Material {
                 zRecipeTypes.register(bus);
                 zContainer.register(bus);
                 zMachines.register(bus);
+                zTags.register(bus);
+                zFluids.register(bus);
         }
 
         // TODO
