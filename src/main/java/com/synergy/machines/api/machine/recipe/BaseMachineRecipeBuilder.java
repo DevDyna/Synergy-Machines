@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.FluidAttach.Any.SimpleFluidAttach;
 import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.devdyna.cakesticklib.api.utils.x;
+import com.mojang.logging.LogUtils;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
 
@@ -96,12 +97,17 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
     }
 
     public T unlockedBy() {
-        return unlockedBy(MODULE_ID, InventoryChangeTrigger.TriggerInstance
-                .hasItems(this.input == null
-                        ? new Item[] { x.getFluidStacksFromIngredient(fluid_input).getFirst().getFluid().getBucket() }
-                        : x.getItemStacksFromIngredient(input).stream()
-                                .map(ItemStack::getItem)
-                                .toArray(Item[]::new)));
+        return unlockedBy("has_" + getMachine().id(),
+                InventoryChangeTrigger.TriggerInstance.hasItems(getMachine().item().get()));
+
+        // unlockedBy(MODULE_ID, InventoryChangeTrigger.TriggerInstance
+        // .hasItems(this.input == null
+        // ? new Item[] {
+        // x.getFluidStacksFromIngredient(fluid_input).getFirst().getFluid().getBucket()
+        // }
+        // : x.getItemStacksFromIngredient(input).stream()
+        // .map(ItemStack::getItem)
+        // .toArray(Item[]::new)));
     }
 
     public T unlockedBy(String name, Criterion<?> criterion) {
@@ -139,10 +145,27 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
         if (ChanceOutput.Item.itemValid(optional_output_item))
             return x.rl(MODULE_ID, getMachinePath() + x.name(optional_output_item.item().item().value()) + extra);
 
-        if (input != null && !input.ingredient().isEmpty())
-            return x.rl(MODULE_ID, getMachinePath() + x.name(input.ingredient().getValues().get(0).value()) + extra);
+        if (optional_input != null)
+            if (optional_input.ingredient().getValues().unwrapKey().isPresent())
+                return x.rl(MODULE_ID, getMachinePath()
+                        + optional_input.ingredient().getValues().unwrapKey().get().location().getPath() + extra);
 
-        throw new IllegalStateException("No valid ID found for " + getMachine().id());
+        if (input != null) {
+
+            var a = input.ingredient().getValues();
+
+            if (a.isImmediatelyResolvable())
+                return x.rl(MODULE_ID, getMachinePath()
+                        + x.name(a.stream().findFirst().get().value()) + extra);
+
+            if (a.unwrapKey().isPresent())
+                return x.rl(MODULE_ID, getMachinePath()
+                        + a.unwrapKey().get().location().getPath() + extra);
+
+        }
+
+        throw new IllegalStateException("No valid ID found for " + getMachine().id() + "details: " + output + " - "
+                + optional_output_item + " - " + optional_input + " - " + input);
 
     }
 
