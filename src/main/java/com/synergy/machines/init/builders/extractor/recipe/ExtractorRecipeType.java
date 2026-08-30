@@ -63,14 +63,14 @@ public class ExtractorRecipeType extends BaseMachineRecipeType<ItemInput.simple>
 
                 ChanceOutput.Item.CODEC.optionalFieldOf("secondary_item")
                         .forGetter(r -> ChanceOutput.Item.optional(r.getSecondaryOutputItem())),
-                FluidStackTemplate.CODEC.optionalFieldOf("optional_fluid", null)
-                        .forGetter(r -> optionalCodec(r.getFluidOutput())))
+                FluidStackTemplate.CODEC.optionalFieldOf("optional_fluid")
+                        .forGetter(r -> Optional.ofNullable(r.getFluidOutput())))
                 .apply(inst, (ticks, energy, input, secondary,fluid) -> new ExtractorRecipeType(
                         ticks,
                         energy,
                         input,
                         secondary.orElse(null),
-                        fluid)));
+                        fluid.orElse(null))));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, ExtractorRecipeType> STREAM_CODEC = StreamCodec
                 .composite(
