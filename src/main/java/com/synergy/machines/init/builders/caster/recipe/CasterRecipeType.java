@@ -58,51 +58,46 @@ public class CasterRecipeType extends BaseMachineRecipeType<ItemFluidInput> {
 
     @Override
     public SizedFluidIngredient getRecipeFluidInput(ItemFluidInput recipe) {
-        return x.fluidSized(recipe.input().getFluid(),recipe.input().amount());
+        return x.fluidSized(recipe.input().getFluid(), recipe.input().amount());
     }
 
     public static final RecipeSerializer<CasterRecipeType> serializer() {
         return new RecipeSerializer<>(CODEC, STREAM_CODEC);
     }
 
+    public static final MapCodec<CasterRecipeType> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("ticks").forGetter(CasterRecipeType::getTime),
+            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("energy").forGetter(CasterRecipeType::getEnergy),
 
-        public static final MapCodec<CasterRecipeType> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("ticks").forGetter(CasterRecipeType::getTime),
-                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("energy").forGetter(CasterRecipeType::getEnergy),
+            SizedFluidIngredient.CODEC.fieldOf("input_fluid").forGetter(CasterRecipeType::getFluidInput),
 
-                SizedFluidIngredient.CODEC.fieldOf("input_fluid").forGetter(CasterRecipeType::getFluidInput),
+            SizedIngredient.NESTED_CODEC.optionalFieldOf("input_item")
+                    .forGetter(r -> Optional.ofNullable(r.getInputItem())),
+            Codec.BOOL.fieldOf("consume_item").forGetter(CasterRecipeType::consumeCatalyst),
+            ItemStackTemplate.CODEC.fieldOf("output").forGetter(CasterRecipeType::getOutputItem)
 
-                SizedIngredient.NESTED_CODEC.optionalFieldOf("input_item",null)
-                        .forGetter(r->(r.getInputItem() == null || r.getInputItem().ingredient().isEmpty()) ? null : r.getInputItem()),
-                Codec.BOOL.fieldOf("consume_item").forGetter(CasterRecipeType::consumeCatalyst),
-                ItemStackTemplate.CODEC.fieldOf("output").forGetter(CasterRecipeType::getOutputItem)
+    )
+            .apply(inst, (t, e, f, i, c, o) -> new CasterRecipeType(t, e, f, i.orElse(null), c, o)));
 
-        )
-                .apply(inst, CasterRecipeType::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, CasterRecipeType> STREAM_CODEC = StreamCodec
+            .composite(
 
-        public static final StreamCodec<RegistryFriendlyByteBuf, CasterRecipeType> STREAM_CODEC = StreamCodec
-                .composite(
+                    ByteBufCodecs.INT, CasterRecipeType::getTime,
+                    ByteBufCodecs.INT, CasterRecipeType::getEnergy,
+                    SizedFluidIngredient.STREAM_CODEC, CasterRecipeType::getFluidInput,
 
-                        ByteBufCodecs.INT, CasterRecipeType::getTime,
-                        ByteBufCodecs.INT, CasterRecipeType::getEnergy,
-                        SizedFluidIngredient.STREAM_CODEC, CasterRecipeType::getFluidInput,
+                    ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC),
+                    r -> Optional.ofNullable(r.getInputItem()),
 
-                        ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC),
-                        r -> (r.getInputItem() == null || x.getItemStacksFromIngredient(r.getInputItem()).isEmpty())
-                                ? Optional.empty()
-                                : Optional.of(r.getInputItem()),
+                    ByteBufCodecs.BOOL, CasterRecipeType::consumeCatalyst,
 
-                        ByteBufCodecs.BOOL, CasterRecipeType::consumeCatalyst,
+                    ItemStackTemplate.STREAM_CODEC, CasterRecipeType::getOutputItem,
 
-                        ItemStackTemplate.STREAM_CODEC, CasterRecipeType::getOutputItem,
-
-                        (ticks, energy, f, i, o, c) -> new CasterRecipeType(
-                                ticks,
-                                energy,
-                                f,
-                                i.orElse(null),
-                                o, c));
-
-       
+                    (ticks, energy, f, i, o, c) -> new CasterRecipeType(
+                            ticks,
+                            energy,
+                            f,
+                            i.orElse(null),
+                            o, c));
 
 }
