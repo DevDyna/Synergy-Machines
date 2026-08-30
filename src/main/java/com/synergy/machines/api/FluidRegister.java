@@ -2,14 +2,12 @@ package com.synergy.machines.api;
 
 import java.util.function.ToIntFunction;
 
-import com.devdyna.cakesticklib.api.utils.x;
-import com.synergy.machines.init.types.zBlocks;
-import com.synergy.machines.init.types.zFluids;
-import com.synergy.machines.init.types.zItems;
-
+import javax.annotation.Nullable;
 import java.awt.Color;
 
-import net.minecraft.resources.Identifier;
+import com.devdyna.cakesticklib.api.utils.ColorUtils;
+import com.synergy.machines.init.types.*;
+
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
@@ -17,7 +15,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
@@ -28,12 +25,13 @@ import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
+//TODO IMP : rework to remove not anymore used stuff
+
 /**
  * Utility class to create fluids
  */
 public class FluidRegister {
 
-    private int color;
     private String id;
 
     private DeferredHolder<Fluid, BaseFlowingFluid.Source> fluidsource;
@@ -43,10 +41,6 @@ public class FluidRegister {
     private BaseFlowingFluid.Properties prop;
     private DeferredHolder<FluidType, ?> type;
 
-    private Identifier still;
-    // private Identifier flowing;
-    // private Identifier overlay;
-
     private int lightLevel;
     private ToIntFunction<BlockState> dynLightLevel;
     private int viscosity;
@@ -54,18 +48,16 @@ public class FluidRegister {
     private boolean canSwim;
     private boolean canPushEntity;
     private boolean canConvertToSource;
-
-    public FluidRegister(String id, float r, float g, float b, float a) {
-        this(id, rgba(r, g, b, a));
-    }
+    private int color;
 
     public FluidRegister(String id, int color) {
-        this.color = color;
-        this.id = id;
+        this(id, color, false);
+    }
 
-        this.still = x.mcLoc( "block/water_still");
-        // this.flowing = x.mcLoc( "block/water_flow");
-        // this.overlay = x.mcLoc( "block/water_overlay");
+    public FluidRegister(String id, int color, boolean noBucket) {
+
+        this.id = id;
+        this.color = color;
         this.viscosity = 1000;// approx water
         this.lightLevel = 0;
         this.dynLightLevel = a -> lightLevel;
@@ -76,7 +68,7 @@ public class FluidRegister {
 
         this.type = zFluids.zFluidTypes.register(
                 id + "_type",
-                () -> new FluidType(FluidType.Properties.create()
+                p -> new FluidType(FluidType.Properties.create()
                         .lightLevel(lightLevel)
                         .viscosity(viscosity)
                         .canDrown(canDrown)
@@ -84,38 +76,43 @@ public class FluidRegister {
                         .canPushEntity(canPushEntity)
                         .canConvertToSource(canConvertToSource)
                         .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
-                        .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)) {
+                        .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY))
 
-                });
+        );
 
         this.prop = new BaseFlowingFluid.Properties(this.type, null, null);
 
         this.fluidsource = zFluids.zFluids.register(id + "_source",
-                () -> new BaseFlowingFluid.Source(this.prop));
+                p -> new BaseFlowingFluid.Source(this.prop));
 
         this.fluidflowing = zFluids.zFluids.register(id + "_flowing",
-                () -> new BaseFlowingFluid.Flowing(this.prop));
+                p -> new BaseFlowingFluid.Flowing(this.prop));
 
-        this.itemBucket = zItems.zBucketItems.register(id + "_bucket",
-                () -> new BucketItem(this.fluidsource.get(),
-                        new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+        this.itemBucket = noBucket ? null
+                : zItems.zBucketItems.registerItem(id + "_bucket",
+                        p -> new BucketItem(this.fluidsource.get(),
+                                p.craftRemainder(Items.BUCKET).stacksTo(1)));
 
-        this.block = zBlocks.zBlockFluids.register(
+        this.block = zBlocks.zBlockFluids.registerBlock(
                 id,
-                () -> new LiquidBlock(this.fluidflowing.value(),
-                        BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollision()
+                pr -> new LiquidBlock(this.fluidsource.value(),
+                        pr.mapColor(MapColor.WATER).replaceable().noCollision()
                                 .strength(100.0F).pushReaction(PushReaction.DESTROY).noLootTable().liquid()
                                 .sound(SoundType.EMPTY)
                                 .liquid()
                                 .lightLevel(dynLightLevel)
                                 .emissiveRendering((s, g, p) -> lightLevel > 0 || dynLightLevel.applyAsInt(s) > 0)));
 
-        this.prop = new BaseFlowingFluid.Properties(
+        var sampleProp = new BaseFlowingFluid.Properties(
                 this.type,
                 this.fluidsource,
-                this.fluidflowing)
-                .bucket(this.itemBucket)
-                .block(this.block);
+                this.fluidflowing).block(this.block);
+
+        if (!noBucket)
+            sampleProp = sampleProp
+                    .bucket(this.itemBucket);
+
+        this.prop = sampleProp;
     }
 
     public DeferredHolder<Block, LiquidBlock> getBlock() {
@@ -130,37 +127,27 @@ public class FluidRegister {
         return fluidsource;
     }
 
-    public DeferredHolder<Item, BucketItem> getItemBucket() {
+    public @Nullable DeferredHolder<Item, BucketItem> getItemBucket() {
         return itemBucket;
     }
 
-    public Identifier getStill() {
-        return still;
-    }
+    // public Identifier getStill() {
+    // return still;
+    // }
 
     public DeferredHolder<FluidType, ?> getType() {
         return type;
     }
 
-    public FluidRegister setTextures(Identifier still) {
-        this.still = still;
-        return this;
-    }
-
-    // public FluidRegister setTextures(Identifier still, Identifier flowing) {
-    //     this.flowing = flowing;
-    //     return setTextures(still);
+    // public FluidRegister setTextures(Identifier still) {
+    // this.still = still;
+    // return this;
     // }
 
-    // public FluidRegister setTextures(Identifier still, Identifier flowing, Identifier overlay) {
-    //     this.overlay = overlay;
-    //     return setTextures(still, flowing);
+    // public FluidRegister setStillTexture(Identifier rl) {
+    // this.still = rl;
+    // return this;
     // }
-
-    public FluidRegister setStillTexture(Identifier rl) {
-        this.still = rl;
-        return this;
-    }
 
     /**
      * dont work
@@ -174,16 +161,6 @@ public class FluidRegister {
         this.dynLightLevel = l;
         return this;
     }
-
-    // public FluidRegister setFlowingTexture(Identifier rl) {
-    //     this.flowing = rl;
-    //     return this;
-    // }
-
-    // public FluidRegister setOverlayTexture(Identifier rl) {
-    //     this.overlay = rl;
-    //     return this;
-    // }
 
     public FluidRegister swim() {
         this.canSwim = true;
@@ -213,31 +190,28 @@ public class FluidRegister {
         return this;
     }
 
-    public int getColor() {
-        return color;
-    }
-
     public String getId() {
         return id;
     }
 
+    public int getColor() {
+        return color;
+    }
+
     public static FluidRegister create(String id, int color) {
-        return new FluidRegister(id, color);
+        return create(id, color, false);
     }
 
     public static FluidRegister create(String id, Color color) {
-        return new FluidRegister(id, color.getRGB());
+        return create(id, ColorUtils.argb(color));
     }
 
-    public static FluidRegister create(String id, float r, float g, float b, float a) {
-        return new FluidRegister(id, r, g, b, a);
+    public static FluidRegister create(String id, Color color, boolean noBucket) {
+        return create(id, ColorUtils.argb(color), noBucket);
     }
 
-    public static int rgba(float r, float g, float b, float a) {
-        return ((int) (a * 255) << 24)
-                | ((int) (b * 255) << 16)
-                | ((int) (g * 255) << 8)
-                | ((int) (r * 255));
+    public static FluidRegister create(String id, int color, boolean noBucket) {
+        return new FluidRegister(id, color, noBucket);
     }
 
     public Fluid getFluid() {
