@@ -76,7 +76,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
         recipeHolder = new MixedRecipeHolder(
 
                 (r.isEmpty()
-                        ? getCalculatedDelay(smelting)
+                        ? getCalculatedDelay(smelting.cookingTime())
                         : electric.getTime()),
 
                 (r.isEmpty()
@@ -114,9 +114,9 @@ public class ElectricFurnaceBE extends BaseMachineBE {
         return networkData;
     }
 
-    public static int getCalculatedDelay(SmeltingRecipe recipe) {
-        return Common.DISABLE_MACHINE_FURNACE_VANILLA_TICK_REDUCER.get() ? recipe.cookingTime()
-                : Math.max(Common.MACHINE_FURNACE_PROCESS_VANILLA_MIN_TICK_DELAY.get(), recipe.cookingTime()
+    public static int getCalculatedDelay(int time) {
+        return Common.DISABLE_MACHINE_FURNACE_VANILLA_TICK_REDUCER.get() ? time
+                : Math.max(Common.MACHINE_FURNACE_PROCESS_VANILLA_MIN_TICK_DELAY.get(), time
                         * Common.MACHINE_FURNACE_PROCESS_VANILLA_PERCENTUAGE_TICK_DELAY.get() / 100);
     }
 
