@@ -1,6 +1,7 @@
 package com.synergy.machines.api.machine.recipe;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javax.annotation.Nullable;
 
@@ -215,27 +216,24 @@ public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Re
         return getMachine().recipe().getSerializer();
     }
 
-    public static FluidStack optionalCodec(FluidStack f) {
-        return (f == null || f.isEmpty())
-                ? FluidStack.EMPTY
-                : f;
-    }
-    public static FluidStackTemplate optionalCodec(FluidStackTemplate f) {
-        return (f == null || f.fluid().value() == null)
-                ? null
-                : f;
+    @Deprecated
+    public static Optional<FluidStack> optionalCodec(FluidStack f) {
+        return Optional.ofNullable(f);
     }
 
-    public static ItemStackTemplate optionalCodec(ItemStackTemplate i) {
-        return (i == null || i.item().value() == null)
-                ? null
-                : i;
+    @Deprecated
+    public static Optional<FluidStackTemplate> optionalCodec(FluidStackTemplate f) {
+        return Optional.ofNullable(f);
     }
 
-    public static Ingredient optionalCodec(Ingredient i) {
-        return (i == null || i.isEmpty())
-                ? Ingredient.of()
-                : i;
+    @Deprecated
+    public static Optional<ItemStackTemplate> optionalCodec(ItemStackTemplate i) {
+        return Optional.ofNullable(i);
+    }
+
+    @Deprecated
+    public static Optional<Ingredient> optionalCodec(Ingredient i) {
+        return Optional.ofNullable(i);
     }
 
 }
