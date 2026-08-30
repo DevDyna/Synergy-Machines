@@ -3,11 +3,15 @@ package com.synergy.machines.datagen.client;
 import static com.synergy.machines.Main.MODULE_ID;
 
 import java.util.List;
+import java.util.Optional;
+
+import com.devdyna.cakesticklib.api.datagen.ModelUtils;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.BaseMachineBlock;
 import com.synergy.machines.api.solar_panel.SolarPanelBlock;
 import com.synergy.machines.init.types.zBlocks;
+import com.synergy.machines.init.types.zItems;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -23,7 +27,11 @@ import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.client.model.item.DynamicFluidContainerModel;
 
 public class DataModel extends ModelProvider {
 
@@ -33,6 +41,9 @@ public class DataModel extends ModelProvider {
 
         @Override
         protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+                
+                zItems.zBucketItems.getEntries().forEach(b -> createBucketItem(itemModels, b.get()));
+                zBlocks.zBlockFluids.getEntries().forEach(b -> ModelUtils.fluid(blockModels, b.get(), MODULE_ID));
 
                 var machines = List.of(zMachines.ALLOY_SMELTER, zMachines.CASTING_FACTORY, zMachines.COMPRESSOR,
                                 zMachines.ELECTRIC_FURNACE, zMachines.ELECTRIC_MELTER, zMachines.EXTRACTOR,
@@ -253,5 +264,50 @@ public class DataModel extends ModelProvider {
                                                                                 .term(SolarPanelBlock.WEST, true),
                                                                 angleSouthWest));
         }
+
+        // TODO API : MOVE TO API
+        private static void createBucketItem(ItemModelGenerators itemModels, Item bucket, boolean flipGas,
+                        boolean coverIsMask, boolean applyFluidLuminosity,
+                        boolean forceOpaqueFluid, Identifier container, Identifier mask) {
+                var item = (BucketItem) bucket;
+                itemModels.itemModelOutput.accept(item,
+                                new DynamicFluidContainerModel.Unbaked(
+                                                new DynamicFluidContainerModel.Textures(
+                                                                Optional.empty(),
+                                                                Optional.of(new Material(container)),
+                                                                Optional.of(new Material(mask)),
+                                                                Optional.empty()),
+                                                item.content, flipGas, coverIsMask, applyFluidLuminosity,
+                                                forceOpaqueFluid));
+
+        }
+
+
+
+          public static void createBucketItem(ItemModelGenerators itemModels, Item bucket, boolean flipGas,
+            boolean coverIsMask, boolean applyFluidLuminosity,
+            boolean forceOpaqueFluid) {
+        createBucketItem(itemModels, bucket, flipGas, coverIsMask, applyFluidLuminosity, forceOpaqueFluid,
+                x.mcLoc("item/bucket"), x.rl("neoforge", "item/mask/bucket_fluid_drip"));
+
+    }
+
+    public static void createBucketItem(ItemModelGenerators itemModels, Item bucket, boolean flipGas,
+            boolean coverIsMask, boolean applyFluidLuminosity) {
+        createBucketItem(itemModels, bucket, flipGas, coverIsMask, applyFluidLuminosity, true);
+    }
+
+    public static void createBucketItem(ItemModelGenerators itemModels, Item bucket, boolean flipGas,
+            boolean coverIsMask) {
+        createBucketItem(itemModels, bucket, flipGas, coverIsMask, true);
+    }
+
+    public static void createBucketItem(ItemModelGenerators itemModels, Item bucket, boolean flipGas) {
+        createBucketItem(itemModels, bucket, flipGas, false);
+    }
+
+    public static void createBucketItem(ItemModelGenerators itemModels, Item bucket) {
+        createBucketItem(itemModels, bucket, false);
+    }
 
 }
