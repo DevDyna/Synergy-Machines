@@ -5,6 +5,7 @@ import static com.synergy.machines.Main.MODULE_ID;
 import java.util.List;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.Client;
+import com.synergy.machines.Common;
 import com.synergy.machines.api.machine.BaseMachineScreen;
 import com.synergy.machines.compat.jei.categories.AlloySmelterCategory;
 import com.synergy.machines.compat.jei.categories.CasterCategory;
@@ -18,11 +19,14 @@ import com.synergy.machines.init.builders.alloy_smelter.AlloySmelterScreen;
 import com.synergy.machines.init.builders.caster.CasterScreen;
 import com.synergy.machines.init.builders.compressor.CompressorScreen;
 import com.synergy.machines.init.builders.extractor.ExtractorScreen;
+import com.synergy.machines.init.builders.furnace.ElectricFurnaceBE;
 import com.synergy.machines.init.builders.furnace.ElectricFurnaceScreen;
+import com.synergy.machines.init.builders.furnace.recipe.ElectricFurnaceRecipeType;
 import com.synergy.machines.init.builders.macerator.MaceratorScreen;
 import com.synergy.machines.init.builders.melter.MelterScreen;
 import com.synergy.machines.init.builders.rock_crusher.RockCrusherScreen;
 import com.synergy.machines.init.types.zMachines;
+import com.synergy.machines.mixin.SingleItemRecipeMixin;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -32,7 +36,9 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.renderer.Rect2i;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
@@ -57,7 +63,6 @@ public class PluginJEI implements IModPlugin {
                 r.addCraftingStation(MaceratorCategory.TYPE, x.item(zMachines.MACERATOR.item().get()));
                 r.addCraftingStation(MelterCategory.TYPE, x.item(zMachines.ELECTRIC_MELTER.item().get()));
                 r.addCraftingStation(RockCrusherCategory.TYPE, x.item(zMachines.ROCK_CRUSHER.item().get()));
-
         }
 
         @Override
@@ -91,43 +96,32 @@ public class PluginJEI implements IModPlugin {
                 r.addRecipes(ElectricFurnaceCategory.TYPE,
                                 getRecipes(zMachines.ELECTRIC_FURNACE.recipe().getType()));
 
-                // if (!Common.DISABLE_MACHINE_FURNACE_PROCESS_VANILLA.get())
-                //         r.addRecipes(ElectricFurnaceCategory.TYPE,
-                //                         (List<RecipeHolder<ElectricFurnaceRecipeType>>) getRecipes(RecipeType.SMELTING)
-                //                                         .stream()
-                //                                         .map(s -> {
+                if (!Common.DISABLE_MACHINE_FURNACE_PROCESS_VANILLA.get())
+                        r.addRecipes(ElectricFurnaceCategory.TYPE,
+                                        getRecipes(RecipeType.SMELTING)
+                                                        .stream()
+                                                        .map(s -> new RecipeHolder<ElectricFurnaceRecipeType>(
+                                                                        ResourceKey.create(Registries.RECIPE, x.rl(
+                                                                                        MODULE_ID,
+                                                                                        zMachines.ELECTRIC_FURNACE.id()
+                                                                                                        + "_generated_"
+                                                                                                        + s.id().identifier()
+                                                                                                                        .getPath()
+                                                                                                                        .replace("/",
+                                                                                                                                        "")))
+                                                                        // s.id()
+                                                                        , ElectricFurnaceRecipeType.of(
+                                                                                        ElectricFurnaceBE
+                                                                                                        .getCalculatedDelay(
+                                                                                                                        s.value().cookingTime()),
+                                                                                        Common.MACHINE_FURNACE_PROCESS_VANILLA_FE_COST
+                                                                                                        .get(),
+                                                                                        x.itemSized(s.value().input()),
+                                                                                        ((SingleItemRecipeMixin) s
+                                                                                                        .value())
+                                                                                                        .getResult()))
 
-                //                                             return    new RecipeHolder<>(Registries.RECIPE_TYPE.,null);
-
-                //                                         }));
-
-                // if (!Common.DISABLE_MACHINE_FURNACE_PROCESS_VANILLA.get())
-                // r.addRecipes(ElectricFurnaceCategory.TYPE,
-                // getRecipes(RecipeType.SMELTING).stream()
-                // .map(s -> new RecipeHolder<>(
-                // x.rl(MODULE_ID,zMachines.ELECTRIC_FURNACE.id()
-                // + "_generated_"
-                // + s.id().identifier().getPath().replace("/",
-                // "")),
-                // (ElectricFurnaceRecipeType) ElectricFurnaceRecipeBuilder
-                // .of()
-                // .delay(ElectricFurnaceBE
-                // .getCalculatedDelay(
-                // s.value()))
-                // .energy(Common.MACHINE_FURNACE_PROCESS_VANILLA_FE_COST
-                // .get())
-                // .input(x.itemSized(((BaseMachineRecipeType<MonoItemInput>) s.value())
-                // .getIngredients()
-                // .getFirst()))
-                // .output(s.value().getResultItem(
-                // ServerLifecycleHooks
-                // .getCurrentServer()
-                // .registryAccess()))
-                // .createRecipe())
-
-                // )
-
-                // .toList());
+                                                        ).toList());
 
                 r.addRecipes(ExtractorCategory.TYPE,
                                 getRecipes(zMachines.EXTRACTOR.recipe().getType()));
