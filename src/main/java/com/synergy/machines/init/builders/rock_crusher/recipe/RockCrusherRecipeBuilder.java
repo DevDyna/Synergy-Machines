@@ -15,6 +15,8 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
+import net.neoforged.neoforge.registries.DeferredHolder;
+
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
 import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.devdyna.cakesticklib.api.utils.x;
@@ -67,12 +69,16 @@ public class RockCrusherRecipeBuilder extends BaseMachineRecipeBuilder<RockCrush
         return addResult(x.itemTemplate(item), chance);
     }
 
-    public RockCrusherRecipeBuilder addResult(Item item,int count, float chance) {
-        return addResult(x.itemTemplate(item,count), chance);
+    public RockCrusherRecipeBuilder addResult(DeferredHolder<Item, Item> item, float chance) {
+        return addResult(item.get(), chance);
     }
 
-  
+    public RockCrusherRecipeBuilder addResult(Item item, int count, float chance) {
+        return addResult(x.itemTemplate(item, count), chance);
+    }
 
-
+    public RockCrusherRecipeBuilder addResult(DeferredHolder<Item, Item> item, int count, float chance) {
+        return addResult(item.get(), count, chance);
+    }
 
 }
