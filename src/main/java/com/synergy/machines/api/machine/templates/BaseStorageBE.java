@@ -75,6 +75,28 @@ public abstract class BaseStorageBE extends BaseRecipeBE
     public ItemStacksResourceHandler getAutomationItemStorage() {
         return new ItemStacksResourceHandler(getMachineSlots()) {
 
+
+            @Override
+            public ItemResource getResource(int i) {
+                return getItemStorage().getResource(i);
+            }
+
+            @Override
+            public long getAmountAsLong(int i) {
+                return getItemStorage().getAmountAsLong(i);
+            }
+
+            @Override
+            public long getCapacityAsLong(int i, ItemResource r) {
+                if (getInputSlotIndex().contains(i))
+                    return getItemStorage().getCapacityAsLong(i, r);
+
+                if (getOutputSlotIndex().contains(i))
+                    return getItemStorage().getCapacityAsLong(i, r);
+
+                return 0;
+            }
+
             @Override
             public boolean isValid(int i, ItemResource r) {
                 return getInputSlotIndex().contains(i) && getItemStorage().isValid(i, r);
