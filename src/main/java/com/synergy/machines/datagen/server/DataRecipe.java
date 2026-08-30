@@ -37,56 +37,56 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 .input(Items.RAW_IRON)
                                 .output(LibItems.IRON_DUST, 2)
                                 .output(LibItems.IRON_DUST, 1, 0.25f)
-                                .unlockedBy(MODULE_ID, has(Items.RAW_IRON))
+                                .unlockedBy(Items.RAW_IRON)
                                 .save(output);
 
                 AlloySmelterRecipeBuilder.of(registries)
                                 .inputs(Items.NETHERITE_SCRAP, Items.GOLD_INGOT)
                                 .output(Items.NETHERITE_INGOT)
-                                .unlockedBy(MODULE_ID, has(Items.NETHERITE_SCRAP))
+                                .unlockedBy(Items.NETHERITE_SCRAP)
                                 .save(output);
 
                 CasterRecipeBuilder.of(registries)
                                 .fluid(Fluids.WATER)
                                 .input(Items.COBBLESTONE)
                                 .output(Items.MOSSY_COBBLESTONE)
-                                .unlockedBy(MODULE_ID, has(Items.COBBLESTONE))
+                                .unlockedBy(Items.COBBLESTONE)
                                 .save(output);
 
                 CompressorRecipeBuilder.of(registries)
                                 .input(Items.NETHERITE_SCRAP)
                                 .catalyst(Items.GOLD_INGOT)
                                 .output(Items.NETHERITE_INGOT)
-                                .unlockedBy(MODULE_ID, has(Items.NETHERITE_SCRAP))
+                                .unlockedBy(Items.NETHERITE_SCRAP)
                                 .save(output);
 
                 ElectricFurnaceRecipeBuilder.of(registries)
                                 .input(Items.RAW_IRON)
                                 .output(Items.IRON_INGOT)
-                                .unlockedBy(MODULE_ID, has(Items.RAW_IRON))
+                                .unlockedBy(Items.RAW_IRON)
                                 .save(output);
 
                 ExtractorRecipeBuilder.of(registries)
                                 .input(Items.MAGMA_BLOCK)
                                 .output(Fluids.LAVA, 250)
                                 .output(Items.NETHERRACK, 0.5f)
-                                .unlockedBy(MODULE_ID, has(Items.MAGMA_BLOCK))
+                                .unlockedBy(Items.MAGMA_BLOCK)
                                 .save(output);
 
                 MelterRecipeBuilder.of(registries)
                                 .input(Items.COBBLESTONE)
                                 .output(Fluids.LAVA, 125)
-                                .unlockedBy(MODULE_ID, has(Items.COBBLESTONE))
+                                .unlockedBy(Items.COBBLESTONE)
                                 .save(output);
 
                 RockCrusherRecipeBuilder.of(registries)
                                 .fluid(Fluids.WATER, 125)
                                 .input(Items.STONE)
-                                .addResult(Items.COBBLESTONE, 2,1f)
+                                .addResult(Items.COBBLESTONE, 2, 1f)
                                 .addResult(Items.RAW_COPPER, 0.25f)
                                 .addResult(Items.RAW_GOLD, 0.15f)
                                 .addResult(Items.RAW_IRON, 0.28f)
-                                .unlockedBy(MODULE_ID, has(Items.STONE))
+                                .unlockedBy(Items.STONE)
                                 .save(output);
 
         }
