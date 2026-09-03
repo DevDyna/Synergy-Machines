@@ -2,8 +2,8 @@ package com.synergy.machines.init.builders.rock_crusher;
 
 import java.util.List;
 
+import com.devdyna.cakesticklib.api.upgrades.UpgradeComponents.UpgradeType;
 import com.devdyna.cakesticklib.api.utils.ArrayUtils;
-import com.devdyna.cakesticklib.api.utils.UpgradeComponents.UpgradeType;
 import com.synergy.machines.api.machine.BaseMachineScreen;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
