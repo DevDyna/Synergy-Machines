@@ -12,7 +12,6 @@ import com.synergy.machines.init.builders.alloy_smelter.recipe.AlloySmelterRecip
 import com.synergy.machines.init.builders.caster.recipe.CasterRecipeBuilder;
 import com.synergy.machines.init.builders.compressor.recipe.CompressorRecipeBuilder;
 import com.synergy.machines.init.builders.extractor.recipe.ExtractorRecipeBuilder;
-import com.synergy.machines.init.builders.furnace.recipe.ElectricFurnaceRecipeBuilder;
 import com.synergy.machines.init.builders.macerator.recipe.MaceratorRecipeBuilder;
 import com.synergy.machines.init.builders.melter.recipe.MelterRecipeBuilder;
 import com.synergy.machines.init.builders.rock_crusher.recipe.RockCrusherRecipeBuilder;
@@ -49,7 +48,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
 
                 MaceratorRecipeBuilder.of(registries)
                                 .input(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
-                                .output(x.itemTemplate(Items.SAND), 2) // TODO
+                                .output(x.itemTemplate(Items.SAND, 2)) // TODO
                                 .output(LibItems.SILICON_SHARD, 1, 0.5f)
                                 .unlockedBy(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS, items)
                                 .save(output);
@@ -213,7 +212,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
 
                 MaceratorRecipeBuilder.of(registries)
                                 .input(raw)
-                                .output(x.itemTemplate(dust), 2) //TODO
+                                .output(x.itemTemplate(dust.asItem(), 2)) //TODO
                                 .output(dust.asItem(), 1, 0.05f)
                                 .unlockedBy(raw)
                                 .save(output, "_from_raw");
@@ -257,11 +256,11 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 .unlockedBy(nugget)
                                 .save(output, "_from_nugget");
 
-                ElectricFurnaceRecipeBuilder.of(registries)
-                                .input(dust)
-                                .output(ingot)
-                                .unlockedBy(dust)
-                                .save(output);
+                // ElectricFurnaceRecipeBuilder.of(registries)
+                //                 .input(dust)
+                //                 .output(ingot)
+                //                 .unlockedBy(dust)
+                //                 .save(output);
 
                 MelterRecipeBuilder.of(registries)
                                 .input(raw)
