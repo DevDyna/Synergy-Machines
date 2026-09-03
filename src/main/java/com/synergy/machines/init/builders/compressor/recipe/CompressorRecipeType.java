@@ -22,7 +22,6 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
-@SuppressWarnings("null")
 public class CompressorRecipeType extends BaseMachineRecipeType<BiItemInput> {
 
     public CompressorRecipeType(int ticks, int energy, SizedIngredient input, SizedIngredient plate,
