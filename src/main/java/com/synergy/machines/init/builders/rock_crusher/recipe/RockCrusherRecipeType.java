@@ -21,7 +21,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
-@SuppressWarnings("null")
 public class RockCrusherRecipeType extends BaseMachineRecipeType<ItemFluidInput> {
 
     private List<ChanceOutput.Item> result;
