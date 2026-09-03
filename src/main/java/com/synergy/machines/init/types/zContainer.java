@@ -1,7 +1,5 @@
 package com.synergy.machines.init.types;
 
-
-
 import static com.synergy.machines.Main.MODULE_ID;
 
 import net.minecraft.core.registries.Registries;
@@ -14,6 +12,6 @@ public class zContainer {
                 zMenu.register(bus);
         }
 
-    public static final DeferredRegister<MenuType<?>> zMenu = DeferredRegister.create(Registries.MENU, MODULE_ID);
+        public static final DeferredRegister<MenuType<?>> zMenu = DeferredRegister.create(Registries.MENU, MODULE_ID);
 
 }
