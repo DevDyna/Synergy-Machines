@@ -3,14 +3,16 @@ package com.synergy.machines.api.machine;
 import static com.synergy.machines.Main.MODULE_ID;
 
 import java.util.List;
+
 import javax.annotation.Nullable;
 
 import com.devdyna.cakesticklib.api.gui.BaseScreen;
-import com.devdyna.cakesticklib.api.gui.ScreenUpgradable;
 import com.devdyna.cakesticklib.api.primitive.Pos;
+import com.devdyna.cakesticklib.api.upgrades.ScreenUpgradable;
 import com.devdyna.cakesticklib.api.utils.StringUtil;
 import com.devdyna.cakesticklib.api.utils.UpgradeSlotBuilder;
 import com.devdyna.cakesticklib.api.utils.x;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -50,8 +52,9 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         }
 
         @Override
-        protected @Nullable Identifier arrow() {// TODO API : move to api
-                return Identifier.withDefaultNamespace("container/furnace/burn_progress");
+        @Nullable
+        protected Identifier arrow() {
+                return furnace_arrow;
         }
 
         protected boolean whenAnimateArrow() {
@@ -190,6 +193,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         @Override
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
 
+                // TODO API : GUI_TEXTURED
                 guiGraphics.blit(
                                 RenderPipelines.GUI_TEXTURED,
                                 background(),
@@ -198,6 +202,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                 0, 0,
                                 175, 165,
                                 256, 256);
+
                 this.renderArrow(guiGraphics);
 
                 renderUpgradesLabel(guiGraphics, 172, 0);
@@ -301,19 +306,6 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                 .set(3, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_4).getItem(),
                                                 Pos.of(getLeftPos() + 179, getTopPos() + 61)
                                                                 .setSize(18, 18));
-        }
-
-        // TODO update api
-        protected void renderArrow(GuiGraphicsExtractor guiGraphics) {
-
-                if (this.arrow() != null && this.whenAnimateArrow())
-                        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,
-                                        Identifier.withDefaultNamespace("container/furnace/burn_progress"),
-                                        24, 16,
-                                        0, 0,
-                                        getLeftPos() + 79 - 4 - 1, getTopPos() + 34,
-                                        getScaledArrowProgress(), 16);
-
         }
 
 }
