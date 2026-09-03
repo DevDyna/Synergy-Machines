@@ -14,7 +14,6 @@ public class GameEvents {
         bus.register(CreativeTabs.class);
         NeoForge.EVENT_BUS.register(ItemToolTipped.class);
         NeoForge.EVENT_BUS.register(RecipeSender.class);
-
     }
 
 }
