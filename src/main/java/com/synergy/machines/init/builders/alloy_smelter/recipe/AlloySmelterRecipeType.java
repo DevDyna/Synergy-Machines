@@ -20,7 +20,6 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
-@SuppressWarnings("null")
 public class AlloySmelterRecipeType extends BaseMachineRecipeType<BiItemInput> {
 
     public AlloySmelterRecipeType(int ticks, int energy, SizedIngredient  right,SizedIngredient  left,
