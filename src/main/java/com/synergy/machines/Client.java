@@ -1,8 +1,8 @@
 package com.synergy.machines;
 
 import com.devdyna.cakesticklib.api.FluidRenderUtils;
+import com.devdyna.cakesticklib.api.utils.ClazzUtil;
 import com.devdyna.cakesticklib.api.utils.x;
-import com.synergy.machines.api.ClassUtils;
 import com.synergy.machines.api.FluidRegister;
 import com.synergy.machines.init.builders.alloy_smelter.AlloySmelterScreen;
 import com.synergy.machines.init.builders.caster.CasterScreen;
@@ -63,6 +63,7 @@ public class Client {
         event.register(zMachines.ROCK_CRUSHER.menu().get(), RockCrusherScreen::new);
     }
 
+    @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
 
@@ -71,7 +72,7 @@ public class Client {
             public Identifier getRenderOverlayTexture(Minecraft mc) {
                 return x.parse("textures/misc/underwater.png");
             }
-        }, ClassUtils.getAll(zFluids.class, FluidRegister.class)
+        }, ClazzUtil.getAll(zFluids.class, FluidRegister.class)
                 .stream()
                 .map(FluidRegister::getType)
                 .map(DeferredHolder::get)
@@ -79,10 +80,11 @@ public class Client {
 
     }
 
+    @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void onRegisterFluidModels(RegisterFluidModelsEvent event) {
 
-        ClassUtils.getAll(zFluids.class, FluidRegister.class).forEach(
+        ClazzUtil.getAll(zFluids.class, FluidRegister.class).forEach(
                 f -> event.register(
                         FluidRenderUtils.createWaterModel(new FluidTintSource() {
 
