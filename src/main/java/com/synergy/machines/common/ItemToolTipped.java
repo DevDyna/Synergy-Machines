@@ -3,7 +3,6 @@ package com.synergy.machines.common;
 import com.devdyna.cakesticklib.CakeStickLib;
 import com.synergy.machines.Common;
 import com.synergy.machines.api.solar_panel.SolarPanelBlock;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
