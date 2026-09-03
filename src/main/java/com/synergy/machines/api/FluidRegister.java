@@ -25,8 +25,6 @@ import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-//TODO IMP : rework to remove not anymore used stuff
-
 /**
  * Utility class to create fluids
  */
