@@ -17,7 +17,10 @@ public class CreativeTabs {
 
             CreativeTabUtils.accept(event, zBlocks.SOLAR_PANEL.get().asItem(), zBlocks.LUNAR_PANEL.get().asItem());
 
+          
         }
 
     }
+
+  
 }
