@@ -19,6 +19,7 @@ import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
+@SuppressWarnings("deprecation")
 public abstract class SolarPanelBE extends TickingBE implements EnergyProvider {
 
     private final Map<Direction, BlockCapabilityCache<EnergyHandler, Direction>> cache = new HashMap<>();
