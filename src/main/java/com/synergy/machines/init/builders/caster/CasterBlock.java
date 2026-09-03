@@ -2,8 +2,8 @@ package com.synergy.machines.init.builders.caster;
 
 import javax.annotation.Nullable;
 
+import com.devdyna.cakesticklib.api.aspect.logic.BucketInteraction;
 import com.synergy.machines.api.machine.BaseMachineBlock;
-import com.synergy.machines.api.machine.attachments.BucketAction;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class CasterBlock extends BaseMachineBlock implements BucketAction {
+public class CasterBlock extends BaseMachineBlock implements BucketInteraction.Simple {
 
     public CasterBlock(Properties p) {
         super(p);
