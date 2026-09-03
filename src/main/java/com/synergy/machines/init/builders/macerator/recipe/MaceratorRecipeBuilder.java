@@ -10,8 +10,6 @@ import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.util.datafix.fixes.ItemStackTagFix;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
