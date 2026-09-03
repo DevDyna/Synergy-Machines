@@ -5,6 +5,10 @@
     "count": 1,
     "ingredient": "minecraft:raw_copper"
   },
+  "output": {
+    "count": 2,
+    "id": "cakesticklib:copper_dust"
+  },
   "secondary_item": {
     "chance": 0.05,
     "item": {
