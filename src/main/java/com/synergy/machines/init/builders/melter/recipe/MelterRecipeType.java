@@ -19,7 +19,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
-@SuppressWarnings("null")
 public class MelterRecipeType extends BaseMachineRecipeType<ItemInput.simple> {
 
     public MelterRecipeType(int ticks, int energy, SizedIngredient input, FluidStackTemplate fluid) {
