@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "machines:electric_furnace/iron_ingot"
+        "recipe": "machines:casting_factory/gold_plate"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "iron_dust": {
+    "plate_mold": {
       "conditions": {
         "items": [
           {
-            "items": "cakesticklib:iron_dust"
+            "items": "cakesticklib:plate_mold"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "iron_dust"
+      "plate_mold"
     ]
   ],
   "rewards": {
     "recipes": [
-      "machines:electric_furnace/iron_ingot"
+      "machines:casting_factory/gold_plate"
     ]
   }
 }

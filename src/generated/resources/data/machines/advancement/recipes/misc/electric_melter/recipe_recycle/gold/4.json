@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "machines:electric_furnace/iron_ingot"
+        "recipe": "machines:electric_melter/recipe_recycle/gold/4"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "iron_dust": {
+    "recipe_recycle/gold/4": {
       "conditions": {
         "items": [
           {
-            "items": "cakesticklib:iron_dust"
+            "items": "#machines:recipe_recycle/gold/4"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "iron_dust"
+      "recipe_recycle/gold/4"
     ]
   ],
   "rewards": {
     "recipes": [
-      "machines:electric_furnace/iron_ingot"
+      "machines:electric_melter/recipe_recycle/gold/4"
     ]
   }
 }

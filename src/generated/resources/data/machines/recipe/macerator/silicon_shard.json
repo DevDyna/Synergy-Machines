@@ -1,0 +1,15 @@
+{
+  "type": "machines:macerator",
+  "energy": 500,
+  "input": {
+    "count": 1,
+    "ingredient": "#c:sandstone/uncolored_blocks"
+  },
+  "secondary_item": {
+    "chance": 0.5,
+    "item": {
+      "id": "cakesticklib:silicon_shard"
+    }
+  },
+  "ticks": 100
+}

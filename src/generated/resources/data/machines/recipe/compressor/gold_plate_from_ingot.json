@@ -1,0 +1,17 @@
+{
+  "type": "machines:compressor",
+  "consume_catalyst": false,
+  "energy": 500,
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:gold_ingot"
+  },
+  "output": {
+    "id": "cakesticklib:gold_plate"
+  },
+  "plate": {
+    "count": 1,
+    "ingredient": "cakesticklib:plate_mold"
+  },
+  "ticks": 100
+}

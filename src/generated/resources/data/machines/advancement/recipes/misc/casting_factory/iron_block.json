@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "machines:electric_furnace/iron_ingot"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "iron_dust": {
+    "block_mold": {
       "conditions": {
         "items": [
           {
-            "items": "cakesticklib:iron_dust"
+            "items": "cakesticklib:block_mold"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "machines:casting_factory/iron_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "iron_dust"
+      "block_mold"
     ]
   ],
   "rewards": {
     "recipes": [
-      "machines:electric_furnace/iron_ingot"
+      "machines:casting_factory/iron_block"
     ]
   }
 }

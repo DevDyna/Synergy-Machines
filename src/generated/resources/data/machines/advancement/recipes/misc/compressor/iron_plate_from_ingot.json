@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "machines:electric_furnace/iron_ingot"
+        "recipe": "machines:compressor/iron_plate_from_ingot"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "iron_dust": {
+    "iron_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "cakesticklib:iron_dust"
+            "items": "minecraft:iron_ingot"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "iron_dust"
+      "iron_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "machines:electric_furnace/iron_ingot"
+      "machines:compressor/iron_plate_from_ingot"
     ]
   }
 }

@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "machines:electric_furnace/iron_ingot"
+        "recipe": "machines:casting_factory/iron_nugget"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "iron_dust": {
+    "steel_nugget": {
       "conditions": {
         "items": [
           {
-            "items": "cakesticklib:iron_dust"
+            "items": "cakesticklib:steel_nugget"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "iron_dust"
+      "steel_nugget"
     ]
   ],
   "rewards": {
     "recipes": [
-      "machines:electric_furnace/iron_ingot"
+      "machines:casting_factory/iron_nugget"
     ]
   }
 }

@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "machines:electric_furnace/iron_ingot"
+        "recipe": "machines:macerator/silicon_shard"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "iron_dust": {
+    "sandstone/uncolored_blocks": {
       "conditions": {
         "items": [
           {
-            "items": "cakesticklib:iron_dust"
+            "items": "#c:sandstone/uncolored_blocks"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "iron_dust"
+      "sandstone/uncolored_blocks"
     ]
   ],
   "rewards": {
     "recipes": [
-      "machines:electric_furnace/iron_ingot"
+      "machines:macerator/silicon_shard"
     ]
   }
 }

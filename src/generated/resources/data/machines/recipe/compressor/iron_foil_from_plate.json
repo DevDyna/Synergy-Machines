@@ -1,0 +1,17 @@
+{
+  "type": "machines:compressor",
+  "consume_catalyst": false,
+  "energy": 500,
+  "input": {
+    "count": 1,
+    "ingredient": "cakesticklib:iron_plate"
+  },
+  "output": {
+    "id": "cakesticklib:iron_foil"
+  },
+  "plate": {
+    "count": 1,
+    "ingredient": "cakesticklib:foil_mold"
+  },
+  "ticks": 100
+}

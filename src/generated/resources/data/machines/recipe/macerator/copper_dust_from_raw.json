@@ -1,0 +1,15 @@
+{
+  "type": "machines:macerator",
+  "energy": 500,
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:raw_copper"
+  },
+  "secondary_item": {
+    "chance": 0.05,
+    "item": {
+      "id": "cakesticklib:copper_dust"
+    }
+  },
+  "ticks": 100
+}

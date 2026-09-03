@@ -3,10 +3,10 @@
   "energy": 500,
   "input": {
     "count": 1,
-    "ingredient": "cakesticklib:iron_dust"
+    "ingredient": "cakesticklib:gold_dust"
   },
   "output": {
-    "id": "minecraft:iron_ingot"
+    "id": "minecraft:gold_ingot"
   },
   "ticks": 100
 }

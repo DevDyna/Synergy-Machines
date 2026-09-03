@@ -1,0 +1,17 @@
+{
+  "type": "machines:casting_factory",
+  "consume_item": false,
+  "energy": 500,
+  "input_fluid": {
+    "amount": 144,
+    "ingredient": "machines:iron_source"
+  },
+  "input_item": {
+    "count": 1,
+    "ingredient": "cakesticklib:foil_mold"
+  },
+  "output": {
+    "id": "cakesticklib:iron_foil"
+  },
+  "ticks": 10
+}

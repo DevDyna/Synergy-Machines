@@ -1,0 +1,17 @@
+{
+  "type": "machines:compressor",
+  "consume_catalyst": false,
+  "energy": 500,
+  "input": {
+    "count": 9,
+    "ingredient": "minecraft:iron_ingot"
+  },
+  "output": {
+    "id": "minecraft:iron_block"
+  },
+  "plate": {
+    "count": 1,
+    "ingredient": "cakesticklib:block_mold"
+  },
+  "ticks": 100
+}

@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "machines:electric_furnace/iron_ingot"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "iron_dust": {
+    "copper_dust": {
       "conditions": {
         "items": [
           {
-            "items": "cakesticklib:iron_dust"
+            "items": "cakesticklib:copper_dust"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "machines:electric_furnace/copper_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "iron_dust"
+      "copper_dust"
     ]
   ],
   "rewards": {
     "recipes": [
-      "machines:electric_furnace/iron_ingot"
+      "machines:electric_furnace/copper_ingot"
     ]
   }
 }
