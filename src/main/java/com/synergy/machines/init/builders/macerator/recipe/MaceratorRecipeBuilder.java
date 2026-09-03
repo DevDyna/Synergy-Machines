@@ -39,13 +39,12 @@ public class MaceratorRecipeBuilder extends BaseMachineRecipeBuilder<MaceratorRe
         return zMachines.MACERATOR;
     }
 
-    //TODO
+    // TODO
     @Override
     public MaceratorRecipeBuilder output(ItemStackTemplate item) {
         this.output = item;
         return this;
     }
-
     // TODO API : revert .output(chance.item) ->
     // .chance(chance.item)
     @Override
