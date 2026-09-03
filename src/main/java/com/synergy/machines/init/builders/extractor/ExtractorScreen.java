@@ -4,8 +4,8 @@ import static com.synergy.machines.Main.MODULE_ID;
 
 import java.util.List;
 
+import com.devdyna.cakesticklib.api.upgrades.UpgradeComponents.UpgradeType;
 import com.devdyna.cakesticklib.api.utils.ArrayUtils;
-import com.devdyna.cakesticklib.api.utils.UpgradeComponents.UpgradeType;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.machine.BaseMachineScreen;
 
