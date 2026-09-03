@@ -130,7 +130,7 @@ public abstract class BaseRecipeBE extends BaseEnergyBE {
      * {@link BaseMachineBE#init}
      */
     public boolean succed() {
-        // TODO maybe pointless
+        //  maybe pointless
         return true;
     }
 
@@ -174,7 +174,13 @@ public abstract class BaseRecipeBE extends BaseEnergyBE {
 
         result();
 
+        ejection();
+
         progress = 0;
+    }
+
+    protected void ejection(){
+
     }
 
     public static <RECIPE extends BaseMachineRecipeType<INPUT>, INPUT extends RecipeInput> Optional<RecipeHolder<RECIPE>> getRecipes(
