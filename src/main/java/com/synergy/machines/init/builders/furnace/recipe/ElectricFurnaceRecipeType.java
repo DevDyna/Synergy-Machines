@@ -17,7 +17,6 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
-@SuppressWarnings("null")
 public class ElectricFurnaceRecipeType extends BaseMachineRecipeType<ItemInput.simple> {
 
     public ElectricFurnaceRecipeType(int ticks, int energy, SizedIngredient input,
