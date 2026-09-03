@@ -1,6 +1,8 @@
 package com.synergy.machines.init.builders.macerator.recipe;
 
 
+import java.util.Optional;
+
 import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
 import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.mojang.serialization.Codec;
@@ -61,14 +63,14 @@ public class MaceratorRecipeType extends BaseMachineRecipeType<ItemInput.simple>
                 Codec.intRange(1, Integer.MAX_VALUE).fieldOf("energy").forGetter(MaceratorRecipeType::getEnergy),
 
                 SizedIngredient.NESTED_CODEC.fieldOf("input").forGetter(MaceratorRecipeType::getInputItem),
-                ItemStackTemplate.CODEC.fieldOf("output").forGetter(MaceratorRecipeType::getOutputItem),
+                ItemStackTemplate.CODEC.optionalFieldOf("output").forGetter(r->Optional.ofNullable(r.getOutputItem())),
                 ChanceOutput.Item.CODEC.optionalFieldOf("secondary_item")
                         .forGetter(r -> ChanceOutput.Item.optional(r.getSecondaryOutputItem())))
                 .apply(inst, (ticks, energy, input, output, secondary) -> new MaceratorRecipeType(
                         ticks,
                         energy,
                         input,
-                        output,
+                        output.orElse(null),
                         secondary.orElse(null))));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, MaceratorRecipeType> STREAM_CODEC = StreamCodec
@@ -76,14 +78,14 @@ public class MaceratorRecipeType extends BaseMachineRecipeType<ItemInput.simple>
                         ByteBufCodecs.INT, MaceratorRecipeType::getTime,
                         ByteBufCodecs.INT, MaceratorRecipeType::getEnergy,
                         SizedIngredient.STREAM_CODEC, MaceratorRecipeType::getInputItem,
-                        ItemStackTemplate.STREAM_CODEC, MaceratorRecipeType::getOutputItem,
+                        ByteBufCodecs.optional(ItemStackTemplate.STREAM_CODEC),r-> Optional.ofNullable(r.getOutputItem()),
                         ByteBufCodecs.optional(ChanceOutput.Item.STREAM_CODEC),
                         r -> ChanceOutput.Item.optional(r.getSecondaryOutputItem()),
                         (ticks, energy, input, output, secondary) -> new MaceratorRecipeType(
                                 ticks,
                                 energy,
                                 input,
-                                output,
+                                output.orElse(null),
                                 secondary.orElse(null)));
 
        

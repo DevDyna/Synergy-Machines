@@ -10,6 +10,9 @@ import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.util.datafix.fixes.ItemStackTagFix;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 
@@ -38,6 +41,15 @@ public class MaceratorRecipeBuilder extends BaseMachineRecipeBuilder<MaceratorRe
         return zMachines.MACERATOR;
     }
 
+    //TODO
+    @Override
+    public MaceratorRecipeBuilder output(ItemStackTemplate item) {
+        this.output = item;
+        return this;
+    }
+
+    // TODO API : revert .output(chance.item) ->
+    // .chance(chance.item)
     @Override
     public MaceratorRecipeBuilder output(ChanceOutput.Item item) {
         this.optional_output_item = item;
