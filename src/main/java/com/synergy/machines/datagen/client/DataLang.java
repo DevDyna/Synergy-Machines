@@ -9,11 +9,8 @@ import com.synergy.machines.init.Material;
 import com.synergy.machines.init.types.*;
 
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.LanguageProvider;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
-@SuppressWarnings("unused")
 public class DataLang extends LanguageProvider implements LangGenerators {
 
         public DataLang(PackOutput o) {
