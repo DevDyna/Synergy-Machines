@@ -1,11 +1,13 @@
 package com.synergy.machines.init.builders.extractor;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
+import com.devdyna.cakesticklib.api.aspect.logic.ResourceRestricted;
 import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
-import com.synergy.machines.api.machine.TypedFluidStorage;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.core.BlockPos;
@@ -19,7 +21,7 @@ import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
 @SuppressWarnings("null")
-public class ExtractorBE extends BaseMachineBE implements TypedFluidStorage {
+public class ExtractorBE extends BaseMachineBE implements ResourceRestricted.Fluid {
 
     public ExtractorBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -90,7 +92,6 @@ public class ExtractorBE extends BaseMachineBE implements TypedFluidStorage {
                         recipe.getSecondaryOutputItem().item().count(), false);
 
         if (recipe.getFluidOutput() != null)
-
             updateResource(getFluidStorage().getResource(0), 0, recipe.getFluidOutput().amount(), false);
 
         updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
@@ -119,7 +120,7 @@ public class ExtractorBE extends BaseMachineBE implements TypedFluidStorage {
     }
 
     @Override
-    public FluidTankType getTankIOType() {
-        return FluidTankType.OUTPUT;
+    public List<Integer> getInputTankIndex() {
+        return List.of();
     }
 }

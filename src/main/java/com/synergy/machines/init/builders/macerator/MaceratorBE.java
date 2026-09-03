@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 
 import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
 import com.synergy.machines.api.machine.BaseMachineBE;
-import com.synergy.machines.api.machine.ExtraMachineSlots;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.core.BlockPos;
@@ -19,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
 @SuppressWarnings("null")
-public class MaceratorBE extends BaseMachineBE implements ExtraMachineSlots {
+public class MaceratorBE extends BaseMachineBE {
 
     public static final int SECONDARY_SLOT = 6;
 
@@ -100,11 +99,6 @@ public class MaceratorBE extends BaseMachineBE implements ExtraMachineSlots {
     @Override
     public ContainerData getContainerData() {
         return networkData;
-    }
-
-    @Override
-    public SlotBuilder getSlotTypes() {
-        return SlotBuilder.of(1).set(SECONDARY_SLOT, SlotType.OUTPUT);
     }
 
     public ItemStack getSecondarySlot() {

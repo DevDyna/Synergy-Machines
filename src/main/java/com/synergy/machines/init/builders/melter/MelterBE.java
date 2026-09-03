@@ -1,11 +1,13 @@
 package com.synergy.machines.init.builders.melter;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
+import com.devdyna.cakesticklib.api.aspect.logic.ResourceRestricted;
 import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
-import com.synergy.machines.api.machine.TypedFluidStorage;
 import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.core.BlockPos;
@@ -18,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 
-public class MelterBE extends BaseMachineBE implements TypedFluidStorage {
+public class MelterBE extends BaseMachineBE implements ResourceRestricted.Fluid {
 
     public MelterBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -26,7 +28,7 @@ public class MelterBE extends BaseMachineBE implements TypedFluidStorage {
 
     @Override
     public int getMachineSlots() {
-        return UPGRADES_SIZE + 1;
+        return 5;
     }
 
     public MelterBE(BlockPos pos, BlockState blockState) {
@@ -80,10 +82,12 @@ public class MelterBE extends BaseMachineBE implements TypedFluidStorage {
         var recipe = getUnsafeRecipes(level, zMachines.ELECTRIC_MELTER, new ItemInput.simple(getInput()));
 
         if (!recipe.getFluidOutput().create().isEmpty())
-            updateResource(FluidResource.of(recipe.getFluidOutput().create()), 0, recipe.getFluidOutput().amount(),false);
+            updateResource(FluidResource.of(recipe.getFluidOutput().create()), 0, recipe.getFluidOutput().amount(),
+                    false);
 
-        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(),true);
+        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(), true);
 
+        
     }
 
     @Override
@@ -107,7 +111,8 @@ public class MelterBE extends BaseMachineBE implements TypedFluidStorage {
     }
 
     @Override
-    public FluidTankType getTankIOType() {
-        return FluidTankType.OUTPUT;
+    public List<Integer> getInputTankIndex() {
+        return List.of();
     }
+
 }

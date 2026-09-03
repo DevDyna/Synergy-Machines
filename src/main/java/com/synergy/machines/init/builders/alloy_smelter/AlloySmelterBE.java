@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 import com.synergy.machines.api.machine.BaseMachineBE;
-import com.synergy.machines.api.machine.ExtraMachineSlots;
 import com.synergy.machines.api.recipeinputs.BiItemInput;
 import com.synergy.machines.init.builders.alloy_smelter.recipe.AlloySmelterRecipeType;
 import com.synergy.machines.init.types.zMachines;
@@ -22,7 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-public class AlloySmelterBE extends BaseMachineBE implements ExtraMachineSlots {
+public class AlloySmelterBE extends BaseMachineBE {
 
     public static final int SECONDARY_INPUT = 6;
 
@@ -122,11 +121,6 @@ public class AlloySmelterBE extends BaseMachineBE implements ExtraMachineSlots {
     @Override
     public ContainerData getContainerData() {
         return networkData;
-    }
-
-    @Override
-    public SlotBuilder getSlotTypes() {
-        return SlotBuilder.of(1).set(SECONDARY_INPUT, SlotType.INPUT);
     }
 
 }

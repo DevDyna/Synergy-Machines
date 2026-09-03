@@ -3,7 +3,6 @@ package com.synergy.machines.init.builders.compressor;
 import javax.annotation.Nullable;
 
 import com.synergy.machines.api.machine.BaseMachineBE;
-import com.synergy.machines.api.machine.ExtraMachineSlots;
 import com.synergy.machines.api.recipeinputs.BiItemInput;
 import com.synergy.machines.init.types.zMachines;
 
@@ -17,7 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-public class CompressorBE extends BaseMachineBE implements ExtraMachineSlots {
+public class CompressorBE extends BaseMachineBE {
 
     public static final int PLATE_SLOT = 6;
 
@@ -91,11 +90,6 @@ public class CompressorBE extends BaseMachineBE implements ExtraMachineSlots {
     @Override
     public ContainerData getContainerData() {
         return networkData;
-    }
-
-    @Override
-    public SlotBuilder getSlotTypes() {
-        return SlotBuilder.of(1).set(PLATE_SLOT, SlotType.INPUT);
     }
 
     public ItemStack getPlateSlot() {

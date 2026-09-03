@@ -2,9 +2,9 @@ package com.synergy.machines.api.machine.templates;
 
 import java.util.List;
 
-import com.devdyna.cakesticklib.api.aspect.logic.UpgradeInstallable;
-import com.devdyna.cakesticklib.api.utils.x;
-import com.devdyna.cakesticklib.setup.registry.LibComponents;
+import com.devdyna.cakesticklib.api.aspect.logic.ResourceRestricted;
+import com.devdyna.cakesticklib.api.upgrades.UpgradeInstallable;
+import com.devdyna.cakesticklib.api.upgrades.modifiers.ModifierUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
@@ -20,6 +20,7 @@ public abstract class BaseUpgradableBE extends BaseStorageBE implements UpgradeI
     public static final int SLOT_UPGRADE_3 = 2;
     public static final int SLOT_UPGRADE_4 = 3;
 
+    @Deprecated
     public final int UPGRADES_SIZE = getUpgradeSlots().size();
 
     public BaseUpgradableBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -55,27 +56,33 @@ public abstract class BaseUpgradableBE extends BaseStorageBE implements UpgradeI
     }
 
     public boolean tryAddUpgrade(ItemStack item) {
+
+        // if (level.isClientSide())
+        //     return false;
+
         var upgrade = item.copy();
         upgrade.setCount(1);
 
-        if (!upgrade.has(LibComponents.UPGRADE_COMPONENTS))
+        if (!ModifierUtils.itemValid(item))
             return false;
 
-        for (int index = 0; index < UPGRADES_SIZE; index++) {
-            var slot = getStackInSlot(index);
-
-            if (slot.isEmpty()) {
-                setStackInSlot(index, upgrade);
-                return true;
-            }
-
-            if (ItemStack.isSameItemSameComponents(upgrade, slot) && slot.getCount() < 4) {
-                setStackInSlot(index, x.item(slot.getItem(), slot.count() + 1));
-                return true;
-            }
+        for (var i : getUpgradeSlots()) {
+            if (getItemStorage().getAmountAsInt(i) < 4)
+                if (insertItem(i, upgrade).isEmpty()) {
+                    // item.shrink(1);
+                    return true;
+                }
         }
 
         return false;
+    }
+
+    @Override
+    protected void ejection() {
+        tryToEject(getAutomationItemStorage(), getOutputSlotIndex());
+
+        if (this instanceof ResourceRestricted.Fluid f)
+            tryToEject(f.getFluidStorage(), f.getOutputTankIndex());
     }
 
 }

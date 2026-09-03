@@ -1,6 +1,8 @@
 package com.synergy.machines.api.machine;
 
+import com.devdyna.cakesticklib.api.aspect.logic.ResourceRestricted;
 import com.devdyna.cakesticklib.api.gui.BaseMenu;
+import com.devdyna.cakesticklib.api.utils.FluidUtils;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
@@ -86,25 +88,25 @@ public abstract class BaseMachineMenu extends BaseMenu {
     }
 
     public int getFluidAmount() {
-        return (getBlockEntity() instanceof TypedFluidStorage)
+        return (getBlockEntity() instanceof ResourceRestricted.Fluid)
                 ? data.get(FLUID_INDEX)
                 : 0;
     }
 
     public int getMaxFluidAmount() {
-        return (getBlockEntity() instanceof TypedFluidStorage)
+        return (getBlockEntity() instanceof ResourceRestricted.Fluid)
                 ? data.get(MAX_FLUID_INDEX)
                 : 0;
     }
 
     public Fluid getFluid() {
-        return (getBlockEntity() instanceof TypedFluidStorage)
-                ? TypedFluidStorage.getFluidFromID(data.get(ID_FLUID_INDEX))
+        return (getBlockEntity() instanceof ResourceRestricted.Fluid)
+                ? FluidUtils.getFluidFromID(data.get(ID_FLUID_INDEX))
                 : null;
     }
 
     public FluidStack getFluidStack() {
-        return (getBlockEntity() instanceof TypedFluidStorage)
+        return (getBlockEntity() instanceof ResourceRestricted.Fluid)
                 ? x.fluid(getFluid(), getFluidAmount())
                 : null;
     }

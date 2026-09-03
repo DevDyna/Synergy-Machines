@@ -3,12 +3,11 @@ package com.synergy.machines.init.builders.rock_crusher;
 import java.util.List;
 import javax.annotation.Nullable;
 
+import com.devdyna.cakesticklib.api.aspect.logic.ResourceRestricted;
 import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.devdyna.cakesticklib.api.utils.ArrayUtils;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
-import com.synergy.machines.api.machine.ExtraMachineSlots;
-import com.synergy.machines.api.machine.TypedFluidStorage;
 import com.synergy.machines.api.recipeinputs.ItemFluidInput;
 import com.synergy.machines.init.types.zMachines;
 
@@ -22,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-public class RockCrusherBE extends BaseMachineBE implements TypedFluidStorage, ExtraMachineSlots {
+public class RockCrusherBE extends BaseMachineBE implements ResourceRestricted.Fluid {
 
     public static final int OUTPUT_EXTRA_1 = 6;
     public static final int OUTPUT_EXTRA_2 = 7;
@@ -140,17 +139,12 @@ public class RockCrusherBE extends BaseMachineBE implements TypedFluidStorage, E
     }
 
     @Override
-    public FluidTankType getTankIOType() {
-        return FluidTankType.INPUT;
-    }
-
-    @Override
     public List<Integer> getOutputSlotIndex() {
         return OUTPUT_SLOTS;
     }
 
     @Override
-    public SlotBuilder getSlotTypes() {
-        return SlotBuilder.of(8).setAll(SlotType.OUTPUT, EXTRA_OUTPUT_SLOTS.toArray(Integer[]::new));
+    public List<Integer> getOutputTankIndex() {
+        return List.of();
     }
 }

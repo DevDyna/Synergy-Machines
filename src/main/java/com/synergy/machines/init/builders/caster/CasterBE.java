@@ -1,10 +1,12 @@
 package com.synergy.machines.init.builders.caster;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
+import com.devdyna.cakesticklib.api.aspect.logic.ResourceRestricted;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
-import com.synergy.machines.api.machine.TypedFluidStorage;
 import com.synergy.machines.api.recipeinputs.ItemFluidInput;
 import com.synergy.machines.init.types.zMachines;
 
@@ -18,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-public class CasterBE extends BaseMachineBE implements TypedFluidStorage {
+public class CasterBE extends BaseMachineBE implements ResourceRestricted.Fluid {
 
     public CasterBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -116,7 +118,7 @@ public class CasterBE extends BaseMachineBE implements TypedFluidStorage {
     }
 
     @Override
-    public FluidTankType getTankIOType() {
-        return FluidTankType.INPUT;
+    public List<Integer> getOutputTankIndex() {
+        return List.of();
     }
 }

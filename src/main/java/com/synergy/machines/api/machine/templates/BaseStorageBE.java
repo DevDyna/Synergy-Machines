@@ -3,11 +3,8 @@ package com.synergy.machines.api.machine.templates;
 import java.util.List;
 import java.util.function.Function;
 
-import com.devdyna.cakesticklib.api.aspect.logic.ItemStorageBlock;
-import com.devdyna.cakesticklib.api.aspect.logic.MachineItemAutomation;
-import com.devdyna.cakesticklib.api.aspect.logic.MenuProvider;
+import com.devdyna.cakesticklib.api.aspect.logic.*;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
-import com.synergy.machines.api.machine.TypedFluidStorage;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -25,14 +22,14 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
 public abstract class BaseStorageBE extends BaseRecipeBE
-        implements MachineItemAutomation, MenuProvider, ItemStorageBlock {
+        implements ResourceRestricted.Item, MenuProvider {
 
     public static final int INPUT_SLOT = 4;
     public static final int OUTPUT_SLOT = 5;
 
     public static final int FLUID_DATA_SIZE = 3;
 
-    protected Function<TypedFluidStorage, List<Integer>> FLUID_DATA = f -> List.of(
+    protected Function<ResourceRestricted.Fluid, List<Integer>> FLUID_DATA = f -> List.of(
             f.getFluidStorage().getAmountAsInt(0),
             f.getTankCapacity(),
             BuiltInRegistries.FLUID.getId(f.getAsStack(0).getFluid())
@@ -154,15 +151,15 @@ public abstract class BaseStorageBE extends BaseRecipeBE
         };
     }
 
-    @Override
-    public ItemStack getStackInSlot(int i) {
-        return MachineItemAutomation.super.getStackInSlot(i);
-    }
+    // @Override
+    // public ItemStack getStackInSlot(int i) {
+    //     return MachineItemAutomation.super.getStackInSlot(i);
+    // }
 
-    @Override
-    public void set(int i, ItemResource resource, int amount) {
-        getAutomationItemStorage().set(i, resource, amount);
-    }
+    // @Override
+    // public void set(int i, ItemResource resource, int amount) {
+    //     getAutomationItemStorage().set(i, resource, amount);
+    // }
 
     @Override
     public Component getContainerName() {
@@ -182,7 +179,7 @@ public abstract class BaseStorageBE extends BaseRecipeBE
         if (resource instanceof ItemResource)
             storage = (StacksResourceHandler<STACK, RESOURCE>) getItemStorage();
 
-        if (resource instanceof FluidResource && this instanceof TypedFluidStorage f)
+        if (resource instanceof FluidResource && this instanceof ResourceRestricted.Fluid f)
             storage = (StacksResourceHandler<STACK, RESOURCE>) f.getFluidStorage();
 
         if (storage == null || resource.isEmpty())
