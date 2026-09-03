@@ -23,7 +23,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
-@SuppressWarnings("null")
 public class CasterRecipeType extends BaseMachineRecipeType<ItemFluidInput> {
 
     public CasterRecipeType(int ticks, int energy, SizedFluidIngredient fluid, SizedIngredient input,
