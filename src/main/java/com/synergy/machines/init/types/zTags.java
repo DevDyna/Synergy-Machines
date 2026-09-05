@@ -30,6 +30,9 @@ public class zTags {
 
                 }
 
+                // TODO API : move to api
+                public static final TagKey<Item> LEGACY_STONES = RegistryUtils.tagItem(MODULE_ID, "legacy_stones");
+
                 // TODO API : move to api and remove from VintageTech
 
                 public static final TagKey<Item> RECYCLE_COPPER_1 = RegistryUtils.tagItem(MODULE_ID,

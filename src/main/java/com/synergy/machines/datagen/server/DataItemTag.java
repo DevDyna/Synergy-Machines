@@ -138,6 +138,8 @@ public class DataItemTag extends ItemTagsProvider {
                 tag(zTags.Items.RECYCLE_GOLD_9).add(
                                 Items.GOLDEN_NAUTILUS_ARMOR);
 
+                tag(zTags.Items.LEGACY_STONES).add(Items.STONE, Items.DIORITE, Items.ANDESITE, Items.GRANITE);
+
         }
 
 }
