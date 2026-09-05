@@ -29,7 +29,7 @@ public class DataLootBlock extends BlockLootSubProvider {
                                 .map(DeferredHolder::get)
                                 .forEach(blocks::add);
 
-                return ArrayUtils.concat(blocks, zBlocks.LUNAR_PANEL.get(), zBlocks.SOLAR_PANEL.get());
+                return ArrayUtils.concat(blocks, zBlocks.LUNAR_PANEL.get(), zBlocks.SOLAR_PANEL.get(),zBlocks.MACHINE_FRAME.get());
         }
 
         @Override
@@ -41,6 +41,7 @@ public class DataLootBlock extends BlockLootSubProvider {
 
                 dropSelf(zBlocks.SOLAR_PANEL.get());
                 dropSelf(zBlocks.LUNAR_PANEL.get());
+                dropSelf(zBlocks.MACHINE_FRAME.get());
         }
 
 }

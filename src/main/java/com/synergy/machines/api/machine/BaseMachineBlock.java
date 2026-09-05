@@ -2,6 +2,8 @@ package com.synergy.machines.api.machine;
 
 import javax.annotation.Nullable;
 
+import com.synergy.machines.init.builders.MachineFrame;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -16,7 +18,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -24,21 +25,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
-public abstract class BaseMachineBlock extends Block implements EntityBlock {
+public abstract class BaseMachineBlock extends MachineFrame implements EntityBlock {
 
-    public final static EnumProperty<Direction> FACING = BlockStateProperties.FACING;
     public final static BooleanProperty ENABLED = BlockStateProperties.ENABLED;
 
     public BaseMachineBlock(Properties p) {
-        super(p
-                .strength(1.0f)
-                .destroyTime(1.0f)
-                .sound(SoundType.METAL)
-                .mapColor(MapColor.METAL));
+        super(p);
     }
 
     @Override

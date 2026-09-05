@@ -8,6 +8,7 @@ import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.BaseMachineBlock;
 import com.synergy.machines.api.solar_panel.SolarPanelBlock;
+import com.synergy.machines.init.builders.MachineFrame;
 import com.synergy.machines.init.types.zBlocks;
 import com.synergy.machines.init.types.zItems;
 import com.synergy.machines.init.types.zMachines;
@@ -15,7 +16,6 @@ import com.synergy.machines.init.types.zMachines;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
-import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
@@ -23,11 +23,17 @@ import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
-import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 
 public class DataModel extends ModelProvider {
+
+        public static final TextureMapping MACHINE_FRAME_CUBE_MAPPING = new TextureMapping()
+                        .put(TextureSlot.DOWN, x.material(MODULE_ID, "block/machine/frame/basic/bottom"))
+                        .put(TextureSlot.UP, x.material(MODULE_ID, "block/machine/frame/basic/top"))
+                        .put(TextureSlot.SIDE, x.material(MODULE_ID, "block/machine/frame/basic/side"))
+                        .put(TextureSlot.PARTICLE, x.material(MODULE_ID, "block/machine/frame/basic/side"));
 
         public DataModel(PackOutput output) {
                 super(output, MODULE_ID);
@@ -59,106 +65,108 @@ public class DataModel extends ModelProvider {
                 createSolarPanel(blockModels, zBlocks.SOLAR_PANEL.get(), "day");
                 createSolarPanel(blockModels, zBlocks.LUNAR_PANEL.get(), "night");
 
+                createMachineFrame(blockModels, zBlocks.MACHINE_FRAME.get());
+
+        }
+
+        public void createMachineFrame(BlockModelGenerators b, Block block) {
+
+                var model = BlockModelGenerators.plainVariant(ModelTemplates.CUBE.create(block,
+                                MACHINE_FRAME_CUBE_MAPPING.copy(), b.modelOutput));
+
+                b.blockStateOutput.accept(
+                                MultiVariantGenerator.dispatch(block)
+                                                .with(
+                                                                PropertyDispatch.initial(
+                                                                                MachineFrame.FACING)
+                                                                                .select(Direction.UP, model)
+                                                                                .select(Direction.DOWN,
+                                                                                                model.with(BlockModelGenerators.X_ROT_180))
+                                                                                .select(Direction.NORTH,
+                                                                                                model.with(BlockModelGenerators.X_ROT_90))
+                                                                                .select(Direction.SOUTH,
+                                                                                                model.with(BlockModelGenerators.X_ROT_90)
+                                                                                                                .with(BlockModelGenerators.Y_ROT_180))
+                                                                                .select(Direction.EAST,
+                                                                                                model.with(BlockModelGenerators.X_ROT_90)
+                                                                                                                .with(BlockModelGenerators.Y_ROT_90))
+                                                                                .select(Direction.WEST,
+                                                                                                model.with(BlockModelGenerators.X_ROT_90)
+                                                                                                                .with(BlockModelGenerators.Y_ROT_270))));
+
         }
 
         private void createBasicMachineBlock(BlockModelGenerators b, MachineType<?, ?, ?, ?> machine) {
                 var block = machine.block().get();
 
-                var baseMapping = new TextureMapping()
-                                .put(TextureSlot.DOWN, new Material(modLocation(
-                                                "block/machine/frame/basic/bottom")))
-                                .put(TextureSlot.UP, new Material(modLocation(
-                                                "block/machine/frame/basic/top")))
-                                .put(TextureSlot.SIDE, new Material(modLocation(
-                                                "block/machine/frame/basic/side")))
-                                .put(TextureSlot.PARTICLE, new Material(modLocation(
-                                                "block/machine/frame/basic/side")));
+                var off = MACHINE_FRAME_CUBE_MAPPING.copy().put(TextureSlot.NORTH,
+                                x.material(MODULE_ID, "block/machine/processing/" + machine.id() + "/off"));
 
-                var off = baseMapping.copy()
-                                .put(
-                                                TextureSlot.NORTH,
-                                                new Material(modLocation(
-                                                                "block/machine/processing/" + machine.id() + "/off"))
-
-                                );
-
-                var on = baseMapping.copy()
-                                .put(
-                                                TextureSlot.NORTH,
-                                                new Material(modLocation(
-                                                                "block/machine/processing/" + machine.id() + "/on")));
+                var on = MACHINE_FRAME_CUBE_MAPPING.copy().put(TextureSlot.NORTH,
+                                x.material(MODULE_ID, "block/machine/processing/" + machine.id() + "/on"));
 
                 b.blockStateOutput.accept(
                                 MultiVariantGenerator.dispatch(block)
                                                 .with(
                                                                 PropertyDispatch.initial(BaseMachineBlock.ENABLED)
                                                                                 .select(false, BlockModelGenerators
-                                                                                                .plainVariant(
-                                                                                                                ModelTemplates.CUBE
-                                                                                                                                .createWithSuffix(
-                                                                                                                                                block,
-                                                                                                                                                "/off",
-                                                                                                                                                off,
-                                                                                                                                                b.modelOutput)))
+                                                                                                .plainVariant(ModelTemplates.CUBE
+                                                                                                                .createWithSuffix(
+                                                                                                                                block,
+                                                                                                                                "/off",
+                                                                                                                                off,
+                                                                                                                                b.modelOutput)))
                                                                                 .select(true, BlockModelGenerators
-                                                                                                .plainVariant(
-                                                                                                                ModelTemplates.CUBE
-                                                                                                                                .createWithSuffix(
-                                                                                                                                                block,
-                                                                                                                                                "/on",
-                                                                                                                                                on,
-                                                                                                                                                b.modelOutput))))
+                                                                                                .plainVariant(ModelTemplates.CUBE
+                                                                                                                .createWithSuffix(
+                                                                                                                                block,
+                                                                                                                                "/on",
+                                                                                                                                on,
+                                                                                                                                b.modelOutput))))
                                                 .with(BlockModelGenerators.ROTATION_FACING));
         }
 
-        private void createSolarPanel(
-                        BlockModelGenerators b,
-                        Block block,
-                        String suffix) {
+        private void createSolarPanel(BlockModelGenerators b, Block block, String suffix) {
 
-                MultiVariant core = BlockModelGenerators.plainVariant(
-                                x.rl(MODULE_ID, "block/solar_panel/" + suffix + "/core_cell"));
-
-                MultiVariant side = BlockModelGenerators.plainVariant(
+                var side = BlockModelGenerators.plainVariant(
                                 x.rl(MODULE_ID, "block/solar_panel/side"));
 
-                MultiVariant sideHalf = BlockModelGenerators.plainVariant(
+                var sideHalf = BlockModelGenerators.plainVariant(
                                 x.rl(MODULE_ID, "block/solar_panel/side_half"));
 
-                MultiVariant sideHalfAlt = BlockModelGenerators.plainVariant(
+                var sideHalfAlt = BlockModelGenerators.plainVariant(
                                 x.rl(MODULE_ID, "block/solar_panel/side_half_alt"));
 
-                MultiVariant cellNorth = BlockModelGenerators.plainVariant(
+                var cellNorth = BlockModelGenerators.plainVariant(
                                 x.rl(MODULE_ID, "block/solar_panel/" + suffix + "/cell/north"));
 
-                MultiVariant cellEast = BlockModelGenerators.plainVariant(
+                var cellEast = BlockModelGenerators.plainVariant(
                                 x.rl(MODULE_ID, "block/solar_panel/" + suffix + "/cell/east"));
 
-                MultiVariant cellSouth = BlockModelGenerators.plainVariant(
+                var cellSouth = BlockModelGenerators.plainVariant(
                                 x.rl(MODULE_ID, "block/solar_panel/" + suffix + "/cell/south"));
 
-                MultiVariant cellWest = BlockModelGenerators.plainVariant(
+                var cellWest = BlockModelGenerators.plainVariant(
                                 x.rl(MODULE_ID, "block/solar_panel/" + suffix + "/cell/west"));
 
-                MultiVariant angleNorthEast = BlockModelGenerators.plainVariant(
+                var angleNorthEast = BlockModelGenerators.plainVariant(
                                 x.rl(MODULE_ID, "block/solar_panel/" + suffix + "/angle/north_east"));
 
-                MultiVariant angleNorthWest = BlockModelGenerators.plainVariant(
+                var angleNorthWest = BlockModelGenerators.plainVariant(
                                 x.rl(MODULE_ID, "block/solar_panel/" + suffix + "/angle/north_west"));
 
-                MultiVariant angleSouthEast = BlockModelGenerators.plainVariant(
+                var angleSouthEast = BlockModelGenerators.plainVariant(
                                 x.rl(MODULE_ID, "block/solar_panel/" + suffix + "/angle/south_east"));
 
-                MultiVariant angleSouthWest = BlockModelGenerators.plainVariant(
+                var angleSouthWest = BlockModelGenerators.plainVariant(
                                 x.rl(MODULE_ID, "block/solar_panel/" + suffix + "/angle/south_west"));
 
                 b.blockStateOutput.accept(
                                 MultiPartGenerator.multiPart(block)
 
-                                                // Core
-                                                .with(core)
+                                                .with(BlockModelGenerators.plainVariant(x.rl(MODULE_ID,
+                                                                "block/solar_panel/" + suffix + "/core_cell")))
 
-                                                // Full sides
                                                 .with(
                                                                 BlockModelGenerators.condition()
                                                                                 .term(SolarPanelBlock.NORTH, false),
@@ -176,7 +184,6 @@ public class DataModel extends ModelProvider {
                                                                                 .term(SolarPanelBlock.WEST, false),
                                                                 side.with(BlockModelGenerators.Y_ROT_270))
 
-                                                // Half sides
                                                 .with(
                                                                 BlockModelGenerators.condition()
                                                                                 .term(SolarPanelBlock.NORTH, true)
@@ -218,7 +225,6 @@ public class DataModel extends ModelProvider {
                                                                                 .term(SolarPanelBlock.SOUTH, false),
                                                                 sideHalf.with(BlockModelGenerators.Y_ROT_270))
 
-                                                // Cells
                                                 .with(
                                                                 BlockModelGenerators.condition()
                                                                                 .term(SolarPanelBlock.NORTH, true),
@@ -236,7 +242,6 @@ public class DataModel extends ModelProvider {
                                                                                 .term(SolarPanelBlock.WEST, true),
                                                                 cellWest)
 
-                                                // Angles
                                                 .with(
                                                                 BlockModelGenerators.condition()
                                                                                 .term(SolarPanelBlock.NORTH, true)

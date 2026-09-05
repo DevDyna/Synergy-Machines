@@ -33,6 +33,7 @@ public class DataLang extends LanguageProvider implements LangGenerators {
                 addBlock(zBlocks.SOLAR_PANEL, "Solar Panel");
                 addBlock(zBlocks.LUNAR_PANEL, "Lunar Panel");
 
+                addBlock(zBlocks.MACHINE_FRAME, "Machine Frame");
         }
 
 }
