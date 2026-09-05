@@ -50,9 +50,16 @@ public class DataLang extends LanguageProvider implements LangGenerators {
                                 "Craft an electric melter");
                 LangUtils.advKey(this, MODULE_ID, zMachines.ROCK_CRUSHER.id(), "Rock 'n' Roll", "Craft a rock crusher");
 
-                add(MODULE_ID + ".advancement.root." + MODULE_ID, "Synergy : Machines");
-                add(MODULE_ID + ".advancement.root." + MODULE_ID + ".desc",
-                                "The keywords are simplify , automate and improve");
+                LangUtils.advKey(this, MODULE_ID, "solar_panel", "Eco Green Energy for you", "Craft a solar panel");
+                LangUtils.advKey(this, MODULE_ID, "lunar_panel", "Light up on night", "Craft a lunar panel");
+
+                LangUtils.advKey(this, MODULE_ID, "machine_frame", "The core of everything", "Obtain a machine frame");
+
+                LangUtils.advKey(this, MODULE_ID, "wrought_iron_ingot", "One shade of gray",
+                                "Combine some carbon dust with an iron ingot");
+
+                add(MODULE_ID + ".advancement.root." + MODULE_ID, "Industrial Machines");
+                add(MODULE_ID + ".advancement.root." + MODULE_ID + ".desc", "The world need something to be more nicer");
 
                 add(MODULE_ID + ".creative_tab." + MODULE_ID, "Synergy : Machines");
 
