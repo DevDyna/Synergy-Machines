@@ -571,7 +571,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                         .input(ingot)
                                         .output(molten.getFluid(), MoltenValues.INGOT)
                                         .unlockedBy(ingot)
-                                        .save(output);
+                                        .save(output,"_from_ingot");
 
         }
 
@@ -583,55 +583,55 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 .input(item1)
                                 .output(fluid.getFluid(), MoltenValues.INGOT)
                                 .unlockedBy(item1, items)
-                                .save(output);
+                                .save(output,"/recycle/1");
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item2)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 2)
                                 .unlockedBy(item2, items)
-                                .save(output);
+                                .save(output,"/recycle/2");
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item3)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 3)
                                 .unlockedBy(item3, items)
-                                .save(output);
+                                .save(output,"/recycle/3");
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item4)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 4)
                                 .unlockedBy(item4, items)
-                                .save(output);
+                                .save(output,"/recycle/4");
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item5)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 5)
                                 .unlockedBy(item5, items)
-                                .save(output);
+                                .save(output,"/recycle/5");
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item6)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 6)
                                 .unlockedBy(item6, items)
-                                .save(output);
+                                .save(output,"/recycle/6");
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item7)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 7)
                                 .unlockedBy(item7, items)
-                                .save(output);
+                                .save(output,"/recycle/7");
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item8)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 8)
                                 .unlockedBy(item8, items)
-                                .save(output);
+                                .save(output,"/recycle/8");
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item9)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 9)
                                 .unlockedBy(item9, items)
-                                .save(output);
+                                .save(output,"/recycle/9");
 
         }
 
