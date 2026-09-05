@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
+import com.devdyna.cakesticklib.CakeStickLib;
+import com.devdyna.cakesticklib.api.datagen.AdvancementGenerator;
 import com.devdyna.cakesticklib.api.utils.x;
-import com.devdyna.cakesticklib.setup.registry.LibItems;
-import com.synergy.machines.api.AdvancementGenerator;
 import com.synergy.machines.init.types.zBlocks;
 import com.synergy.machines.init.types.zMachines;
 
@@ -27,69 +27,58 @@ public class DataAdvancement extends AdvancementProvider {
 
         public static class DataAdvancementGenerator implements AdvancementSubProvider, AdvancementGenerator {
 
-                @SuppressWarnings("unused")
                 @Override
                 public void generate(Provider p, Consumer<AdvancementHolder> c) {
 
-                        // TODO API : API advancements
-
-                        var wrought_iron_task = simpleTask("minecraft:story/smelt_iron",
-                                        LibItems.WROUGHT_IRON_INGOT.get(),
-                                        MODULE_ID + ":extend/story/smelt_iron/", c);
-
-                        // TODO IMP : API adv connections
-
-                        // TODO IMP : solar advancements
-
                         var machine_frame_root = simpleRoot(
                                         zBlocks.MACHINE_FRAME.get(),
-                                        MODULE_ID + ":extend/story/smelt_iron/",
+                                        MODULE_ID + ":setup/",
                                         x.rl(MODULE_ID, "block/machine/frame/basic/side"),
                                         MODULE_ID, c);
 
-                        var machine_frame_task = simpleTask(wrought_iron_task,
+                        simpleTask(CakeStickLib.MODULE_ID + ":setup/wrought_iron_ingot",
                                         zBlocks.MACHINE_FRAME.get(),
-                                        MODULE_ID + ":main/", c);
+                                        MODULE_ID + ":setup/", c);
 
-                        var solar_panel = simpleTask(machine_frame_root,
+                        simpleTask(machine_frame_root,
                                         zBlocks.SOLAR_PANEL.get(),
-                                        MODULE_ID + ":main/", c);
+                                        MODULE_ID + ":setup/", c);
 
-                        var lunar_panel = simpleTask(machine_frame_root,
+                        simpleTask(machine_frame_root,
                                         zBlocks.LUNAR_PANEL.get(),
-                                        MODULE_ID + ":main/", c);
+                                        MODULE_ID + ":setup/", c);
 
-                        var alloy_smelter = simpleTask(machine_frame_root,
+                        simpleTask(machine_frame_root,
                                         zMachines.ALLOY_SMELTER.block().get(),
-                                        MODULE_ID + ":main/", c);
+                                        MODULE_ID + ":setup/", c);
 
-                        var casting_factory = simpleTask(machine_frame_root,
+                        simpleTask(machine_frame_root,
                                         zMachines.CASTING_FACTORY.block().get(),
-                                        MODULE_ID + ":main/", c);
+                                        MODULE_ID + ":setup/", c);
 
-                        var compressor = simpleTask(machine_frame_root,
+                        simpleTask(machine_frame_root,
                                         zMachines.COMPRESSOR.block().get(),
-                                        MODULE_ID + ":main/", c);
+                                        MODULE_ID + ":setup/", c);
 
-                        var electric_furnace = simpleTask(machine_frame_root,
+                        simpleTask(machine_frame_root,
                                         zMachines.ELECTRIC_FURNACE.block().get(),
-                                        MODULE_ID + ":main/", c);
+                                        MODULE_ID + ":setup/", c);
 
-                        var electric_melter = simpleTask(machine_frame_root,
+                        simpleTask(machine_frame_root,
                                         zMachines.ELECTRIC_MELTER.block().get(),
-                                        MODULE_ID + ":main/", c);
+                                        MODULE_ID + ":setup/", c);
 
-                        var extractor = simpleTask(machine_frame_root,
+                        simpleTask(machine_frame_root,
                                         zMachines.EXTRACTOR.block().get(),
-                                        MODULE_ID + ":main/", c);
+                                        MODULE_ID + ":setup/", c);
 
-                        var macerator = simpleTask(machine_frame_root,
+                        simpleTask(machine_frame_root,
                                         zMachines.MACERATOR.block().get(),
-                                        MODULE_ID + ":main/", c);
+                                        MODULE_ID + ":setup/", c);
 
-                        var rock_crusher = simpleTask(machine_frame_root,
+                        simpleTask(machine_frame_root,
                                         zMachines.ROCK_CRUSHER.block().get(),
-                                        MODULE_ID + ":main/", c);
+                                        MODULE_ID + ":setup/", c);
 
                 }
 
