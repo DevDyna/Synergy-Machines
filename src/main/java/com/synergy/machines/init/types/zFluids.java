@@ -23,27 +23,34 @@ public class zFluids {
         public static final DeferredRegister<FluidType> zFluidTypes = DeferredRegister.create(Keys.FLUID_TYPES,
                         MODULE_ID);
 
-        public static final FluidRegister CRUDE_OIL = FluidRegister.create("crude_oil", 0xFF202020);
+        // TODO API : move to api
+
+        public static final FluidRegister CRUDE_OIL = FluidRegister
+                        .create("crude_oil", ColorUtils.BLACK);
 
         public static final FluidRegister LIQUID_GLASS = FluidRegister
-                        .create("liquid_glass", ColorUtils.WHITE.brighter());
+                        .create("liquid_glass", ColorUtils.color(248, 248, 255, 125));
 
         // ---------------------------------------------------------------------------------------//
         public static final FluidRegister MOLTEN_IRON = FluidRegister
-                        .create("iron", ColorUtils.LIGHT_GRAY.brighter());
+                        .create("iron", ColorUtils.GRAY);
 
         public static final FluidRegister MOLTEN_COPPER = FluidRegister
-                        .create("copper", ColorUtils.ORANGE.darker());
+                        .create("copper", ColorUtils.COPPER);
 
         public static final FluidRegister MOLTEN_GOLD = FluidRegister
-                        .create("gold", ColorUtils.YELLOW.brighter());
+                        .create("gold", ColorUtils.GOLD);
 
-        public static final FluidRegister MOLTEN_STEEL = FluidRegister.create("steel", ColorUtils.GRAY.darker());
+        public static final FluidRegister MOLTEN_STEEL = FluidRegister
+                        .create("steel", ColorUtils.DARK_GRAY);
 
         public static final FluidRegister MOLTEN_ANCIENT_DEBRIS = FluidRegister
-                        .create("ancient_debris", ColorUtils.PINK.darker().darker());
+                        .create("ancient_debris", ColorUtils.BROWN);
 
         public static final FluidRegister SULFURIC_ACID = FluidRegister
-                        .create("sulfuric_acid", ColorUtils.YELLOW).drown();
+                        .create("sulfuric_acid", ColorUtils.YELLOW);
+
+        public static final FluidRegister PLASTIC = FluidRegister
+                        .create("plastic", ColorUtils.SILVER_GRAY);
 
 }
