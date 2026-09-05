@@ -2,7 +2,6 @@ package com.synergy.machines.init.builders.compressor.recipe;
 
 import java.util.Optional;
 
-import com.devdyna.cakesticklib.api.utils.x;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -58,34 +57,27 @@ public class CompressorRecipeType extends BaseMachineRecipeType<BiItemInput> {
         return new RecipeSerializer<>(CODEC, STREAM_CODEC);
     }
 
+    public static final MapCodec<CompressorRecipeType> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("ticks").forGetter(CompressorRecipeType::getTime),
+            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("energy").forGetter(CompressorRecipeType::getEnergy),
 
-        public static final MapCodec<CompressorRecipeType> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("ticks").forGetter(CompressorRecipeType::getTime),
-                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("energy").forGetter(CompressorRecipeType::getEnergy),
+            SizedIngredient.NESTED_CODEC.fieldOf("input").forGetter(CompressorRecipeType::getInputItem),
+            SizedIngredient.NESTED_CODEC.optionalFieldOf("plate")
+                    .forGetter(r -> Optional.ofNullable(r.getCatalystItem())),
+            Codec.BOOL.fieldOf("consume_catalyst").forGetter(CompressorRecipeType::consumeCatalyst),
+            ItemStackTemplate.CODEC.fieldOf("output").forGetter(CompressorRecipeType::getOutputItem))
+            .apply(inst, (t, e, i, p, c, o) -> new CompressorRecipeType(t, e, i, p.orElse(null), c, o)));
 
-                SizedIngredient.NESTED_CODEC.fieldOf("input").forGetter(CompressorRecipeType::getInputItem),
-                SizedIngredient.NESTED_CODEC.optionalFieldOf("plate", null)
-                        .forGetter(r -> (r.getCatalystItem() == null)
-                                ? null
-                                : r.getCatalystItem()),
-                Codec.BOOL.fieldOf("consume_catalyst").forGetter(CompressorRecipeType::consumeCatalyst),
-                ItemStackTemplate.CODEC.fieldOf("output").forGetter(CompressorRecipeType::getOutputItem))
-                .apply(inst, CompressorRecipeType::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, CompressorRecipeType> STREAM_CODEC = StreamCodec
+            .composite(
+                    ByteBufCodecs.INT, CompressorRecipeType::getTime,
+                    ByteBufCodecs.INT, CompressorRecipeType::getEnergy,
+                    SizedIngredient.STREAM_CODEC, CompressorRecipeType::getInputItem,
+                    ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC),
+                    r -> Optional.ofNullable(r.getCatalystItem()),
+                    ByteBufCodecs.BOOL, CompressorRecipeType::consumeCatalyst,
+                    ItemStackTemplate.STREAM_CODEC, CompressorRecipeType::getOutputItem,
 
-        public static final StreamCodec<RegistryFriendlyByteBuf, CompressorRecipeType> STREAM_CODEC = StreamCodec
-                .composite(
-                        ByteBufCodecs.INT, CompressorRecipeType::getTime,
-                        ByteBufCodecs.INT, CompressorRecipeType::getEnergy,
-                        SizedIngredient.STREAM_CODEC, CompressorRecipeType::getInputItem,
-                        ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC),
-                        r -> (r.getCatalystItem() == null || x.getItemStacksFromIngredient(r.getCatalystItem()).isEmpty())
-                                ? Optional.empty()
-                                : Optional.of(r.getCatalystItem()),
-                        ByteBufCodecs.BOOL, CompressorRecipeType::consumeCatalyst,
-                        ItemStackTemplate.STREAM_CODEC, CompressorRecipeType::getOutputItem,
-
-                        (t, e, i, o, s, c) -> new CompressorRecipeType(t, e, i, o.orElse(null), s, c));
-
-        
+                    (t, e, i, o, s, c) -> new CompressorRecipeType(t, e, i, o.orElse(null), s, c));
 
 }

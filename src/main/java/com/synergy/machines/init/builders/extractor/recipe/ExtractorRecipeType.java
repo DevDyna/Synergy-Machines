@@ -82,9 +82,7 @@ public class ExtractorRecipeType extends BaseMachineRecipeType<ItemInput.simple>
                         ByteBufCodecs.optional(ChanceOutput.Item.STREAM_CODEC),
                         r -> ChanceOutput.Item.optional(r.getSecondaryOutputItem()),
                         ByteBufCodecs.optional(FluidStackTemplate.STREAM_CODEC),
-                        r -> (r.getFluidOutput() == null || r.getFluidOutput().fluid() == null)
-                                ? Optional.empty()
-                                : Optional.of(r.getFluidOutput()),
+                        r -> Optional.ofNullable(r.getFluidOutput()),
                         (ticks, energy, input, secondary,fluid) -> new ExtractorRecipeType(
                         ticks,
                         energy,
