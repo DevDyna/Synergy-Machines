@@ -32,7 +32,7 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
     public abstract MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<? extends RecipeInput>> getMachine();
 
     public static final int DEFAULT_TICK_DURATION = 100;
-    public static final int DEFAULT_FE_COST = 500;
+    public static final int DEFAULT_FE_COST = 50;
 
     protected int ticks = DEFAULT_TICK_DURATION;
     protected int energy = DEFAULT_FE_COST;
