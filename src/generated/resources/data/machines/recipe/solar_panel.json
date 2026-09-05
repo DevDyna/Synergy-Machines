@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": "minecraft:lapis_lazuli",
+    "R": "minecraft:redstone",
+    "W": "cakesticklib:wrought_iron_ingot"
+  },
+  "pattern": [
+    "LLL",
+    "WRW"
+  ],
+  "result": {
+    "count": 3,
+    "id": "machines:solar_panel"
+  }
+}

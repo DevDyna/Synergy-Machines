@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:amethyst_shard",
+    "R": "minecraft:redstone",
+    "W": "cakesticklib:wrought_iron_ingot"
+  },
+  "pattern": [
+    "AAA",
+    "WRW"
+  ],
+  "result": {
+    "count": 3,
+    "id": "machines:lunar_panel"
+  }
+}

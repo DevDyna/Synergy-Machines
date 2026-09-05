@@ -1,7 +1,7 @@
 {
   "type": "machines:compressor",
   "consume_catalyst": false,
-  "energy": 500,
+  "energy": 50,
   "input": {
     "count": 4,
     "ingredient": "minecraft:gold_ingot"

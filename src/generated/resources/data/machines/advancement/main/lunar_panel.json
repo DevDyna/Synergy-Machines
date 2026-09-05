@@ -1,11 +1,11 @@
 {
   "parent": "machines:extend/story/smelt_iron/root",
   "criteria": {
-    "craft_macerator": {
+    "craft_lunar_panel": {
       "conditions": {
         "items": [
           {
-            "items": "machines:macerator"
+            "items": "machines:lunar_panel"
           }
         ]
       },
@@ -14,18 +14,18 @@
   },
   "display": {
     "description": {
-      "translate": "machines.advancement.branch.macerator.desc"
+      "translate": "machines.advancement.branch.lunar_panel.desc"
     },
     "icon": {
-      "id": "machines:macerator"
+      "id": "machines:lunar_panel"
     },
     "title": {
-      "translate": "machines.advancement.branch.macerator"
+      "translate": "machines.advancement.branch.lunar_panel"
     }
   },
   "requirements": [
     [
-      "craft_macerator"
+      "craft_lunar_panel"
     ]
   ],
   "sends_telemetry_event": true

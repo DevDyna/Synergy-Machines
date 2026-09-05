@@ -1,6 +1,6 @@
 {
   "type": "machines:extractor",
-  "energy": 500,
+  "energy": 50,
   "input": {
     "count": 1,
     "ingredient": "#c:slime_balls"

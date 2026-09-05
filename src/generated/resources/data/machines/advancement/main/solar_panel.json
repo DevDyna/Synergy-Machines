@@ -1,11 +1,11 @@
 {
   "parent": "machines:extend/story/smelt_iron/root",
   "criteria": {
-    "craft_macerator": {
+    "craft_solar_panel": {
       "conditions": {
         "items": [
           {
-            "items": "machines:macerator"
+            "items": "machines:solar_panel"
           }
         ]
       },
@@ -14,18 +14,18 @@
   },
   "display": {
     "description": {
-      "translate": "machines.advancement.branch.macerator.desc"
+      "translate": "machines.advancement.branch.solar_panel.desc"
     },
     "icon": {
-      "id": "machines:macerator"
+      "id": "machines:solar_panel"
     },
     "title": {
-      "translate": "machines.advancement.branch.macerator"
+      "translate": "machines.advancement.branch.solar_panel"
     }
   },
   "requirements": [
     [
-      "craft_macerator"
+      "craft_solar_panel"
     ]
   ],
   "sends_telemetry_event": true

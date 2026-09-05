@@ -1,0 +1,34 @@
+{
+  "criteria": {
+    "craft_machine_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": "machines:machine_frame"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "machines:block/machine/frame/basic/side",
+    "description": {
+      "translate": "machines.advancement.root.machines.desc"
+    },
+    "icon": {
+      "id": "machines:machine_frame"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "machines.advancement.root.machines"
+    }
+  },
+  "requirements": [
+    [
+      "craft_machine_frame"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

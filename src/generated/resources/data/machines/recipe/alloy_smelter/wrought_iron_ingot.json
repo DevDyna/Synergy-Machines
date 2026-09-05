@@ -1,6 +1,6 @@
 {
   "type": "machines:alloy_smelter",
-  "energy": 500,
+  "energy": 50,
   "left": {
     "count": 1,
     "ingredient": "#c:dusts/carbon"

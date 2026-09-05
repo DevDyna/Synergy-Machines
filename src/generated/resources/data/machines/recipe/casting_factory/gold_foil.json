@@ -1,7 +1,7 @@
 {
   "type": "machines:casting_factory",
   "consume_item": false,
-  "energy": 500,
+  "energy": 50,
   "input_fluid": {
     "amount": 90,
     "ingredient": "machines:gold_source"

@@ -1,6 +1,6 @@
 {
   "type": "machines:macerator",
-  "energy": 500,
+  "energy": 50,
   "input": {
     "count": 1,
     "ingredient": "#c:sandstone/uncolored_blocks"

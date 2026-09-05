@@ -1,6 +1,7 @@
 {
+  "parent": "machines:extend/story/smelt_iron/wrought_iron_ingot",
   "criteria": {
-    "machine_frame": {
+    "craft_machine_frame": {
       "conditions": {
         "items": [
           {
@@ -12,22 +13,19 @@
     }
   },
   "display": {
-    "announce_to_chat": false,
-    "background": "machines:block/machine/frame/basic/side",
     "description": {
-      "translate": "machines.advancement.root.machines.desc"
+      "translate": "machines.advancement.branch.machine_frame.desc"
     },
     "icon": {
       "id": "machines:machine_frame"
     },
-    "show_toast": false,
     "title": {
-      "translate": "machines.advancement.root.machines"
+      "translate": "machines.advancement.branch.machine_frame"
     }
   },
   "requirements": [
     [
-      "machine_frame"
+      "craft_machine_frame"
     ]
   ],
   "sends_telemetry_event": true
