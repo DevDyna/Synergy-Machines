@@ -45,7 +45,7 @@ public class ExtractorRecipeBuilder extends BaseMachineRecipeBuilder<ExtractorRe
     }
 
     @Override
-    public ExtractorRecipeBuilder output(ChanceOutput.Item item) {
+    public ExtractorRecipeBuilder outputChance(ChanceOutput.Item item) {
         this.optional_output_item = item;
         return getBuilder();
     }
