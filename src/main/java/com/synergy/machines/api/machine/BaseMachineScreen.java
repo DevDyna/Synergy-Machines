@@ -192,8 +192,8 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
         @Override
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
-
-                // TODO API : GUI_TEXTURED
+                // TODO BUG : using super cause fluid tank to render dark! (need to investigate
+                // why)
                 guiGraphics.blit(
                                 RenderPipelines.GUI_TEXTURED,
                                 background(),
@@ -202,6 +202,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                 0, 0,
                                 175, 165,
                                 256, 256);
+                // super.extractBackground(guiGraphics, mouseX, mouseY, a);
 
                 this.renderArrow(guiGraphics);
 
