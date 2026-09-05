@@ -217,7 +217,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                 ExtractorRecipeBuilder.of(registries)
                                 .input(Items.NETHERRACK)
                                 .output(Fluids.LAVA, 150)
-                                .output(LibItems.SILICON_SHARD, 0.5f)
+                                .output(LibItems.SILICON_SHARD, 0.15f)
                                 .unlockedBy(Items.NETHERRACK)
                                 .save(output);
 
