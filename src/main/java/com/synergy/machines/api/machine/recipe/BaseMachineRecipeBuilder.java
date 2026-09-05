@@ -70,6 +70,43 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
         return getBuilder();
     }
 
+    /**
+     * Reset All Base Machine values to the default values
+     * <br/>
+     * <br/>
+     * base value -> {@code 100t}
+     * <br/>
+     * <br/>
+     * base value -> {@code 50fe/t}
+     */
+    public T overrideBaseMachine() {
+        overrideBaseEnergy();
+        overrideBaseDelay();
+        return getBuilder();
+    }
+
+    /**
+     * Reset Base Machine energy values to the default
+     * <br/>
+     * <br/>
+     * base value -> {@code 50fe/t}
+     */
+    public T overrideBaseEnergy() {
+        this.energy = DEFAULT_FE_COST;
+        return getBuilder();
+    }
+
+    /**
+     * Reset Base Machine ticks values to the default
+     * <br/>
+     * <br/>
+     * base value -> {@code 100t}
+     */
+    public T overrideBaseDelay() {
+        this.ticks = DEFAULT_TICK_DURATION;
+        return getBuilder();
+    }
+
     public T unlockedBy() {
         return unlockedBy("has_" + getMachine().id(),
                 InventoryChangeTrigger.TriggerInstance.hasItems(getMachine().item().get()));
