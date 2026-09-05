@@ -33,19 +33,19 @@ public class zFluids {
 
         // ---------------------------------------------------------------------------------------//
         public static final FluidRegister MOLTEN_IRON = FluidRegister
-                        .create("iron", ColorUtils.GRAY);
+                        .create("molten_iron", ColorUtils.GRAY);
 
         public static final FluidRegister MOLTEN_COPPER = FluidRegister
-                        .create("copper", ColorUtils.COPPER);
+                        .create("molten_copper", ColorUtils.COPPER);
 
         public static final FluidRegister MOLTEN_GOLD = FluidRegister
-                        .create("gold", ColorUtils.GOLD);
+                        .create("molten_gold", ColorUtils.GOLD);
 
         public static final FluidRegister MOLTEN_STEEL = FluidRegister
-                        .create("steel", ColorUtils.DARK_GRAY);
+                        .create("molten_steel", ColorUtils.DARK_GRAY);
 
         public static final FluidRegister MOLTEN_ANCIENT_DEBRIS = FluidRegister
-                        .create("ancient_debris", ColorUtils.BROWN);
+                        .create("molten_ancient_debris", ColorUtils.BROWN);
 
         public static final FluidRegister SULFURIC_ACID = FluidRegister
                         .create("sulfuric_acid", ColorUtils.YELLOW);
