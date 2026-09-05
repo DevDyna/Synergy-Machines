@@ -15,12 +15,13 @@ public class CreativeTabs {
 
             Material.getAllMachineTypes().forEach(m -> event.accept(m.item().get()));
 
-            CreativeTabUtils.accept(event, zBlocks.SOLAR_PANEL.get().asItem(), zBlocks.LUNAR_PANEL.get().asItem());
+            CreativeTabUtils.accept(event,
+                    zBlocks.MACHINE_FRAME.get(),
+                    zBlocks.SOLAR_PANEL.get(),
+                    zBlocks.LUNAR_PANEL.get());
 
-          
         }
 
     }
 
-  
 }
