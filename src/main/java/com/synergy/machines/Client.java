@@ -1,11 +1,5 @@
 package com.synergy.machines;
 
-import java.util.List;
-
-import com.devdyna.cakesticklib.api.FluidRenderUtils;
-import com.devdyna.cakesticklib.api.utils.ClazzUtil;
-import com.devdyna.cakesticklib.api.utils.x;
-import com.synergy.machines.api.FluidRegister;
 import com.synergy.machines.init.builders.alloy_smelter.AlloySmelterScreen;
 import com.synergy.machines.init.builders.caster.CasterScreen;
 import com.synergy.machines.init.builders.compressor.CompressorScreen;
@@ -14,13 +8,9 @@ import com.synergy.machines.init.builders.furnace.ElectricFurnaceScreen;
 import com.synergy.machines.init.builders.macerator.MaceratorScreen;
 import com.synergy.machines.init.builders.melter.MelterScreen;
 import com.synergy.machines.init.builders.rock_crusher.RockCrusherScreen;
-import com.synergy.machines.init.types.zFluids;
 import com.synergy.machines.init.types.zMachines;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeMap;
-import net.minecraft.world.level.material.FluidState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -32,13 +22,9 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
-import net.neoforged.neoforge.client.fluid.FluidTintSource;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
 @Mod(value = Main.MODULE_ID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = Main.MODULE_ID, value = Dist.CLIENT)
@@ -65,78 +51,40 @@ public class Client {
         event.register(zMachines.ROCK_CRUSHER.menu().get(), RockCrusherScreen::new);
     }
 
-    @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
 
-        event.registerFluidType(new IClientFluidTypeExtensions() {
-            @Override
-            public Identifier getRenderOverlayTexture(Minecraft mc) {
-                return x.parse("textures/misc/underwater.png");
-            }
-        }, ClazzUtil.getAll(zFluids.class, FluidRegister.class)
-                .stream()
-                .map(FluidRegister::getType)
-                .map(DeferredHolder::get)
-                .toArray(FluidType[]::new));
+        // event.registerFluidType(new IClientFluidTypeExtensions() {
+        // @Override
+        // public Identifier getRenderOverlayTexture(Minecraft mc) {
+        // return x.parse("textures/misc/underwater.png");
+        // }
+        // }, ClazzUtil.getAll(zFluids.class, FluidRegister.class)
+        // .stream()
+        // .map(FluidRegister::getType)
+        // .map(DeferredHolder::get)
+        // .toArray(FluidType[]::new));
 
     }
 
-    @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void onRegisterFluidModels(RegisterFluidModelsEvent event) {
 
-        var molten_fluids = List.of(
-                zFluids.MOLTEN_ANCIENT_DEBRIS,
-                zFluids.MOLTEN_COPPER,
-                zFluids.MOLTEN_GOLD,
-                zFluids.MOLTEN_IRON,
-                zFluids.MOLTEN_STEEL);
+        // ClazzUtil.getAll(zFluids.class, FluidRegister.class).stream()
+        // // .filter(f -> !molten_fluids.contains(f))
+        // // .filter(f -> !blazing_fluids.contains(f))
+        // .forEach(
+        // f -> event.register(
+        // FluidRenderUtils.createWaterModel(new FluidTintSource() {
 
-        var blazing_fluids = List.of(
-                zFluids.SULFURIC_ACID);
+        // @Override
+        // public int color(FluidState state) {
+        // return f.getColor();
+        // }
 
-        molten_fluids.forEach(
-                f -> event.register(
-                        FluidRenderUtils.createMoltenModel(new FluidTintSource() {
-
-                            @Override
-                            public int color(FluidState state) {
-                                return f.getColor();
-                            }
-
-                        }),
-                        f.getSource(),
-                        f.getFlowing()));
-                        
-        blazing_fluids.forEach(
-                f -> event.register(
-                        FluidRenderUtils.createBlazingModel(new FluidTintSource() {
-
-                            @Override
-                            public int color(FluidState state) {
-                                return f.getColor();
-                            }
-
-                        }),
-                        f.getSource(),
-                        f.getFlowing()));
-
-        ClazzUtil.getAll(zFluids.class, FluidRegister.class).stream()
-                .filter(f -> !molten_fluids.contains(f))
-                .filter(f -> !blazing_fluids.contains(f))
-                .forEach(
-                        f -> event.register(
-                                FluidRenderUtils.createWaterModel(new FluidTintSource() {
-
-                                    @Override
-                                    public int color(FluidState state) {
-                                        return f.getColor();
-                                    }
-
-                                }),
-                                f.getSource(),
-                                f.getFlowing()));
+        // }),
+        // f.getSource(),
+        // f.getFlowing()));
 
     }
 
