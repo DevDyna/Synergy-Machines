@@ -2,6 +2,8 @@ package com.synergy.machines.api.machine;
 
 import javax.annotation.Nullable;
 
+import com.devdyna.cakesticklib.CakeStickLib;
+import com.devdyna.cakesticklib.api.upgrades.UpgradeInstallable;
 import com.devdyna.cakesticklib.api.upgrades.modifiers.ModifierUtils;
 import com.synergy.machines.init.builders.MachineFrame;
 
@@ -9,6 +11,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -68,12 +73,37 @@ public abstract class BaseMachineBlock extends MachineFrame implements EntityBlo
         }
     }
 
+    public boolean addUpgrade(ItemStack item, InteractionHand hand, BlockPos pos, BlockState state, Level level,
+            Player player) {
+        if (!player.isCrouching())
+            if (ModifierUtils.itemValid(item))
+                if (level.getBlockEntity(pos) instanceof UpgradeInstallable machine)
+                    if (machine.tryAddUpgrade(item)) {
+
+                        if (!player.isCreative())
+                            item.shrink(1);
+
+                        player.swing(hand);
+
+                        player.sendOverlayMessage(
+                                Component.translatable(CakeStickLib.MODULE_ID + ".item_use.install"));
+
+                        level.playSound(player, pos,
+                                SoundEvents.SMITHING_TABLE_USE,
+                                SoundSource.BLOCKS,
+                                1.0F, 1.5F);
+
+                        return true;
+                    }
+        return false;
+    }
+
     @Override
-    public InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos,
+    public InteractionResult useItemOn(ItemStack item, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult) {
 
-        if (ModifierUtils.itemValid(itemStack))
-            return InteractionResult.CONSUME;
+        if (addUpgrade(item, hand, pos, state, level, player))
+            return InteractionResult.SUCCESS;
 
         return InteractionResult.TRY_WITH_EMPTY_HAND;
     }

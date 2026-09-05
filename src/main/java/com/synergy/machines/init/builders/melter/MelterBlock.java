@@ -2,7 +2,7 @@ package com.synergy.machines.init.builders.melter;
 
 import javax.annotation.Nullable;
 
-import com.devdyna.cakesticklib.api.aspect.logic.BucketInteraction;
+import com.synergy.machines.api.BucketUpgradableInteraction;
 import com.synergy.machines.api.machine.BaseMachineBlock;
 
 import net.minecraft.core.BlockPos;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class MelterBlock extends BaseMachineBlock implements BucketInteraction.Simple {
+public class MelterBlock extends BaseMachineBlock implements BucketUpgradableInteraction {
 
     public MelterBlock(Properties p) {
         super(p);
