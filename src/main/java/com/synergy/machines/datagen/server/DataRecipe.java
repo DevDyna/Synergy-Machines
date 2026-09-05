@@ -571,7 +571,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                         .input(ingot)
                                         .output(molten.getFluid(), MoltenValues.INGOT)
                                         .unlockedBy(ingot)
-                                        .save(output, "_from_ingot");
+                                        .save(output);
 
         }
 
