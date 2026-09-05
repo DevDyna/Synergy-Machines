@@ -47,7 +47,7 @@ public class DataAdvancement extends AdvancementProvider {
                                                                         MODULE_ID + ".advancement.root." + MODULE_ID),
                                                         Component.translatable(MODULE_ID + ".advancement.root."
                                                                         + MODULE_ID + ".desc"),
-                                                        x.rl(MODULE_ID, "textures/block/machine/frame/basic/top.png"),
+                                                        x.rl(MODULE_ID, "textures/block/machine/frame/basic/side"),
                                                         AdvancementType.TASK, true, false, false)
                                         .addCriterion("machine_frame",
                                                         InventoryChangeTrigger.TriggerInstance
