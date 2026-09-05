@@ -59,9 +59,48 @@ public class DataLang extends LanguageProvider implements LangGenerators {
                                 "Combine some carbon dust with an iron ingot");
 
                 add(MODULE_ID + ".advancement.root." + MODULE_ID, "Industrial Machines");
-                add(MODULE_ID + ".advancement.root." + MODULE_ID + ".desc", "The world need something to be more nicer");
+                add(MODULE_ID + ".advancement.root." + MODULE_ID + ".desc",
+                                "The world need something to be more nicer");
 
                 add(MODULE_ID + ".creative_tab." + MODULE_ID, "Synergy : Machines");
+
+                add(MODULE_ID + ".configuration.machines", "Machine Configuration");
+
+                add(MODULE_ID + ".configuration.solar_panel_fe_max", "Solar Panels FE Capacity");
+                add(MODULE_ID + ".configuration.solar_panel_fe_gen", "Solar Panels FE every tick");
+                add(MODULE_ID + ".configuration.solar_panel_disable_seesky", "Solar Panels require to see the sky");
+
+                add(MODULE_ID + ".configuration.enable_shift_invert_facing",
+                                "Allow to place any machine on the opposite side when pressed shift during the placement");
+
+                add(MODULE_ID + ".configuration.base_machine_max_fe", "Base max energy stored");
+
+                add(MODULE_ID + ".configuration.max_speed_upgrades",
+                                "Max Speed Increaser Upgrade Types usable foreach machine");
+                add(MODULE_ID + ".configuration.max_energy_upgrades",
+                                "Max Energy Efficiency Upgrade Types usable foreach machine");
+                add(MODULE_ID + ".configuration.max_luck_upgrades",
+                                "Max Secondary Output Increaser Upgrade Types usable foreach machine");
+                add(MODULE_ID + ".configuration.max_fluid_upgrades",
+                                "Max Fluid Efficiency Upgrade Types usable foreach machine");
+
+                add(MODULE_ID + ".configuration.min_tick_rate", "Minimal tick delay based on upgrade installed");
+                add(MODULE_ID + ".configuration.min_fe_cost", "Minimal Energy cost based on upgrade installed");
+                add(MODULE_ID + ".configuration.min_mb_cost", "Minimal Fluid cost based on upgrade installed");
+                add(MODULE_ID + ".configuration.max_luck", "Maximal Secondary Chance based on upgrade installed");
+
+                add(MODULE_ID + ".configuration.disable_ms_firewall",
+                                "Disable crash safer when an Industrial Machine is corrupted");
+
+                add(MODULE_ID + ".configuration.machine_furnace_disable_vanilla", "Disable Vanilla Recipes");
+                add(MODULE_ID + ".configuration.machine_furnace_vanilla_fe_cost",
+                                "Vanilla Recipe Base FE consumed every tick");
+                add(MODULE_ID + ".configuration.machine_furnace_vanilla_disable_tick_reducer",
+                                "Disable Vanilla Recipe Tick Reducer");
+                add(MODULE_ID + ".configuration.machine_furnace_vanilla_min_tick_delay",
+                                "Vanilla Recipe Mininal Tick Delay");
+                add(MODULE_ID + ".configuration.machine_furnace_vanilla_percentuage_tick_delay",
+                                "Vanilla Recipe Tick Delay reduction of total Tick Delay");
 
         }
 
