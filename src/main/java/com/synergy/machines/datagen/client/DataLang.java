@@ -34,6 +34,25 @@ public class DataLang extends LanguageProvider implements LangGenerators {
                 addBlock(zBlocks.LUNAR_PANEL, "Lunar Panel");
 
                 addBlock(zBlocks.MACHINE_FRAME, "Machine Frame");
+
+                LangUtils.advKey(this, MODULE_ID, zMachines.ALLOY_SMELTER.id(), "Mix stuff", "Craft an alloy smelter");
+                LangUtils.advKey(this, MODULE_ID, zMachines.CASTING_FACTORY.id(), "Cool it down!",
+                                "Craft a casting factory");
+                LangUtils.advKey(this, MODULE_ID, zMachines.COMPRESSOR.id(), "Don't put your finger here!",
+                                "Craft a compressor");
+                LangUtils.advKey(this, MODULE_ID, zMachines.ELECTRIC_FURNACE.id(), "Not an Iron Furnace",
+                                "Craft an electric furnace");
+                LangUtils.advKey(this, MODULE_ID, zMachines.EXTRACTOR.id(), "Extract the essential",
+                                "Craft an extractor");
+                LangUtils.advKey(this, MODULE_ID, zMachines.MACERATOR.id(), "Crush into dusts",
+                                "Craft a macerator to process items into dusts");
+                LangUtils.advKey(this, MODULE_ID, zMachines.ELECTRIC_MELTER.id(), "High temperatures",
+                                "Craft an electric melter");
+                LangUtils.advKey(this, MODULE_ID, zMachines.ROCK_CRUSHER.id(), "Rock 'n' Roll", "Craft a rock crusher");
+
+                add(MODULE_ID + ".advancement.root." + MODULE_ID, "Synergy : Machines");
+                add(MODULE_ID + ".advancement.root." + MODULE_ID + ".desc", "The keywords are simplify , automate and improve");
+
         }
 
 }
