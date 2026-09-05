@@ -10,7 +10,7 @@
     "id": "minecraft:lava"
   },
   "secondary_item": {
-    "chance": 0.5,
+    "chance": 0.15,
     "item": {
       "id": "cakesticklib:silicon_shard"
     }
