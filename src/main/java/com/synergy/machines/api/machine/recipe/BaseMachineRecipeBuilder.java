@@ -4,7 +4,6 @@ import static com.synergy.machines.Main.MODULE_ID;
 
 import javax.annotation.Nullable;
 
-import com.devdyna.cakesticklib.api.recipe.recipeBuilder.FluidAttach.Any.SimpleFluidAttach;
 import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
@@ -38,7 +37,7 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
     protected SizedIngredient input;
     protected SizedIngredient optional_input;
     protected ItemStackTemplate output;
-    protected @Nullable ChanceOutput.Item optional_output_item;
+    protected ChanceOutput.Item optional_output_item;
     protected SizedIngredient extra_input;
     protected boolean consumeCatalyst = false;
     protected SizedFluidIngredient fluid_input;
@@ -141,14 +140,13 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
         return getBuilder();
     }
 
-    @SuppressWarnings({ "deprecation", "null" })
     @Override
     public Identifier getSuffix(String extra) {
 
         if (output != null && output.item().value() != null)
             return x.rl(MODULE_ID, getMachinePath() + x.name(output.item().value()) + extra);
 
-        if (this instanceof SimpleFluidAttach
+        if (this instanceof FluidAttach.Output.OutputFluid
                 && fluid_output != null
                 && fluid_output.fluid().value() != null)
             return x.rl(MODULE_ID, getMachinePath() + x.name(fluid_output.fluid().value()) + extra);
