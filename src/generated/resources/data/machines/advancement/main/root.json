@@ -13,13 +13,14 @@
   },
   "display": {
     "announce_to_chat": false,
-    "background": "machines:textures/block/machine/frame/basic/top.png",
+    "background": "machines:block/machine/frame/basic/side",
     "description": {
       "translate": "machines.advancement.root.machines.desc"
     },
     "icon": {
       "id": "machines:machine_frame"
     },
+    "show_toast": false,
     "title": {
       "translate": "machines.advancement.root.machines"
     }
