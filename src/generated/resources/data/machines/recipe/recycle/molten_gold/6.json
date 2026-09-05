@@ -1,0 +1,13 @@
+{
+  "type": "machines:electric_melter",
+  "energy": 500,
+  "fluid": {
+    "amount": 540,
+    "id": "machines:molten_gold"
+  },
+  "input": {
+    "count": 1,
+    "ingredient": "#machines:recipe_recycle/gold/6"
+  },
+  "ticks": 400
+}

@@ -1,0 +1,13 @@
+{
+  "type": "machines:electric_melter",
+  "energy": 500,
+  "fluid": {
+    "amount": 270,
+    "id": "machines:molten_iron"
+  },
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:raw_iron"
+  },
+  "ticks": 400
+}

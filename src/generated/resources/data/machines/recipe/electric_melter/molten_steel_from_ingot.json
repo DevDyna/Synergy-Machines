@@ -1,0 +1,13 @@
+{
+  "type": "machines:electric_melter",
+  "energy": 500,
+  "fluid": {
+    "amount": 90,
+    "id": "machines:molten_steel"
+  },
+  "input": {
+    "count": 1,
+    "ingredient": "cakesticklib:steel_ingot"
+  },
+  "ticks": 400
+}

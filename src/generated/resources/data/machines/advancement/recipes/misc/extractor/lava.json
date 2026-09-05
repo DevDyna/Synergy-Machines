@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "machines:extractor/lava"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "netherrack": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:netherrack"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "netherrack"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "machines:extractor/lava"
+    ]
+  }
+}

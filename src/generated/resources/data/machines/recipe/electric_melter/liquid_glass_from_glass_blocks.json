@@ -1,0 +1,13 @@
+{
+  "type": "machines:electric_melter",
+  "energy": 500,
+  "fluid": {
+    "amount": 144,
+    "id": "machines:liquid_glass"
+  },
+  "input": {
+    "count": 1,
+    "ingredient": "#c:glass_blocks/cheap"
+  },
+  "ticks": 400
+}

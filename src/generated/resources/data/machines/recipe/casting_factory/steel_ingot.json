@@ -1,0 +1,17 @@
+{
+  "type": "machines:casting_factory",
+  "consume_item": false,
+  "energy": 50,
+  "input_fluid": {
+    "amount": 90,
+    "ingredient": "machines:molten_steel"
+  },
+  "input_item": {
+    "count": 1,
+    "ingredient": "cakesticklib:ingot_mold"
+  },
+  "output": {
+    "id": "cakesticklib:steel_ingot"
+  },
+  "ticks": 10
+}

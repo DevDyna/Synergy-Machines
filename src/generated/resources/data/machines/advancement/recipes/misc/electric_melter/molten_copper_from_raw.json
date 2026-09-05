@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "machines:electric_melter/molten_copper_from_raw"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "raw_copper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:raw_copper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "raw_copper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "machines:electric_melter/molten_copper_from_raw"
+    ]
+  }
+}

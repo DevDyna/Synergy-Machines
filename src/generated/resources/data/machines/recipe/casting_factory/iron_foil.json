@@ -4,7 +4,7 @@
   "energy": 50,
   "input_fluid": {
     "amount": 90,
-    "ingredient": "machines:iron_source"
+    "ingredient": "machines:molten_iron"
   },
   "input_item": {
     "count": 1,
