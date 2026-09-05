@@ -187,6 +187,26 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 .unlockedBy(getHasName(LibItems.PLASTIC.get()), has(LibItems.PLASTIC.get()))
                                 .save(output, asRecipeID(zBlocks.MACHINE_FRAME.get(), "_advanced"));
 
+                shaped(RecipeCategory.MISC, zBlocks.SOLAR_PANEL.get(), 3)
+                                .pattern("LLL")
+                                .pattern("WRW")
+                                .define('R', Items.REDSTONE)
+                                .define('W', LibItems.WROUGHT_IRON_INGOT.get())
+                                .define('L', Items.LAPIS_LAZULI)
+                                .unlockedBy(getHasName(LibItems.WROUGHT_IRON_INGOT.get()),
+                                                has(LibItems.WROUGHT_IRON_INGOT.get()))
+                                .save(output);
+
+                shaped(RecipeCategory.MISC, zBlocks.LUNAR_PANEL.get(), 3)
+                                .pattern("AAA")
+                                .pattern("WRW")
+                                .define('R', Items.REDSTONE)
+                                .define('W', LibItems.WROUGHT_IRON_INGOT.get())
+                                .define('A', Items.AMETHYST_SHARD)
+                                .unlockedBy(getHasName(LibItems.WROUGHT_IRON_INGOT.get()),
+                                                has(LibItems.WROUGHT_IRON_INGOT.get()))
+                                .save(output);
+
                 MaceratorRecipeBuilder.of(registries)
                                 .input(ItemTags.LOGS)
                                 .output(x.itemTemplate(LibItems.SAWDUST, 4)) // TODO
