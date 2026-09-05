@@ -80,8 +80,8 @@ public class FluidRegister {
 
         this.prop = new BaseFlowingFluid.Properties(this.type, null, null);
 
-        this.fluidsource = zFluids.zFluids.register(id + "_source",
-                p -> new BaseFlowingFluid.Source(this.prop));
+        this.fluidsource = zFluids.zFluids.register(id //+ "_source"
+        ,   p -> new BaseFlowingFluid.Source(this.prop));
 
         this.fluidflowing = zFluids.zFluids.register(id + "_flowing",
                 p -> new BaseFlowingFluid.Flowing(this.prop));
