@@ -82,7 +82,7 @@ public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRe
                                         26 + 10 + 10 - 5 + 2 + 1
                                                         + (recipe.getResult().indexOf(output) / 3
                                                                         * (24 + 10 + 10 - 2 - 2)),
-                                        ColorUtils.WHITE.getRGB());
+                                        ColorUtils.WHITE.WHITE.getRGB());
                 stack.popMatrix();
 
         }
