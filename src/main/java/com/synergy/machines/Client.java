@@ -1,5 +1,7 @@
 package com.synergy.machines;
 
+import java.util.List;
+
 import com.devdyna.cakesticklib.api.FluidRenderUtils;
 import com.devdyna.cakesticklib.api.utils.ClazzUtil;
 import com.devdyna.cakesticklib.api.utils.x;
@@ -84,9 +86,19 @@ public class Client {
     @SubscribeEvent
     public static void onRegisterFluidModels(RegisterFluidModelsEvent event) {
 
-        ClazzUtil.getAll(zFluids.class, FluidRegister.class).forEach(
+        var molten_fluids = List.of(
+                zFluids.MOLTEN_ANCIENT_DEBRIS,
+                zFluids.MOLTEN_COPPER,
+                zFluids.MOLTEN_GOLD,
+                zFluids.MOLTEN_IRON,
+                zFluids.MOLTEN_STEEL);
+
+        var blazing_fluids = List.of(
+                zFluids.SULFURIC_ACID);
+
+        molten_fluids.forEach(
                 f -> event.register(
-                        FluidRenderUtils.createWaterModel(new FluidTintSource() {
+                        FluidRenderUtils.createMoltenModel(new FluidTintSource() {
 
                             @Override
                             public int color(FluidState state) {
@@ -96,6 +108,35 @@ public class Client {
                         }),
                         f.getSource(),
                         f.getFlowing()));
+                        
+        blazing_fluids.forEach(
+                f -> event.register(
+                        FluidRenderUtils.createBlazingModel(new FluidTintSource() {
+
+                            @Override
+                            public int color(FluidState state) {
+                                return f.getColor();
+                            }
+
+                        }),
+                        f.getSource(),
+                        f.getFlowing()));
+
+        ClazzUtil.getAll(zFluids.class, FluidRegister.class).stream()
+                .filter(f -> !molten_fluids.contains(f))
+                .filter(f -> !blazing_fluids.contains(f))
+                .forEach(
+                        f -> event.register(
+                                FluidRenderUtils.createWaterModel(new FluidTintSource() {
+
+                                    @Override
+                                    public int color(FluidState state) {
+                                        return f.getColor();
+                                    }
+
+                                }),
+                                f.getSource(),
+                                f.getFlowing()));
 
     }
 
