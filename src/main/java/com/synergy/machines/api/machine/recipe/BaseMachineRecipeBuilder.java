@@ -21,7 +21,6 @@ import net.neoforged.neoforge.fluids.FluidStackTemplate;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
 
-
 public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilder<T>> extends BaseRecipeBuilder
         implements ItemAttach.Input.ItemCounted<T>, ItemAttach.Output.SimpleOutputItem<T> {
 
@@ -39,12 +38,8 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
     protected SizedIngredient input;
     protected SizedIngredient optional_input;
     protected ItemStackTemplate output;
-    // @Deprecated
-    // protected ItemStack optional_output = ItemStack.EMPTY;
     protected @Nullable ChanceOutput.Item optional_output_item;
     protected SizedIngredient extra_input;
-    // @Deprecated
-    // protected float chance;
     protected boolean consumeCatalyst = false;
     protected SizedFluidIngredient fluid_input;
     protected FluidStackTemplate fluid_output;
@@ -60,7 +55,7 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
     }
 
     /**
-     * default value -> 60t
+     * base value -> 100t
      */
     public T delay(int ticks) {
         this.ticks = ticks;
@@ -68,7 +63,7 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
     }
 
     /**
-     * default value -> 1kfe | 1000fe
+     * base value -> 50fe/t
      */
     public T energy(int energy) {
         this.energy = energy;
