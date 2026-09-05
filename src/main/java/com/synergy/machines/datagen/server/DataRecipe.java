@@ -3,6 +3,7 @@ package com.synergy.machines.datagen.server;
 import static com.synergy.machines.Main.MODULE_ID;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 import com.devdyna.cakesticklib.api.datagen.RecipeGenerators;
 import com.devdyna.cakesticklib.api.utils.x;
@@ -27,11 +28,13 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.Tags;
 
@@ -583,56 +586,76 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 .input(item1)
                                 .output(fluid.getFluid(), MoltenValues.INGOT)
                                 .unlockedBy(item1, items)
-                                .save(output,"/recycle/1");
+                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/1"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item2)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 2)
                                 .unlockedBy(item2, items)
-                                .save(output,"/recycle/2");
+                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/2"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item3)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 3)
                                 .unlockedBy(item3, items)
-                                .save(output,"/recycle/3");
+                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/3"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item4)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 4)
                                 .unlockedBy(item4, items)
-                                .save(output,"/recycle/4");
+                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/4"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item5)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 5)
                                 .unlockedBy(item5, items)
-                                .save(output,"/recycle/5");
+                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/5"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item6)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 6)
                                 .unlockedBy(item6, items)
-                                .save(output,"/recycle/6");
+                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/6"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item7)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 7)
                                 .unlockedBy(item7, items)
-                                .save(output,"/recycle/7");
+                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/7"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item8)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 8)
                                 .unlockedBy(item8, items)
-                                .save(output,"/recycle/8");
+                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/8"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item9)
                                 .output(fluid.getFluid(), MoltenValues.INGOT * 9)
                                 .unlockedBy(item9, items)
-                                .save(output,"/recycle/9");
+                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/9"));
 
         }
+
+        //TODO API : move to api
+        private String asRecipeID(Fluid i, String suffix) {
+                return getModName() + ":" + x.name(i) + suffix;
+        }
+
+        @SuppressWarnings("unused")
+        private String asRecipeID(Fluid i) {
+                return asRecipeID(i, "_alt");
+        }
+
+        @SuppressWarnings("unused")
+        private Function<Identifier, Identifier> overrideID(Identifier n){
+                return f-> n;
+        }
+        private Function<Identifier, Identifier> overrideID(String s){
+                return f-> x.rl(getModName(),s);
+        }
+
+        
 
 }
