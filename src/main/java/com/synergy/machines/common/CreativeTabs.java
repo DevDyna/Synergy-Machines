@@ -14,12 +14,12 @@ public class CreativeTabs {
     public static void register(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == zCreativeTab.MACHINES_TAB.getKey()) {
 
-            Material.getAllMachineTypes().forEach(m -> event.accept(m.item().get()));
-
             CreativeTabUtils.accept(event,
                     zBlocks.MACHINE_FRAME.get(),
                     zBlocks.SOLAR_PANEL.get(),
                     zBlocks.LUNAR_PANEL.get());
+
+            Material.getAllMachineTypes().forEach(m -> event.accept(m.item().get()));
 
         }
 
