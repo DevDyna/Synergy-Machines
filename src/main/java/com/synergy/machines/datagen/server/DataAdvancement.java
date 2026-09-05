@@ -39,6 +39,8 @@ public class DataAdvancement extends AdvancementProvider {
                         // TODO API : API advancements
                         // TODO IMP : API adv connections
 
+                        // TODO IMP : solar advancements
+
                         var root_machine_frame = Advancement.Builder.advancement()
                                         .display(zBlocks.MACHINE_FRAME.get(),
                                                         Component.translatable(
