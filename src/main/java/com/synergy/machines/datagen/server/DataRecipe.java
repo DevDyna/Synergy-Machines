@@ -3,14 +3,9 @@ package com.synergy.machines.datagen.server;
 import static com.synergy.machines.Main.MODULE_ID;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
-
 import com.devdyna.cakesticklib.api.datagen.RecipeGenerators;
 import com.devdyna.cakesticklib.api.utils.x;
-import com.devdyna.cakesticklib.setup.registry.LibBlocks;
-import com.devdyna.cakesticklib.setup.registry.LibItems;
-import com.devdyna.cakesticklib.setup.registry.LibTags;
-import com.synergy.machines.api.FluidRegister;
+import com.devdyna.cakesticklib.setup.registry.*;
 import com.synergy.machines.init.builders.alloy_smelter.recipe.AlloySmelterRecipeBuilder;
 import com.synergy.machines.init.builders.caster.recipe.CasterRecipeBuilder;
 import com.synergy.machines.init.builders.compressor.recipe.CompressorRecipeBuilder;
@@ -18,17 +13,12 @@ import com.synergy.machines.init.builders.extractor.recipe.ExtractorRecipeBuilde
 import com.synergy.machines.init.builders.macerator.recipe.MaceratorRecipeBuilder;
 import com.synergy.machines.init.builders.melter.recipe.MelterRecipeBuilder;
 import com.synergy.machines.init.builders.rock_crusher.recipe.RockCrusherRecipeBuilder;
-import com.synergy.machines.init.types.zBlocks;
-import com.synergy.machines.init.types.zFluids;
-import com.synergy.machines.init.types.zMachines;
-import com.synergy.machines.init.types.zTags;
+import com.synergy.machines.init.types.*;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -50,7 +40,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                 public static final int INGREDIENT_BARS = BARS * 16;
         }
 
-        protected DataRecipe(Provider registries, RecipeOutput output) {
+        protected DataRecipe(HolderLookup.Provider registries, RecipeOutput output) {
                 super(registries, output);
         }
 
@@ -59,19 +49,9 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
 
                 MaceratorRecipeBuilder.of(registries)
                                 .input(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
-                                .output(x.itemTemplate(Items.SAND, 2)) // TODO
-                                .output(LibItems.SILICON_SHARD, 1, 0.5f)
+                                .output(Items.SAND, 2)
+                                .outputChance(LibItems.SILICON_SHARD, 1, 0.5f)
                                 .unlockedBy(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS, items)
-                                .save(output);
-
-                RockCrusherRecipeBuilder.of(registries)
-                                .fluid(Fluids.WATER, 125)
-                                .input(Items.STONE)
-                                .addResult(Items.COBBLESTONE, 2, 1f)
-                                .addResult(Items.RAW_COPPER, 0.25f)
-                                .addResult(Items.RAW_GOLD, 0.15f)
-                                .addResult(Items.RAW_IRON, 0.28f)
-                                .unlockedBy(Items.STONE)
                                 .save(output);
 
                 shaped(RecipeCategory.REDSTONE, zMachines.CASTING_FACTORY.block().get())
@@ -176,8 +156,8 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 .pattern(" C ")
                                 .define('C', LibItems.CHIP.get())
                                 .define('F', Items.IRON_NUGGET)
-                                .define('R', zTags.Items.LEGACY_STONES)
-                                .unlockedBy(getHasName(zTags.Items.LEGACY_STONES), has(zTags.Items.LEGACY_STONES))
+                                .define('R', LibTags.Items.LEGACY_STONES)
+                                .unlockedBy(getHasName(LibTags.Items.LEGACY_STONES), has(LibTags.Items.LEGACY_STONES))
                                 .save(output);
 
                 shaped(RecipeCategory.MISC, zBlocks.MACHINE_FRAME.get(), 4)
@@ -212,14 +192,27 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
 
                 MaceratorRecipeBuilder.of(registries)
                                 .input(ItemTags.LOGS)
-                                .output(x.itemTemplate(LibItems.SAWDUST, 4)) // TODO
-                                .output(LibItems.SAWDUST, 2, 0.75f)
+                                .output(LibItems.SAWDUST, 4)
+                                .outputChance(LibItems.SAWDUST, 2, 0.75f)
                                 .unlockedBy(ItemTags.LOGS, items)
-                                .save(output);
+                                .save(output, "_from_logs");
+
+                MaceratorRecipeBuilder.of(registries)
+                                .input(ItemTags.PLANKS)
+                                .output(LibItems.SAWDUST, 1)
+                                .outputChance(LibItems.SAWDUST, 1, 0.35f)
+                                .unlockedBy(ItemTags.PLANKS, items)
+                                .save(output, "_from_planks");
+
+                MaceratorRecipeBuilder.of(registries)
+                                .input(Items.STICK)
+                                .outputChance(LibItems.SAWDUST, 1, 0.25f)
+                                .unlockedBy(ItemTags.PLANKS, items)
+                                .save(output, "_from_sticks");
 
                 MaceratorRecipeBuilder.of(registries)
                                 .input(ItemTags.COALS)
-                                .output(x.itemTemplate(LibItems.CARBON_DUST, 2)) // TODO
+                                .output(LibItems.CARBON_DUST, 2)
                                 .unlockedBy(ItemTags.COALS, items)
                                 .save(output);
 
@@ -240,13 +233,27 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                 ExtractorRecipeBuilder.of(registries)
                                 .input(Items.NETHERRACK)
                                 .output(Fluids.LAVA, 150)
-                                .output(LibItems.SILICON_SHARD, 0.15f)
+                                .outputChance(LibItems.SULFUR_DUST, 0.15f)
                                 .unlockedBy(Items.NETHERRACK)
-                                .save(output);
+                                .save(output, "_from_netherrack");
+
+                ExtractorRecipeBuilder.of(registries)
+                                .input(Items.MAGMA_BLOCK)
+                                .output(Fluids.LAVA, 250)
+                                .outputChance(LibItems.SULFUR_DUST, 0.95f)
+                                .unlockedBy(Items.MAGMA_BLOCK)
+                                .save(output, "_from_magma_block");
+
+                ExtractorRecipeBuilder.of(registries)
+                                .input(Items.MAGMA_CREAM)
+                                .output(Fluids.LAVA, 50)
+                                .outputChance(LibItems.SULFUR_DUST, 0.25f)
+                                .unlockedBy(Items.MAGMA_CREAM)
+                                .save(output, "_from_magma_cream");
 
                 ExtractorRecipeBuilder.of(registries)
                                 .input(Tags.Items.SLIME_BALLS)
-                                .output(zFluids.PLASTIC.getFluid(), 25)
+                                .output(LibFluids.PLASTIC.getFluid(), 25)
                                 .unlockedBy(Tags.Items.SLIME_BALLS, items)
                                 .save(output);
 
@@ -269,42 +276,107 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 .unlockedBy(ItemTags.PLANKS, items)
                                 .save(output);
 
+                CompressorRecipeBuilder.of(registries)
+                                .input(ItemTags.PLANKS)
+                                .catalyst(LibItems.MOLD_ROD.get())
+                                .output(Items.STICK, 8)
+                                .unlockedBy(ItemTags.PLANKS, items)
+                                .save(output);
+
                 MelterRecipeBuilder.of(registries)
                                 .input(Tags.Items.GLASS_BLOCKS_CHEAP)
-                                .output(zFluids.LIQUID_GLASS.getFluid(), MoltenValues.INGREDIENT_BARS)
+                                .output(LibFluids.LIQUID_GLASS.getFluid(), MoltenValues.INGREDIENT_BARS)
                                 .unlockedBy(Tags.Items.GLASS_BLOCKS_CHEAP, items)
                                 .save(output, "_from_glass_blocks");
 
-                // TODO API : change itemtag on glass to dust recipe!
-
                 MelterRecipeBuilder.of(registries)
                                 .input(Tags.Items.GLASS_PANES)
-                                .output(zFluids.LIQUID_GLASS.getFluid(), MoltenValues.BARS)
+                                .output(LibFluids.LIQUID_GLASS.getFluid(), MoltenValues.BARS)
                                 .unlockedBy(Tags.Items.GLASS_PANES, items)
                                 .save(output, "_from_glass_panes");
 
                 CasterRecipeBuilder.of(registries)
-                                .fluid(zFluids.LIQUID_GLASS.getFluid(), MoltenValues.BARS)
+                                .fluid(LibFluids.LIQUID_GLASS.getFluid(), MoltenValues.BARS)
                                 .input(LibItems.MOLD_FOIL)
                                 .output(Items.GLASS_PANE)
                                 .unlockedBy(LibItems.MOLD_FOIL.get())
                                 .save(output);
 
                 CasterRecipeBuilder.of(registries)
-                                .fluid(zFluids.PLASTIC.getFluid(), 25)
+                                .fluid(LibFluids.PLASTIC.getFluid(), 25)
                                 .input(LibItems.MOLD_FOIL)
                                 .output(LibItems.PLASTIC, 2)
                                 .unlockedBy(LibItems.MOLD_FOIL.get())
                                 .save(output);
 
                 CasterRecipeBuilder.of(registries)
-                                .fluid(zFluids.LIQUID_GLASS.getFluid(), MoltenValues.INGREDIENT_BARS)
+                                .fluid(Fluids.LAVA, 250)
+                                .input(Items.NETHERRACK)
+                                .output(Items.MAGMA_BLOCK)
+                                .unlockedBy(Items.NETHERRACK)
+                                .save(output);
+
+                CasterRecipeBuilder.of(registries)
+                                .fluid(Fluids.LAVA, 250)
+                                .input(LibItems.MOLD_BLOCK)
+                                .output(Items.OBSIDIAN)
+                                .unlockedBy(LibItems.MOLD_BLOCK)
+                                .save(output);
+
+                CasterRecipeBuilder.of(registries)
+                                .fluid(LibFluids.LIQUID_GLASS.getFluid(), MoltenValues.INGREDIENT_BARS)
                                 .input(LibItems.MOLD_BLOCK)
                                 .output(Items.GLASS)
                                 .unlockedBy(LibItems.MOLD_BLOCK.get())
                                 .save(output);
 
-                // TODO API : ENERGY UPGRADES MUST USE BLUE BATTERIES
+                RockCrusherRecipeBuilder.of(registries)
+                                .fluid(LibFluids.SULFURIC_ACID.getFluid(), 50)
+                                .input(LibTags.Items.LEGACY_STONES)
+                                .addResult(LibItems.STONE_PEBBLE, 2, 0.9f)
+                                .addResult(LibItems.STONE_PEBBLE, 1, 0.75f)
+                                .addResult(LibItems.CARBON_DUST, 0.45f)
+                                .addResult(LibItems.COPPER_DUST, 0.30f)
+                                .addResult(LibItems.LAPIS_DUST, 0.15f)
+                                .addResult(LibItems.IRON_DUST, 0.10f)
+                                .addResult(LibItems.GOLD_DUST, 0.02f)
+                                .addResult(LibItems.DIAMOND_DUST, 0.01f)
+                                .unlockedBy(LibTags.Items.LEGACY_STONES, items)
+                                .save(output);
+
+                // TODO API : TAG BUG
+
+                RockCrusherRecipeBuilder.of(registries)
+                                .fluid(LibFluids.SULFURIC_ACID.getFluid(), 125)
+                                .input(LibTags.Items.MODERN_STONES)
+                                .addResult(LibItems.STONE_PEBBLE, 3, 0.75f)
+                                .addResult(LibItems.STONE_PEBBLE, 1, 0.5f)
+                                .addResult(LibItems.LAPIS_DUST, 0.25f)
+                                .addResult(LibItems.IRON_DUST, 0.17f)
+                                .addResult(LibItems.COPPER_DUST, 0.10f)
+                                .addResult(LibItems.GOLD_DUST, 0.08f)
+                                .addResult(LibItems.AMETHYST_DUST, 0.05f)
+                                .addResult(LibItems.DIAMOND_DUST, 0.05f)
+                                .unlockedBy(LibTags.Items.MODERN_STONES, items)
+                                .save(output);
+
+                // TODO IMP : diorite quartz dust and other specific stones?
+
+                RockCrusherRecipeBuilder.of(registries)
+                                .fluid(LibFluids.SULFURIC_ACID.getFluid(), 125)
+                                .input(Items.BLACKSTONE)
+                                .addResult(LibItems.NETHERRACK_PEBBLE, 1, 0.7f)
+                                .addResult(Items.GOLD_NUGGET, 0.30f)
+                                .addResult(LibItems.IRON_DUST, 0.10f)
+                                .addResult(Items.NETHERITE_SCRAP, 0.02f)
+                                .unlockedBy(Items.BLACKSTONE)
+                                .save(output);
+
+                MelterRecipeBuilder.of(registries)
+                                .input(LibItems.SULFUR_DUST)
+                                .output(LibFluids.SULFURIC_ACID.getFluid(), 25)
+                                .unlockedBy(LibItems.SULFUR_DUST)
+                                .save(output);
 
                 oreProcessing(
                                 Items.RAW_IRON,
@@ -316,7 +388,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 LibItems.IRON_PLATE.get(),
                                 LibItems.IRON_FOIL.get(),
                                 LibItems.IRON_COIL.get(),
-                                zFluids.MOLTEN_IRON);
+                                LibFluids.MOLTEN_IRON.getFluid());
 
                 oreProcessing(
                                 Items.RAW_COPPER,
@@ -328,7 +400,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 LibItems.COPPER_PLATE.get(),
                                 LibItems.COPPER_FOIL.get(),
                                 LibItems.COPPER_COIL.get(),
-                                zFluids.MOLTEN_COPPER);
+                                LibFluids.MOLTEN_COPPER.getFluid());
                 oreProcessing(
                                 Items.RAW_GOLD,
                                 LibItems.GOLD_DUST.get(),
@@ -339,41 +411,41 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 LibItems.GOLD_PLATE.get(),
                                 LibItems.GOLD_FOIL.get(),
                                 LibItems.GOLD_COIL.get(),
-                                zFluids.MOLTEN_GOLD);
+                                LibFluids.MOLTEN_GOLD.getFluid());
 
                 melterRecycle(
-                                zFluids.MOLTEN_COPPER,
-                                zTags.Items.RECYCLE_COPPER_1,
-                                zTags.Items.RECYCLE_COPPER_2,
-                                zTags.Items.RECYCLE_COPPER_3,
-                                zTags.Items.RECYCLE_COPPER_4,
-                                zTags.Items.RECYCLE_COPPER_5,
-                                zTags.Items.RECYCLE_COPPER_6,
-                                zTags.Items.RECYCLE_COPPER_7,
-                                zTags.Items.RECYCLE_COPPER_8,
-                                zTags.Items.RECYCLE_COPPER_9);
+                                LibFluids.MOLTEN_COPPER.getFluid(),
+                                LibTags.Items.RECYCLE_COPPER_1,
+                                LibTags.Items.RECYCLE_COPPER_2,
+                                LibTags.Items.RECYCLE_COPPER_3,
+                                LibTags.Items.RECYCLE_COPPER_4,
+                                LibTags.Items.RECYCLE_COPPER_5,
+                                LibTags.Items.RECYCLE_COPPER_6,
+                                LibTags.Items.RECYCLE_COPPER_7,
+                                LibTags.Items.RECYCLE_COPPER_8,
+                                LibTags.Items.RECYCLE_COPPER_9);
                 melterRecycle(
-                                zFluids.MOLTEN_GOLD,
-                                zTags.Items.RECYCLE_GOLD_1,
-                                zTags.Items.RECYCLE_GOLD_2,
-                                zTags.Items.RECYCLE_GOLD_3,
-                                zTags.Items.RECYCLE_GOLD_4,
-                                zTags.Items.RECYCLE_GOLD_5,
-                                zTags.Items.RECYCLE_GOLD_6,
-                                zTags.Items.RECYCLE_GOLD_7,
-                                zTags.Items.RECYCLE_GOLD_8,
-                                zTags.Items.RECYCLE_GOLD_9);
+                                LibFluids.MOLTEN_GOLD.getFluid(),
+                                LibTags.Items.RECYCLE_GOLD_1,
+                                LibTags.Items.RECYCLE_GOLD_2,
+                                LibTags.Items.RECYCLE_GOLD_3,
+                                LibTags.Items.RECYCLE_GOLD_4,
+                                LibTags.Items.RECYCLE_GOLD_5,
+                                LibTags.Items.RECYCLE_GOLD_6,
+                                LibTags.Items.RECYCLE_GOLD_7,
+                                LibTags.Items.RECYCLE_GOLD_8,
+                                LibTags.Items.RECYCLE_GOLD_9);
                 melterRecycle(
-                                zFluids.MOLTEN_IRON,
-                                zTags.Items.RECYCLE_IRON_1,
-                                zTags.Items.RECYCLE_IRON_2,
-                                zTags.Items.RECYCLE_IRON_3,
-                                zTags.Items.RECYCLE_IRON_4,
-                                zTags.Items.RECYCLE_IRON_5,
-                                zTags.Items.RECYCLE_IRON_6,
-                                zTags.Items.RECYCLE_IRON_7,
-                                zTags.Items.RECYCLE_IRON_8,
-                                zTags.Items.RECYCLE_IRON_9);
+                                LibFluids.MOLTEN_IRON.getFluid(),
+                                LibTags.Items.RECYCLE_IRON_1,
+                                LibTags.Items.RECYCLE_IRON_2,
+                                LibTags.Items.RECYCLE_IRON_3,
+                                LibTags.Items.RECYCLE_IRON_4,
+                                LibTags.Items.RECYCLE_IRON_5,
+                                LibTags.Items.RECYCLE_IRON_6,
+                                LibTags.Items.RECYCLE_IRON_7,
+                                LibTags.Items.RECYCLE_IRON_8,
+                                LibTags.Items.RECYCLE_IRON_9);
 
                 oreProcessing(
                                 LibItems.STEEL_INGOT.get(),
@@ -381,7 +453,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 LibBlocks.STEEL_BLOCK.get(),
                                 LibItems.STEEL_PLATE.get(),
                                 LibItems.STEEL_GEAR.get(),
-                                zFluids.MOLTEN_STEEL);
+                                LibFluids.MOLTEN_STEEL.getFluid());
 
                 oreProcessing(
                                 LibItems.WROUGHT_IRON_INGOT.get(),
@@ -430,30 +502,26 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
         }
 
         @Override
-        public Provider getProvider() {
+        public HolderLookup.Provider getProvider() {
                 return registries;
         }
 
         private void oreProcessing(ItemLike raw, ItemLike dust, ItemLike ingot, ItemLike nugget, ItemLike block,
                         ItemLike gear,
-                        ItemLike plate, ItemLike foil, ItemLike coil, FluidRegister molten) {
+                        ItemLike plate, ItemLike foil, ItemLike coil, Fluid molten) {
 
                 MaceratorRecipeBuilder.of(registries)
                                 .input(raw)
-                                .output(x.itemTemplate(dust.asItem(), 2)) // TODO
-                                .output(dust.asItem(), 1, 0.25f)
+                                .output(dust.asItem(), 2) // TODO API : SimpleOutputItem#output ItemLike
+                                .outputChance(dust.asItem(), 1, 0.25f)
                                 .unlockedBy(raw)
                                 .save(output, "_from_raw");
 
                 MaceratorRecipeBuilder.of(registries)
                                 .input(ingot)
-                                .output(x.itemTemplate(dust.asItem())) // TODO
+                                .output(dust.asItem())
                                 .unlockedBy(ingot)
                                 .save(output, "_from_ingot");
-
-                // TODO API : input(ItemLike input, int c)
-                // TODO API : output(ItemLike output,int c)
-                // TODO API : nugget mold & coil mold
 
                 CompressorRecipeBuilder.of(registries)
                                 .input(plate)
@@ -464,31 +532,29 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
 
                 MelterRecipeBuilder.of(registries)
                                 .input(raw)
-                                .output(molten.getFluid(), MoltenValues.INGOT * 3)
+                                .output(molten, MoltenValues.INGOT * 3)
                                 .unlockedBy(raw)
                                 .save(output, "_from_raw");
 
                 CasterRecipeBuilder.of(registries)
-                                .fluid(molten.getFluid(), MoltenValues.INGOT)
+                                .fluid(molten, MoltenValues.INGOT)
                                 .input(LibItems.MOLD_FOIL)
                                 .output(foil)
                                 .unlockedBy(LibItems.MOLD_FOIL.get())
                                 .save(output);
-
-                // TODO API : unlockedBy(DeferredHolder<Item, Item>)
 
                 oreProcessing(ingot, nugget, block, plate, gear, molten);
 
         }
 
         private void oreProcessing(ItemLike ingot, ItemLike nugget, ItemLike block, ItemLike plate,
-                        ItemLike gear, FluidRegister molten) {
+                        ItemLike gear, Fluid molten) {
 
                 CompressorRecipeBuilder.of(registries)
                                 .input(ingot.asItem(), 9)
                                 .delay(10)
                                 .overrideBaseEnergy()
-                                .catalyst(LibItems.MOLD_BLOCK.get()) // TODO API : DEPRECATED
+                                .catalyst(LibItems.MOLD_BLOCK.get())
                                 .output(block)
                                 .unlockedBy(ingot)
                                 .save(output, "_from_ingot");
@@ -496,7 +562,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                 if (gear != null)
                         CompressorRecipeBuilder.of(registries)
                                         .input(ingot.asItem(), 4)
-                                        .catalyst(LibItems.MOLD_GEAR.get())
+                                        .catalyst(LibItems.MOLD_GEAR.get())// TODO API: remove deprecation
                                         .output(gear)
                                         .unlockedBy(ingot)
                                         .save(output, "_from_ingot");
@@ -514,7 +580,8 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 .input(nugget.asItem(), 9)
                                 .delay(10)
                                 .overrideBaseEnergy()
-                                .catalyst(LibItems.MOLD_INGOT.get())
+                                .catalyst(LibItems.MOLD_INGOT.get())// TODO API : deprecate DefferedHolder<Item,Item> ->
+                                                                    // cause bugs!
                                 .output(ingot)
                                 .unlockedBy(nugget)
                                 .save(output, "_from_nugget");
@@ -523,14 +590,14 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 .input(ingot.asItem())
                                 .delay(10)
                                 .overrideBaseEnergy()
-                                .catalyst(LibItems.STEEL_NUGGET.get())
+                                .catalyst(LibItems.MOLD_NUGGET.get())
                                 .output(nugget.asItem(), 9)
                                 .unlockedBy(ingot)
                                 .save(output, "_from_ingot");
 
                 if (molten != null)
                         CasterRecipeBuilder.of(registries)
-                                        .fluid(molten.getFluid(), MoltenValues.BLOCK)
+                                        .fluid(molten, MoltenValues.BLOCK)
                                         .input(LibItems.MOLD_BLOCK)
                                         .output(block)
                                         .unlockedBy(LibItems.MOLD_BLOCK.get())
@@ -538,8 +605,8 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
 
                 if (molten != null)
                         CasterRecipeBuilder.of(registries)
-                                        .fluid(molten.getFluid(), MoltenValues.NUGGET)
-                                        .input(LibItems.STEEL_NUGGET)// TODO API : DEPRECATED
+                                        .fluid(molten, MoltenValues.NUGGET)
+                                        .input(LibItems.MOLD_NUGGET)
                                         .output(nugget)
                                         .unlockedBy(LibItems.STEEL_NUGGET.get())
                                         .save(output);
@@ -547,7 +614,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                 if (gear != null)
                         if (molten != null)
                                 CasterRecipeBuilder.of(registries)
-                                                .fluid(molten.getFluid(), MoltenValues.INGOT * 4)
+                                                .fluid(molten, MoltenValues.INGOT * 4)
                                                 .input(LibItems.MOLD_GEAR)
                                                 .output(gear)
                                                 .unlockedBy(LibItems.MOLD_GEAR.get())
@@ -555,7 +622,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
 
                 if (molten != null)
                         CasterRecipeBuilder.of(registries)
-                                        .fluid(molten.getFluid(), MoltenValues.INGOT)
+                                        .fluid(molten, MoltenValues.INGOT)
                                         .input(LibItems.MOLD_PLATE)
                                         .output(plate)
                                         .unlockedBy(LibItems.MOLD_PLATE.get())
@@ -563,7 +630,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
 
                 if (molten != null)
                         CasterRecipeBuilder.of(registries)
-                                        .fluid(molten.getFluid(), MoltenValues.INGOT)
+                                        .fluid(molten, MoltenValues.INGOT)
                                         .input(LibItems.MOLD_INGOT)
                                         .output(ingot)
                                         .unlockedBy(LibItems.MOLD_INGOT.get())
@@ -572,90 +639,70 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                 if (molten != null)
                         MelterRecipeBuilder.of(registries)
                                         .input(ingot)
-                                        .output(molten.getFluid(), MoltenValues.INGOT)
+                                        .output(molten, MoltenValues.INGOT)
                                         .unlockedBy(ingot)
-                                        .save(output,"_from_ingot");
+                                        .save(output, "_from_ingot");
 
         }
 
-        private void melterRecycle(FluidRegister fluid, TagKey<Item> item1, TagKey<Item> item2, TagKey<Item> item3,
+        private void melterRecycle(Fluid fluid, TagKey<Item> item1, TagKey<Item> item2, TagKey<Item> item3,
                         TagKey<Item> item4, TagKey<Item> item5, TagKey<Item> item6, TagKey<Item> item7,
                         TagKey<Item> item8, TagKey<Item> item9) {
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item1)
-                                .output(fluid.getFluid(), MoltenValues.INGOT)
+                                .output(fluid, MoltenValues.INGOT)
                                 .unlockedBy(item1, items)
-                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/1"));
+                                .save(output, overrideID("recycle/" + x.name(fluid) + "/1"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item2)
-                                .output(fluid.getFluid(), MoltenValues.INGOT * 2)
+                                .output(fluid, MoltenValues.INGOT * 2)
                                 .unlockedBy(item2, items)
-                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/2"));
+                                .save(output, overrideID("recycle/" + x.name(fluid) + "/2"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item3)
-                                .output(fluid.getFluid(), MoltenValues.INGOT * 3)
+                                .output(fluid, MoltenValues.INGOT * 3)
                                 .unlockedBy(item3, items)
-                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/3"));
+                                .save(output, overrideID("recycle/" + x.name(fluid) + "/3"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item4)
-                                .output(fluid.getFluid(), MoltenValues.INGOT * 4)
+                                .output(fluid, MoltenValues.INGOT * 4)
                                 .unlockedBy(item4, items)
-                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/4"));
+                                .save(output, overrideID("recycle/" + x.name(fluid) + "/4"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item5)
-                                .output(fluid.getFluid(), MoltenValues.INGOT * 5)
+                                .output(fluid, MoltenValues.INGOT * 5)
                                 .unlockedBy(item5, items)
-                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/5"));
+                                .save(output, overrideID("recycle/" + x.name(fluid) + "/5"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item6)
-                                .output(fluid.getFluid(), MoltenValues.INGOT * 6)
+                                .output(fluid, MoltenValues.INGOT * 6)
                                 .unlockedBy(item6, items)
-                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/6"));
+                                .save(output, overrideID("recycle/" + x.name(fluid) + "/6"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item7)
-                                .output(fluid.getFluid(), MoltenValues.INGOT * 7)
+                                .output(fluid, MoltenValues.INGOT * 7)
                                 .unlockedBy(item7, items)
-                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/7"));
+                                .save(output, overrideID("recycle/" + x.name(fluid) + "/7"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item8)
-                                .output(fluid.getFluid(), MoltenValues.INGOT * 8)
+                                .output(fluid, MoltenValues.INGOT * 8)
                                 .unlockedBy(item8, items)
-                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/8"));
+                                .save(output, overrideID("recycle/" + x.name(fluid) + "/8"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item9)
-                                .output(fluid.getFluid(), MoltenValues.INGOT * 9)
+                                .output(fluid, MoltenValues.INGOT * 9)
                                 .unlockedBy(item9, items)
-                                .save(output,overrideID("recycle/"+x.name(fluid.getFluid())+"/9"));
+                                .save(output, overrideID("recycle/" + x.name(fluid) + "/9"));
 
         }
-
-        //TODO API : move to api
-        private String asRecipeID(Fluid i, String suffix) {
-                return getModName() + ":" + x.name(i) + suffix;
-        }
-
-        @SuppressWarnings("unused")
-        private String asRecipeID(Fluid i) {
-                return asRecipeID(i, "_alt");
-        }
-
-        @SuppressWarnings("unused")
-        private Function<Identifier, Identifier> overrideID(Identifier n){
-                return f-> n;
-        }
-        private Function<Identifier, Identifier> overrideID(String s){
-                return f-> x.rl(getModName(),s);
-        }
-
-        
 
 }
