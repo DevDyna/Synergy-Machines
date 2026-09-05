@@ -558,6 +558,21 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                         .unlockedBy(LibItems.MOLD_PLATE.get())
                                         .save(output);
 
+                if (molten != null)
+                        CasterRecipeBuilder.of(registries)
+                                        .fluid(molten.getFluid(), MoltenValues.INGOT)
+                                        .input(LibItems.MOLD_INGOT)
+                                        .output(ingot)
+                                        .unlockedBy(LibItems.MOLD_INGOT.get())
+                                        .save(output);
+
+                if (molten != null)
+                        MelterRecipeBuilder.of(registries)
+                                        .input(ingot)
+                                        .output(molten.getFluid(), MoltenValues.INGOT)
+                                        .unlockedBy(ingot)
+                                        .save(output, "_from_ingot");
+
         }
 
         private void melterRecycle(FluidRegister fluid, TagKey<Item> item1, TagKey<Item> item2, TagKey<Item> item3,
