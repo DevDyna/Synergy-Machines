@@ -301,7 +301,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 .unlockedBy(LibItems.MOLD_BLOCK.get())
                                 .save(output);
 
-                // TODO IMP : solar recipes
+                // TODO API : ENERGY UPGRADES MUST USE BLUE BATTERIES
 
                 oreProcessing(
                                 Items.RAW_IRON,
