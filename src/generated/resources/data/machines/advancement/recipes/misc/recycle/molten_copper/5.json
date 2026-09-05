@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#machines:recipe_recycle/copper/5"
+            "items": "#cakesticklib:recipe_recycle/copper/5"
           }
         ]
       },

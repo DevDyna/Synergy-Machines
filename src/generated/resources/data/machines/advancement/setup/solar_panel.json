@@ -1,0 +1,32 @@
+{
+  "parent": "machines:setup/root",
+  "criteria": {
+    "craft_solar_panel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "machines:solar_panel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "machines.advancement.branch.solar_panel.desc"
+    },
+    "icon": {
+      "id": "machines:solar_panel"
+    },
+    "title": {
+      "translate": "machines.advancement.branch.solar_panel"
+    }
+  },
+  "requirements": [
+    [
+      "craft_solar_panel"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "machines:setup/root",
+  "criteria": {
+    "craft_electric_melter": {
+      "conditions": {
+        "items": [
+          {
+            "items": "machines:electric_melter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "machines.advancement.branch.electric_melter.desc"
+    },
+    "icon": {
+      "id": "machines:electric_melter"
+    },
+    "title": {
+      "translate": "machines.advancement.branch.electric_melter"
+    }
+  },
+  "requirements": [
+    [
+      "craft_electric_melter"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

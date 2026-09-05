@@ -3,11 +3,11 @@
   "energy": 500,
   "fluid": {
     "amount": 450,
-    "id": "machines:molten_gold"
+    "id": "cakesticklib:molten_gold"
   },
   "input": {
     "count": 1,
-    "ingredient": "#machines:recipe_recycle/gold/5"
+    "ingredient": "#cakesticklib:recipe_recycle/gold/5"
   },
   "ticks": 400
 }

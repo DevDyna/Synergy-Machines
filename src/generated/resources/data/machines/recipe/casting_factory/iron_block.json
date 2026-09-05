@@ -4,7 +4,7 @@
   "energy": 50,
   "input_fluid": {
     "amount": 810,
-    "ingredient": "machines:molten_iron"
+    "ingredient": "cakesticklib:molten_iron"
   },
   "input_item": {
     "count": 1,

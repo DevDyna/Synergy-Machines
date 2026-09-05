@@ -4,11 +4,11 @@
   "energy": 50,
   "input_fluid": {
     "amount": 10,
-    "ingredient": "machines:molten_steel"
+    "ingredient": "cakesticklib:molten_steel"
   },
   "input_item": {
     "count": 1,
-    "ingredient": "cakesticklib:steel_nugget"
+    "ingredient": "cakesticklib:nugget_mold"
   },
   "output": {
     "id": "cakesticklib:steel_nugget"

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "machines:rock_crusher/legacy_stones"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "legacy_stones": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#cakesticklib:legacy_stones"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "legacy_stones"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "machines:rock_crusher/legacy_stones"
+    ]
+  }
+}

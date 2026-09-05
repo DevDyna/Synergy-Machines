@@ -1,0 +1,13 @@
+{
+  "type": "machines:electric_melter",
+  "energy": 500,
+  "fluid": {
+    "amount": 25,
+    "id": "cakesticklib:sulfuric_acid"
+  },
+  "input": {
+    "count": 1,
+    "ingredient": "cakesticklib:sulfur_dust"
+  },
+  "ticks": 400
+}

@@ -1,0 +1,18 @@
+{
+  "type": "machines:macerator",
+  "energy": 50,
+  "input": {
+    "count": 1,
+    "ingredient": "#minecraft:planks"
+  },
+  "output": {
+    "id": "cakesticklib:sawdust"
+  },
+  "secondary_item": {
+    "chance": 0.35,
+    "item": {
+      "id": "cakesticklib:sawdust"
+    }
+  },
+  "ticks": 100
+}

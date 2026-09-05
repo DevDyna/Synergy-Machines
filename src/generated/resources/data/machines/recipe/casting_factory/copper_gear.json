@@ -4,7 +4,7 @@
   "energy": 50,
   "input_fluid": {
     "amount": 360,
-    "ingredient": "machines:molten_copper"
+    "ingredient": "cakesticklib:molten_copper"
   },
   "input_item": {
     "count": 1,

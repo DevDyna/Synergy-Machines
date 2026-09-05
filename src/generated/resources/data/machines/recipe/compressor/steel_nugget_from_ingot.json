@@ -12,7 +12,7 @@
   },
   "plate": {
     "count": 1,
-    "ingredient": "cakesticklib:steel_nugget"
+    "ingredient": "cakesticklib:nugget_mold"
   },
   "ticks": 10
 }

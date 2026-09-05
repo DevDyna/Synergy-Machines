@@ -3,7 +3,7 @@
   "energy": 500,
   "fluid": {
     "amount": 90,
-    "id": "machines:molten_steel"
+    "id": "cakesticklib:molten_steel"
   },
   "input": {
     "count": 1,

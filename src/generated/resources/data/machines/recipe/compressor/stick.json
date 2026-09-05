@@ -1,0 +1,18 @@
+{
+  "type": "machines:compressor",
+  "consume_catalyst": false,
+  "energy": 50,
+  "input": {
+    "count": 1,
+    "ingredient": "#minecraft:planks"
+  },
+  "output": {
+    "count": 8,
+    "id": "minecraft:stick"
+  },
+  "plate": {
+    "count": 1,
+    "ingredient": "cakesticklib:rod_mold"
+  },
+  "ticks": 100
+}

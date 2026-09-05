@@ -4,7 +4,7 @@
   "key": {
     "C": "cakesticklib:chip",
     "F": "minecraft:iron_nugget",
-    "R": "#machines:legacy_stones"
+    "R": "#cakesticklib:legacy_stones"
   },
   "pattern": [
     " C ",

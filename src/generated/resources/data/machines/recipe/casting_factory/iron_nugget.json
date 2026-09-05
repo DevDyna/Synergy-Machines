@@ -4,11 +4,11 @@
   "energy": 50,
   "input_fluid": {
     "amount": 10,
-    "ingredient": "machines:molten_iron"
+    "ingredient": "cakesticklib:molten_iron"
   },
   "input_item": {
     "count": 1,
-    "ingredient": "cakesticklib:steel_nugget"
+    "ingredient": "cakesticklib:nugget_mold"
   },
   "output": {
     "id": "minecraft:iron_nugget"

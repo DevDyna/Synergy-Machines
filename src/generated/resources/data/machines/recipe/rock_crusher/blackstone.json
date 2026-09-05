@@ -1,0 +1,39 @@
+{
+  "type": "machines:rock_crusher",
+  "energy": 1500,
+  "input_fluid": {
+    "amount": 125,
+    "ingredient": "cakesticklib:sulfuric_acid"
+  },
+  "input_item": {
+    "count": 1,
+    "ingredient": "minecraft:blackstone"
+  },
+  "result": [
+    {
+      "chance": 0.7,
+      "item": {
+        "id": "cakesticklib:netherrack_pebble"
+      }
+    },
+    {
+      "chance": 0.3,
+      "item": {
+        "id": "minecraft:gold_nugget"
+      }
+    },
+    {
+      "chance": 0.1,
+      "item": {
+        "id": "cakesticklib:iron_dust"
+      }
+    },
+    {
+      "chance": 0.02,
+      "item": {
+        "id": "minecraft:netherite_scrap"
+      }
+    }
+  ],
+  "ticks": 120
+}

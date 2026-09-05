@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "machines:macerator/sawdust_from_sticks"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "planks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:planks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "planks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "machines:macerator/sawdust_from_sticks"
+    ]
+  }
+}

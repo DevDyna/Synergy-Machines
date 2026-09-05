@@ -1,0 +1,64 @@
+{
+  "type": "machines:rock_crusher",
+  "energy": 1500,
+  "input_fluid": {
+    "amount": 50,
+    "ingredient": "cakesticklib:sulfuric_acid"
+  },
+  "input_item": {
+    "count": 1,
+    "ingredient": "#cakesticklib:legacy_stones"
+  },
+  "result": [
+    {
+      "chance": 0.9,
+      "item": {
+        "count": 2,
+        "id": "cakesticklib:stone_pebble"
+      }
+    },
+    {
+      "chance": 0.75,
+      "item": {
+        "id": "cakesticklib:stone_pebble"
+      }
+    },
+    {
+      "chance": 0.45,
+      "item": {
+        "id": "cakesticklib:carbon_dust"
+      }
+    },
+    {
+      "chance": 0.3,
+      "item": {
+        "id": "cakesticklib:copper_dust"
+      }
+    },
+    {
+      "chance": 0.15,
+      "item": {
+        "id": "cakesticklib:lapis_dust"
+      }
+    },
+    {
+      "chance": 0.1,
+      "item": {
+        "id": "cakesticklib:iron_dust"
+      }
+    },
+    {
+      "chance": 0.02,
+      "item": {
+        "id": "cakesticklib:gold_dust"
+      }
+    },
+    {
+      "chance": 0.01,
+      "item": {
+        "id": "cakesticklib:diamond_dust"
+      }
+    }
+  ],
+  "ticks": 120
+}

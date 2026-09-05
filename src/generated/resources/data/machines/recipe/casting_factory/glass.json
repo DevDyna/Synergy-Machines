@@ -4,7 +4,7 @@
   "energy": 50,
   "input_fluid": {
     "amount": 144,
-    "ingredient": "machines:liquid_glass"
+    "ingredient": "cakesticklib:liquid_glass"
   },
   "input_item": {
     "count": 1,

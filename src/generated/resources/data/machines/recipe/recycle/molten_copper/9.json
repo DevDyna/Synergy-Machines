@@ -3,11 +3,11 @@
   "energy": 500,
   "fluid": {
     "amount": 810,
-    "id": "machines:molten_copper"
+    "id": "cakesticklib:molten_copper"
   },
   "input": {
     "count": 1,
-    "ingredient": "#machines:recipe_recycle/copper/9"
+    "ingredient": "#cakesticklib:recipe_recycle/copper/9"
   },
   "ticks": 400
 }

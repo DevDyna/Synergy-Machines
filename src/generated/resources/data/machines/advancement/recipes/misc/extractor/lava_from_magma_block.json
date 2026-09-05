@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "machines:extractor/lava_from_magma_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "magma_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:magma_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "magma_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "machines:extractor/lava_from_magma_block"
+    ]
+  }
+}

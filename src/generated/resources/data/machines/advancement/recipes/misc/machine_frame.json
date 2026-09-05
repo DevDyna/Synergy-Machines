@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#machines:legacy_stones"
+            "items": "#cakesticklib:legacy_stones"
           }
         ]
       },

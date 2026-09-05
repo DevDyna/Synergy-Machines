@@ -1,0 +1,15 @@
+{
+  "values": [
+    "machines:macerator",
+    "machines:alloy_smelter",
+    "machines:compressor",
+    "machines:electric_furnace",
+    "machines:extractor",
+    "machines:casting_factory",
+    "machines:electric_melter",
+    "machines:rock_crusher",
+    "machines:lunar_panel",
+    "machines:solar_panel",
+    "machines:machine_frame"
+  ]
+}

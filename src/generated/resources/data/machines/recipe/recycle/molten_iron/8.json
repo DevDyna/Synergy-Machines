@@ -3,11 +3,11 @@
   "energy": 500,
   "fluid": {
     "amount": 720,
-    "id": "machines:molten_iron"
+    "id": "cakesticklib:molten_iron"
   },
   "input": {
     "count": 1,
-    "ingredient": "#machines:recipe_recycle/iron/8"
+    "ingredient": "#cakesticklib:recipe_recycle/iron/8"
   },
   "ticks": 400
 }
