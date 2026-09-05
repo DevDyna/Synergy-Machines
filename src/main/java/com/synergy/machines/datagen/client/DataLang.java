@@ -51,7 +51,10 @@ public class DataLang extends LanguageProvider implements LangGenerators {
                 LangUtils.advKey(this, MODULE_ID, zMachines.ROCK_CRUSHER.id(), "Rock 'n' Roll", "Craft a rock crusher");
 
                 add(MODULE_ID + ".advancement.root." + MODULE_ID, "Synergy : Machines");
-                add(MODULE_ID + ".advancement.root." + MODULE_ID + ".desc", "The keywords are simplify , automate and improve");
+                add(MODULE_ID + ".advancement.root." + MODULE_ID + ".desc",
+                                "The keywords are simplify , automate and improve");
+
+                add(MODULE_ID + ".creative_tab." + MODULE_ID, "Synergy : Machines");
 
         }
 

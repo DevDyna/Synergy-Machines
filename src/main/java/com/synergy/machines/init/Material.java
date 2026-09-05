@@ -29,6 +29,7 @@ public class Material {
                 zMachines.register(bus);
                 zTags.register(bus);
                 zFluids.register(bus);
+                zCreativeTab.register(bus);
         }
 
         
