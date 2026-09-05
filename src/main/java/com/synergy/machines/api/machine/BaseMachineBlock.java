@@ -2,6 +2,7 @@ package com.synergy.machines.api.machine;
 
 import javax.annotation.Nullable;
 
+import com.devdyna.cakesticklib.api.upgrades.modifiers.ModifierUtils;
 import com.synergy.machines.init.builders.MachineFrame;
 
 import net.minecraft.core.BlockPos;
@@ -70,6 +71,10 @@ public abstract class BaseMachineBlock extends MachineFrame implements EntityBlo
     @Override
     public InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult) {
+
+        if (ModifierUtils.itemValid(itemStack))
+            return InteractionResult.CONSUME;
+
         return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
