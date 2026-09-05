@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": "cakesticklib:blue_battery",
+    "C": "cakesticklib:chip",
+    "M": "machines:machine_frame",
+    "P": "minecraft:piston",
+    "R": "cakesticklib:resistor"
+  },
+  "pattern": [
+    "CPC",
+    "RMR",
+    " B "
+  ],
+  "result": {
+    "id": "machines:compressor"
+  }
+}

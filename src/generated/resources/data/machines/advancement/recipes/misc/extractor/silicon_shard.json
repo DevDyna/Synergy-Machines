@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "machines:extractor/netherrack"
+        "recipe": "machines:extractor/silicon_shard"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "magma_block": {
+    "netherrack": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:magma_block"
+            "items": "minecraft:netherrack"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "magma_block"
+      "netherrack"
     ]
   ],
   "rewards": {
     "recipes": [
-      "machines:extractor/netherrack"
+      "machines:extractor/silicon_shard"
     ]
   }
 }

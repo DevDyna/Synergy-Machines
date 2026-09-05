@@ -1,0 +1,12 @@
+{
+  "type": "machines:macerator",
+  "energy": 500,
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:gold_ingot"
+  },
+  "output": {
+    "id": "cakesticklib:gold_dust"
+  },
+  "ticks": 100
+}

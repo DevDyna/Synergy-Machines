@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": "cakesticklib:blue_battery",
+    "E": "cakesticklib:electron_tube",
+    "F": "cakesticklib:gold_foil",
+    "M": "machines:machine_frame",
+    "R": "cakesticklib:resistor"
+  },
+  "pattern": [
+    "RFR",
+    "EME",
+    " B "
+  ],
+  "result": {
+    "id": "machines:extractor"
+  }
+}

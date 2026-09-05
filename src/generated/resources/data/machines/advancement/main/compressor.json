@@ -1,0 +1,32 @@
+{
+  "parent": "machines:main/root",
+  "criteria": {
+    "craft_compressor": {
+      "conditions": {
+        "items": [
+          {
+            "items": "machines:compressor"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "machines.advancement.branch.compressor.desc"
+    },
+    "icon": {
+      "id": "machines:compressor"
+    },
+    "title": {
+      "translate": "machines.advancement.branch.compressor"
+    }
+  },
+  "requirements": [
+    [
+      "craft_compressor"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

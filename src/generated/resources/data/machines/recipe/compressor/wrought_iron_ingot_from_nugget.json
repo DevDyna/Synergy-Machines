@@ -1,0 +1,17 @@
+{
+  "type": "machines:compressor",
+  "consume_catalyst": false,
+  "energy": 50,
+  "input": {
+    "count": 9,
+    "ingredient": "cakesticklib:wrought_iron_nugget"
+  },
+  "output": {
+    "id": "cakesticklib:wrought_iron_ingot"
+  },
+  "plate": {
+    "count": 1,
+    "ingredient": "cakesticklib:ingot_mold"
+  },
+  "ticks": 10
+}

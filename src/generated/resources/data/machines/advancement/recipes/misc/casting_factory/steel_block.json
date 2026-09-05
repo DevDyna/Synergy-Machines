@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "block_mold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "cakesticklib:block_mold"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "machines:casting_factory/steel_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "block_mold"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "machines:casting_factory/steel_block"
+    ]
+  }
+}

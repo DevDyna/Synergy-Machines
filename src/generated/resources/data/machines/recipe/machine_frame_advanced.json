@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "cakesticklib:plastic",
+    "S": "cakesticklib:silicon_gem",
+    "W": "cakesticklib:wrought_iron_block"
+  },
+  "pattern": [
+    " S ",
+    "PWP",
+    " S "
+  ],
+  "result": {
+    "count": 4,
+    "id": "machines:machine_frame"
+  }
+}

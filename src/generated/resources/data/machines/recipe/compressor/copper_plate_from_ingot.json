@@ -1,7 +1,7 @@
 {
   "type": "machines:compressor",
   "consume_catalyst": false,
-  "energy": 500,
+  "energy": 50,
   "input": {
     "count": 1,
     "ingredient": "minecraft:copper_ingot"
@@ -13,5 +13,5 @@
     "count": 1,
     "ingredient": "cakesticklib:plate_mold"
   },
-  "ticks": 100
+  "ticks": 10
 }

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": "cakesticklib:blue_battery",
+    "F": "minecraft:flint",
+    "M": "machines:machine_frame",
+    "R": "cakesticklib:resistor"
+  },
+  "pattern": [
+    "FFF",
+    "RMR",
+    " B "
+  ],
+  "result": {
+    "id": "machines:macerator"
+  }
+}

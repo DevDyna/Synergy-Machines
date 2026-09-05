@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": "cakesticklib:blue_battery",
+    "F": "machines:machine_frame",
+    "L": "cakesticklib:electron_tube",
+    "M": "machines:macerator",
+    "R": "cakesticklib:resistor"
+  },
+  "pattern": [
+    "RLR",
+    "MFM",
+    " B "
+  ],
+  "result": {
+    "id": "machines:rock_crusher"
+  }
+}

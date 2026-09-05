@@ -1,0 +1,17 @@
+{
+  "type": "machines:compressor",
+  "consume_catalyst": false,
+  "energy": 50,
+  "input": {
+    "count": 9,
+    "ingredient": "cakesticklib:advanced_alloy_ingot"
+  },
+  "output": {
+    "id": "cakesticklib:advanced_alloy_block"
+  },
+  "plate": {
+    "count": 1,
+    "ingredient": "cakesticklib:block_mold"
+  },
+  "ticks": 10
+}

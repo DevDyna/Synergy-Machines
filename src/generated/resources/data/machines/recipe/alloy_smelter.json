@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": "cakesticklib:blue_battery",
+    "C": "cakesticklib:condenser",
+    "F": "machines:electric_furnace",
+    "M": "machines:machine_frame",
+    "R": "cakesticklib:resistor"
+  },
+  "pattern": [
+    "FCF",
+    "RMR",
+    " B "
+  ],
+  "result": {
+    "id": "machines:alloy_smelter"
+  }
+}

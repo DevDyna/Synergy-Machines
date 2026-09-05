@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "foil_mold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "cakesticklib:foil_mold"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "machines:casting_factory/glass_pane"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "foil_mold"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "machines:casting_factory/glass_pane"
+    ]
+  }
+}

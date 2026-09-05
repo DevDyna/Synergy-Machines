@@ -1,0 +1,32 @@
+{
+  "parent": "machines:main/root",
+  "criteria": {
+    "craft_casting_factory": {
+      "conditions": {
+        "items": [
+          {
+            "items": "machines:casting_factory"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "machines.advancement.branch.casting_factory.desc"
+    },
+    "icon": {
+      "id": "machines:casting_factory"
+    },
+    "title": {
+      "translate": "machines.advancement.branch.casting_factory"
+    }
+  },
+  "requirements": [
+    [
+      "craft_casting_factory"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

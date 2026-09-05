@@ -2,7 +2,7 @@
   "type": "machines:electric_melter",
   "energy": 5000,
   "fluid": {
-    "amount": 576,
+    "amount": 360,
     "id": "machines:copper_source"
   },
   "input": {

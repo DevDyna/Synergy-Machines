@@ -1,0 +1,17 @@
+{
+  "type": "machines:alloy_smelter",
+  "energy": 500,
+  "left": {
+    "count": 1,
+    "ingredient": "#c:dusts/carbon"
+  },
+  "output": {
+    "count": 2,
+    "id": "cakesticklib:wrought_iron_ingot"
+  },
+  "right": {
+    "count": 2,
+    "ingredient": "minecraft:iron_ingot"
+  },
+  "ticks": 100
+}

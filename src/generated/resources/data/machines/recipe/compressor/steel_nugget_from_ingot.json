@@ -1,0 +1,18 @@
+{
+  "type": "machines:compressor",
+  "consume_catalyst": false,
+  "energy": 50,
+  "input": {
+    "count": 1,
+    "ingredient": "cakesticklib:steel_ingot"
+  },
+  "output": {
+    "count": 9,
+    "id": "cakesticklib:steel_nugget"
+  },
+  "plate": {
+    "count": 1,
+    "ingredient": "cakesticklib:steel_nugget"
+  },
+  "ticks": 10
+}

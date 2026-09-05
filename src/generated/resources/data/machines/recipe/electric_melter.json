@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": "cakesticklib:blue_battery",
+    "C": "cakesticklib:copper_coil",
+    "D": "cakesticklib:condenser",
+    "M": "machines:machine_frame",
+    "R": "cakesticklib:chip"
+  },
+  "pattern": [
+    "CRC",
+    "DMD",
+    " B "
+  ],
+  "result": {
+    "id": "machines:electric_melter"
+  }
+}

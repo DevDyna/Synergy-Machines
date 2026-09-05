@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "machines:compressor/wrought_iron_plate_from_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "wrought_iron_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "cakesticklib:wrought_iron_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "wrought_iron_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "machines:compressor/wrought_iron_plate_from_ingot"
+    ]
+  }
+}

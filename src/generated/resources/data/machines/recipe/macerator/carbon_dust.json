@@ -1,0 +1,13 @@
+{
+  "type": "machines:macerator",
+  "energy": 500,
+  "input": {
+    "count": 1,
+    "ingredient": "#minecraft:coals"
+  },
+  "output": {
+    "count": 2,
+    "id": "cakesticklib:carbon_dust"
+  },
+  "ticks": 100
+}

@@ -10,7 +10,7 @@
     "id": "cakesticklib:copper_dust"
   },
   "secondary_item": {
-    "chance": 0.05,
+    "chance": 0.25,
     "item": {
       "id": "cakesticklib:copper_dust"
     }

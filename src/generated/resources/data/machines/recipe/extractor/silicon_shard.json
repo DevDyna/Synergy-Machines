@@ -3,16 +3,16 @@
   "energy": 500,
   "input": {
     "count": 1,
-    "ingredient": "minecraft:magma_block"
+    "ingredient": "minecraft:netherrack"
   },
   "optional_fluid": {
-    "amount": 250,
+    "amount": 150,
     "id": "minecraft:lava"
   },
   "secondary_item": {
     "chance": 0.5,
     "item": {
-      "id": "minecraft:netherrack"
+      "id": "cakesticklib:silicon_shard"
     }
   },
   "ticks": 100

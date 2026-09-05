@@ -1,0 +1,13 @@
+{
+  "type": "machines:extractor",
+  "energy": 500,
+  "input": {
+    "count": 1,
+    "ingredient": "#c:slime_balls"
+  },
+  "optional_fluid": {
+    "amount": 25,
+    "id": "machines:plastic_source"
+  },
+  "ticks": 100
+}

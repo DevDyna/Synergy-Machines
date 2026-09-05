@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": "cakesticklib:blue_battery",
+    "C": "cakesticklib:chip",
+    "F": "minecraft:furnace",
+    "M": "machines:machine_frame",
+    "R": "cakesticklib:resistor"
+  },
+  "pattern": [
+    "CFC",
+    "RMR",
+    " B "
+  ],
+  "result": {
+    "id": "machines:electric_furnace"
+  }
+}

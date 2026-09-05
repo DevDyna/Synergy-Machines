@@ -1,0 +1,20 @@
+{
+  "type": "machines:macerator",
+  "energy": 500,
+  "input": {
+    "count": 1,
+    "ingredient": "#minecraft:logs"
+  },
+  "output": {
+    "count": 4,
+    "id": "cakesticklib:sawdust"
+  },
+  "secondary_item": {
+    "chance": 0.75,
+    "item": {
+      "count": 2,
+      "id": "cakesticklib:sawdust"
+    }
+  },
+  "ticks": 100
+}

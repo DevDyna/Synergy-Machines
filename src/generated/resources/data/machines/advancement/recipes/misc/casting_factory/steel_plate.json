@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "machines:casting_factory/steel_plate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "plate_mold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "cakesticklib:plate_mold"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "plate_mold"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "machines:casting_factory/steel_plate"
+    ]
+  }
+}

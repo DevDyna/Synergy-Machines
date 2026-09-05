@@ -2,7 +2,7 @@
   "type": "machines:electric_melter",
   "energy": 5000,
   "fluid": {
-    "amount": 144,
+    "amount": 90,
     "id": "machines:iron_source"
   },
   "input": {

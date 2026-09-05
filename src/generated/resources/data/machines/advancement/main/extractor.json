@@ -1,0 +1,32 @@
+{
+  "parent": "machines:main/root",
+  "criteria": {
+    "craft_extractor": {
+      "conditions": {
+        "items": [
+          {
+            "items": "machines:extractor"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "machines.advancement.branch.extractor.desc"
+    },
+    "icon": {
+      "id": "machines:extractor"
+    },
+    "title": {
+      "translate": "machines.advancement.branch.extractor"
+    }
+  },
+  "requirements": [
+    [
+      "craft_extractor"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

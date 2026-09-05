@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "cakesticklib:chip",
+    "F": "minecraft:iron_nugget",
+    "R": "#machines:legacy_stones"
+  },
+  "pattern": [
+    " C ",
+    "FRF",
+    " C "
+  ],
+  "result": {
+    "id": "machines:machine_frame"
+  }
+}

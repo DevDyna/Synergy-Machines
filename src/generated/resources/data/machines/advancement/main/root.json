@@ -1,0 +1,33 @@
+{
+  "criteria": {
+    "machine_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": "machines:machine_frame"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "machines:textures/block/machine/frame/basic/top.png",
+    "description": {
+      "translate": "machines.advancement.root.machines.desc"
+    },
+    "icon": {
+      "id": "machines:machine_frame"
+    },
+    "title": {
+      "translate": "machines.advancement.root.machines"
+    }
+  },
+  "requirements": [
+    [
+      "machine_frame"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
