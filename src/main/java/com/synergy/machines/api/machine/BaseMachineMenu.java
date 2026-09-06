@@ -19,10 +19,10 @@ public abstract class BaseMachineMenu extends BaseMenu {
 
     protected static final int PROGRESS_INDEX = 0;
     protected static final int MAX_PROGRESS_INDEX = 1;
-    protected static final int ENERGY_INDEX = 2;
+    protected static final int STORED_ENERGY_INDEX = 2;
     protected static final int MAX_ENERGY_INDEX = 3;
-    protected static final int ENERGY_USAGE = 4;
-    protected static final int FLUID_INDEX = 5;
+    protected static final int RECIPE_ENERGY_USAGE = 4;
+    protected static final int STORED_FLUID_INDEX = 5;
     protected static final int MAX_FLUID_INDEX = 6;
     protected static final int ID_FLUID_INDEX = 7;
 
@@ -76,11 +76,11 @@ public abstract class BaseMachineMenu extends BaseMenu {
 
     public int getEnergyStored() {
         blockEntity.setChanged();
-        return data.get(ENERGY_INDEX);
+        return data.get(STORED_ENERGY_INDEX);
     }
 
     public int getEnergyUsage() {
-        return data.get(ENERGY_USAGE);
+        return data.get(RECIPE_ENERGY_USAGE);
     }
 
     public int getMaxEnergy() {
@@ -89,7 +89,7 @@ public abstract class BaseMachineMenu extends BaseMenu {
 
     public int getFluidAmount() {
         return (getBlockEntity() instanceof ResourceRestricted.Fluid)
-                ? data.get(FLUID_INDEX)
+                ? data.get(STORED_FLUID_INDEX)
                 : 0;
     }
 
