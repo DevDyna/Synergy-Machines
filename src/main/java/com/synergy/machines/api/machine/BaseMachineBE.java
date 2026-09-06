@@ -31,20 +31,17 @@ public abstract class BaseMachineBE extends BaseUpgradableBE {
             return switch (i) {
                 case BaseMachineMenu.PROGRESS_INDEX -> getProgress();
                 case BaseMachineMenu.MAX_PROGRESS_INDEX -> getMaxProgress();
-                case BaseMachineMenu.ENERGY_INDEX -> getEnergyStorage().getAmountAsInt();
+                case BaseMachineMenu.STORED_ENERGY_INDEX -> getEnergyStorage().getAmountAsInt();
                 case BaseMachineMenu.MAX_ENERGY_INDEX -> getMaxEnergy();
-                case BaseMachineMenu.ENERGY_USAGE -> getEnergyUsage();
-                case BaseMachineMenu.FLUID_INDEX,
-                        BaseMachineMenu.MAX_FLUID_INDEX,
-                        BaseMachineMenu.ID_FLUID_INDEX ->
+                case BaseMachineMenu.RECIPE_ENERGY_USAGE -> getEnergyUsage();
+                default ->
                     (BaseMachineBE.this instanceof ResourceRestricted.Fluid fluid) ? switch (i) {
-                        case BaseMachineMenu.FLUID_INDEX -> fluid.getFluidStorage().getAmountAsInt(0);
+                        case BaseMachineMenu.STORED_FLUID_INDEX -> fluid.getFluidStorage().getAmountAsInt(0);
                         case BaseMachineMenu.MAX_FLUID_INDEX -> fluid.getTankCapacity();
                         case BaseMachineMenu.ID_FLUID_INDEX -> FluidUtils.getFluidToID(fluid.getAsStack(0));
                         default -> 0;
                     } : 0;
 
-                default -> 0;
             };
         }
 
