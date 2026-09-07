@@ -2,6 +2,7 @@ package com.synergy.machines.init.builders.melter;
 
 import static com.synergy.machines.Main.MODULE_ID;
 
+import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.machine.BaseMachineScreen;
 
@@ -38,7 +39,7 @@ public class MelterScreen extends BaseMachineScreen<MelterMenu> {
         @Override
         protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
                 graphics.text(this.font, this.title, this.titleLabelX + 47, this.titleLabelY,
-                                defaultToolTipColor.getRGB(), false);
+                                ClientUtils.defaultToolTipColor.getRGB(), false);
         }
 
 }

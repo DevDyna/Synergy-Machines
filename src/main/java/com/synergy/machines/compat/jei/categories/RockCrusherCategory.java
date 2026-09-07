@@ -1,9 +1,9 @@
 package com.synergy.machines.compat.jei.categories;
 
-
 import com.devdyna.cakesticklib.api.compat.jei.JEIFluidTankHelper;
 import com.devdyna.cakesticklib.api.primitive.Size;
 import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
+import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.devdyna.cakesticklib.api.utils.ColorUtils;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
@@ -47,7 +47,8 @@ public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRe
         public void setRecipe(IRecipeLayoutBuilder builder, RockCrusherRecipeType recipe, IFocusGroup focuses) {
 
                 if (recipe.getInputItem() != null && !x.getItemStacksFromIngredient(recipe.getInputItem()).isEmpty())
-                        builder.addInputSlot(2 + 21, 5 + 28).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
+                        builder.addInputSlot(2 + 21, 5 + 28)
+                                        .addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
 
                 for (ChanceOutput.Item output : recipe.getResult())
                         builder.addOutputSlot(68 - 1 + (recipe.getResult().indexOf(output) % 3 * (18 + 1)),
@@ -61,7 +62,8 @@ public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRe
         }
 
         @Override
-        public void draw(RockCrusherRecipeType recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics,
+        public void draw(RockCrusherRecipeType recipe, IRecipeSlotsView recipeSlotsView,
+                        GuiGraphicsExtractor guiGraphics,
                         double mouseX,
                         double mouseY) {
                 super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
@@ -70,14 +72,14 @@ public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRe
 
                 guiGraphics.text(font, recipe.getTime() + " ticks",
                                 24 - 10 - 10, 15,
-                                defaultToolTipColor.getRGB(), false);
+                                ClientUtils.defaultToolTipColor.getRGB(), false);
 
                 var stack = guiGraphics.pose();
                 stack.pushMatrix();
                 stack.scale(0.6F, 0.6F);
                 for (ChanceOutput.Item output : recipe.getResult())
                         guiGraphics.text(font, ((int) (output.chance() * 100)) + "%",
-                                        68 + 10 + 10 + 10 + 5 + 5 + 5 + 2 + 10-10
+                                        68 + 10 + 10 + 10 + 5 + 5 + 5 + 2 + 10 - 10
                                                         + (recipe.getResult().indexOf(output) % 3 * (20 + 12 + 1)),
                                         26 + 10 + 10 - 5 + 2 + 1
                                                         + (recipe.getResult().indexOf(output) / 3

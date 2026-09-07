@@ -3,6 +3,7 @@ package com.synergy.machines.compat.jei.categories;
 import com.devdyna.cakesticklib.CakeStickLib;
 import com.devdyna.cakesticklib.api.compat.jei.JEIFluidTankHelper;
 import com.devdyna.cakesticklib.api.primitive.Size;
+import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.compat.jei.categories.api.BaseMachineRecipeCategory;
@@ -47,11 +48,13 @@ public class CasterCategory extends BaseMachineRecipeCategory<CasterRecipeType> 
         public void setRecipe(IRecipeLayoutBuilder builder, CasterRecipeType recipe, IFocusGroup focuses) {
 
                 if (recipe.getInputItem() != null && !x.getItemStacksFromIngredient(recipe.getInputItem()).isEmpty()) {
-                        var item = builder.addInputSlot(2 + 21, 5).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
+                        var item = builder.addInputSlot(2 + 21, 5)
+                                        .addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
 
                         if (!recipe.consumeCatalyst())
                                 item.addRichTooltipCallback(
-                                                (v, t) -> t.add(Component.translatable(CakeStickLib.MODULE_ID + ".ui.dont_consume")));
+                                                (v, t) -> t.add(Component.translatable(
+                                                                CakeStickLib.MODULE_ID + ".ui.dont_consume")));
                 }
 
                 builder.addOutputSlot(81 + 21, 5).add(recipe.getOutputItem());
@@ -75,7 +78,7 @@ public class CasterCategory extends BaseMachineRecipeCategory<CasterRecipeType> 
                                 Component.literal(
                                                 recipe.getTime() + " ticks"),
                                 24 + 21, -2,
-                                defaultToolTipColor.getRGB(), false);
+                                ClientUtils.defaultToolTipColor.getRGB(), false);
 
         }
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.devdyna.cakesticklib.api.upgrades.UpgradeComponents.UpgradeType;
 import com.devdyna.cakesticklib.api.utils.ArrayUtils;
+import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.synergy.machines.api.machine.BaseMachineScreen;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -42,7 +43,7 @@ public class RockCrusherScreen extends BaseMachineScreen<RockCrusherMenu> {
         @Override
         protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
         graphics.text(this.font, this.title, this.titleLabelX + 47, this.titleLabelY,
-                                defaultToolTipColor.getRGB(), false);
+                               ClientUtils.defaultToolTipColor.getRGB(), false);
         }
 
         

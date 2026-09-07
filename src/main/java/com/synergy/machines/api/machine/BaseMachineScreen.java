@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import com.devdyna.cakesticklib.api.gui.BaseScreen;
 import com.devdyna.cakesticklib.api.primitive.Pos;
 import com.devdyna.cakesticklib.api.upgrades.ScreenUpgradable;
+import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.devdyna.cakesticklib.api.utils.StringUtil;
 import com.devdyna.cakesticklib.api.utils.UpgradeSlotBuilder;
 import com.devdyna.cakesticklib.api.utils.x;
@@ -21,7 +22,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
-
+//TODO API : remove ClientUtils interface from BaseScreen
 public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseScreen<T> implements ScreenUpgradable {
 
         public BaseMachineScreen(T menu, Inventory playerInventory, Component title) {
@@ -113,7 +114,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                         guiGraphics.text(font, Component.literal((1 + getRemainProgress()) + " ticks"),
                                         getLeftPos() + xo,
                                         getTopPos() + yo,
-                                        defaultToolTipColor.getRGB(), false);
+                                        ClientUtils.defaultToolTipColor.getRGB(), false);
         }
 
         protected void renderLeftLabel(GuiGraphicsExtractor guiGraphics) {
@@ -288,7 +289,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         @Override
         protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
                 graphics.text(this.font, this.title, this.titleLabelX + 57, this.titleLabelY,
-                                defaultToolTipColor.getRGB(), false);
+                                ClientUtils.defaultToolTipColor.getRGB(), false);
         }
 
         @Override
