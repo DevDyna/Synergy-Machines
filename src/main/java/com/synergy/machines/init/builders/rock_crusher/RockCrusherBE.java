@@ -15,7 +15,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
@@ -71,7 +70,6 @@ public class RockCrusherBE extends BaseMachineBE implements ResourceRestricted.F
                 new ItemFluidInput(getFluidStorage().getResource(0).toStack(getFluidStorage().getAmountAsInt(0)),
                         getInput()));
 
-        // no recipe
         if (r.isEmpty())
             return cancel();
 
@@ -116,11 +114,6 @@ public class RockCrusherBE extends BaseMachineBE implements ResourceRestricted.F
 
         updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(), true);
 
-    }
-
-    @Override
-    public ContainerData getContainerData() {
-        return networkData;
     }
 
     @Override
