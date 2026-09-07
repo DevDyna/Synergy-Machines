@@ -1,13 +1,10 @@
 package com.synergy.machines.api.machine.templates;
 
 import java.util.List;
-import java.util.function.Function;
-
 import com.devdyna.cakesticklib.api.aspect.logic.*;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -28,13 +25,6 @@ public abstract class BaseStorageBE extends BaseRecipeBE
     public static final int OUTPUT_SLOT = 5;
 
     public static final int FLUID_DATA_SIZE = 3;
-
-    protected Function<ResourceRestricted.Fluid, List<Integer>> FLUID_DATA = f -> List.of(
-            f.getFluidStorage().getAmountAsInt(0),
-            f.getTankCapacity(),
-            BuiltInRegistries.FLUID.getId(f.getAsStack(0).getFluid())
-
-    );
 
     public BaseStorageBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -71,7 +61,6 @@ public abstract class BaseStorageBE extends BaseRecipeBE
     @Override
     public ItemStacksResourceHandler getAutomationItemStorage() {
         return new ItemStacksResourceHandler(getMachineSlots()) {
-
 
             @Override
             public ItemResource getResource(int i) {
@@ -153,12 +142,12 @@ public abstract class BaseStorageBE extends BaseRecipeBE
 
     // @Override
     // public ItemStack getStackInSlot(int i) {
-    //     return MachineItemAutomation.super.getStackInSlot(i);
+    // return MachineItemAutomation.super.getStackInSlot(i);
     // }
 
     // @Override
     // public void set(int i, ItemResource resource, int amount) {
-    //     getAutomationItemStorage().set(i, resource, amount);
+    // getAutomationItemStorage().set(i, resource, amount);
     // }
 
     @Override

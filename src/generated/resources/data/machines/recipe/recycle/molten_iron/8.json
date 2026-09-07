@@ -1,6 +1,6 @@
 {
   "type": "machines:electric_melter",
-  "energy": 500,
+  "energy": 4000,
   "fluid": {
     "amount": 720,
     "id": "cakesticklib:molten_iron"
@@ -9,5 +9,5 @@
     "count": 1,
     "ingredient": "#cakesticklib:recipe_recycle/iron/8"
   },
-  "ticks": 400
+  "ticks": 640
 }

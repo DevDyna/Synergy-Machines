@@ -4,7 +4,6 @@ package com.synergy.machines.init.builders.melter;
 
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
-import com.synergy.machines.api.machine.BaseMachineMenu;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
 import com.synergy.machines.init.types.zMachines;
 
@@ -16,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 public class MelterMenu extends BaseMachineMenu {
 
     public MelterMenu(int c, Inventory i, FriendlyByteBuf d) {
-        this(c, i, i.player.level().getBlockEntity(d.readBlockPos()), MACHINE_FLUID_DATA);
+        this(c, i, i.player.level().getBlockEntity(d.readBlockPos()), DataStorage.fluid(1));
     }
 
     public MelterMenu(int i, Inventory inv, BlockEntity be, ContainerData data) {

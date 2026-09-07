@@ -40,7 +40,7 @@ public class Common {
         public static IntValue MACHINE_MINIMAL_FLUID_COST;// 0
         public static IntValue MACHINE_MAXIMAL_LUCK;// 100
 
-        public static BooleanValue DISABLE_MACHINE_DROP_WHEN_CORRUPTED;
+        // public static BooleanValue DISABLE_MACHINE_DROP_WHEN_CORRUPTED;
 
         public static BooleanValue DISABLE_MACHINE_FURNACE_PROCESS_VANILLA;// false
         public static IntValue MACHINE_FURNACE_PROCESS_VANILLA_FE_COST;// DEFAULT
@@ -95,8 +95,8 @@ public class Common {
                 MACHINE_MAXIMAL_LUCK = number("Maximal Secondary Chance based on upgrade installed",
                                 "max_luck", 100);
 
-                DISABLE_MACHINE_DROP_WHEN_CORRUPTED = bool(
-                                "Disable crash safer when an Industrial Machine is corrupted", "disable_ms_firewall");
+                // DISABLE_MACHINE_DROP_WHEN_CORRUPTED = bool(
+                //                 "Disable crash safer when an Industrial Machine is corrupted", "disable_ms_firewall");
 
                 decor.complex("electric_furnace");
 

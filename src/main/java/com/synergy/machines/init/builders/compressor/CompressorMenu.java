@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 public class CompressorMenu extends BaseMachineMenu {
 
     public CompressorMenu(int c, Inventory i, FriendlyByteBuf d) {
-        this(c, i, i.player.level().getBlockEntity(d.readBlockPos()), MACHINE_ITEM_DATA);
+        this(c, i, i.player.level().getBlockEntity(d.readBlockPos()), DataStorage.simple());
     }
 
     public CompressorMenu(int i, Inventory inv, BlockEntity be, ContainerData data) {

@@ -5,6 +5,7 @@ import static com.synergy.machines.Main.MODULE_ID;
 import com.devdyna.cakesticklib.CakeStickLib;
 import com.devdyna.cakesticklib.api.compat.jei.ImageJei;
 import com.devdyna.cakesticklib.api.primitive.Size;
+import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.compat.jei.categories.api.BaseMachineRecipeCategory;
@@ -49,18 +50,22 @@ public class CompressorCategory extends BaseMachineRecipeCategory<CompressorReci
 
                 builder.addInputSlot(2, 2).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
 
-    if(recipe.getCatalystItem() != null) {           var catalyst = builder.addInputSlot(2, 38).addItemStacks(x.getItemStacksFromIngredient(recipe.getCatalystItem()));
+                if (recipe.getCatalystItem() != null) {
+                        var catalyst = builder.addInputSlot(2, 38)
+                                        .addItemStacks(x.getItemStacksFromIngredient(recipe.getCatalystItem()));
 
-                if (!recipe.consumeCatalyst())
-                        catalyst.addRichTooltipCallback(
-                                        (v, t) -> t.add(Component.translatable(CakeStickLib.MODULE_ID + ".ui.dont_consume")));
-}
+                        if (!recipe.consumeCatalyst())
+                                catalyst.addRichTooltipCallback(
+                                                (v, t) -> t.add(Component.translatable(
+                                                                CakeStickLib.MODULE_ID + ".ui.dont_consume")));
+                }
                 builder.addOutputSlot(74, 21).add(recipe.getOutputItem());
 
         }
 
         @Override
-        public void draw(CompressorRecipeType recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics,
+        public void draw(CompressorRecipeType recipe, IRecipeSlotsView recipeSlotsView,
+                        GuiGraphicsExtractor guiGraphics,
                         double mouseX,
                         double mouseY) {
                 super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
@@ -71,10 +76,10 @@ public class CompressorCategory extends BaseMachineRecipeCategory<CompressorReci
                                 Component.literal(
                                                 recipe.getTime() + " ticks"),
                                 25, 2,
-                                defaultToolTipColor.getRGB(), false);
+                                ClientUtils.defaultToolTipColor.getRGB(), false);
 
                 ImageJei.of()
-                                .rl(x.rl(MODULE_ID,"textures/gui/sprite/compressor_arrow.png"))
+                                .rl(x.rl(MODULE_ID, "textures/gui/sprite/compressor_arrow.png"))
                                 .size(16, 9)
                                 .offset(2, 23)
                                 .render(helper, guiGraphics);

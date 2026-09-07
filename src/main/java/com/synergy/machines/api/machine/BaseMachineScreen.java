@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import com.devdyna.cakesticklib.api.gui.BaseScreen;
 import com.devdyna.cakesticklib.api.primitive.Pos;
 import com.devdyna.cakesticklib.api.upgrades.ScreenUpgradable;
+import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.devdyna.cakesticklib.api.utils.StringUtil;
 import com.devdyna.cakesticklib.api.utils.UpgradeSlotBuilder;
 import com.devdyna.cakesticklib.api.utils.x;
@@ -21,7 +22,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
-
+//TODO API : remove ClientUtils interface from BaseScreen
 public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseScreen<T> implements ScreenUpgradable {
 
         public BaseMachineScreen(T menu, Inventory playerInventory, Component title) {
@@ -77,20 +78,20 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 return menu.getRemainProgress();
         }
 
-        protected int getFluidAmount() {
-                return menu.getFluidAmount();
+        protected int getFluidAmount(int i) {
+                return menu.getFluidAmount(i);
         }
 
-        protected Fluid getFluid() {
-                return menu.getFluid();
+        protected Fluid getFluid(int i) {
+                return menu.getFluid(i);
         }
 
-        protected FluidStack getFluidStack() {
-                return menu.getFluidStack();
+        protected FluidStack getFluidStack(int i) {
+                return menu.getFluidStack(i);
         }
 
-        protected int getMaxFluidAmount() {
-                return menu.getMaxFluidAmount();
+        protected int getMaxFluidAmount(int i) {
+                return menu.getMaxFluidAmount(i);
         }
 
         protected int getEnergyUsage() {
@@ -113,7 +114,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                         guiGraphics.text(font, Component.literal((1 + getRemainProgress()) + " ticks"),
                                         getLeftPos() + xo,
                                         getTopPos() + yo,
-                                        defaultToolTipColor.getRGB(), false);
+                                        ClientUtils.defaultToolTipColor.getRGB(), false);
         }
 
         protected void renderLeftLabel(GuiGraphicsExtractor guiGraphics) {
@@ -158,7 +159,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 }
         }
 
-        protected void renderFluidTank(GuiGraphicsExtractor guiGraphics, int xo, int yo) {
+        protected void renderFluidTank(GuiGraphicsExtractor guiGraphics,int index, int xo, int yo) {
 
                 int x0 = getLeftPos() + xo;
                 int y0 = getTopPos() + yo;
@@ -171,11 +172,11 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                 18, 72,
                                 36, 72);
 
-                if (getMaxFluidAmount() > 0 && getFluidAmount() > 0 && getFluid() != null) {
+                if (getMaxFluidAmount(index) > 0 && getFluidAmount(index) > 0 && getFluid(index) != null) {
                         FluidGUITank.of()
-                                        .setFluid(getFluid())
-                                        .setMaxCapacity(getMaxFluidAmount())
-                                        .setAmount(getFluidAmount())
+                                        .setFluid(getFluid(index))
+                                        .setMaxCapacity(getMaxFluidAmount(index))
+                                        .setAmount(getFluidAmount(index))
                                         .size(16, 70)
                                         .offset(x0 + 1, y0 + 1)
                                         .render(guiGraphics);
@@ -211,20 +212,20 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 renderEnergyStorage(guiGraphics, 8, 5);
         }
 
-        public void renderFluidTooltip(GuiGraphicsExtractor graphics, int x, int y, int x0, int y0, int mouseX,
+        public void renderFluidTooltip(GuiGraphicsExtractor graphics,int index, int x, int y, int x0, int y0, int mouseX,
                         int mouseY) {
 
-                renderDualTooltip(graphics, Component.literal((hasShiftDown() ? getFluidAmount()
+                renderDualTooltip(graphics, Component.literal((ClientUtils.hasShiftDown() ? getFluidAmount(index)
                                 : StringUtil.getFormatNoRound()
-                                                .format(getFluidAmount()))
+                                                .format(getFluidAmount(index)))
                                 + " mB / " +
-                                (hasShiftDown() ? getMaxFluidAmount()
+                                (ClientUtils.hasShiftDown() ? getMaxFluidAmount(index)
                                                 : StringUtil.getFormatNoRound()
-                                                                .format(getMaxFluidAmount()))
+                                                                .format(getMaxFluidAmount(index)))
                                 + " mB"), Component
                                                 .literal(
                                                                 "Fluid: ")
-                                                .append(getFluidStack().getHoverName()),
+                                                .append(getFluidStack(index).getHoverName()),
                                 x, y, x0, y0, mouseX, mouseY);
 
         }
@@ -288,7 +289,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         @Override
         protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
                 graphics.text(this.font, this.title, this.titleLabelX + 57, this.titleLabelY,
-                                defaultToolTipColor.getRGB(), false);
+                                ClientUtils.defaultToolTipColor.getRGB(), false);
         }
 
         @Override

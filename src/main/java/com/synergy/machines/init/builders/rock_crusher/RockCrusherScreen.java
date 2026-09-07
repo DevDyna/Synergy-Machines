@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.devdyna.cakesticklib.api.upgrades.UpgradeComponents.UpgradeType;
 import com.devdyna.cakesticklib.api.utils.ArrayUtils;
+import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.synergy.machines.api.machine.BaseMachineScreen;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -25,7 +26,7 @@ public class RockCrusherScreen extends BaseMachineScreen<RockCrusherMenu> {
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
                 renderLeftLabel(guiGraphics);
                 super.extractBackground(guiGraphics, mouseX, mouseY, a);
-                renderFluidTank(guiGraphics, -22, +6);
+                renderFluidTank(guiGraphics,0, -22, +6);
         }
 
 
@@ -34,7 +35,7 @@ public class RockCrusherScreen extends BaseMachineScreen<RockCrusherMenu> {
 
                 super.extractRenderState(graphics, mouseX, mouseY, a);
 
-                renderFluidTooltip(graphics, - 22, + 6, 18, 72, mouseX, mouseY);
+                renderFluidTooltip(graphics,0, - 22, + 6, 18, 72, mouseX, mouseY);
         }
         
 
@@ -42,7 +43,7 @@ public class RockCrusherScreen extends BaseMachineScreen<RockCrusherMenu> {
         @Override
         protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
         graphics.text(this.font, this.title, this.titleLabelX + 47, this.titleLabelY,
-                                defaultToolTipColor.getRGB(), false);
+                               ClientUtils.defaultToolTipColor.getRGB(), false);
         }
 
         

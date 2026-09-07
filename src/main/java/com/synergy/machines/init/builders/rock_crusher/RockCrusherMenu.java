@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 public class RockCrusherMenu extends BaseMachineMenu {
 
     public RockCrusherMenu(int c, Inventory i, FriendlyByteBuf d) {
-        this(c, i, i.player.level().getBlockEntity(d.readBlockPos()), MACHINE_FLUID_DATA);
+        this(c, i, i.player.level().getBlockEntity(d.readBlockPos()), DataStorage.fluid(1));
     }
 
     public RockCrusherMenu(int i, Inventory inv, BlockEntity be, ContainerData data) {

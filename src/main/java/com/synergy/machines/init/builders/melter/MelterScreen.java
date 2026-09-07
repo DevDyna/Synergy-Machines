@@ -2,6 +2,7 @@ package com.synergy.machines.init.builders.melter;
 
 import static com.synergy.machines.Main.MODULE_ID;
 
+import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.machine.BaseMachineScreen;
 
@@ -25,20 +26,20 @@ public class MelterScreen extends BaseMachineScreen<MelterMenu> {
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
 
                 super.extractBackground(guiGraphics, mouseX, mouseY, a);
-                renderFluidTank(guiGraphics, 150, 5);
+                renderFluidTank(guiGraphics,0, 150, 5);
         }
 
         @Override
         public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 
                 super.extractRenderState(graphics, mouseX, mouseY, a);
-                renderFluidTooltip(graphics, 150, 5, 18, 72, mouseX, mouseY);
+                renderFluidTooltip(graphics,0, 150, 5, 18, 72, mouseX, mouseY);
         }
 
         @Override
         protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
                 graphics.text(this.font, this.title, this.titleLabelX + 47, this.titleLabelY,
-                                defaultToolTipColor.getRGB(), false);
+                                ClientUtils.defaultToolTipColor.getRGB(), false);
         }
 
 }
