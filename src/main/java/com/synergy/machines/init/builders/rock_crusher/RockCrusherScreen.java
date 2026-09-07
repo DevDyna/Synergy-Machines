@@ -26,7 +26,7 @@ public class RockCrusherScreen extends BaseMachineScreen<RockCrusherMenu> {
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
                 renderLeftLabel(guiGraphics);
                 super.extractBackground(guiGraphics, mouseX, mouseY, a);
-                renderFluidTank(guiGraphics, -22, +6);
+                renderFluidTank(guiGraphics,0, -22, +6);
         }
 
 
@@ -35,7 +35,7 @@ public class RockCrusherScreen extends BaseMachineScreen<RockCrusherMenu> {
 
                 super.extractRenderState(graphics, mouseX, mouseY, a);
 
-                renderFluidTooltip(graphics, - 22, + 6, 18, 72, mouseX, mouseY);
+                renderFluidTooltip(graphics,0, - 22, + 6, 18, 72, mouseX, mouseY);
         }
         
 

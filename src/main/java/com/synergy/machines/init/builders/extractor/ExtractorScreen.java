@@ -28,14 +28,14 @@ public class ExtractorScreen extends BaseMachineScreen<ExtractorMenu> {
     @Override
     public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
         super.extractBackground(guiGraphics, mouseX, mouseY, a);
-        renderFluidTank(guiGraphics, 150, 5);
+        renderFluidTank(guiGraphics,0, 150, 5);
     }
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor graphics, int pMouseX, int pMouseY, float a) {
         super.extractRenderState(graphics, pMouseX, pMouseY, a);
 
-        renderFluidTooltip(graphics, 150, 5, 18, 72, pMouseX, pMouseY);
+        renderFluidTooltip(graphics,0, 150, 5, 18, 72, pMouseX, pMouseY);
 
     }
 

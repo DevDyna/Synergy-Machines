@@ -26,13 +26,13 @@ public class CasterScreen extends BaseMachineScreen<CasterMenu> {
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
                 renderLeftLabel(guiGraphics);
                 super.extractBackground(guiGraphics, mouseX, mouseY, a);
-                renderFluidTank(guiGraphics, -22, +6);
+                renderFluidTank(guiGraphics,0, -22, +6);
         }
 
         @Override
         public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
                 super.extractRenderState(graphics, mouseX, mouseY, a);
-                renderFluidTooltip(graphics, -22, 6, 18, 72, mouseX, mouseY);
+                renderFluidTooltip(graphics,0, -22, 6, 18, 72, mouseX, mouseY);
         }
 
         @Override
