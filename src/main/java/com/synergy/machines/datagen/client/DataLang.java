@@ -110,6 +110,8 @@ public class DataLang extends LanguageProvider implements LangGenerators {
                 add(MODULE_ID + ".gui.inventory.debug", "Player inventory slots");
                 add(MODULE_ID + ".gui.energy.debug", "Machine energy storage");
                 add(MODULE_ID + ".gui.fluid.debug", "Machine fluid storage");
+                
+                add(MODULE_ID + ".gui.upgrade.debug", "Machine upgrade slots");
 
                 add(MODULE_ID + ".gui.slot.input.debug", "Machine input slot");
                 add(MODULE_ID + ".gui.slot.extra.debug", "Machine extra slot");

@@ -49,10 +49,10 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                         DEBUG = !DEBUG;
                                         ((DebugButton) b).update(DEBUG);
 
-                                        ((DebugButton) b).updateTooltip( (DEBUG ? "active" : "deactive"));
+                                        ((DebugButton) b).updateTooltip((DEBUG ? "active" : "deactive"));
                                 });
 
-                        button.updateTooltip( (DEBUG ? "active" : "deactive"));
+                button.updateTooltip((DEBUG ? "active" : "deactive"));
 
                 addRenderableWidget(button);
 
@@ -140,13 +140,14 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         @Override
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
                 renderRightLabel(guiGraphics, 172, 0, mouseX, mouseY);
-                renderUpgradeSlots(guiGraphics, 172, 0, mouseX, mouseY);
+                
                 renderMachineInventory(guiGraphics, 0, 0, mouseX, mouseY);
 
                 this.renderArrow(guiGraphics);
 
                 renderTickProgress(guiGraphics, 68, 70, mouseX, mouseY);
                 renderEnergyStorage(guiGraphics, 8, 5, mouseX, mouseY);
+                renderUpgradeSlots(guiGraphics, 172, 0, mouseX, mouseY);
         }
 
         @Override
@@ -184,8 +185,10 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 // if (DEBUG)
                 // renderToolTips(graphics, mouseX, mouseY);
 
-                if (DEBUG)
+                if (!DEBUG)
                         renderToolTips(graphics, mouseX, mouseY, true);
+
+                renderUpgradeTooltips(graphics, 179, 7, mouseX, mouseY);
 
                 renderMachineInventoryTooltip(graphics, 0, 0, mouseX, mouseY);
 
