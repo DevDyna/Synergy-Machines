@@ -2,19 +2,23 @@ package com.synergy.machines.api.machine;
 
 import static com.synergy.machines.Main.MODULE_ID;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
 import com.devdyna.cakesticklib.api.gui.BaseScreen;
 import com.devdyna.cakesticklib.api.primitive.Pos;
+import com.devdyna.cakesticklib.api.primitive.Size;
 import com.devdyna.cakesticklib.api.upgrades.ScreenUpgradable;
+import com.devdyna.cakesticklib.api.upgrades.UpgradeComponents;
 import com.devdyna.cakesticklib.api.utils.ClientUtils;
-import com.devdyna.cakesticklib.api.utils.StringUtil;
 import com.devdyna.cakesticklib.api.utils.UpgradeSlotBuilder;
 import com.devdyna.cakesticklib.api.utils.x;
+import com.synergy.machines.api.DebugButton;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -22,11 +26,36 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
-//TODO API : remove ClientUtils interface from BaseScreen
-public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseScreen<T> implements ScreenUpgradable {
+
+public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseScreen<T>
+                implements MachineWidgets, ScreenUpgradable {
+
+        private boolean DEBUG = false;
 
         public BaseMachineScreen(T menu, Inventory playerInventory, Component title) {
                 super(menu, playerInventory, title);
+        }
+
+        @Override
+        protected void init() {
+
+                super.init();
+
+                DEBUG = false;
+
+                var button = new DebugButton(getLeftPos() + 176, getTopPos() + 83 + 5,
+                                21, 21,
+                                b -> {
+                                        DEBUG = !DEBUG;
+                                        ((DebugButton) b).update(DEBUG);
+
+                                        ((DebugButton) b).updateTooltip( (DEBUG ? "active" : "deactive"));
+                                });
+
+                        button.updateTooltip( (DEBUG ? "active" : "deactive"));
+
+                addRenderableWidget(button);
+
         }
 
         @Override
@@ -48,14 +77,14 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         }
 
         @Override
-        protected Identifier background() {
+        protected Identifier background() {// TODO TO FIX
                 return x.rl(MODULE_ID, "textures/gui/container/" + menu.getMachine().id() + ".png");
         }
 
         @Override
         @Nullable
-        protected Identifier arrow() {
-                return furnace_arrow;
+        protected Identifier arrow() {// TODO blitSprite -> blit
+                return x.rl(MODULE_ID, "textures/gui/container/progress/on.png");
         }
 
         protected boolean whenAnimateArrow() {
@@ -66,230 +95,147 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 return menu.getScaledArrowProgress();
         }
 
-        protected int getEnergyStored() {
+        public int getEnergyStored() {
                 return menu.getEnergyStored();
         }
 
-        protected int getMaxEnergy() {
+        public int getMaxEnergy() {
                 return menu.getMaxEnergy();
         }
 
-        protected int getRemainProgress() {
+        public int getRemainProgress() {
                 return menu.getRemainProgress();
         }
 
-        protected int getFluidAmount(int i) {
+        public int getFluidAmount(int i) {
                 return menu.getFluidAmount(i);
         }
 
-        protected Fluid getFluid(int i) {
+        public Fluid getFluid(int i) {
                 return menu.getFluid(i);
         }
 
-        protected FluidStack getFluidStack(int i) {
+        public FluidStack getFluidStack(int i) {
                 return menu.getFluidStack(i);
         }
 
-        protected int getMaxFluidAmount(int i) {
+        public int getMaxFluidAmount(int i) {
                 return menu.getMaxFluidAmount(i);
         }
 
-        protected int getEnergyUsage() {
+        public int getEnergyUsage() {
                 return menu.getEnergyUsage();
         }
 
-        protected void renderUpgradesLabel(GuiGraphicsExtractor guiGraphics, int xo, int yo) {
-                guiGraphics.blit(
-                                RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/upgrade_slots.png"),
-                                getLeftPos() + xo,
-                                getTopPos() + yo,
-                                0, 0,
-                                32, 86,
-                                32, 86);
+        @Override
+        public Font getFont() {
+                return font;
         }
 
-        protected void renderTickProgress(GuiGraphicsExtractor guiGraphics, int xo, int yo) {
-                if (getRemainProgress() > 0)
-                        guiGraphics.text(font, Component.literal((1 + getRemainProgress()) + " ticks"),
-                                        getLeftPos() + xo,
-                                        getTopPos() + yo,
-                                        ClientUtils.defaultToolTipColor.getRGB(), false);
-        }
-
-        protected void renderLeftLabel(GuiGraphicsExtractor guiGraphics) {
-                guiGraphics.blit(
-                                RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/left_label.png"),
-                                getLeftPos() - 30,
-                                getTopPos(),
-                                0, 0,
-                                32, 86,
-                                32, 86);
-        }
-
-        protected void renderEnergyStorage(GuiGraphicsExtractor guiGraphics, int xo, int yo) {
-
-                int x0 = getLeftPos() + xo;
-                int y0 = getTopPos() + yo;
-
-                guiGraphics.blit(
-                                RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/energy.png"),
-                                x0, y0,
-                                0, 0,
-                                18, 72,
-                                36, 72);
-
-                if (getMaxEnergy() > 0 && getEnergyStored() > 0) {
-
-                        int slice = Math.min(72, (getEnergyStored() * 72) / getMaxEnergy());
-
-                        guiGraphics.blit(
-                                        RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/energy.png"),
-                                        x0,
-                                        y0 + (72 - slice),
-                                        18,
-                                        72 - slice,
-                                        18,
-                                        slice,
-                                        36,
-                                        72);
-                }
-        }
-
-        protected void renderFluidTank(GuiGraphicsExtractor guiGraphics,int index, int xo, int yo) {
-
-                int x0 = getLeftPos() + xo;
-                int y0 = getTopPos() + yo;
-
-                guiGraphics.blit(
-                                RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/fluid_widget.png"),
-                                x0, y0,
-                                0, 0,
-                                18, 72,
-                                36, 72);
-
-                if (getMaxFluidAmount(index) > 0 && getFluidAmount(index) > 0 && getFluid(index) != null) {
-                        FluidGUITank.of()
-                                        .setFluid(getFluid(index))
-                                        .setMaxCapacity(getMaxFluidAmount(index))
-                                        .setAmount(getFluidAmount(index))
-                                        .size(16, 70)
-                                        .offset(x0 + 1, y0 + 1)
-                                        .render(guiGraphics);
-                }
-
-                guiGraphics.blit(
-                                RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/fluid_widget.png"),
-                                x0, y0,
-                                18, 0,
-                                18, 72,
-                                36, 72);
+        @Override
+        public boolean getDebug() {
+                return DEBUG;
         }
 
         @Override
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
-                // TODO BUG : using super cause fluid tank to render dark! (need to investigate
-                // why)
-                guiGraphics.blit(
-                                RenderPipelines.GUI_TEXTURED,
-                                background(),
-                                getLeftPos(),
-                                getTopPos(),
-                                0, 0,
-                                175, 165,
-                                256, 256);
-                // super.extractBackground(guiGraphics, mouseX, mouseY, a);
+                renderRightLabel(guiGraphics, 172, 0, mouseX, mouseY);
+                renderUpgradeSlots(guiGraphics, 172, 0, mouseX, mouseY);
+                renderMachineInventory(guiGraphics, 0, 0, mouseX, mouseY);
 
                 this.renderArrow(guiGraphics);
 
-                renderUpgradesLabel(guiGraphics, 172, 0);
-                renderTickProgress(guiGraphics, 68, 70);
-                renderEnergyStorage(guiGraphics, 8, 5);
+                renderTickProgress(guiGraphics, 68, 70, mouseX, mouseY);
+                renderEnergyStorage(guiGraphics, 8, 5, mouseX, mouseY);
         }
 
-        public void renderFluidTooltip(GuiGraphicsExtractor graphics,int index, int x, int y, int x0, int y0, int mouseX,
-                        int mouseY) {
+        @Override
+        protected void renderArrow(GuiGraphicsExtractor guiGraphics) {
 
-                renderDualTooltip(graphics, Component.literal((ClientUtils.hasShiftDown() ? getFluidAmount(index)
-                                : StringUtil.getFormatNoRound()
-                                                .format(getFluidAmount(index)))
-                                + " mB / " +
-                                (ClientUtils.hasShiftDown() ? getMaxFluidAmount(index)
-                                                : StringUtil.getFormatNoRound()
-                                                                .format(getMaxFluidAmount(index)))
-                                + " mB"), Component
-                                                .literal(
-                                                                "Fluid: ")
-                                                .append(getFluidStack(index).getHoverName()),
-                                x, y, x0, y0, mouseX, mouseY);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
+                                x.rl(MODULE_ID, "textures/gui/container/progress/off.png"),
+                                this.getLeftPos() + 73, this.getTopPos() + 35,
+                                0, 0,
+                                24, 16,
+                                24, 16);
 
-        }
-
-        private void renderDualTooltip(GuiGraphicsExtractor graphics, String first, String second, int x, int y, int x0,
-                        int y0, int mouseX,
-                        int mouseY) {
-                renderDualTooltip(graphics, Component.literal(first), Component.literal(second), x, y, x0, y0, mouseX,
-                                mouseY);
-        }
-
-        private void renderDualTooltip(GuiGraphicsExtractor graphics, Component first, Component second, int x, int y,
-                        int x0,
-                        int y0, int mouseX,
-                        int mouseY) {
-                if (Pos.of(getLeftPos() + x, getTopPos() + y).setSize(x0, y0).test(mouseX, mouseY))
-
-                        graphics.setComponentTooltipForNextFrame(font,
-                                        List.of(
-                                                        first,
-                                                        second),
-                                        mouseX,
-                                        mouseY);
-        }
-
-        public void renderEnergyTooltip(GuiGraphicsExtractor graphics, int x, int y, int x0, int y0, int mouseX,
-                        int mouseY) {
-
-                renderDualTooltip(graphics,
-                                (Minecraft.getInstance().hasShiftDown()
-                                                ? getEnergyStored()
-                                                : StringUtil.getFormatNoRound()
-                                                                .format(getEnergyStored()))
-                                                + " FE / " +
-                                                (Minecraft.getInstance()
-                                                                .hasShiftDown()
-                                                                                ? getMaxEnergy()
-                                                                                : StringUtil.getFormatNoRound()
-                                                                                                .format(getMaxEnergy()))
-                                                + " FE",
-                                getEnergyUsage() <= 0 ? "No valid recipe found"
-                                                : ("Usage : " + (getMaxEnergy() <= getEnergyUsage()
-                                                                ? "§c"
-                                                                : "")
-                                                                + getEnergyUsage()
-                                                                + "§f FE/tick"),
-                                x, y, x0, y0, mouseX, mouseY);
-
+                if (this.whenAnimateArrow()) {
+                        guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
+                                        x.rl(MODULE_ID, "textures/gui/container/progress/on.png"),
+                                        this.getLeftPos() + 73, this.getTopPos() + 35,
+                                        0, 0,
+                                        getScaledArrowProgress(), 16,
+                                        24, 16);
+                }
         }
 
         @Override
         public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-                super.extractRenderState(graphics, mouseX, mouseY, a);
+
+                this.extractContents(graphics, mouseX, mouseY, a);
+                this.extractCarriedItem(graphics, mouseX, mouseY);
+                this.extractSnapbackItem(graphics);
+
+                if (!DEBUG)
+                        this.extractTooltip(graphics, mouseX, mouseY);
 
                 renderEnergyTooltip(graphics, 8, 5, 18, 72, mouseX, mouseY);
 
-                renderToolTips(graphics, mouseX, mouseY);
+                // if (DEBUG)
+                // renderToolTips(graphics, mouseX, mouseY);
 
+                if (DEBUG)
+                        renderToolTips(graphics, mouseX, mouseY, true);
+
+                renderMachineInventoryTooltip(graphics, 0, 0, mouseX, mouseY);
+
+        }
+
+        // TODO flag to empty slot
+
+        public void renderToolTips(GuiGraphicsExtractor graphics, int mouseX, int mouseY, boolean flag) {
+                this.getSlotBuilder().getAll().forEach((k, v) -> {
+                        if (flag && v.getPos().test(mouseX, mouseY)) {
+                                graphics.setComponentTooltipForNextFrame(this.getFont(),
+                                                this.calculateTooltipUpgrades(), mouseX, mouseY);
+                        }
+
+                });
+        }
+
+        // TODO API : private -> default
+        private List<Component> calculateTooltipUpgrades() {
+                List<Component> result = new ArrayList<>();
+                result.add(Component.translatable("cakesticklib.screen.upgrades"));
+                var var2 = this.validUpgrades().iterator();
+
+                while (var2.hasNext()) {
+                        UpgradeComponents.UpgradeType upgrade = (UpgradeComponents.UpgradeType) var2.next();
+                        result.add(Component
+                                        .translatable("cakesticklib.screen.modifier." + upgrade.name().toLowerCase(),
+                                                        new Object[] { this.getConfigLimits(upgrade) })
+                                        .withStyle(this.getConfigLimits(upgrade) > this
+                                                        .getInstalledUpgradesOnSlots(upgrade)
+                                                                        ? ChatFormatting.GREEN
+                                                                        : (this.getConfigLimits(upgrade) < this
+                                                                                        .getInstalledUpgradesOnSlots(
+                                                                                                        upgrade) ? ChatFormatting.RED
+                                                                                                                        : ChatFormatting.YELLOW)));
+                }
+
+                return result;
         }
 
         @Override
         protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
-                graphics.text(this.font, this.title, this.titleLabelX + 57, this.titleLabelY,
+                graphics.text(this.font, this.title,
+                                this.titleLabelX + getContainerTitlePos().getX(),
+                                this.titleLabelY + getContainerTitlePos().getY(),
                                 ClientUtils.defaultToolTipColor.getRGB(), false);
+        }
+
+        public Size getContainerTitlePos() {
+                return Size.of(57, 0);
         }
 
         @Override

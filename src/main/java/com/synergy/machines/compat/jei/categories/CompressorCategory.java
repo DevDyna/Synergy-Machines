@@ -79,7 +79,7 @@ public class CompressorCategory extends BaseMachineRecipeCategory<CompressorReci
                                 ClientUtils.defaultToolTipColor.getRGB(), false);
 
                 ImageJei.of()
-                                .rl(x.rl(MODULE_ID, "textures/gui/sprite/compressor_arrow.png"))
+                                .rl(x.rl(MODULE_ID, "textures/gui/sprite/compressor_arrow/on.png"))
                                 .size(16, 9)
                                 .offset(2, 23)
                                 .render(helper, guiGraphics);
