@@ -176,7 +176,7 @@ public abstract class BaseStorageBE extends BaseRecipeBE
 
         try (Transaction tx = Transaction.openRoot()) {
             if (consume)
-                storage.extract(resource, amount, tx);
+                storage.extract(slot,resource, amount, tx);
             else
                 storage.insert(slot, resource, amount, tx);
             tx.commit();
