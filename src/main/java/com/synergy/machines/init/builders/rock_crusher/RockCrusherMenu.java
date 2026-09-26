@@ -15,14 +15,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 public class RockCrusherMenu extends BaseMachineMenu {
 
     public RockCrusherMenu(int c, Inventory i, FriendlyByteBuf d) {
-        this(c, i, i.player.level().getBlockEntity(d.readBlockPos()), MACHINE_FLUID_DATA);
+        this(c, i, i.player.level().getBlockEntity(d.readBlockPos()), DataStorage.fluid(1));
     }
 
     public RockCrusherMenu(int i, Inventory inv, BlockEntity be, ContainerData data) {
         super(zMachines.ROCK_CRUSHER.menu().get(), i, be, inv, data);
         addMachineInputSlot(blockEntity.getItemStorage(), RockCrusherBE.INPUT_SLOT, 47, 33);
 
-        for (Integer slot : RockCrusherBE.OUTPUT_SLOTS)
+        for (var slot : RockCrusherBE.OUTPUT_SLOTS)
             addMachineOutputSlot(blockEntity.getItemStorage(),
                     slot,
                     108 + (RockCrusherBE.OUTPUT_SLOTS.indexOf(slot) % 3 * 19),

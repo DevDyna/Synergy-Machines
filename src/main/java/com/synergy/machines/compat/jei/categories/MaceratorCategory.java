@@ -1,6 +1,7 @@
 package com.synergy.machines.compat.jei.categories;
 
 import com.devdyna.cakesticklib.api.primitive.Size;
+import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.compat.jei.categories.api.BaseMachineRecipeCategory;
@@ -45,7 +46,7 @@ public class MaceratorCategory extends BaseMachineRecipeCategory<MaceratorRecipe
         public void setRecipe(IRecipeLayoutBuilder builder, MaceratorRecipeType recipe, IFocusGroup focuses) {
 
                 builder.addInputSlot(2, 14).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
-              
+
                 if (recipe.getOutputItem() != null)
                         builder.addOutputSlot(74, 6).add(recipe.getOutputItem());
 
@@ -66,14 +67,14 @@ public class MaceratorCategory extends BaseMachineRecipeCategory<MaceratorRecipe
                                 Component.literal(
                                                 recipe.getTime() + " ticks"),
                                 22, 2,
-                                defaultToolTipColor.getRGB(), false);
+                                ClientUtils.defaultToolTipColor.getRGB(), false);
 
                 if (recipe.hasSecondaryOutput())
                         drawCentredStringFixed(guiGraphics, font,
                                         Component.literal(
                                                         ((int) (recipe.getSecondaryOutputItem().chance() * 100)) + "%"),
                                         60, 36,
-                                        defaultToolTipColor.getRGB(), false);
+                                        ClientUtils.defaultToolTipColor.getRGB(), false);
 
         }
 

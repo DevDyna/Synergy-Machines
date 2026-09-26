@@ -22,24 +22,23 @@ public abstract class BaseMachineMenu extends BaseMenu {
     protected static final int STORED_ENERGY_INDEX = 2;
     protected static final int MAX_ENERGY_INDEX = 3;
     protected static final int RECIPE_ENERGY_USAGE = 4;
-    protected static final int STORED_FLUID_INDEX = 5;
-    protected static final int MAX_FLUID_INDEX = 6;
-    protected static final int ID_FLUID_INDEX = 7;
 
     protected final ContainerData data;
     protected final Level level;
     protected final BaseMachineBE blockEntity;
 
-    /**
-     * A simple container data used on machines that DONT USE FLUIDS
-     */
-    public static final SimpleContainerData MACHINE_ITEM_DATA = new SimpleContainerData(
-            BaseMachineBE.PROGRESS_DATA_SIZE + BaseMachineBE.ENERGY_DATA_SIZE);
-    /**
-     * A simple container data used on machines that USE FLUIDS
-     */
-    public static final SimpleContainerData MACHINE_FLUID_DATA = new SimpleContainerData(
-            BaseMachineBE.PROGRESS_DATA_SIZE + BaseMachineBE.ENERGY_DATA_SIZE + BaseMachineBE.FLUID_DATA_SIZE);
+    public static class DataStorage {
+
+        public static final SimpleContainerData simple() {
+            return new SimpleContainerData(BaseMachineBE.PROGRESS_DATA_SIZE + BaseMachineBE.ENERGY_DATA_SIZE);
+        }
+
+        public static final SimpleContainerData fluid(int tanks) {
+            return new SimpleContainerData(BaseMachineBE.PROGRESS_DATA_SIZE + BaseMachineBE.ENERGY_DATA_SIZE
+                    + (tanks * BaseMachineBE.FLUID_DATA_SIZE));
+        }
+
+    }
 
     protected BaseMachineMenu(MenuType<?> menuType, int containerId, BlockEntity be, Inventory inv,
             ContainerData data) {
@@ -55,6 +54,7 @@ public abstract class BaseMachineMenu extends BaseMenu {
 
         addDataSlots(data);
         addPlayerSlots(inv);
+
     }
 
     @Override
@@ -87,27 +87,29 @@ public abstract class BaseMachineMenu extends BaseMenu {
         return data.get(MAX_ENERGY_INDEX);
     }
 
-    public int getFluidAmount() {
-        return (getBlockEntity() instanceof ResourceRestricted.Fluid)
-                ? data.get(STORED_FLUID_INDEX)
+    public int getFluidAmount(int i) {
+        return (blockEntity instanceof ResourceRestricted.Fluid) ? data.get(
+                BaseMachineBE.BASE_MACHINE_INDEX
+                        + i * BaseMachineBE.FLUID_DATA_SIZE)
                 : 0;
     }
 
-    public int getMaxFluidAmount() {
-        return (getBlockEntity() instanceof ResourceRestricted.Fluid)
-                ? data.get(MAX_FLUID_INDEX)
+    public int getMaxFluidAmount(int i) {
+        return (blockEntity instanceof ResourceRestricted.Fluid) ? data.get(
+                BaseMachineBE.BASE_MACHINE_INDEX + i * BaseMachineBE.FLUID_DATA_SIZE + 1)
                 : 0;
     }
 
-    public Fluid getFluid() {
-        return (getBlockEntity() instanceof ResourceRestricted.Fluid)
-                ? FluidUtils.getFluidFromID(data.get(ID_FLUID_INDEX))
+    public Fluid getFluid(int i) {
+        return (blockEntity instanceof ResourceRestricted.Fluid)
+                ? FluidUtils.getFluidFromID(data.get(BaseMachineBE.BASE_MACHINE_INDEX
+                        + i * BaseMachineBE.FLUID_DATA_SIZE + 2))
                 : null;
     }
 
-    public FluidStack getFluidStack() {
+    public FluidStack getFluidStack(int i) {
         return (getBlockEntity() instanceof ResourceRestricted.Fluid)
-                ? x.fluid(getFluid(), getFluidAmount())
+                ? x.fluid(getFluid(i), getFluidAmount(i))
                 : null;
     }
 

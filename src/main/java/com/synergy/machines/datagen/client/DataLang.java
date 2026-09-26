@@ -5,6 +5,7 @@ import static com.synergy.machines.Main.MODULE_ID;
 
 import com.devdyna.cakesticklib.api.datagen.LangGenerators;
 import com.devdyna.cakesticklib.api.datagen.LangUtils;
+import com.devdyna.cakesticklib.api.datagen.LangUtils.TipColors;
 import com.synergy.machines.init.Material;
 import com.synergy.machines.init.types.*;
 
@@ -101,6 +102,21 @@ public class DataLang extends LanguageProvider implements LangGenerators {
                                 "Vanilla Recipe Mininal Tick Delay");
                 add(MODULE_ID + ".configuration.machine_furnace_vanilla_percentuage_tick_delay",
                                 "Vanilla Recipe Tick Delay reduction of total Tick Delay");
+
+                // debug
+
+                add(MODULE_ID + ".gui.button.debug.active", "Deactive debug screen vision");
+                add(MODULE_ID + ".gui.button.debug.deactive", "Active debug screen vision");
+
+                add(MODULE_ID + ".gui.inventory.debug", TipColors.GOLD + "Player inventory slots");
+                add(MODULE_ID + ".gui.energy.debug", TipColors.RED + "Machine energy storage");
+                add(MODULE_ID + ".gui.fluid.debug", TipColors.BLUE + "Machine fluid storage");
+
+                add(MODULE_ID + ".gui.upgrade.debug", TipColors.MAGENTA + "Machine upgrade slots");
+
+                add(MODULE_ID + ".gui.slot.input.debug", TipColors.GREEN + "Machine input slot");
+                add(MODULE_ID + ".gui.slot.extra.debug", TipColors.YELLOW + "Machine extra slot");
+                add(MODULE_ID + ".gui.slot.output.debug", TipColors.CYAN + "Machine output slot");
 
         }
 

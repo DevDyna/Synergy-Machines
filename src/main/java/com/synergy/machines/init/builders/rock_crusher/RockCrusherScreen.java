@@ -2,6 +2,7 @@ package com.synergy.machines.init.builders.rock_crusher;
 
 import java.util.List;
 
+import com.devdyna.cakesticklib.api.primitive.Size;
 import com.devdyna.cakesticklib.api.upgrades.UpgradeComponents.UpgradeType;
 import com.devdyna.cakesticklib.api.utils.ArrayUtils;
 import com.synergy.machines.api.machine.BaseMachineScreen;
@@ -22,29 +23,41 @@ public class RockCrusherScreen extends BaseMachineScreen<RockCrusherMenu> {
         }
 
         @Override
-        public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
-                renderLeftLabel(guiGraphics);
-                super.extractBackground(guiGraphics, mouseX, mouseY, a);
-                renderFluidTank(guiGraphics, -22, +6);
-        }
+        public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+                renderLeftLabel(graphics);
+                super.extractBackground(graphics, mouseX, mouseY, a);
+                renderFluidTank(graphics, 0, -22, +6, mouseX, mouseY);
 
+                renderInputSlot(graphics, 47, 33, mouseX, mouseY);
+
+                for (var slot : RockCrusherBE.OUTPUT_SLOTS)
+                        renderOutputSlot(graphics,
+                                        108 + (RockCrusherBE.OUTPUT_SLOTS.indexOf(slot) % 3 * 19),
+                                        15 + (RockCrusherBE.OUTPUT_SLOTS.indexOf(slot) / 3 * 19),
+                                        mouseX, mouseY);
+
+        }
 
         @Override
         public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 
                 super.extractRenderState(graphics, mouseX, mouseY, a);
 
-                renderFluidTooltip(graphics, - 22, + 6, 18, 72, mouseX, mouseY);
-        }
-        
+                renderFluidTooltip(graphics, 0, -22, +6, 18, 72, mouseX, mouseY);
 
+                renderInputSlotTooltip(graphics, 47, 33, mouseX, mouseY);
+
+                for (var slot : RockCrusherBE.OUTPUT_SLOTS)
+                        renderOutputSlotTooltip(graphics,
+                                        108 + (RockCrusherBE.OUTPUT_SLOTS.indexOf(slot) % 3 * 19),
+                                        15 + (RockCrusherBE.OUTPUT_SLOTS.indexOf(slot) / 3 * 19),
+                                        mouseX, mouseY);
+
+        }
 
         @Override
-        protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
-        graphics.text(this.font, this.title, this.titleLabelX + 47, this.titleLabelY,
-                                defaultToolTipColor.getRGB(), false);
+        public Size getContainerTitlePos() {
+                return Size.of(47, 0);
         }
-
-        
 
 }

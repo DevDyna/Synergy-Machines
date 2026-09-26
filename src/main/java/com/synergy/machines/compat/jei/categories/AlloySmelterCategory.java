@@ -1,6 +1,7 @@
 package com.synergy.machines.compat.jei.categories;
 
 import com.devdyna.cakesticklib.api.primitive.Size;
+import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.compat.jei.categories.api.BaseMachineRecipeCategory;
@@ -61,7 +62,7 @@ public class AlloySmelterCategory extends BaseMachineRecipeCategory<AlloySmelter
                 Component.literal(
                         recipe.getTime() + " ticks"),
                 40, -2,
-                defaultToolTipColor.getRGB(), false);
+                ClientUtils.defaultToolTipColor.getRGB(), false);
 
     }
 

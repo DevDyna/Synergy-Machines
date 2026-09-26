@@ -2,6 +2,7 @@ package com.synergy.machines.compat.jei.categories;
 
 import com.devdyna.cakesticklib.api.compat.jei.JEIFluidTankHelper;
 import com.devdyna.cakesticklib.api.primitive.Size;
+import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.compat.jei.categories.api.BaseMachineRecipeCategory;
@@ -50,7 +51,7 @@ public class MelterCategory extends BaseMachineRecipeCategory<MelterRecipeType> 
                 JEIFluidTankHelper.of()
                                 .fluid(recipe.getFluidOutput().create())
                                 .offset(74, 21)
-                                .build((x,y)->builder.addOutputSlot(x,y));
+                                .build((x, y) -> builder.addOutputSlot(x, y));
 
         }
 
@@ -66,7 +67,7 @@ public class MelterCategory extends BaseMachineRecipeCategory<MelterRecipeType> 
                                 Component.literal(
                                                 recipe.getTime() + " ticks"),
                                 24, -2,
-                                defaultToolTipColor.getRGB(), false);
+                                ClientUtils.defaultToolTipColor.getRGB(), false);
 
         }
 

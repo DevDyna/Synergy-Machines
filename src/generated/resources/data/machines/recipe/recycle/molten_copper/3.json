@@ -1,6 +1,6 @@
 {
   "type": "machines:electric_melter",
-  "energy": 500,
+  "energy": 1500,
   "fluid": {
     "amount": 270,
     "id": "cakesticklib:molten_copper"
@@ -9,5 +9,5 @@
     "count": 1,
     "ingredient": "#cakesticklib:recipe_recycle/copper/3"
   },
-  "ticks": 400
+  "ticks": 240
 }

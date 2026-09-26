@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 public class CasterMenu extends BaseMachineMenu {
 
     public CasterMenu(int c, Inventory i, FriendlyByteBuf d) {
-        this(c, i, i.player.level().getBlockEntity(d.readBlockPos()), MACHINE_FLUID_DATA);
+        this(c, i, i.player.level().getBlockEntity(d.readBlockPos()), DataStorage.fluid(1));
     }
 
     public CasterMenu(int i, Inventory inv, BlockEntity be, ContainerData data) {

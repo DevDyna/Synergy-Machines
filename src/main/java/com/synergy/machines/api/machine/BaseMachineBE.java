@@ -12,6 +12,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class BaseMachineBE extends BaseUpgradableBE {
 
+    protected static final int BASE_MACHINE_INDEX = BaseMachineBE.ENERGY_DATA_SIZE + BaseMachineBE.PROGRESS_DATA_SIZE;
+
     public BaseMachineBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
@@ -21,35 +23,43 @@ public abstract class BaseMachineBE extends BaseUpgradableBE {
         @Override
         public int getCount() {
             return ENERGY_DATA_SIZE + PROGRESS_DATA_SIZE
-                    + (BaseMachineBE.this instanceof ResourceRestricted.Fluid
-                            ? FLUID_DATA_SIZE
+                    + (BaseMachineBE.this instanceof ResourceRestricted.Fluid fluid
+                            ? fluid.getTanks() * 3
                             : 0);
+
         }
 
         @Override
         public int get(int i) {
-            return switch (i) {
-                case BaseMachineMenu.PROGRESS_INDEX -> getProgress();
-                case BaseMachineMenu.MAX_PROGRESS_INDEX -> getMaxProgress();
-                case BaseMachineMenu.STORED_ENERGY_INDEX -> getEnergyStorage().getAmountAsInt();
-                case BaseMachineMenu.MAX_ENERGY_INDEX -> getMaxEnergy();
-                case BaseMachineMenu.RECIPE_ENERGY_USAGE -> getEnergyUsage();
-                default ->
-                    (BaseMachineBE.this instanceof ResourceRestricted.Fluid fluid) ? switch (i) {
-                        case BaseMachineMenu.STORED_FLUID_INDEX -> fluid.getFluidStorage().getAmountAsInt(0);
-                        case BaseMachineMenu.MAX_FLUID_INDEX -> fluid.getTankCapacity();
-                        case BaseMachineMenu.ID_FLUID_INDEX -> FluidUtils.getFluidToID(fluid.getAsStack(0));
-                        default -> 0;
-                    } : 0;
 
-            };
+            if (i < BASE_MACHINE_INDEX)
+                return switch (i) {
+                    case BaseMachineMenu.PROGRESS_INDEX -> getProgress();
+                    case BaseMachineMenu.MAX_PROGRESS_INDEX -> getMaxProgress();
+                    case BaseMachineMenu.STORED_ENERGY_INDEX -> getEnergyStorage().getAmountAsInt();
+                    case BaseMachineMenu.MAX_ENERGY_INDEX -> getMaxEnergy();
+                    case BaseMachineMenu.RECIPE_ENERGY_USAGE -> getEnergyUsage();
+                    default -> 0;
+                };
+
+            if (BaseMachineBE.this instanceof ResourceRestricted.Fluid fluid) {
+
+                var fluidIndex = i - BASE_MACHINE_INDEX;
+
+                return switch (fluidIndex % 3) {
+                    case 0 -> fluid.getFluidStorage().getAmountAsInt(fluidIndex / 3);
+                    case 1 -> fluid.getTankCapacity();
+                    case 2 -> FluidUtils.getFluidToID(fluid.getAsStack(fluidIndex / 3));
+                    default -> 0;
+                };
+            }
+
+            return 0;
         }
 
         @Override
         public void set(int index, int value) {
-
         }
-
     };
 
     @Override

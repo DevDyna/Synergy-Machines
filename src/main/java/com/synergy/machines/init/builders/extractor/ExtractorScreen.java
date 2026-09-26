@@ -1,17 +1,13 @@
 package com.synergy.machines.init.builders.extractor;
 
-import static com.synergy.machines.Main.MODULE_ID;
-
 import java.util.List;
 
 import com.devdyna.cakesticklib.api.upgrades.UpgradeComponents.UpgradeType;
 import com.devdyna.cakesticklib.api.utils.ArrayUtils;
-import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.machine.BaseMachineScreen;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class ExtractorScreen extends BaseMachineScreen<ExtractorMenu> {
@@ -21,21 +17,21 @@ public class ExtractorScreen extends BaseMachineScreen<ExtractorMenu> {
     }
 
     @Override
-    protected Identifier background() {
-        return x.rl(MODULE_ID, "textures/gui/container/simple_dual.png");
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+        super.extractBackground(graphics, mouseX, mouseY, a);
+        renderFluidTank(graphics, 0, 150, 5, mouseX, mouseY);
+
+        renderInputSlot(graphics, 47, 33, mouseX, mouseY);
+        renderLargeOutputSlot(graphics, 119, 34, mouseX, mouseY);
     }
 
     @Override
-    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
-        super.extractBackground(guiGraphics, mouseX, mouseY, a);
-        renderFluidTank(guiGraphics, 150, 5);
-    }
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+        super.extractRenderState(graphics, mouseX, mouseY, a);
 
-    @Override
-    public void extractRenderState(GuiGraphicsExtractor graphics, int pMouseX, int pMouseY, float a) {
-        super.extractRenderState(graphics, pMouseX, pMouseY, a);
-
-        renderFluidTooltip(graphics, 150, 5, 18, 72, pMouseX, pMouseY);
+        renderFluidTooltip(graphics, 0, 150, 5, 18, 72, mouseX, mouseY);
+        renderInputSlotTooltip(graphics, 47, 33, mouseX, mouseY);
+        renderLargeOutputSlotTooltip(graphics, 119, 34, mouseX, mouseY);
 
     }
 
