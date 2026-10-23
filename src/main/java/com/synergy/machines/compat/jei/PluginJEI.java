@@ -170,7 +170,7 @@ public class PluginJEI implements IModPlugin {
                                                                                 screen.getLeftPos() + 172,
                                                                                 screen.getTopPos(),
                                                                                 32,
-                                                                                86));
+                                                                                86+20));
                                         }
                                 });
         }
