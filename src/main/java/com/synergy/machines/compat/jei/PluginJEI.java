@@ -3,6 +3,8 @@ package com.synergy.machines.compat.jei;
 import static com.synergy.machines.Main.MODULE_ID;
 
 import java.util.List;
+import java.util.function.Function;
+
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.Client;
 import com.synergy.machines.Common;
@@ -35,6 +37,7 @@ import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -160,19 +163,28 @@ public class PluginJEI implements IModPlugin {
                 r.addRecipeClickArea(RockCrusherScreen.class, 75, 35, 22, 15,
                                 RockCrusherCategory.TYPE);
 
-                r.addGuiContainerHandler(
-                                (Class<? extends BaseMachineScreen<?>>) (Class<?>) BaseMachineScreen.class,
-                                new IGuiContainerHandler<BaseMachineScreen<?>>() {
-                                        @Override
-                                        public List<Rect2i> getGuiExtraAreas(BaseMachineScreen<?> screen) {
-                                                return List.of(
-                                                                new Rect2i(
-                                                                                screen.getLeftPos() + 172,
-                                                                                screen.getTopPos(),
-                                                                                32,
-                                                                                86+20));
-                                        }
-                                });
+                // TODO : move to api
+                addExclusionJEIArea(r, BaseMachineScreen.class, screen -> {
+                        var shape = screen.getScreenUsage();
+                        return new Rect2i(
+                                        screen.getLeftPos() + shape.getX0(),
+                                        screen.getTopPos() + shape.getY0(),
+                                        shape.getX1(),
+                                        shape.getY1());
+                });
+        }
+
+        // TODO : move to api
+        private <T extends AbstractContainerScreen<?>> void addExclusionJEIArea(IGuiHandlerRegistration r,
+                        Class<T> clazz, Function<T, Rect2i> shape) {
+
+                r.addGuiContainerHandler(clazz, new IGuiContainerHandler<T>() {
+                        @Override
+                        public List<Rect2i> getGuiExtraAreas(T screen) {
+                                return List.of(shape.apply(screen));
+                        }
+                });
+
         }
 
         private <C extends RecipeInput, T extends Recipe<C>> List<RecipeHolder<T>> getRecipes(RecipeType<T> type) {

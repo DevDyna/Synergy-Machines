@@ -262,4 +262,8 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                                                 .setSize(18, 18));
         }
 
+        public Pos getScreenUsage() {
+                return Pos.of(-30, -10).setSize(32 + 172 + 30 + 30, 86 + 20 + 10 + 20);
+        }
+
 }
