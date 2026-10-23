@@ -70,7 +70,7 @@ public class MaceratorCategory extends BaseMachineRecipeCategory<MaceratorRecipe
                                 ClientUtils.defaultToolTipColor.getRGB(), false);
 
                 if (recipe.hasSecondaryOutput())
-                        drawCentredStringFixed(guiGraphics, font,
+                        drawCenteredString(guiGraphics, font,
                                         Component.literal(
                                                         ((int) (recipe.getSecondaryOutputItem().chance() * 100)) + "%"),
                                         60, 36,
