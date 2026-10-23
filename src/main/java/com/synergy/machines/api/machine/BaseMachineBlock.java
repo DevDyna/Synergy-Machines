@@ -3,6 +3,7 @@ package com.synergy.machines.api.machine;
 import javax.annotation.Nullable;
 
 import com.devdyna.cakesticklib.CakeStickLib;
+import com.devdyna.cakesticklib.api.aspect.logic.Tickable;
 import com.devdyna.cakesticklib.api.upgrades.UpgradeInstallable;
 import com.devdyna.cakesticklib.api.upgrades.modifiers.ModifierUtils;
 import com.synergy.machines.init.builders.MachineFrame;
@@ -136,15 +137,7 @@ public abstract class BaseMachineBlock extends MachineFrame implements EntityBlo
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l, BlockState s,
             BlockEntityType<T> ty) {
-        return (lvl, pos, b, t) -> {
-            if (t instanceof BaseMachineBE be) {
-                be.tickBoth();
-                if (l.isClientSide())
-                    be.tickClient();
-                else
-                    be.tickServer();
-            }
-        };
+        return Tickable::compute;
     }
 
 }
