@@ -73,7 +73,7 @@ public class ExtractorCategory extends BaseMachineRecipeCategory<ExtractorRecipe
                                 ClientUtils.defaultToolTipColor.getRGB(), false);
 
                 if (recipe.hasSecondaryOutput())
-                        drawCentredStringFixed(guiGraphics, font,
+                drawCenteredString(guiGraphics, font,
                                         Component.literal(
                                                         ((int) (recipe.getSecondaryOutputItem().chance() * 100)) + "%"),
                                         65, 10,
