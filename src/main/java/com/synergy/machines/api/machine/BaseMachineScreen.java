@@ -25,6 +25,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseScreen<T>
@@ -140,7 +142,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         @Override
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
                 renderRightLabel(guiGraphics, 172, 0, mouseX, mouseY);
-                
+
                 renderMachineInventory(guiGraphics, 0, 0, mouseX, mouseY);
 
                 this.renderArrow(guiGraphics);
@@ -174,6 +176,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 
                 this.extractContents(graphics, mouseX, mouseY, a);
+                NeoForge.EVENT_BUS.post(new ScreenEvent.Render.Foreground(this, graphics, mouseX, mouseY, a));
                 this.extractCarriedItem(graphics, mouseX, mouseY);
                 this.extractSnapbackItem(graphics);
 
