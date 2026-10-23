@@ -15,7 +15,7 @@ public class Common {
         public static void register(ModContainer c) {
                 industrial_machines();
 
-                c.registerConfig(ModConfig.Type.COMMON, qCOMMON.build());
+                c.registerConfig(ModConfig.Type.SERVER, qCOMMON.build());
         }
 
         public static IntValue SOLAR_PANEL_FE_GEN;// 16
