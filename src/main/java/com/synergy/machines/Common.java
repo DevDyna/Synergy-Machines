@@ -10,12 +10,12 @@ import net.neoforged.neoforge.common.ModConfigSpec.*;
 
 public class Common {
 
-        private static final ModConfigSpec.Builder qCOMMON = new ModConfigSpec.Builder();
+        private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
         public static void register(ModContainer c) {
                 industrial_machines();
 
-                c.registerConfig(ModConfig.Type.SERVER, qCOMMON.build());
+                c.registerConfig(ModConfig.Type.SERVER, BUILDER.build());
         }
 
         public static IntValue SOLAR_PANEL_FE_GEN;// 16
@@ -50,7 +50,7 @@ public class Common {
 
         private static void industrial_machines() {
 
-                qCOMMON.comment("Machines").push("machines");
+                BUILDER.comment("Machines").push("machines");
 
                 decor.simple("Solar Panel");
 
@@ -115,11 +115,11 @@ public class Common {
                                 "Vanilla Recipe Tick Delay reduction of total Tick Delay",
                                 "machine_furnace_vanilla_percentuage_tick_delay", 50, 0, 100);
 
-                qCOMMON.pop();
+                BUILDER.pop();
         }
 
         private static BooleanValue bool(String c, String k, boolean b) {
-                return qCOMMON
+                return BUILDER
                                 .comment(c)
                                 .define(k, b);
         }
@@ -132,13 +132,13 @@ public class Common {
         }
 
         private static IntValue number(String c, String k, int d, int mn, int mx) {
-                return qCOMMON
+                return BUILDER
                                 .comment(c)
                                 .defineInRange(k, d, mn, mx);
         }
 
         private static DoubleValue numberFloat(String c, String k, double d, double min, double max) {
-                return qCOMMON
+                return BUILDER
                                 .comment(c)
                                 .defineInRange(k, d, min, max);
         }
@@ -203,11 +203,11 @@ public class Common {
 
         protected class decor {
                 protected static void complex(String s) {
-                        qCOMMON.comment(StringUtil.nameCapitalized(s));
+                        BUILDER.comment(StringUtil.nameCapitalized(s));
                 }
 
                 protected static void simple(String s) {
-                        qCOMMON.comment(s);
+                        BUILDER.comment(s);
                 }
         }
 
