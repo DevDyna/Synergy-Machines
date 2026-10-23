@@ -43,7 +43,7 @@ public class DataModel extends ModelProvider {
         protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
 
                 zItems.zBucketItems.getEntries().forEach(b -> ModelUtils.createBucketItem(itemModels, b.get()));
-                zBlocks.zBlockFluids.getEntries().forEach(b -> ModelUtils.fluid(blockModels, b.get(), MODULE_ID));
+                zBlocks.zBlockFluids.getEntries().forEach(b -> ModelUtils.vanilla(blockModels, b.get()));
 
                 var machines = List.of(zMachines.ALLOY_SMELTER, zMachines.CASTING_FACTORY, zMachines.COMPRESSOR,
                                 zMachines.ELECTRIC_FURNACE, zMachines.ELECTRIC_MELTER, zMachines.EXTRACTOR,
