@@ -27,8 +27,8 @@ public class CasterScreen extends BaseMachineScreen<CasterMenu> {
         public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
                 super.extractRenderState(graphics, mouseX, mouseY, a);
                 renderFluidTooltip(graphics, 0, -22, 6, 18, 72, mouseX, mouseY);
-        
-        renderInputSlotTooltip(graphics, 47, 33, mouseX, mouseY);
+
+                renderInputSlotTooltip(graphics, 47, 33, mouseX, mouseY);
                 renderLargeOutputSlotTooltip(graphics, 119, 34, mouseX, mouseY);
         }
 
