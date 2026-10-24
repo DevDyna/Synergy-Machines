@@ -133,6 +133,4 @@ public abstract class SolarPanelBlock extends TickingBlock {
         super.onNeighborChange(state, level, pos, neighbor);
     }
 
-    
-
 }
