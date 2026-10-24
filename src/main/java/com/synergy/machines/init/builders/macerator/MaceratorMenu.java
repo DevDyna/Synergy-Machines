@@ -1,6 +1,7 @@
 package com.synergy.machines.init.builders.macerator;
 
-
+import com.devdyna.cakesticklib.api.utils.SlotBuilder;
+import com.devdyna.cakesticklib.api.utils.SlotBuilder.ResourceType;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.BaseMachineBlock;
@@ -29,6 +30,14 @@ public class MaceratorMenu extends BaseMachineMenu {
     @Override
     public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<?>> getMachine() {
         return zMachines.MACERATOR;
+    }
+
+    @Override
+    public SlotBuilder getSlots() {
+        return SlotBuilder.of(blockEntity.getMachineSlots())
+                .set(MaceratorBE.INPUT_SLOT - 4, ResourceType.INPUT)
+                .set(MaceratorBE.OUTPUT_SLOT - 4, ResourceType.OUTPUT)
+                .set(MaceratorBE.SECONDARY_SLOT - 4, ResourceType.OUTPUT);
     }
 
 }

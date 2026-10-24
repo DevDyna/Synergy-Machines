@@ -1,7 +1,7 @@
 package com.synergy.machines.init.builders.melter;
 
-
-
+import com.devdyna.cakesticklib.api.utils.SlotBuilder;
+import com.devdyna.cakesticklib.api.utils.SlotBuilder.ResourceType;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
@@ -26,6 +26,12 @@ public class MelterMenu extends BaseMachineMenu {
     @Override
     public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<?>> getMachine() {
         return zMachines.ELECTRIC_MELTER;
+    }
+
+    @Override
+    public SlotBuilder getSlots() {
+        return SlotBuilder.of(blockEntity.getMachineSlots())
+                .set(MelterBE.INPUT_SLOT - 4, ResourceType.INPUT);
     }
 
 }

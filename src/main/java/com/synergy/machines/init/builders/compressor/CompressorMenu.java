@@ -2,6 +2,8 @@ package com.synergy.machines.init.builders.compressor;
 
 
 
+import com.devdyna.cakesticklib.api.utils.SlotBuilder;
+import com.devdyna.cakesticklib.api.utils.SlotBuilder.ResourceType;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.BaseMachineBlock;
@@ -30,6 +32,14 @@ public class CompressorMenu extends BaseMachineMenu {
     @Override
     public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<?>> getMachine() {
         return zMachines.COMPRESSOR;
+    }
+
+    @Override
+    public SlotBuilder getSlots() {
+        return SlotBuilder.of(blockEntity.getMachineSlots())
+                .set(CompressorBE.INPUT_SLOT-4, ResourceType.INPUT)
+                .set(CompressorBE.OUTPUT_SLOT-4, ResourceType.OUTPUT)
+                .set(CompressorBE.PLATE_SLOT-4, ResourceType.INPUT);
     }
 
 }

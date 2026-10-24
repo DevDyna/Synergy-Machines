@@ -3,13 +3,18 @@ package com.synergy.machines.api.machine;
 import com.devdyna.cakesticklib.api.aspect.logic.ResourceRestricted;
 import com.devdyna.cakesticklib.api.gui.BaseMenu;
 import com.devdyna.cakesticklib.api.utils.FluidUtils;
+import com.devdyna.cakesticklib.api.utils.SlotBuilder;
+import com.devdyna.cakesticklib.api.utils.SlotBuilder.ResourceType;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
@@ -124,5 +129,110 @@ public abstract class BaseMachineMenu extends BaseMenu {
     }
 
     public abstract MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<?>> getMachine();
+
+    /*
+     * 0-3 upgrades
+     * 4-30 inventory
+     * 31-39 hotbar
+     * 40+ machine slots (SlotBuilder)
+     */
+
+    // <?> -> player
+    private ItemStack moveToInventory(ItemStack item, Slot slot, Player player) {
+        var copy = item.copy();
+        // <?> -> hotbar
+        if (moveItemStackTo(item, 31, 40, false)) {
+            slot.onTake(player, item);
+            return copy;
+        }
+
+        // <?> -> inv
+        if (moveItemStackTo(item, 4, 31, false)) {
+            slot.onTake(player, item);
+            return copy;
+        }
+
+        return ItemStack.EMPTY;
+    }
+
+    //TODO IMP : visual debug render?
+    @Override
+    public ItemStack quickMoveStack(Player player, int index) {
+
+        if (index < 0 || index >= this.slots.size()) {
+            return ItemStack.EMPTY;
+        }
+
+        var slot = this.slots.get(index);
+
+        if (!slot.hasItem())
+            return ItemStack.EMPTY;
+
+        var item = slot.getItem();
+
+        // upgrades -> inventory (no machine)
+        if (index >= 0 && index <= 3 + 1)
+            return moveToInventory(item, slot, player);
+
+        // player inv -> <?>
+        if (index >= 4 && index <= 39) {
+            var copy = item.copy();
+
+            // player -> upgrades
+            if (moveItemStackTo(item, 0, 3 + 1, true)) {
+                slot.onTake(player, item);
+                return copy;
+            }
+            // // player -> machine input
+            // if (moveItemStackTo(item, 40, 40 + 1, true)) {
+            // slot.onTake(player, item);
+            // return copy;
+            // }
+            // player -> machine
+            for (var i = 0; i < getSlots().get().size(); i++) {
+                if (getSlots().get(i).equals(ResourceType.INPUT) || getSlots().get(i).equals(ResourceType.BUFFER))
+                    if (moveItemStackTo(item, 40 + i, 40 + 1 + i, true)) {
+                        slot.onTake(player, item);
+                        return copy;
+                    }
+            }
+
+            // inv -> hotbar
+            if (index >= 4 && index <= 30) {
+                if (moveItemStackTo(item, 31, 39 + 1, true)) {
+                    slot.onTake(player, item);
+                    return copy;
+                }
+            }
+
+            // hotbar -> inv
+            if (index >= 31 && index <= 39) {
+                if (moveItemStackTo(item, 4, 30 + 1, true)) {
+                    slot.onTake(player, item);
+                    return copy;
+                }
+            }
+        }
+
+        // base slots
+        // if (index == 40 || index == 41) {
+        // return moveToInventory(item, slot, player);
+        // }
+
+        // machine -> <?>
+        if (index >= 40) {
+            if (!getSlots().get(index - 40).equals(SlotBuilder.ResourceType.NONE))
+                return moveToInventory(item, slot, player);
+        }
+
+        return ItemStack.EMPTY;
+
+    }
+
+    public SlotBuilder getSlots() {
+        return SlotBuilder.of(blockEntity.getMachineSlots())
+                .set(BaseMachineBE.INPUT_SLOT - 4, ResourceType.INPUT)
+                .set(BaseMachineBE.OUTPUT_SLOT - 4, ResourceType.OUTPUT);
+    }
 
 }
