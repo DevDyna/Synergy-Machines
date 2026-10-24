@@ -68,7 +68,7 @@ public class Config {
                                 "enable_shift_invert_facing", false);
 
                 MACHINE_MAX_FE = number("Base max energy stored",
-                                "base_machine_max_fe", 100_000);
+                                "base_machine_max_fe", 160_000);
 
                 MACHINE_MAX_SPEED_UPGRADES_TYPE = number("Max Speed Increaser Upgrade Types usable foreach machine",
                                 "max_speed_upgrades", 4, 0, 16);
