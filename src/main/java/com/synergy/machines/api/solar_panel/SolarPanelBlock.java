@@ -24,6 +24,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+//TODO API : maybe move to api as template?
 public abstract class SolarPanelBlock extends TickingBlock {
 
     public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
@@ -43,6 +44,14 @@ public abstract class SolarPanelBlock extends TickingBlock {
     @Override
     protected VoxelShape getShape(BlockState s, BlockGetter l, BlockPos p, CollisionContext c) {
         return Block.box(0, 0, 0, 16, 4, 16);
+    }
+
+    public Map<Direction, BooleanProperty> getStateMapping() {
+        return Map.of(
+                Direction.NORTH, NORTH,
+                Direction.EAST, EAST,
+                Direction.SOUTH, SOUTH,
+                Direction.WEST, WEST);
     }
 
     @Override
@@ -124,12 +133,6 @@ public abstract class SolarPanelBlock extends TickingBlock {
         super.onNeighborChange(state, level, pos, neighbor);
     }
 
-    public Map<Direction, BooleanProperty> getStateMapping() {
-        return Map.of(
-                Direction.NORTH, NORTH,
-                Direction.EAST, EAST,
-                Direction.SOUTH, SOUTH,
-                Direction.WEST, WEST);
-    }
+    
 
 }
