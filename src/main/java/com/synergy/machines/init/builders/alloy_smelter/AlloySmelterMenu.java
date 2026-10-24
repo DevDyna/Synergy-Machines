@@ -1,7 +1,7 @@
 package com.synergy.machines.init.builders.alloy_smelter;
 
-
-
+import com.devdyna.cakesticklib.api.utils.SlotBuilder;
+import com.devdyna.cakesticklib.api.utils.SlotBuilder.ResourceType;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.BaseMachineBlock;
@@ -30,6 +30,14 @@ public class AlloySmelterMenu extends BaseMachineMenu {
     @Override
     public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<?>> getMachine() {
         return zMachines.ALLOY_SMELTER;
+    }
+
+    @Override
+    public SlotBuilder getSlots() {
+        return SlotBuilder.of(blockEntity.getMachineSlots())
+                .set(AlloySmelterBE.INPUT_SLOT-4, ResourceType.INPUT)
+                .set(AlloySmelterBE.OUTPUT_SLOT-4, ResourceType.OUTPUT)
+                .set(AlloySmelterBE.SECONDARY_INPUT-4, ResourceType.INPUT);
     }
 
 }

@@ -14,7 +14,7 @@ public class Main {
     public Main(IEventBus bus, ModContainer c) {
         Material.register(bus);
         GameEvents.build(bus, c);
-        Common.register(c);
+        Config.register(c);
     }
 
 }

@@ -45,8 +45,8 @@ public class DebugButton extends Button {
         this.flag = f;
     }
 
-    public void updateTooltip( String v) {
-    setTooltip(Tooltip.create(Component.translatable(MODULE_ID + ".gui.button.debug." + v)));
+    public void updateTooltip(String v) {
+        setTooltip(Tooltip.create(Component.translatable(MODULE_ID + ".gui.button.debug." + v)));
     }
 
 }

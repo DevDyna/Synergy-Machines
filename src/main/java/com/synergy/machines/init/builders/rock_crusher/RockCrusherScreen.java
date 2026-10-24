@@ -24,7 +24,7 @@ public class RockCrusherScreen extends BaseMachineScreen<RockCrusherMenu> {
 
         @Override
         public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-                renderLeftLabel(graphics);
+
                 super.extractBackground(graphics, mouseX, mouseY, a);
                 renderFluidTank(graphics, 0, -22, +6, mouseX, mouseY);
 
@@ -36,6 +36,11 @@ public class RockCrusherScreen extends BaseMachineScreen<RockCrusherMenu> {
                                         15 + (RockCrusherBE.OUTPUT_SLOTS.indexOf(slot) / 3 * 19),
                                         mouseX, mouseY);
 
+        }
+
+        @Override
+        public boolean enableLeftLabel(GuiGraphicsExtractor g, int x, int y, float a) {
+                return true;
         }
 
         @Override

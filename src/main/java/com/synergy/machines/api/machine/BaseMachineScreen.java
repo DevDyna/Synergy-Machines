@@ -25,6 +25,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseScreen<T>
@@ -77,14 +79,14 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         }
 
         @Override
-        protected Identifier background() {// TODO TO FIX
-                return x.rl(MODULE_ID, "textures/gui/container/" + menu.getMachine().id() + ".png");
+        protected Identifier background() {
+                return null;
         }
 
         @Override
         @Nullable
-        protected Identifier arrow() {// TODO blitSprite -> blit
-                return x.rl(MODULE_ID, "textures/gui/container/progress/on.png");
+        protected Identifier arrow() {
+                return null;
         }
 
         protected boolean whenAnimateArrow() {
@@ -139,8 +141,13 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
         @Override
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
+                extractBaseBackground(guiGraphics, mouseX, mouseY, a);
+
+                if (enableLeftLabel(guiGraphics, mouseX, mouseY, a))
+                        renderLeftLabel(guiGraphics);
+
                 renderRightLabel(guiGraphics, 172, 0, mouseX, mouseY);
-                
+
                 renderMachineInventory(guiGraphics, 0, 0, mouseX, mouseY);
 
                 this.renderArrow(guiGraphics);
@@ -148,6 +155,24 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 renderTickProgress(guiGraphics, 68, 70, mouseX, mouseY);
                 renderEnergyStorage(guiGraphics, 8, 5, mouseX, mouseY);
                 renderUpgradeSlots(guiGraphics, 172, 0, mouseX, mouseY);
+        }
+
+        public boolean enableLeftLabel(GuiGraphicsExtractor g, int x, int y, float a) {
+                return false;
+        }
+
+        private void extractBaseBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+                if (this.isInGameUi()) {
+                        this.extractTransparentBackground(graphics);
+                } else {
+                        if (this.minecraft.level == null)
+                                this.extractPanorama(graphics, a);
+
+                        this.extractBlurredBackground(graphics);
+                        this.extractMenuBackground(graphics);
+                }
+
+                this.minecraft.gui.extractDeferredSubtitles();
         }
 
         @Override
@@ -174,6 +199,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 
                 this.extractContents(graphics, mouseX, mouseY, a);
+                NeoForge.EVENT_BUS.post(new ScreenEvent.Render.Foreground(this, graphics, mouseX, mouseY, a));
                 this.extractCarriedItem(graphics, mouseX, mouseY);
                 this.extractSnapbackItem(graphics);
 
@@ -188,13 +214,13 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 if (!DEBUG)
                         renderToolTips(graphics, mouseX, mouseY, true);
 
-                renderUpgradeTooltips(graphics, 179, 7, mouseX, mouseY);
+                renderUpgradeTooltips(graphics, 172, 0, mouseX, mouseY);
 
                 renderMachineInventoryTooltip(graphics, 0, 0, mouseX, mouseY);
 
         }
 
-        // TODO flag to empty slot
+        @Deprecated
 
         public void renderToolTips(GuiGraphicsExtractor graphics, int mouseX, int mouseY, boolean flag) {
                 this.getSlotBuilder().getAll().forEach((k, v) -> {
@@ -206,7 +232,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 });
         }
 
-        // TODO API : private -> default
+        @Deprecated
         private List<Component> calculateTooltipUpgrades() {
                 List<Component> result = new ArrayList<>();
                 result.add(Component.translatable("cakesticklib.screen.upgrades"));
@@ -257,6 +283,10 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                 .set(3, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_4).getItem(),
                                                 Pos.of(getLeftPos() + 179, getTopPos() + 61)
                                                                 .setSize(18, 18));
+        }
+
+        public Pos getScreenUsage() {
+                return Pos.of(-30, -10).setSize(32 + 172 + 30 + 30, 86 + 20 + 10 + 20);
         }
 
 }

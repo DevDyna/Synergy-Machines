@@ -21,7 +21,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-@SuppressWarnings("null")
 public class MaceratorCategory extends BaseMachineRecipeCategory<MaceratorRecipeType> {
 
         public MaceratorCategory(IGuiHelper h) {
@@ -70,7 +69,7 @@ public class MaceratorCategory extends BaseMachineRecipeCategory<MaceratorRecipe
                                 ClientUtils.defaultToolTipColor.getRGB(), false);
 
                 if (recipe.hasSecondaryOutput())
-                        drawCentredStringFixed(guiGraphics, font,
+                        drawCenteredString(guiGraphics, font,
                                         Component.literal(
                                                         ((int) (recipe.getSecondaryOutputItem().chance() * 100)) + "%"),
                                         60, 36,

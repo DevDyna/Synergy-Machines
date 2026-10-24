@@ -4,14 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.devdyna.cakesticklib.api.aspect.logic.EnergyProvider;
-import com.devdyna.cakesticklib.api.aspect.templates.TickingBE;
+import com.devdyna.cakesticklib.api.aspect.logic.Tickable;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
-import com.synergy.machines.Common;
+import com.synergy.machines.Config;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -19,8 +20,7 @@ import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
-@SuppressWarnings("deprecation")
-public abstract class SolarPanelBE extends TickingBE implements EnergyProvider {
+public abstract class SolarPanelBE extends BlockEntity implements EnergyProvider, Tickable {
 
     private final Map<Direction, BlockCapabilityCache<EnergyHandler, Direction>> cache = new HashMap<>();
 
@@ -49,12 +49,12 @@ public abstract class SolarPanelBE extends TickingBE implements EnergyProvider {
     private boolean checkSky() {
         return level.canSeeSkyFromBelowWater(getBlockPos().above())
                 && level.getBlockState(getBlockPos().above()).isAir()
-                && !Common.SOLAR_PANEL_DISABLE_CHECK_SEE_SKY.get();
+                && !Config.SOLAR_PANEL_DISABLE_CHECK_SEE_SKY.get();
     }
 
     public abstract boolean checkDay();
 
-    @Override
+    @Override //TODO maybe useless
     public ContainerData getContainerData() {
         return new SimpleContainerData(getMaxEnergy());
     }
@@ -66,12 +66,12 @@ public abstract class SolarPanelBE extends TickingBE implements EnergyProvider {
 
     @Override
     public int getMaxEnergy() {
-        return Common.SOLAR_PANEL_MAX_FE.get();
+        return Config.SOLAR_PANEL_MAX_FE.get();
     }
 
     @Override
     public int getFERate() {
-        return Common.SOLAR_PANEL_FE_GEN.get();
+        return Config.SOLAR_PANEL_FE_GEN.get();
     }
 
 }

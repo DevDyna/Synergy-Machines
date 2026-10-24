@@ -22,7 +22,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-@SuppressWarnings("null")
 public class ExtractorCategory extends BaseMachineRecipeCategory<ExtractorRecipeType> {
 
         public ExtractorCategory(IGuiHelper h) {
@@ -73,7 +72,7 @@ public class ExtractorCategory extends BaseMachineRecipeCategory<ExtractorRecipe
                                 ClientUtils.defaultToolTipColor.getRGB(), false);
 
                 if (recipe.hasSecondaryOutput())
-                        drawCentredStringFixed(guiGraphics, font,
+                drawCenteredString(guiGraphics, font,
                                         Component.literal(
                                                         ((int) (recipe.getSecondaryOutputItem().chance() * 100)) + "%"),
                                         65, 10,

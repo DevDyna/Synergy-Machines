@@ -1,5 +1,7 @@
 package com.synergy.machines.init.builders.rock_crusher;
 
+import com.devdyna.cakesticklib.api.utils.SlotBuilder;
+import com.devdyna.cakesticklib.api.utils.SlotBuilder.ResourceType;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.BaseMachineBlock;
@@ -32,6 +34,13 @@ public class RockCrusherMenu extends BaseMachineMenu {
     @Override
     public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<?>> getMachine() {
         return zMachines.ROCK_CRUSHER;
+    }
+
+    @Override
+    public SlotBuilder getSlots() {
+        return SlotBuilder.of(blockEntity.getMachineSlots())
+                .set(RockCrusherBE.INPUT_SLOT - 4, ResourceType.INPUT)
+                .setAll(ResourceType.OUTPUT, 1, 2, 3, 4, 5, 6, 7, 8, 9);
     }
 
 }

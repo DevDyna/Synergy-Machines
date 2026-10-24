@@ -3,6 +3,9 @@ package com.synergy.machines.api.machine.templates;
 import java.util.List;
 import java.util.Optional;
 
+import com.devdyna.cakesticklib.api.aspect.logic.Tickable;
+import com.devdyna.cakesticklib.api.aspect.logic.TickerDelay;
+import com.devdyna.cakesticklib.api.primitive.Ticker;
 import com.devdyna.cakesticklib.api.recipe.recipeType.BaseRecipeType;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.RecipeRegister;
@@ -20,12 +23,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-public abstract class BaseRecipeBE extends BaseEnergyBE {
+public abstract class BaseRecipeBE extends BaseEnergyBE implements TickerDelay , Tickable{
 
-    private int progress = 0;
-    private int maxProgress;
+    private Ticker ticker = null;
 
-    private boolean progress_cancel;
+    // private int progress = 0;
+    // private int maxProgress;
+
+    // private boolean progress_cancel;
 
     public static final int PROGRESS_DATA_SIZE = 2;
 
@@ -40,34 +45,36 @@ public abstract class BaseRecipeBE extends BaseEnergyBE {
     }
 
     public void setMaxProgress(int v) {
-        this.maxProgress = v;
+        this.ticker.setMax(v);
     }
 
     public int getProgress() {
-        return progress;
+        return isRecipeCancelled() ? 0 : ticker.value();
     }
 
     public int getMaxProgress() {
-        return maxProgress;
+        return isRecipeCancelled() ? 0 : ticker.max();
     }
 
     public boolean isRecipeCancelled() {
-        return progress_cancel;
+        return ticker == null;
     }
 
     public void enableProgress() {
-        this.progress_cancel = false;
+        if(isRecipeCancelled())
+        ticker = Ticker.of(1);
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
-        output.putInt("progress", progress);
+        output.putInt("progress", getProgress());
         super.saveAdditional(output);
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
-        input.getInt("progress").ifPresent(v -> progress = v);
+        if(ticker != null)
+        input.getInt("progress").ifPresent(ticker::setValue);
         super.loadAdditional(input);
     }
 
@@ -112,13 +119,15 @@ public abstract class BaseRecipeBE extends BaseEnergyBE {
      * {@link BaseMachineBE#init}
      */
     public boolean cancel() {
-        progress_cancel = true;
+        // progress_cancel = true;
 
-        if (progress > 0)
-            progress--;
+        ticker = null;
 
-        if (progress == 0)
-            progress_cancel = false;
+        // if (progress > 0)
+            // progress--;
+
+        // if (progress == 0)
+            // progress_cancel = false;
 
         update(false);
         setChanged();
@@ -162,12 +171,12 @@ public abstract class BaseRecipeBE extends BaseEnergyBE {
         if (!init())
             return;
 
-        if (progress_cancel)
-            return;
+        // if (progress_cancel)
+        //     return;
 
-        this.progress++;
+        // this.progress++;
 
-        if (this.progress < this.maxProgress) {
+        if (!ticker.commit()) {
             setChanged();
             return;
         }
@@ -176,7 +185,8 @@ public abstract class BaseRecipeBE extends BaseEnergyBE {
 
         ejection();
 
-        progress = 0;
+        ticker = null;
+        // progress = 0;
     }
 
     protected void ejection(){
@@ -203,6 +213,16 @@ public abstract class BaseRecipeBE extends BaseEnergyBE {
     public static <RECIPE extends BaseRecipeType<INPUT>, INPUT extends RecipeInput> RECIPE getUnsafeRecipes(Level level,
             RecipeRegister<RECIPE> machine, INPUT input) {
         return getUnsafeRecipes(level, machine.getType(), input);
+    }
+
+    @Override
+    public TimerStyle getStyle() {
+        return TimerStyle.PROGRESS_BAR;
+    }
+
+    @Override
+    public Ticker getTicker() {
+        return ticker;
     }
 
 }
