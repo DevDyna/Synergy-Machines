@@ -141,6 +141,8 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
         @Override
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
+                extractBaseBackground(guiGraphics, mouseX, mouseY, a);
+                
                 renderRightLabel(guiGraphics, 172, 0, mouseX, mouseY);
 
                 renderMachineInventory(guiGraphics, 0, 0, mouseX, mouseY);
@@ -150,6 +152,20 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 renderTickProgress(guiGraphics, 68, 70, mouseX, mouseY);
                 renderEnergyStorage(guiGraphics, 8, 5, mouseX, mouseY);
                 renderUpgradeSlots(guiGraphics, 172, 0, mouseX, mouseY);
+        }
+
+        private void extractBaseBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+                if (this.isInGameUi()) {
+                        this.extractTransparentBackground(graphics);
+                } else {
+                        if (this.minecraft.level == null)
+                                this.extractPanorama(graphics, a);
+
+                        this.extractBlurredBackground(graphics);
+                        this.extractMenuBackground(graphics);
+                }
+
+                this.minecraft.gui.extractDeferredSubtitles();
         }
 
         @Override
