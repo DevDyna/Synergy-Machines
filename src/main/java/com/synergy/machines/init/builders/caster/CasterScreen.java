@@ -15,12 +15,16 @@ public class CasterScreen extends BaseMachineScreen<CasterMenu> {
 
         @Override
         public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-                renderLeftLabel(graphics);
                 super.extractBackground(graphics, mouseX, mouseY, a);
                 renderFluidTank(graphics, 0, -22, +6, mouseX, mouseY);
 
                 renderInputSlot(graphics, 47, 33, mouseX, mouseY);
                 renderLargeOutputSlot(graphics, 119, 34, mouseX, mouseY);
+        }
+
+        @Override
+        public boolean enableLeftLabel(GuiGraphicsExtractor g, int x, int y, float a) {
+                return true;
         }
 
         @Override

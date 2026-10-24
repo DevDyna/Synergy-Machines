@@ -142,7 +142,10 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         @Override
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
                 extractBaseBackground(guiGraphics, mouseX, mouseY, a);
-                
+
+                if (enableLeftLabel(guiGraphics, mouseX, mouseY, a))
+                        renderLeftLabel(guiGraphics);
+
                 renderRightLabel(guiGraphics, 172, 0, mouseX, mouseY);
 
                 renderMachineInventory(guiGraphics, 0, 0, mouseX, mouseY);
@@ -152,6 +155,10 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 renderTickProgress(guiGraphics, 68, 70, mouseX, mouseY);
                 renderEnergyStorage(guiGraphics, 8, 5, mouseX, mouseY);
                 renderUpgradeSlots(guiGraphics, 172, 0, mouseX, mouseY);
+        }
+
+        public boolean enableLeftLabel(GuiGraphicsExtractor g, int x, int y, float a) {
+                return false;
         }
 
         private void extractBaseBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
