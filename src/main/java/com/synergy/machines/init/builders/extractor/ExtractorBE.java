@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-@SuppressWarnings("null")
 public class ExtractorBE extends BaseMachineBE implements ResourceRestricted.Fluid {
 
     public ExtractorBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {

@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-@SuppressWarnings("null")
 public class MaceratorBE extends BaseMachineBE {
 
     public static final int SECONDARY_SLOT = 6;

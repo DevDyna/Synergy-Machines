@@ -31,8 +31,6 @@ import net.neoforged.neoforge.common.Tags;
 
 public class DataRecipe extends RecipeProvider implements RecipeGenerators {
 
-        
-
         protected DataRecipe(HolderLookup.Provider registries, RecipeOutput output) {
                 super(registries, output);
         }
@@ -336,8 +334,6 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 .addResult(LibItems.DIAMOND_DUST, 0.01f)
                                 .unlockedBy(LibTags.Items.LEGACY_STONES, items)
                                 .save(output);
-
-                // TODO API : TAG BUG
 
                 RockCrusherRecipeBuilder.of(registries)
                                 .fluid(LibFluids.SULFURIC_ACID.getFluid(), 125)
@@ -651,64 +647,64 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item2)
-                                .delay(80* 2)
-                                .energy(500* 2)
+                                .delay(80 * 2)
+                                .energy(500 * 2)
                                 .output(fluid, FluidUtils.Units.INGOT * 2)
                                 .unlockedBy(item2, items)
                                 .save(output, overrideID("recycle/" + x.name(fluid) + "/2"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item3)
-                                .delay(80* 3)
-                                .energy(500* 3)
+                                .delay(80 * 3)
+                                .energy(500 * 3)
                                 .output(fluid, FluidUtils.Units.INGOT * 3)
                                 .unlockedBy(item3, items)
                                 .save(output, overrideID("recycle/" + x.name(fluid) + "/3"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item4)
-                                .delay(80* 4)
-                                .energy(500* 4)
+                                .delay(80 * 4)
+                                .energy(500 * 4)
                                 .output(fluid, FluidUtils.Units.INGOT * 4)
                                 .unlockedBy(item4, items)
                                 .save(output, overrideID("recycle/" + x.name(fluid) + "/4"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item5)
-                                .delay(80* 5)
-                                .energy(500* 5)
+                                .delay(80 * 5)
+                                .energy(500 * 5)
                                 .output(fluid, FluidUtils.Units.INGOT * 5)
                                 .unlockedBy(item5, items)
                                 .save(output, overrideID("recycle/" + x.name(fluid) + "/5"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item6)
-                                .delay(80* 6)
-                                .energy(500* 6)
+                                .delay(80 * 6)
+                                .energy(500 * 6)
                                 .output(fluid, FluidUtils.Units.INGOT * 6)
                                 .unlockedBy(item6, items)
                                 .save(output, overrideID("recycle/" + x.name(fluid) + "/6"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item7)
-                                .delay(80* 7)
-                                .energy(500* 7)
+                                .delay(80 * 7)
+                                .energy(500 * 7)
                                 .output(fluid, FluidUtils.Units.INGOT * 7)
                                 .unlockedBy(item7, items)
                                 .save(output, overrideID("recycle/" + x.name(fluid) + "/7"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item8)
-                                .delay(80* 8)
-                                .energy(500* 8)
+                                .delay(80 * 8)
+                                .energy(500 * 8)
                                 .output(fluid, FluidUtils.Units.INGOT * 8)
                                 .unlockedBy(item8, items)
                                 .save(output, overrideID("recycle/" + x.name(fluid) + "/8"));
 
                 MelterRecipeBuilder.of(registries)
                                 .input(item9)
-                                .delay(80* 9)
-                                .energy(500* 9)
+                                .delay(80 * 9)
+                                .energy(500 * 9)
                                 .output(fluid, FluidUtils.Units.INGOT * 9)
                                 .unlockedBy(item9, items)
                                 .save(output, overrideID("recycle/" + x.name(fluid) + "/9"));

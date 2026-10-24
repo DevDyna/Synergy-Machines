@@ -79,14 +79,14 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         }
 
         @Override
-        protected Identifier background() {// TODO TO FIX
-                return x.rl(MODULE_ID, "textures/gui/container/" + menu.getMachine().id() + ".png");
+        protected Identifier background() {
+                return null;
         }
 
         @Override
         @Nullable
-        protected Identifier arrow() {// TODO blitSprite -> blit
-                return x.rl(MODULE_ID, "textures/gui/container/progress/on.png");
+        protected Identifier arrow() {
+                return null;
         }
 
         protected boolean whenAnimateArrow() {
@@ -220,7 +220,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
         }
 
-        // TODO flag to empty slot
+        @Deprecated
 
         public void renderToolTips(GuiGraphicsExtractor graphics, int mouseX, int mouseY, boolean flag) {
                 this.getSlotBuilder().getAll().forEach((k, v) -> {
@@ -232,7 +232,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 });
         }
 
-        // TODO API : private -> default
+        @Deprecated
         private List<Component> calculateTooltipUpgrades() {
                 List<Component> result = new ArrayList<>();
                 result.add(Component.translatable("cakesticklib.screen.upgrades"));

@@ -163,7 +163,7 @@ public class PluginJEI implements IModPlugin {
                 r.addRecipeClickArea(RockCrusherScreen.class, 75, 35, 22, 15,
                                 RockCrusherCategory.TYPE);
 
-                // TODO : move to api
+                
                 addExclusionJEIArea(r, BaseMachineScreen.class, screen -> {
                         var shape = screen.getScreenUsage();
                         return new Rect2i(
@@ -174,7 +174,7 @@ public class PluginJEI implements IModPlugin {
                 });
         }
 
-        // TODO : move to api
+       @Deprecated
         private <T extends AbstractContainerScreen<?>> void addExclusionJEIArea(IGuiHandlerRegistration r,
                         Class<T> clazz, Function<T, Rect2i> shape) {
 
