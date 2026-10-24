@@ -155,7 +155,6 @@ public abstract class BaseMachineMenu extends BaseMenu {
         return ItemStack.EMPTY;
     }
 
-    //TODO IMP : visual debug render?
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
 
