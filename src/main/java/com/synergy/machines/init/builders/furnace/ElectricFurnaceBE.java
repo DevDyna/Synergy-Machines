@@ -4,7 +4,7 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
-import com.synergy.machines.Common;
+import com.synergy.machines.Config;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.init.builders.furnace.recipe.ElectricFurnaceRecipeType;
 import com.synergy.machines.init.types.zMachines;
@@ -65,7 +65,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
         SmeltingRecipe smelting = null;
 
         if (r.isEmpty()) {
-            if (r2.isEmpty() || Common.DISABLE_MACHINE_FURNACE_PROCESS_VANILLA.get())
+            if (r2.isEmpty() || Config.DISABLE_MACHINE_FURNACE_PROCESS_VANILLA.get())
                 return cancel();
 
             smelting = r2.get().value();
@@ -79,7 +79,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
                         : electric.getTime()),
 
                 (r.isEmpty()
-                        ? Common.MACHINE_FURNACE_PROCESS_VANILLA_FE_COST.get()
+                        ? Config.MACHINE_FURNACE_PROCESS_VANILLA_FE_COST.get()
                         : electric.getEnergy()),
 
                 (r.isEmpty()
@@ -114,9 +114,9 @@ public class ElectricFurnaceBE extends BaseMachineBE {
     }
 
     public static int getCalculatedDelay(int time) {
-        return Common.DISABLE_MACHINE_FURNACE_VANILLA_TICK_REDUCER.get() ? time
-                : Math.max(Common.MACHINE_FURNACE_PROCESS_VANILLA_MIN_TICK_DELAY.get(), time
-                        * Common.MACHINE_FURNACE_PROCESS_VANILLA_PERCENTUAGE_TICK_DELAY.get() / 100);
+        return Config.DISABLE_MACHINE_FURNACE_VANILLA_TICK_REDUCER.get() ? time
+                : Math.max(Config.MACHINE_FURNACE_PROCESS_VANILLA_MIN_TICK_DELAY.get(), time
+                        * Config.MACHINE_FURNACE_PROCESS_VANILLA_PERCENTUAGE_TICK_DELAY.get() / 100);
     }
 
     private record MixedRecipeHolder(int tick_delay, int energy_every_tick, ItemStack result_item) {

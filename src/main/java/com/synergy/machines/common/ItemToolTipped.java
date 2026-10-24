@@ -1,7 +1,7 @@
 package com.synergy.machines.common;
 
 import com.devdyna.cakesticklib.CakeStickLib;
-import com.synergy.machines.Common;
+import com.synergy.machines.Config;
 import com.synergy.machines.api.solar_panel.SolarPanelBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -22,7 +22,7 @@ public class ItemToolTipped {
                 tip.add(1,
                         Component
                                 .translatable(CakeStickLib.MODULE_ID + ".provider.every_tick",
-                                        Common.SOLAR_PANEL_FE_GEN.get() + "", "FE")
+                                        Config.SOLAR_PANEL_FE_GEN.get() + "", "FE")
                                 .withStyle(ChatFormatting.GRAY));
 
     }

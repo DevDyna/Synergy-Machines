@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.Client;
-import com.synergy.machines.Common;
+import com.synergy.machines.Config;
 import com.synergy.machines.api.machine.BaseMachineScreen;
 import com.synergy.machines.compat.jei.categories.AlloySmelterCategory;
 import com.synergy.machines.compat.jei.categories.CasterCategory;
@@ -99,7 +99,7 @@ public class PluginJEI implements IModPlugin {
                 r.addRecipes(ElectricFurnaceCategory.TYPE,
                                 getRecipes(zMachines.ELECTRIC_FURNACE.recipe().getType()));
 
-                if (!Common.DISABLE_MACHINE_FURNACE_PROCESS_VANILLA.get())
+                if (!Config.DISABLE_MACHINE_FURNACE_PROCESS_VANILLA.get())
                         r.addRecipes(ElectricFurnaceCategory.TYPE,
                                         getRecipes(RecipeType.SMELTING)
                                                         .stream()
@@ -117,7 +117,7 @@ public class PluginJEI implements IModPlugin {
                                                                                         ElectricFurnaceBE
                                                                                                         .getCalculatedDelay(
                                                                                                                         s.value().cookingTime()),
-                                                                                        Common.MACHINE_FURNACE_PROCESS_VANILLA_FE_COST
+                                                                                        Config.MACHINE_FURNACE_PROCESS_VANILLA_FE_COST
                                                                                                         .get(),
                                                                                         x.itemSized(s.value().input()),
                                                                                         ((SingleItemRecipeMixin) s

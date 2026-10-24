@@ -6,7 +6,7 @@ import java.util.Map;
 import com.devdyna.cakesticklib.api.aspect.logic.EnergyProvider;
 import com.devdyna.cakesticklib.api.aspect.templates.TickingBE;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
-import com.synergy.machines.Common;
+import com.synergy.machines.Config;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -49,7 +49,7 @@ public abstract class SolarPanelBE extends TickingBE implements EnergyProvider {
     private boolean checkSky() {
         return level.canSeeSkyFromBelowWater(getBlockPos().above())
                 && level.getBlockState(getBlockPos().above()).isAir()
-                && !Common.SOLAR_PANEL_DISABLE_CHECK_SEE_SKY.get();
+                && !Config.SOLAR_PANEL_DISABLE_CHECK_SEE_SKY.get();
     }
 
     public abstract boolean checkDay();
@@ -66,12 +66,12 @@ public abstract class SolarPanelBE extends TickingBE implements EnergyProvider {
 
     @Override
     public int getMaxEnergy() {
-        return Common.SOLAR_PANEL_MAX_FE.get();
+        return Config.SOLAR_PANEL_MAX_FE.get();
     }
 
     @Override
     public int getFERate() {
-        return Common.SOLAR_PANEL_FE_GEN.get();
+        return Config.SOLAR_PANEL_FE_GEN.get();
     }
 
 }
