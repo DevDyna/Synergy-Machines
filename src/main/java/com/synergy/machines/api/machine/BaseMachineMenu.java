@@ -140,14 +140,15 @@ public abstract class BaseMachineMenu extends BaseMenu {
     // <?> -> player
     private ItemStack moveToInventory(ItemStack item, Slot slot, Player player) {
         var copy = item.copy();
-        // <?> -> hotbar
-        if (moveItemStackTo(item, 31, 40, false)) {
+
+        // <?> -> inv
+        if (moveItemStackTo(item, 4, 31, false)) {
             slot.onTake(player, item);
             return copy;
         }
 
-        // <?> -> inv
-        if (moveItemStackTo(item, 4, 31, false)) {
+        // <?> -> hotbar
+        if (moveItemStackTo(item, 31, 40, false)) {
             slot.onTake(player, item);
             return copy;
         }
