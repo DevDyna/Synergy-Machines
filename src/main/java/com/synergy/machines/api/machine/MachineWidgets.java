@@ -126,7 +126,7 @@ public interface MachineWidgets {
         }
 
         default void renderUpgradeTooltips(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX, int mouseY) {
-                renderDebugSlotTooltip(graphics, xo, yo, 32, 86, "upgrade.debug", mouseX, mouseY);
+                renderDebugSlotTooltip(graphics, xo+ 7 - 3, yo+ 7 - 3, 24, 78, "upgrade.debug", mouseX, mouseY);
         }
 
         // input slots

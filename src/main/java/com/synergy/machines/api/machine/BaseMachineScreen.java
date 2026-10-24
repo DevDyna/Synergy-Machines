@@ -191,7 +191,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 if (!DEBUG)
                         renderToolTips(graphics, mouseX, mouseY, true);
 
-                renderUpgradeTooltips(graphics, 179, 7, mouseX, mouseY);
+                renderUpgradeTooltips(graphics, 172, 0, mouseX, mouseY);
 
                 renderMachineInventoryTooltip(graphics, 0, 0, mouseX, mouseY);
 
