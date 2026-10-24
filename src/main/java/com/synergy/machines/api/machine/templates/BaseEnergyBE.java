@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.devdyna.cakesticklib.api.aspect.logic.*;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
+import com.synergy.machines.Config;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -48,7 +49,7 @@ public abstract class BaseEnergyBE extends BlockEntity implements EnergyBlock {
 
     @Override
     public int getMaxEnergy() {
-        return 16_000;
+        return Config.MACHINE_MAX_FE.get();
     }
 
     @Override
