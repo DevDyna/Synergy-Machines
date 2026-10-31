@@ -2,22 +2,17 @@ package com.synergy.machines.api.machine;
 
 import static com.synergy.machines.Main.MODULE_ID;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nullable;
 
 import com.devdyna.cakesticklib.api.gui.BaseScreen;
 import com.devdyna.cakesticklib.api.primitive.Pos;
 import com.devdyna.cakesticklib.api.primitive.Size;
 import com.devdyna.cakesticklib.api.upgrades.ScreenUpgradable;
-import com.devdyna.cakesticklib.api.upgrades.UpgradeComponents;
 import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.devdyna.cakesticklib.api.utils.UpgradeSlotBuilder;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.DebugButton;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -232,28 +227,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 });
         }
 
-        @Deprecated
-        private List<Component> calculateTooltipUpgrades() {
-                List<Component> result = new ArrayList<>();
-                result.add(Component.translatable("cakesticklib.screen.upgrades"));
-                var var2 = this.validUpgrades().iterator();
-
-                while (var2.hasNext()) {
-                        UpgradeComponents.UpgradeType upgrade = (UpgradeComponents.UpgradeType) var2.next();
-                        result.add(Component
-                                        .translatable("cakesticklib.screen.modifier." + upgrade.name().toLowerCase(),
-                                                        new Object[] { this.getConfigLimits(upgrade) })
-                                        .withStyle(this.getConfigLimits(upgrade) > this
-                                                        .getInstalledUpgradesOnSlots(upgrade)
-                                                                        ? ChatFormatting.GREEN
-                                                                        : (this.getConfigLimits(upgrade) < this
-                                                                                        .getInstalledUpgradesOnSlots(
-                                                                                                        upgrade) ? ChatFormatting.RED
-                                                                                                                        : ChatFormatting.YELLOW)));
-                }
-
-                return result;
-        }
+       
 
         @Override
         protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
