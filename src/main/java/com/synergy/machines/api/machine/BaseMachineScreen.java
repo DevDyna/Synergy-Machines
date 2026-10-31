@@ -245,16 +245,16 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         public UpgradeSlotBuilder getSlotBuilder() {
                 return UpgradeSlotBuilder
                                 .of()
-                                .set(0, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_1).getItem(),
+                                .set(BaseMachineBE.SLOT_UPGRADE_1, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_1).getItem(),
                                                 Pos.of(getLeftPos() + 179, getTopPos() + 7)
                                                                 .setSize(18, 18))
-                                .set(1, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_2).getItem(),
+                                .set(BaseMachineBE.SLOT_UPGRADE_2, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_2).getItem(),
                                                 Pos.of(getLeftPos() + 179, getTopPos() + 25)
                                                                 .setSize(18, 18))
-                                .set(2, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_3).getItem(),
+                                .set(BaseMachineBE.SLOT_UPGRADE_3, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_3).getItem(),
                                                 Pos.of(getLeftPos() + 179, getTopPos() + 43)
                                                                 .setSize(18, 18))
-                                .set(3, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_4).getItem(),
+                                .set(BaseMachineBE.SLOT_UPGRADE_4, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_4).getItem(),
                                                 Pos.of(getLeftPos() + 179, getTopPos() + 61)
                                                                 .setSize(18, 18));
         }
