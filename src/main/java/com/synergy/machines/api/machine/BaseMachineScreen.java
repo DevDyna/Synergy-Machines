@@ -215,20 +215,6 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
         }
 
-        @Deprecated
-
-        public void renderToolTips(GuiGraphicsExtractor graphics, int mouseX, int mouseY, boolean flag) {
-                this.getSlotBuilder().getAll().forEach((k, v) -> {
-                        if (flag && v.getPos().test(mouseX, mouseY)) {
-                                graphics.setComponentTooltipForNextFrame(this.getFont(),
-                                                this.calculateTooltipUpgrades(), mouseX, mouseY);
-                        }
-
-                });
-        }
-
-       
-
         @Override
         protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
                 graphics.text(this.font, this.title,
@@ -257,6 +243,11 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                 .set(BaseMachineBE.SLOT_UPGRADE_4, menu.getSlot(BaseMachineBE.SLOT_UPGRADE_4).getItem(),
                                                 Pos.of(getLeftPos() + 179, getTopPos() + 61)
                                                                 .setSize(18, 18));
+        }
+
+        @Override
+        public boolean enableScreenUsage() {
+                return true;
         }
 
         public Pos getScreenUsage() {

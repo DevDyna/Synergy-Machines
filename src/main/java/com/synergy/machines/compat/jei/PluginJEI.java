@@ -3,12 +3,9 @@ package com.synergy.machines.compat.jei;
 import static com.synergy.machines.Main.MODULE_ID;
 
 import java.util.List;
-import java.util.function.Function;
-
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.Client;
 import com.synergy.machines.Config;
-import com.synergy.machines.api.machine.BaseMachineScreen;
 import com.synergy.machines.compat.jei.categories.AlloySmelterCategory;
 import com.synergy.machines.compat.jei.categories.CasterCategory;
 import com.synergy.machines.compat.jei.categories.CompressorCategory;
@@ -32,13 +29,10 @@ import com.synergy.machines.mixin.SingleItemRecipeMixin;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.gui.handlers.IGuiContainerHandler;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -162,28 +156,6 @@ public class PluginJEI implements IModPlugin {
                                 MelterCategory.TYPE);
                 r.addRecipeClickArea(RockCrusherScreen.class, 75, 35, 22, 15,
                                 RockCrusherCategory.TYPE);
-
-                
-                addExclusionJEIArea(r, BaseMachineScreen.class, screen -> {
-                        var shape = screen.getScreenUsage();
-                        return new Rect2i(
-                                        screen.getLeftPos() + shape.getX0(),
-                                        screen.getTopPos() + shape.getY0(),
-                                        shape.getX1(),
-                                        shape.getY1());
-                });
-        }
-
-       @Deprecated
-        private <T extends AbstractContainerScreen<?>> void addExclusionJEIArea(IGuiHandlerRegistration r,
-                        Class<T> clazz, Function<T, Rect2i> shape) {
-
-                r.addGuiContainerHandler(clazz, new IGuiContainerHandler<T>() {
-                        @Override
-                        public List<Rect2i> getGuiExtraAreas(T screen) {
-                                return List.of(shape.apply(screen));
-                        }
-                });
 
         }
 
