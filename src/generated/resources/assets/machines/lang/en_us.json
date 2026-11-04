@@ -5,6 +5,7 @@
   "block.machines.electric_furnace": "Electric Furnace",
   "block.machines.electric_melter": "Electric Melter",
   "block.machines.extractor": "Extractor",
+  "block.machines.framework": "Framework",
   "block.machines.lunar_panel": "Lunar Panel",
   "block.machines.macerator": "Macerator",
   "block.machines.machine_frame": "Machine Frame",
@@ -72,6 +73,7 @@
   "machines.jei.electric_furnace": "Electric Furnace Recipes",
   "machines.jei.electric_melter": "Electric Melter Recipes",
   "machines.jei.extractor": "Extractor Recipes",
+  "machines.jei.framework": "Framework Recipes",
   "machines.jei.macerator": "Macerator Recipes",
   "machines.jei.rock_crusher": "Rock Crusher Recipes"
 }

@@ -7,6 +7,7 @@
     "machines:extractor",
     "machines:casting_factory",
     "machines:electric_melter",
-    "machines:rock_crusher"
+    "machines:rock_crusher",
+    "machines:framework"
   ]
 }

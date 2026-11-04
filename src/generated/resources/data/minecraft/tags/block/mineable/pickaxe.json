@@ -8,6 +8,7 @@
     "machines:casting_factory",
     "machines:electric_melter",
     "machines:rock_crusher",
+    "machines:framework",
     "machines:lunar_panel",
     "machines:solar_panel",
     "machines:machine_frame"
