@@ -1,5 +1,6 @@
 package com.synergy.machines.init.builders.furnace;
 
+import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
@@ -25,6 +26,9 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class ElectricFurnaceBE extends BaseMachineBE {
 
+    public static final int INPUT_SLOT = 4;
+    public static final int OUTPUT_SLOT = 5;
+
     public ElectricFurnaceBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
     }
@@ -42,6 +46,24 @@ public class ElectricFurnaceBE extends BaseMachineBE {
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         return new ElectricFurnaceMenu(i, inventory, this, this.networkData);
+    }
+
+    public ItemStack getInput() {
+        return getStackInSlot(INPUT_SLOT);
+    }
+
+    public ItemStack getOutput() {
+        return getStackInSlot(OUTPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getInputSlotIndex() {
+        return List.of(INPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getOutputSlotIndex() {
+        return List.of(OUTPUT_SLOT);
     }
 
     private MixedRecipeHolder holder;
@@ -88,11 +110,11 @@ public class ElectricFurnaceBE extends BaseMachineBE {
 
                 (r.isEmpty()
                         ? smelting.assemble(new SingleRecipeInput(getInput())).copy()
-                        : electric.getOutputItem().create()));
+                        : electric.getOutput().create()));
 
         if (!checkSlot(getOutput(), holder.output)) 
             return cancel();
-        }
+        
 
         if (!calculateAndConsumeFE(holder.fe))
             return cancel();
