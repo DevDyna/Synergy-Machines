@@ -36,6 +36,7 @@ public class zTags {
 
                 public static final TagKey<Item> MACHINES = RegistryUtils.tagItem(MODULE_ID, "machines");
                 public static final TagKey<Item> SOLAR_PANELS = RegistryUtils.tagItem(MODULE_ID, "solar_panels");
+               
 
         }
 
