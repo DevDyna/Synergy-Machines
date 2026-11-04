@@ -229,10 +229,6 @@ public abstract class BaseMachineMenu extends BaseMenu {
 
     }
 
-    public SlotBuilder getSlots() {
-        return SlotBuilder.of(blockEntity.getMachineSlots())
-                .set(BaseMachineBE.INPUT_SLOT - 4, ResourceType.INPUT)
-                .set(BaseMachineBE.OUTPUT_SLOT - 4, ResourceType.OUTPUT);
-    }
+    public abstract SlotBuilder getSlots();
 
 }
