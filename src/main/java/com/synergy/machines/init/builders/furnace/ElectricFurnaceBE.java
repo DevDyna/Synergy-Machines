@@ -44,7 +44,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
         return new ElectricFurnaceMenu(i, inventory, this, this.networkData);
     }
 
-    private MixedRecipeHolder recipeHolder;
+    private MixedRecipeHolder holder;
 
     @Override
     public boolean init() {
@@ -72,7 +72,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
         } else
             electric = r.get().value();
 
-        recipeHolder = new MixedRecipeHolder(
+        holder = new MixedRecipeHolder(
 
                 (r.isEmpty()
                         ? getCalculatedDelay(smelting.cookingTime())
@@ -83,19 +83,23 @@ public class ElectricFurnaceBE extends BaseMachineBE {
                         : electric.getEnergy()),
 
                 (r.isEmpty()
+                        ? 1
+                        : electric.getInput().count()),
+
+                (r.isEmpty()
                         ? smelting.assemble(new SingleRecipeInput(getInput())).copy()
                         : electric.getOutputItem().create()));
 
-        if (!checkSlot(getOutput(), recipeHolder.result_item)) {
+        if (!checkSlot(getOutput(), holder.output)) 
             return cancel();
         }
 
-        if (!calculateAndConsumeFE(recipeHolder.energy_every_tick))
+        if (!calculateAndConsumeFE(holder.fe))
             return cancel();
 
         update(true);
 
-        setMaxProgress(calculateMaxProgress(recipeHolder.tick_delay));
+        setMaxProgress(calculateMaxProgress(holder.tick));
 
         return true;
 
@@ -104,8 +108,8 @@ public class ElectricFurnaceBE extends BaseMachineBE {
     @Override
     public void result() {
 
-        updateResource(ItemResource.of(recipeHolder.result_item), OUTPUT_SLOT, recipeHolder.result_item.count(), false);
-        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, 1, true);
+        updateResource(ItemResource.of(holder.output), OUTPUT_SLOT, holder.output.count(), false);
+        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, holder.amount_consumed, true);
     }
 
     @Override
@@ -119,7 +123,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
                         * Config.MACHINE_FURNACE_PROCESS_VANILLA_PERCENTUAGE_TICK_DELAY.get() / 100);
     }
 
-    private record MixedRecipeHolder(int tick_delay, int energy_every_tick, ItemStack result_item) {
+    private record MixedRecipeHolder(int tick, int fe, int amount_consumed, ItemStack output) {
 
     }
 
