@@ -1,7 +1,5 @@
 package com.synergy.machines.common;
 
-import java.util.List;
-
 import com.devdyna.cakesticklib.api.CapabilityUtils;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.init.Material;
