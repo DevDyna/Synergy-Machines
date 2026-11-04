@@ -27,6 +27,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseScreen<T>
                 implements MachineWidgets, ScreenUpgradable {
 
+                        //TODO add a toggle on config?
         private boolean DEBUG = false;
 
         public BaseMachineScreen(T menu, Inventory playerInventory, Component title) {
