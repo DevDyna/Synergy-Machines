@@ -159,9 +159,12 @@ public abstract class BaseMachineMenu extends BaseMenu {
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
 
-        if (index < 0 || index >= this.slots.size()) {
+        //TODO maybe visual?
+        // LogUtils.getLogger().info("i: " + index);
+
+        if (index < 0 || index >= this.slots.size()) 
             return ItemStack.EMPTY;
-        }
+        
 
         var slot = this.slots.get(index);
 
@@ -171,7 +174,7 @@ public abstract class BaseMachineMenu extends BaseMenu {
         var item = slot.getItem();
 
         // upgrades -> inventory (no machine)
-        if (index >= 0 && index <= 3 + 1)
+        if (index >= 0 && index <= 3 )
             return moveToInventory(item, slot, player);
 
         // player inv -> <?>
@@ -183,11 +186,7 @@ public abstract class BaseMachineMenu extends BaseMenu {
                 slot.onTake(player, item);
                 return copy;
             }
-            // // player -> machine input
-            // if (moveItemStackTo(item, 40, 40 + 1, true)) {
-            // slot.onTake(player, item);
-            // return copy;
-            // }
+
             // player -> machine
             for (var i = 0; i < getSlots().get().size(); i++) {
                 if (getSlots().get(i).equals(ResourceType.INPUT) || getSlots().get(i).equals(ResourceType.BUFFER))
@@ -213,11 +212,6 @@ public abstract class BaseMachineMenu extends BaseMenu {
                 }
             }
         }
-
-        // base slots
-        // if (index == 40 || index == 41) {
-        // return moveToInventory(item, slot, player);
-        // }
 
         // machine -> <?>
         if (index >= 40) {
