@@ -4,6 +4,7 @@ import com.synergy.machines.init.builders.alloy_smelter.AlloySmelterScreen;
 import com.synergy.machines.init.builders.caster.CasterScreen;
 import com.synergy.machines.init.builders.compressor.CompressorScreen;
 import com.synergy.machines.init.builders.extractor.ExtractorScreen;
+import com.synergy.machines.init.builders.framework.FrameworkScreen;
 import com.synergy.machines.init.builders.furnace.ElectricFurnaceScreen;
 import com.synergy.machines.init.builders.macerator.MaceratorScreen;
 import com.synergy.machines.init.builders.melter.MelterScreen;
@@ -49,6 +50,7 @@ public class Client {
         event.register(zMachines.EXTRACTOR.menu().get(), ExtractorScreen::new);
         event.register(zMachines.MACERATOR.menu().get(), MaceratorScreen::new);
         event.register(zMachines.ROCK_CRUSHER.menu().get(), RockCrusherScreen::new);
+        event.register(zMachines.FRAMEWORK.menu().get(), FrameworkScreen::new);
     }
 
     @SubscribeEvent

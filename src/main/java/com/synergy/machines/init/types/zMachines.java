@@ -9,6 +9,10 @@ import com.synergy.machines.init.builders.compressor.*;
 import com.synergy.machines.init.builders.compressor.recipe.*;
 import com.synergy.machines.init.builders.extractor.*;
 import com.synergy.machines.init.builders.extractor.recipe.*;
+import com.synergy.machines.init.builders.framework.FrameworkBE;
+import com.synergy.machines.init.builders.framework.FrameworkBlock;
+import com.synergy.machines.init.builders.framework.FrameworkMenu;
+import com.synergy.machines.init.builders.framework.recipe.FrameworkRecipeType;
 import com.synergy.machines.init.builders.furnace.*;
 import com.synergy.machines.init.builders.furnace.recipe.*;
 import com.synergy.machines.init.builders.macerator.*;
@@ -79,5 +83,12 @@ public class zMachines {
             RockCrusherBE::new,
             RockCrusherMenu::new,
             () -> RockCrusherRecipeType.serializer());
+
+    public static final MachineType<FrameworkBlock, FrameworkBE, FrameworkMenu, FrameworkRecipeType> FRAMEWORK = new MachineType<>(
+            "framework",
+            FrameworkBlock::new,
+            FrameworkBE::new,
+            FrameworkMenu::new,
+            () -> FrameworkRecipeType.serializer());
 
 }
