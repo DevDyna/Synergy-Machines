@@ -3,7 +3,6 @@ package com.synergy.machines.init.builders.rock_crusher.recipe;
 import java.util.List;
 
 import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
-import com.devdyna.cakesticklib.api.utils.x;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -17,26 +16,41 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 public class RockCrusherRecipeType extends BaseMachineRecipeType<ItemFluidInput> {
 
     private List<ChanceOutput.Item> result;
 
+    private SizedIngredient input;
+
+    private SizedFluidIngredient fluid;
+
     public RockCrusherRecipeType(int ticks, int energy, SizedFluidIngredient fluid, SizedIngredient input,
             List<ChanceOutput.Item> result) {
         this.input = input;
         this.ticks = ticks;
         this.energy = energy;
-        this.fluid_input = fluid;
+        this.fluid = fluid;
         this.result = result;
     }
 
     public static RockCrusherRecipeType of(int ticks, int energy, SizedFluidIngredient fluid, SizedIngredient input,
             List<ChanceOutput.Item> result) {
         return new RockCrusherRecipeType(ticks, energy, fluid, input, result);
+    }
+
+    public SizedIngredient getInput() {
+        return input;
+    }
+
+    public SizedFluidIngredient getFluid() {
+        return fluid;
     }
 
     public List<ChanceOutput.Item> getResult() {
@@ -49,39 +63,55 @@ public class RockCrusherRecipeType extends BaseMachineRecipeType<ItemFluidInput>
     }
 
     @Override
-    public ItemStack getRecipeInput(ItemFluidInput recipe) {
-        return recipe.item();
+    public List<SizedIngredient> getMachineItems() {
+        return List.of(getInput());
     }
 
     @Override
-    public SizedFluidIngredient getRecipeFluidInput(ItemFluidInput recipe) {
-        return x.fluidSized(recipe.input().getFluid(),recipe.input().amount());
+    public List<SizedFluidIngredient> getMachineFluids() {
+        return List.of(getFluid());
+    }
+
+    @Override
+    public List<ItemStack> getRecipeItemsInput(ItemFluidInput recipe) {
+        return List.of(recipe.item());
+    }
+
+    @Override
+    public List<FluidStack> getRecipeFluidsInput(ItemFluidInput recipe) {
+        return List.of(recipe.input());
+    }
+
+    @Override
+    public List<ItemStackTemplate> getRecipeItemsOutput() {
+        return getResult().stream().map(ChanceOutput.Item::item).toList();
+    }
+
+    @Override
+    public List<FluidStackTemplate> getRecipeFluidsOutput() {
+        return List.of();
     }
 
     public static final RecipeSerializer<RockCrusherRecipeType> serializer() {
         return new RecipeSerializer<>(CODEC, STREAM_CODEC);
     }
 
+    public static final MapCodec<RockCrusherRecipeType> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("ticks").forGetter(RockCrusherRecipeType::getTime),
+            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("energy").forGetter(RockCrusherRecipeType::getEnergy),
 
-        public static final MapCodec<RockCrusherRecipeType> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("ticks").forGetter(RockCrusherRecipeType::getTime),
-                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("energy").forGetter(RockCrusherRecipeType::getEnergy),
+            SizedFluidIngredient.CODEC.fieldOf("input_fluid").forGetter(RockCrusherRecipeType::getFluid),
+            SizedIngredient.NESTED_CODEC.fieldOf("input_item").forGetter(RockCrusherRecipeType::getInput),
+            ChanceOutput.Item.CODEC.listOf().fieldOf("result").forGetter(RockCrusherRecipeType::getResult))
+            .apply(inst, RockCrusherRecipeType::new));
 
-                SizedFluidIngredient.CODEC.fieldOf("input_fluid").forGetter(RockCrusherRecipeType::getFluidInput),
-                SizedIngredient.NESTED_CODEC.fieldOf("input_item").forGetter(RockCrusherRecipeType::getInputItem),
-                ChanceOutput.Item.CODEC.listOf().fieldOf("result").forGetter(RockCrusherRecipeType::getResult))
-                .apply(inst, RockCrusherRecipeType::new));
-
-        public static final StreamCodec<RegistryFriendlyByteBuf, RockCrusherRecipeType> STREAM_CODEC = StreamCodec
-                .composite(
-                        ByteBufCodecs.INT, RockCrusherRecipeType::getTime,
-                        ByteBufCodecs.INT, RockCrusherRecipeType::getEnergy,
-                        SizedFluidIngredient.STREAM_CODEC, RockCrusherRecipeType::getFluidInput,
-                        SizedIngredient.STREAM_CODEC, RockCrusherRecipeType::getInputItem,
-                        ChanceOutput.Item.STREAM_CODEC.apply(ByteBufCodecs.list(9)), RockCrusherRecipeType::getResult,
-                        RockCrusherRecipeType::new);
-
-       
-       
+    public static final StreamCodec<RegistryFriendlyByteBuf, RockCrusherRecipeType> STREAM_CODEC = StreamCodec
+            .composite(
+                    ByteBufCodecs.INT, RockCrusherRecipeType::getTime,
+                    ByteBufCodecs.INT, RockCrusherRecipeType::getEnergy,
+                    SizedFluidIngredient.STREAM_CODEC, RockCrusherRecipeType::getFluid,
+                    SizedIngredient.STREAM_CODEC, RockCrusherRecipeType::getInput,
+                    ChanceOutput.Item.STREAM_CODEC.apply(ByteBufCodecs.list(9)), RockCrusherRecipeType::getResult,
+                    RockCrusherRecipeType::new);
 
 }

@@ -47,9 +47,9 @@ public class CasterCategory extends BaseMachineRecipeCategory<CasterRecipeType> 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, CasterRecipeType recipe, IFocusGroup focuses) {
 
-                if (recipe.getInputItem() != null && !x.getItemStacksFromIngredient(recipe.getInputItem()).isEmpty()) {
+                if (recipe.getMold() != null && !x.getItemStacksFromIngredient(recipe.getMold()).isEmpty()) {
                         var item = builder.addInputSlot(2 + 21, 5)
-                                        .addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
+                                        .addItemStacks(x.getItemStacksFromIngredient(recipe.getMold()));
 
                         if (!recipe.consumeCatalyst())
                                 item.addRichTooltipCallback(
@@ -57,10 +57,10 @@ public class CasterCategory extends BaseMachineRecipeCategory<CasterRecipeType> 
                                                                 CakeStickLib.MODULE_ID + ".ui.dont_consume")));
                 }
 
-                builder.addOutputSlot(81 + 21, 5).add(recipe.getOutputItem());
+                builder.addOutputSlot(81 + 21, 5).add(recipe.getOutput());
 
                 JEIFluidTankHelper.of()
-                                .fluid(recipe.getFluidInput())
+                                .fluid(recipe.getFluid())
                                 .offset(3, 21)
                                 .build((x, y) -> builder.addInputSlot(x, y));
 

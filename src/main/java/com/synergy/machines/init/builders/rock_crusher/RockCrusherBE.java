@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 
 import com.devdyna.cakesticklib.api.aspect.logic.ResourceRestricted;
 import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
-import com.devdyna.cakesticklib.api.utils.ArrayUtils;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.recipeinputs.ItemFluidInput;
@@ -15,6 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
@@ -22,19 +22,21 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class RockCrusherBE extends BaseMachineBE implements ResourceRestricted.Fluid {
 
-    public static final int OUTPUT_EXTRA_1 = 6;
-    public static final int OUTPUT_EXTRA_2 = 7;
-    public static final int OUTPUT_EXTRA_3 = 8;
-    public static final int OUTPUT_EXTRA_4 = 9;
-    public static final int OUTPUT_EXTRA_5 = 10;
-    public static final int OUTPUT_EXTRA_6 = 11;
-    public static final int OUTPUT_EXTRA_7 = 12;
-    public static final int OUTPUT_EXTRA_8 = 13;
+    public static final int INPUT_SLOT = 4;
+    public static final int OUTPUT_SLOT_1 = 5;
+    public static final int OUTPUT_SLOT_2 = 6;
+    public static final int OUTPUT_SLOT_3 = 7;
+    public static final int OUTPUT_SLOT_4 = 8;
+    public static final int OUTPUT_SLOT_5 = 9;
+    public static final int OUTPUT_SLOT_6 = 10;
+    public static final int OUTPUT_SLOT_7 = 11;
+    public static final int OUTPUT_SLOT_8 = 12;
+    public static final int OUTPUT_SLOT_9 = 13;
 
-    public static final List<Integer> EXTRA_OUTPUT_SLOTS = List.of(OUTPUT_EXTRA_1, OUTPUT_EXTRA_2, OUTPUT_EXTRA_3,
-            OUTPUT_EXTRA_4, OUTPUT_EXTRA_5, OUTPUT_EXTRA_6, OUTPUT_EXTRA_7, OUTPUT_EXTRA_8);
-
-    public static final List<Integer> OUTPUT_SLOTS = ArrayUtils.concat(EXTRA_OUTPUT_SLOTS, OUTPUT_SLOT);
+    public static final List<Integer> OUTPUT_SLOTS = List.of(
+            OUTPUT_SLOT_1, OUTPUT_SLOT_2, OUTPUT_SLOT_3,
+            OUTPUT_SLOT_4, OUTPUT_SLOT_5, OUTPUT_SLOT_6,
+            OUTPUT_SLOT_7, OUTPUT_SLOT_8, OUTPUT_SLOT_9);
 
     public RockCrusherBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -53,6 +55,25 @@ public class RockCrusherBE extends BaseMachineBE implements ResourceRestricted.F
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         return new RockCrusherMenu(i, inventory, this, this.networkData);
+    }
+
+    public ItemStack getInput() {
+        return getStackInSlot(INPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getInputSlotIndex() {
+        return List.of(INPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getOutputSlotIndex() {
+        return OUTPUT_SLOTS;
+    }
+
+    @Override
+    public List<Integer> getOutputTankIndex() {
+        return List.of();
     }
 
     @Override
@@ -75,7 +96,7 @@ public class RockCrusherBE extends BaseMachineBE implements ResourceRestricted.F
 
         var recipe = r.get().value();
 
-        if (getFluidStorage().getAmountAsInt(0) < recipe.getFluidInput().amount()) {
+        if (getFluidStorage().getAmountAsInt(0) < recipe.getFluid().amount()) {
             return cancel();
         }
 
@@ -110,9 +131,9 @@ public class RockCrusherBE extends BaseMachineBE implements ResourceRestricted.F
                     updateResource(ItemResource.of(result.item()), recipe.getResult().indexOf(result) + INPUT_SLOT + 1,
                             result.item().count(), false);
 
-        updateResource(getFluidStorage().getResource(0), 0, calculateMBUsage(recipe.getFluidInput().amount()), true);
+        updateResource(getFluidStorage().getResource(0), 0, calculateMBUsage(recipe.getFluid().amount()), true);
 
-        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(), true);
+        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInput().count(), true);
 
     }
 
@@ -131,13 +152,4 @@ public class RockCrusherBE extends BaseMachineBE implements ResourceRestricted.F
         return 1;
     }
 
-    @Override
-    public List<Integer> getOutputSlotIndex() {
-        return OUTPUT_SLOTS;
-    }
-
-    @Override
-    public List<Integer> getOutputTankIndex() {
-        return List.of();
-    }
 }

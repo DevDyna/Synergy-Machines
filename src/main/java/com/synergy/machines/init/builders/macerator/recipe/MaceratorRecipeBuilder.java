@@ -10,14 +10,23 @@ import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
 import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
+import com.devdyna.cakesticklib.api.utils.x;
 
 public class MaceratorRecipeBuilder extends BaseMachineRecipeBuilder<MaceratorRecipeBuilder>
-        implements ItemAttach.Output.ItemOutputChance<MaceratorRecipeBuilder> {
+        implements ItemAttach.Output.ItemOutputChance<MaceratorRecipeBuilder>,
+        ItemAttach.Input.ItemCounted<MaceratorRecipeBuilder>,
+        ItemAttach.Output.SimpleOutputItem<MaceratorRecipeBuilder> {
+
+    private ChanceOutput.Item secondary;
+    private ItemStackTemplate output;
+    private SizedIngredient input;
 
     private MaceratorRecipeBuilder(HolderLookup.Provider p) {
         super(p);
@@ -30,7 +39,7 @@ public class MaceratorRecipeBuilder extends BaseMachineRecipeBuilder<MaceratorRe
 
     @Override
     public Recipe<?> createRecipe() {
-        return new MaceratorRecipeType(ticks, energy, input, output, optional_output_item);
+        return new MaceratorRecipeType(ticks, energy, input, output, secondary);
     }
 
     @Override
@@ -39,14 +48,31 @@ public class MaceratorRecipeBuilder extends BaseMachineRecipeBuilder<MaceratorRe
     }
 
     @Override
-    public MaceratorRecipeBuilder outputChance(ChanceOutput.Item item) {
-        this.optional_output_item = item;
+    public MaceratorRecipeBuilder outputChance(ChanceOutput.Item secondary) {
+        this.secondary = secondary;
         return this;
     }
 
     @Override
     public MaceratorRecipeBuilder getBuilder() {
         return this;
+    }
+
+    @Override
+    public MaceratorRecipeBuilder output(ItemStackTemplate output) {
+        this.output = output;
+        return getBuilder();
+    }
+
+    @Override
+    public MaceratorRecipeBuilder input(SizedIngredient input) {
+        this.input = input;
+        return getBuilder();
+    }
+
+    @Override
+    public String defineID() {
+        return x.name(output != null ? output : secondary.item()) + "_from_" + name(input);
     }
 
 }

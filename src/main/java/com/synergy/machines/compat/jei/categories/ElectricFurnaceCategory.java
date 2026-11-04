@@ -43,8 +43,8 @@ public class ElectricFurnaceCategory extends BaseMachineRecipeCategory<ElectricF
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ElectricFurnaceRecipeType recipe, IFocusGroup focuses) {
 
-        builder.addInputSlot(2, 5).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
-        builder.addOutputSlot(74, 6).add(recipe.getOutputItem());
+        builder.addInputSlot(2, 5).addItemStacks(x.getItemStacksFromIngredient(recipe.getInput()));
+        builder.addOutputSlot(74, 6).add(recipe.getOutput());
 
     }
 

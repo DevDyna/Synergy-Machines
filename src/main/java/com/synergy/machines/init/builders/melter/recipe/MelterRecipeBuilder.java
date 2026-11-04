@@ -12,12 +12,18 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
+import com.devdyna.cakesticklib.api.utils.x;
 
 public class MelterRecipeBuilder extends BaseMachineRecipeBuilder<MelterRecipeBuilder>
-        implements FluidAttach.Output.OutputFluid<MelterRecipeBuilder> {
+        implements FluidAttach.Output.OutputFluid<MelterRecipeBuilder>,
+        ItemAttach.Input.ItemCounted<MelterRecipeBuilder> {
+
+    private SizedIngredient input;
+    private FluidStackTemplate fluid;
 
     private MelterRecipeBuilder(HolderLookup.Provider p) {
         super(p);
@@ -32,7 +38,7 @@ public class MelterRecipeBuilder extends BaseMachineRecipeBuilder<MelterRecipeBu
 
     @Override
     public Recipe<?> createRecipe() {
-        return new MelterRecipeType(ticks, energy, input, fluid_output);
+        return new MelterRecipeType(ticks, energy, input, fluid);
     }
 
     @Override
@@ -47,8 +53,19 @@ public class MelterRecipeBuilder extends BaseMachineRecipeBuilder<MelterRecipeBu
 
     @Override
     public MelterRecipeBuilder output(FluidStackTemplate fluid) {
-        this.fluid_output = fluid;
+        this.fluid = fluid;
         return getBuilder();
+    }
+
+    @Override
+    public MelterRecipeBuilder input(SizedIngredient input) {
+        this.input = input;
+        return getBuilder();
+    }
+
+    @Override
+    public String defineID() {
+        return x.name(fluid) + "_from_" + name(input);
     }
 
 }

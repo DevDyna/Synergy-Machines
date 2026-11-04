@@ -46,10 +46,10 @@ public class MelterCategory extends BaseMachineRecipeCategory<MelterRecipeType> 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, MelterRecipeType recipe, IFocusGroup focuses) {
 
-                builder.addInputSlot(2, 5).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
+                builder.addInputSlot(2, 5).addItemStacks(x.getItemStacksFromIngredient(recipe.getInput()));
 
                 JEIFluidTankHelper.of()
-                                .fluid(recipe.getFluidOutput().create())
+                                .fluid(recipe.getFluid().create())
                                 .offset(74, 21)
                                 .build((x, y) -> builder.addOutputSlot(x, y));
 

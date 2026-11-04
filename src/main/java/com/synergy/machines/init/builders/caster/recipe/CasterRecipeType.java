@@ -1,8 +1,8 @@
 package com.synergy.machines.init.builders.caster.recipe;
 
+import java.util.List;
 import java.util.Optional;
 
-import com.devdyna.cakesticklib.api.utils.x;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -21,17 +21,26 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 public class CasterRecipeType extends BaseMachineRecipeType<ItemFluidInput> {
 
-    public CasterRecipeType(int ticks, int energy, SizedFluidIngredient fluid, SizedIngredient input,
-            boolean consumeCatalyst, ItemStackTemplate output) {
-        this.input = input;
+    protected SizedIngredient mold;
+    protected ItemStackTemplate result;
+
+    protected SizedFluidIngredient fluid;
+
+    protected boolean consumeCatalyst;
+
+    public CasterRecipeType(int ticks, int energy, SizedFluidIngredient fluid, SizedIngredient mold,
+            boolean consumeCatalyst, ItemStackTemplate result) {
+        this.mold = mold;
         this.ticks = ticks;
         this.energy = energy;
-        this.fluid_input = fluid;
-        this.output = output;
+        this.fluid = fluid;
+        this.result = result;
         this.consumeCatalyst = consumeCatalyst;
     }
 
@@ -41,23 +50,54 @@ public class CasterRecipeType extends BaseMachineRecipeType<ItemFluidInput> {
     }
 
     @Override
-    public boolean hasSecondaryOutput() {
-        return false;
-    }
-
-    @Override
     public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<ItemFluidInput>> getMachine() {
         return zMachines.CASTING_FACTORY;
     }
 
     @Override
-    public ItemStack getRecipeInput(ItemFluidInput recipe) {
-        return recipe.item();
+    public List<FluidStack> getRecipeFluidsInput(ItemFluidInput recipe) {
+        return List.of(recipe.input());
     }
 
     @Override
-    public SizedFluidIngredient getRecipeFluidInput(ItemFluidInput recipe) {
-        return x.fluidSized(recipe.input().getFluid(), recipe.input().amount());
+    public List<ItemStack> getRecipeItemsInput(ItemFluidInput recipe) {
+        return List.of(recipe.item());
+    }
+
+    @Override
+    public List<SizedFluidIngredient> getMachineFluids() {
+        return List.of(fluid);
+    }
+
+    @Override
+    public List<SizedIngredient> getMachineItems() {
+        return List.of(mold);
+    }
+
+    @Override
+    public List<ItemStackTemplate> getRecipeItemsOutput() {
+        return List.of(result);
+    }
+
+    @Override
+    public List<FluidStackTemplate> getRecipeFluidsOutput() {
+        return List.of();
+    }
+
+    public SizedFluidIngredient getFluid() {
+        return fluid;
+    }
+
+    public SizedIngredient getMold() {
+        return mold;
+    }
+
+    public ItemStackTemplate getOutput() {
+        return result;
+    }
+
+    public boolean consumeCatalyst() {
+        return consumeCatalyst;
     }
 
     public static final RecipeSerializer<CasterRecipeType> serializer() {
@@ -68,12 +108,12 @@ public class CasterRecipeType extends BaseMachineRecipeType<ItemFluidInput> {
             Codec.intRange(1, Integer.MAX_VALUE).fieldOf("ticks").forGetter(CasterRecipeType::getTime),
             Codec.intRange(1, Integer.MAX_VALUE).fieldOf("energy").forGetter(CasterRecipeType::getEnergy),
 
-            SizedFluidIngredient.CODEC.fieldOf("input_fluid").forGetter(CasterRecipeType::getFluidInput),
+            SizedFluidIngredient.CODEC.fieldOf("input_fluid").forGetter(CasterRecipeType::getFluid),
 
             SizedIngredient.NESTED_CODEC.optionalFieldOf("input_item")
-                    .forGetter(r -> Optional.ofNullable(r.getInputItem())),
+                    .forGetter(r -> Optional.ofNullable(r.getMold())),
             Codec.BOOL.fieldOf("consume_item").forGetter(CasterRecipeType::consumeCatalyst),
-            ItemStackTemplate.CODEC.fieldOf("output").forGetter(CasterRecipeType::getOutputItem)
+            ItemStackTemplate.CODEC.fieldOf("output").forGetter(CasterRecipeType::getOutput)
 
     )
             .apply(inst, (t, e, f, i, c, o) -> new CasterRecipeType(t, e, f, i.orElse(null), c, o)));
@@ -83,20 +123,15 @@ public class CasterRecipeType extends BaseMachineRecipeType<ItemFluidInput> {
 
                     ByteBufCodecs.INT, CasterRecipeType::getTime,
                     ByteBufCodecs.INT, CasterRecipeType::getEnergy,
-                    SizedFluidIngredient.STREAM_CODEC, CasterRecipeType::getFluidInput,
+                    SizedFluidIngredient.STREAM_CODEC, CasterRecipeType::getFluid,
 
                     ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC),
-                    r -> Optional.ofNullable(r.getInputItem()),
+                    r -> Optional.ofNullable(r.getMold()),
 
                     ByteBufCodecs.BOOL, CasterRecipeType::consumeCatalyst,
 
-                    ItemStackTemplate.STREAM_CODEC, CasterRecipeType::getOutputItem,
+                    ItemStackTemplate.STREAM_CODEC, CasterRecipeType::getOutput,
 
-                    (ticks, energy, f, i, o, c) -> new CasterRecipeType(
-                            ticks,
-                            energy,
-                            f,
-                            i.orElse(null),
-                            o, c));
+                    (ticks, energy, f, i, o, c) -> new CasterRecipeType(ticks, energy, f, i.orElse(null), o, c));
 
 }

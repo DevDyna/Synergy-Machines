@@ -1,5 +1,6 @@
 package com.synergy.machines.init.builders.compressor.recipe;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.mojang.serialization.Codec;
@@ -20,13 +21,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 public class CompressorRecipeType extends BaseMachineRecipeType<BiItemInput> {
 
-    public CompressorRecipeType(int ticks, int energy, SizedIngredient input, SizedIngredient plate,
+    private SizedIngredient input;
+    private SizedIngredient mold;
+    private ItemStackTemplate output;
+    private boolean consumeCatalyst;
+
+    public CompressorRecipeType(int ticks, int energy, SizedIngredient input, SizedIngredient mold,
             boolean consumeCatalyst, ItemStackTemplate output) {
         this.input = input;
-        this.optional_input = plate;
+        this.mold = mold;
         this.ticks = ticks;
         this.output = output;
         this.energy = energy;
@@ -34,8 +43,8 @@ public class CompressorRecipeType extends BaseMachineRecipeType<BiItemInput> {
     }
 
     public static CompressorRecipeType of(int ticks, int energy, SizedIngredient input,
-            SizedIngredient plate, boolean consumeCatalyst, ItemStackTemplate output) {
-        return new CompressorRecipeType(ticks, energy, input, plate, consumeCatalyst, output);
+            SizedIngredient mold, boolean consumeCatalyst, ItemStackTemplate output) {
+        return new CompressorRecipeType(ticks, energy, input, mold, consumeCatalyst, output);
     }
 
     @Override
@@ -43,14 +52,50 @@ public class CompressorRecipeType extends BaseMachineRecipeType<BiItemInput> {
         return zMachines.COMPRESSOR;
     }
 
-    @Override
-    public ItemStack getRecipeInput(BiItemInput recipe) {
-        return recipe.first();
+    public SizedIngredient getInput() {
+        return input;
+    }
+
+    public SizedIngredient getMold() {
+        return mold;
+    }
+
+    public ItemStackTemplate getOutput() {
+        return output;
+    }
+
+    public boolean consumeCatalyst() {
+        return consumeCatalyst;
     }
 
     @Override
-    public ItemStack getRecipeInput2(BiItemInput recipe) {
-        return recipe.second();
+    public List<SizedIngredient> getMachineItems() {
+        return List.of(getInput(), getMold());
+    }
+
+    @Override
+    public List<SizedFluidIngredient> getMachineFluids() {
+        return List.of();
+    }
+
+    @Override
+    public List<ItemStack> getRecipeItemsInput(BiItemInput recipe) {
+        return List.of(recipe.first(), recipe.second());
+    }
+
+    @Override
+    public List<FluidStack> getRecipeFluidsInput(BiItemInput recipe) {
+        return List.of();
+    }
+
+    @Override
+    public List<ItemStackTemplate> getRecipeItemsOutput() {
+        return List.of(getOutput());
+    }
+
+    @Override
+    public List<FluidStackTemplate> getRecipeFluidsOutput() {
+        return List.of();
     }
 
     public static final RecipeSerializer<CompressorRecipeType> serializer() {
@@ -61,22 +106,22 @@ public class CompressorRecipeType extends BaseMachineRecipeType<BiItemInput> {
             Codec.intRange(1, Integer.MAX_VALUE).fieldOf("ticks").forGetter(CompressorRecipeType::getTime),
             Codec.intRange(1, Integer.MAX_VALUE).fieldOf("energy").forGetter(CompressorRecipeType::getEnergy),
 
-            SizedIngredient.NESTED_CODEC.fieldOf("input").forGetter(CompressorRecipeType::getInputItem),
+            SizedIngredient.NESTED_CODEC.fieldOf("input").forGetter(CompressorRecipeType::getInput),
             SizedIngredient.NESTED_CODEC.optionalFieldOf("plate")
-                    .forGetter(r -> Optional.ofNullable(r.getCatalystItem())),
+                    .forGetter(r -> Optional.ofNullable(r.getMold())),
             Codec.BOOL.fieldOf("consume_catalyst").forGetter(CompressorRecipeType::consumeCatalyst),
-            ItemStackTemplate.CODEC.fieldOf("output").forGetter(CompressorRecipeType::getOutputItem))
+            ItemStackTemplate.CODEC.fieldOf("output").forGetter(CompressorRecipeType::getOutput))
             .apply(inst, (t, e, i, p, c, o) -> new CompressorRecipeType(t, e, i, p.orElse(null), c, o)));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CompressorRecipeType> STREAM_CODEC = StreamCodec
             .composite(
                     ByteBufCodecs.INT, CompressorRecipeType::getTime,
                     ByteBufCodecs.INT, CompressorRecipeType::getEnergy,
-                    SizedIngredient.STREAM_CODEC, CompressorRecipeType::getInputItem,
+                    SizedIngredient.STREAM_CODEC, CompressorRecipeType::getInput,
                     ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC),
-                    r -> Optional.ofNullable(r.getCatalystItem()),
+                    r -> Optional.ofNullable(r.getMold()),
                     ByteBufCodecs.BOOL, CompressorRecipeType::consumeCatalyst,
-                    ItemStackTemplate.STREAM_CODEC, CompressorRecipeType::getOutputItem,
+                    ItemStackTemplate.STREAM_CODEC, CompressorRecipeType::getOutput,
 
                     (t, e, i, o, s, c) -> new CompressorRecipeType(t, e, i, o.orElse(null), s, c));
 

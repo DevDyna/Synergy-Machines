@@ -1,11 +1,7 @@
 package com.synergy.machines.api.machine.recipe;
 
 import java.util.ArrayList;
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
-import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
+import java.util.List;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
@@ -14,13 +10,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.PlacementInfo;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeBookCategory;
-import net.minecraft.world.item.crafting.RecipeInput;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -29,26 +19,8 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Recipe<T> {
 
-    public int ticks;
-    public int energy;
-    public SizedIngredient input;
-    public SizedIngredient optional_input;
-    public ItemStackTemplate output;
-    @Deprecated
-    public ItemStackTemplate optional_output;
-
-    public @Nullable ChanceOutput.Item optional_output_item;
-    // public SizedIngredient extra_input;
-    @Deprecated
-    public float chance;
-    public boolean consumeCatalyst;
-    public SizedFluidIngredient fluid_input;
-    public SizedFluidIngredient optional_fluid_input;
-    public FluidStackTemplate fluid_output;
-
-    public boolean consumeCatalyst() {
-        return consumeCatalyst;
-    }
+    protected int ticks;
+    protected int energy;
 
     public int getEnergy() {
         return energy;
@@ -58,119 +30,98 @@ public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Re
         return ticks;
     }
 
-    public SizedIngredient getInputItem() {
-        return input;
-    }
+    public abstract List<SizedIngredient> getMachineItems();
 
-    public ItemStackTemplate getOutputItem() {
-        return output;
-    }
+    public abstract List<SizedFluidIngredient> getMachineFluids();
 
-    public @Nullable ChanceOutput.Item getSecondaryOutputItem() {
-        return optional_output_item;
-    }
+    public abstract List<ItemStack> getRecipeItemsInput(T recipe);
 
-    public SizedIngredient getCatalystItem() {
-        return optional_input;
-    }
+    public abstract List<FluidStack> getRecipeFluidsInput(T recipe);
 
-    public FluidStackTemplate getFluidOutput() {
-        return fluid_output;
-    }
+    public abstract List<ItemStackTemplate> getRecipeItemsOutput();
 
-    public SizedFluidIngredient getFluidInput() {
-        return fluid_input;
-    }
-
-    public SizedFluidIngredient getOptionalFluidInput() {
-        return optional_fluid_input;
-    }
-
-    /**
-     * 0.00 -> 1.00
-     */
-    @Deprecated
-    public float getSecondaryItemChance() {
-        return chance;
-    }
-
-    // public boolean hasCatalyst(T r) {
-    // return false;
-    // }
-
-    public boolean hasSecondaryOutput() {
-        return ChanceOutput.Item.valid(optional_output_item);
-    }
+    public abstract List<FluidStackTemplate> getRecipeFluidsOutput();
 
     @Deprecated
     public NonNullList<Ingredient> getIngredients() {
         var list = new ArrayList<Ingredient>();
-        if (getInputItem() != null)
-            list.add(getInputItem().ingredient());
-        if (getCatalystItem() != null)
-            list.add(getCatalystItem().ingredient());
+        if (getMachineItems() != null)
+            getMachineItems().stream().map(SizedIngredient::ingredient).forEach(list::add);
         return NonNullList.copyOf(list);
     }
 
-    public ItemStack getRecipeInput(T recipe) {
-        return null;
-    }
+    @Override
+    public boolean matches(T r, Level level) {
 
-    public ItemStack getRecipeInput2(T recipe) {
-        return null;
-    };
+        var items = getRecipeItemsInput(r);
 
-    public SizedFluidIngredient getRecipeFluidInput(T recipe) {
-        return null;
-    };
+        if (!getMachineItems().isEmpty()) {
 
-    public SizedFluidIngredient getRecipeFluidInput2(T recipe) {
-        return null;
-    };
+            if (items.isEmpty())
+                return false;
 
-    public boolean matches(T r, Level l) {
+            var copy = new ArrayList<Integer>(items.stream().map(ItemStack::getCount).toList());
 
-        // primary item is present
-        if (getRecipeInput(r) != null && getInputItem() != null)
-            if (!x.getItemStacksFromIngredient(getInputItem()).isEmpty()) {
+            for (var stored : getMachineItems()) {
 
-                // primary item dont match
-                if (!getInputItem().test(getRecipeInput(r)))
-                    return false;
+                var required = stored.count();
 
-                // primary count dont match
-                if (getInputItem().count() > getRecipeInput(r).getCount())
-                    return false;
-            }
+                for (var i = 0; i < items.size(); i++) {
 
-        // primary fluid is present
-        if (getFluidInput() != null && getRecipeFluidInput(r) != null)
-            if (!x.getFluidStacksFromIngredient(getFluidInput()).isEmpty())
-                if (!x.getFluidStacksFromIngredient(getRecipeFluidInput(r))
-                        .stream()
-                        .anyMatch(i -> getFluidInput().test(i)))
-                    return false;
+                    if (required <= 0)
+                        break;
 
-        // secondary fluid is present
-        if (getOptionalFluidInput() != null && getRecipeFluidInput2(r) != null)
-            if (!x.getFluidStacksFromIngredient(getOptionalFluidInput()).isEmpty())
-                if (!x.getFluidStacksFromIngredient(getRecipeFluidInput2(r))
-                        .stream()
-                        .anyMatch(i -> getOptionalFluidInput().test(i)))
-                    return false;
+                    if (copy.get(i) <= 0)
+                        continue;
 
-        // secondary item input is present
-        if (getCatalystItem() != null && getRecipeInput2(r) != null)
-            if (!x.getItemStacksFromIngredient(getCatalystItem()).isEmpty()) {
+                    if (!stored.ingredient().test(items.get(i)))
+                        continue;
 
-                // secondary item input dont match
-                if (getCatalystItem().count() > getRecipeInput2(r).getCount())
-                    return false;
+                    var extracted = Math.min(required, copy.get(i));
 
-                // secondary item input dont match
-                if (!getCatalystItem().test(getRecipeInput2(r)))
+                    required -= extracted;
+                    copy.set(i, copy.get(i) - extracted);
+                }
+
+                if (required > 0)
                     return false;
             }
+        }
+
+        var fluids = getRecipeFluidsInput(r);
+
+        if (!getMachineFluids().isEmpty()) {
+
+            if (fluids.isEmpty())
+                return false;
+
+            var copy = new ArrayList<Integer>(fluids.stream().map(FluidStack::getAmount).toList());
+
+            for (var stored : getMachineFluids()) {
+
+                var required = stored.amount();
+
+                for (var i = 0; i < fluids.size(); i++) {
+
+                    if (required <= 0)
+                        break;
+
+                    if (copy.get(i) <= 0)
+                        continue;
+
+                    if (!stored.ingredient().test(fluids.get(i)))
+                        continue;
+
+                    var extracted = Math.min(required, copy.get(i));
+
+                    required -= extracted;
+                    copy.set(i, copy.get(i) - extracted);
+                }
+
+                if (required > 0)
+                    return false;
+            }
+        }
 
         return true;
     }
@@ -178,7 +129,7 @@ public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Re
     @Deprecated
     @Override
     public ItemStack assemble(T input) {
-        return getOutputItem().create().copy();
+        return x.item(getMachine().item().get());
     }
 
     @Override
@@ -208,32 +159,12 @@ public abstract class BaseMachineRecipeType<T extends RecipeInput> implements Re
     }
 
     public ItemStack getToastSymbol() {
-        return new ItemStack(getMachine().block().get());
+        return x.item(getMachine().block().get());
     }
 
     @Override
     public RecipeSerializer<? extends Recipe<T>> getSerializer() {
         return getMachine().recipe().getSerializer();
-    }
-
-    @Deprecated
-    public static Optional<FluidStack> optionalCodec(FluidStack f) {
-        return Optional.ofNullable(f);
-    }
-
-    @Deprecated
-    public static Optional<FluidStackTemplate> optionalCodec(FluidStackTemplate f) {
-        return Optional.ofNullable(f);
-    }
-
-    @Deprecated
-    public static Optional<ItemStackTemplate> optionalCodec(ItemStackTemplate i) {
-        return Optional.ofNullable(i);
-    }
-
-    @Deprecated
-    public static Optional<Ingredient> optionalCodec(Ingredient i) {
-        return Optional.ofNullable(i);
     }
 
 }

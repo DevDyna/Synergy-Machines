@@ -14,12 +14,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 
 public class MelterBE extends BaseMachineBE implements ResourceRestricted.Fluid {
+
+    public static final int INPUT_SLOT = 4;
 
     public MelterBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -38,6 +41,20 @@ public class MelterBE extends BaseMachineBE implements ResourceRestricted.Fluid 
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         return new MelterMenu(i, inventory, this, this.networkData);
+    }
+
+    public ItemStack getInput() {
+        return getStackInSlot(INPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getInputSlotIndex() {
+        return List.of(INPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getOutputSlotIndex() {
+        return List.of();
     }
 
     @Override
@@ -60,7 +77,7 @@ public class MelterBE extends BaseMachineBE implements ResourceRestricted.Fluid 
         var recipe = r.get().value();
 
         if (!checkTank(getAsStack(0),
-                recipe.getFluidOutput().create(), getTankCapacity())) {
+                recipe.getFluid().create(), getTankCapacity())) {
             return cancel();
         }
 
@@ -80,13 +97,12 @@ public class MelterBE extends BaseMachineBE implements ResourceRestricted.Fluid 
 
         var recipe = getUnsafeRecipes(level, zMachines.ELECTRIC_MELTER, new ItemInput.simple(getInput()));
 
-        if (!recipe.getFluidOutput().create().isEmpty())
-            updateResource(FluidResource.of(recipe.getFluidOutput().create()), 0, recipe.getFluidOutput().amount(),
+        if (!recipe.getFluid().create().isEmpty())
+            updateResource(FluidResource.of(recipe.getFluid().create()), 0, recipe.getFluid().amount(),
                     false);
 
-        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(), true);
+        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInput().count(), true);
 
-        
     }
 
     @Override

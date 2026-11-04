@@ -44,13 +44,13 @@ public class MaceratorCategory extends BaseMachineRecipeCategory<MaceratorRecipe
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, MaceratorRecipeType recipe, IFocusGroup focuses) {
 
-                builder.addInputSlot(2, 14).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
+                builder.addInputSlot(2, 14).addItemStacks(x.getItemStacksFromIngredient(recipe.getInput()));
 
-                if (recipe.getOutputItem() != null)
-                        builder.addOutputSlot(74, 6).add(recipe.getOutputItem());
+                if (recipe.getOutput() != null)
+                        builder.addOutputSlot(74, 6).add(recipe.getOutput());
 
-                if (recipe.hasSecondaryOutput())
-                        builder.addOutputSlot(74, 31).add(recipe.getSecondaryOutputItem().item());
+                if (recipe.getSecondaryOutput() != null)
+                        builder.addOutputSlot(74, 31).add(recipe.getSecondaryOutput().item());
 
         }
 
@@ -68,10 +68,10 @@ public class MaceratorCategory extends BaseMachineRecipeCategory<MaceratorRecipe
                                 22, 2,
                                 ClientUtils.defaultToolTipColor.getRGB(), false);
 
-                if (recipe.hasSecondaryOutput())
+                if (recipe.getSecondaryOutput() != null)
                         drawCenteredString(guiGraphics, font,
                                         Component.literal(
-                                                        ((int) (recipe.getSecondaryOutputItem().chance() * 100)) + "%"),
+                                                        ((int) (recipe.getSecondaryOutput().chance() * 100)) + "%"),
                                         60, 36,
                                         ClientUtils.defaultToolTipColor.getRGB(), false);
 

@@ -19,6 +19,9 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class MaceratorBE extends BaseMachineBE {
 
+    public static final int INPUT_SLOT = 4;
+    public static final int OUTPUT_SLOT = 5;
+
     public static final int SECONDARY_SLOT = 6;
 
     public MaceratorBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
@@ -28,6 +31,19 @@ public class MaceratorBE extends BaseMachineBE {
     @Override
     public int getMachineSlots() {
         return 7;
+    }
+
+    public ItemStack getInput() {
+        return getStackInSlot(INPUT_SLOT);
+    }
+
+    public ItemStack getOutput() {
+        return getStackInSlot(OUTPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getInputSlotIndex() {
+        return List.of(INPUT_SLOT);
     }
 
     @Override
@@ -61,11 +77,11 @@ public class MaceratorBE extends BaseMachineBE {
 
         var recipe = r.get().value();
 
-        if (!checkSlot(getOutput(), recipe.getOutputItem().create()))
+        if (!checkSlot(getOutput(), recipe.getOutput().create()))
             return cancel();
 
-        if (recipe.getSecondaryOutputItem() != null)
-            if (!checkSlot(getSecondarySlot(), recipe.getSecondaryOutputItem().item().create()))
+        if (recipe.getSecondaryOutput() != null)
+            if (!checkSlot(getSecondarySlot(), recipe.getSecondaryOutput().item().create()))
                 return cancel();
 
         if (!calculateAndConsumeFE(recipe.getEnergy()))
@@ -84,15 +100,15 @@ public class MaceratorBE extends BaseMachineBE {
 
         var recipe = getUnsafeRecipes(level, zMachines.MACERATOR, new ItemInput.simple(getInput()));
 
-        updateResource(ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT, recipe.getOutputItem().count(), false);
+        updateResource(ItemResource.of(recipe.getOutput()), OUTPUT_SLOT, recipe.getOutput().count(), false);
 
-        if (recipe.getSecondaryOutputItem() != null)
-            if (!recipe.getSecondaryOutputItem().item().create().isEmpty()
-                    && calculateSecondarySuccess(recipe.getSecondaryOutputItem().chance()))
-                updateResource(ItemResource.of(recipe.getSecondaryOutputItem().item()), SECONDARY_SLOT,
-                        recipe.getSecondaryOutputItem().item().count(), false);
+        if (recipe.getSecondaryOutput() != null)
+            if (!recipe.getSecondaryOutput().item().create().isEmpty()
+                    && calculateSecondarySuccess(recipe.getSecondaryOutput().chance()))
+                updateResource(ItemResource.of(recipe.getSecondaryOutput().item()), SECONDARY_SLOT,
+                        recipe.getSecondaryOutput().item().count(), false);
 
-        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInputItem().count(), true);
+        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, recipe.getInput().count(), true);
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.synergy.machines.init.builders.furnace;
 
 
 
+import com.devdyna.cakesticklib.api.utils.SlotBuilder;
+import com.devdyna.cakesticklib.api.utils.SlotBuilder.ResourceType;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.BaseMachineBlock;
@@ -31,4 +33,10 @@ public class ElectricFurnaceMenu extends BaseMachineMenu {
         return zMachines.ELECTRIC_FURNACE;
     }
 
+    @Override
+    public SlotBuilder getSlots() {
+        return SlotBuilder.of(blockEntity.getMachineSlots())
+                .set(ElectricFurnaceBE.INPUT_SLOT - 4, ResourceType.INPUT)
+                .set(ElectricFurnaceBE.OUTPUT_SLOT - 4, ResourceType.OUTPUT);
+    }
 }

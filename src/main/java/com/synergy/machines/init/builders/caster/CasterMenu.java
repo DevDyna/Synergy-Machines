@@ -2,6 +2,8 @@ package com.synergy.machines.init.builders.caster;
 
 
 
+import com.devdyna.cakesticklib.api.utils.SlotBuilder;
+import com.devdyna.cakesticklib.api.utils.SlotBuilder.ResourceType;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.BaseMachineBlock;
@@ -29,6 +31,13 @@ public class CasterMenu extends BaseMachineMenu {
     @Override
     public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<?>> getMachine() {
         return zMachines.CASTING_FACTORY;
+    }
+
+    @Override
+    public SlotBuilder getSlots() {
+        return SlotBuilder.of(blockEntity.getMachineSlots())
+                .set(CasterBE.INPUT_SLOT - 4, ResourceType.INPUT)
+                .set(CasterBE.OUTPUT_SLOT - 4, ResourceType.OUTPUT);
     }
 
 }

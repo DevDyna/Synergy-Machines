@@ -6,10 +6,12 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
 import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
+import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeBuilder;
@@ -18,7 +20,12 @@ import com.synergy.machines.init.types.zMachines;
 
 public class ExtractorRecipeBuilder extends BaseMachineRecipeBuilder<ExtractorRecipeBuilder>
         implements FluidAttach.Output.OutputFluid<ExtractorRecipeBuilder>,
-        ItemAttach.Output.ItemOutputChance<ExtractorRecipeBuilder> {
+        ItemAttach.Output.ItemOutputChance<ExtractorRecipeBuilder>,
+        ItemAttach.Input.ItemCounted<ExtractorRecipeBuilder> {
+
+    private SizedIngredient input;
+    private ChanceOutput.Item output;
+    private FluidStackTemplate fluid;
 
     private ExtractorRecipeBuilder(HolderLookup.Provider p) {
         super(p);
@@ -31,7 +38,7 @@ public class ExtractorRecipeBuilder extends BaseMachineRecipeBuilder<ExtractorRe
 
     @Override
     public Recipe<?> createRecipe() {
-        return new ExtractorRecipeType(ticks, energy, input, optional_output_item, fluid_output);
+        return new ExtractorRecipeType(ticks, energy, input, output, fluid);
     }
 
     @Override
@@ -45,15 +52,26 @@ public class ExtractorRecipeBuilder extends BaseMachineRecipeBuilder<ExtractorRe
     }
 
     @Override
-    public ExtractorRecipeBuilder outputChance(ChanceOutput.Item item) {
-        this.optional_output_item = item;
+    public ExtractorRecipeBuilder outputChance(ChanceOutput.Item output) {
+        this.output = output;
         return getBuilder();
     }
 
     @Override
-    public ExtractorRecipeBuilder output(FluidStackTemplate f) {
-        this.fluid_output = f;
+    public ExtractorRecipeBuilder output(FluidStackTemplate fluid) {
+        this.fluid = fluid;
         return getBuilder();
+    }
+
+    @Override
+    public ExtractorRecipeBuilder input(SizedIngredient input) {
+        this.input = input;
+        return getBuilder();
+    }
+
+    @Override
+    public String defineID() {
+        return x.name(fluid) + "_from_" + name(input);
     }
 
 }
