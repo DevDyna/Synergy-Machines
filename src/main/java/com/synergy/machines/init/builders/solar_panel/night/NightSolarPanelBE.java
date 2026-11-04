@@ -6,9 +6,9 @@ import com.synergy.machines.init.types.zBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class NightSolarPanelBE extends SolarPanelBE{
+public class NightSolarPanelBE extends SolarPanelBE {
 
-    public NightSolarPanelBE( BlockPos arg1, BlockState arg2) {
+    public NightSolarPanelBE(BlockPos arg1, BlockState arg2) {
         super(zBlockEntities.LUNAR_PANEL.get(), arg1, arg2);
     }
 
@@ -16,5 +16,5 @@ public class NightSolarPanelBE extends SolarPanelBE{
     public boolean checkDay() {
         return level.isDarkOutside();
     }
-    
+
 }
