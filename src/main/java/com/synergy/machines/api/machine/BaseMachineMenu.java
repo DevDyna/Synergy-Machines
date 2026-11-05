@@ -72,10 +72,14 @@ public abstract class BaseMachineMenu extends BaseMenu {
     }
 
     public int getScaledArrowProgress() {
+        return getScaledProgress(24);
+    }
+
+    public int getScaledProgress(int size) {
         int progress = data.get(PROGRESS_INDEX);
         int maxProgress = data.get(MAX_PROGRESS_INDEX);
         return maxProgress != 0 && progress != 0
-                ? progress * 24 / maxProgress
+                ? progress * size / maxProgress
                 : 0;
     }
 

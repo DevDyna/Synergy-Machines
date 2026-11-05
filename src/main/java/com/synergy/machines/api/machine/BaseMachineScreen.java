@@ -92,6 +92,10 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         protected int getScaledArrowProgress() {
                 return menu.getScaledArrowProgress();
         }
+        
+        protected int getScaledProgress(int v) {
+                return menu.getScaledProgress(v);
+        }
 
         public int getEnergyStored() {
                 return menu.getEnergyStored();
