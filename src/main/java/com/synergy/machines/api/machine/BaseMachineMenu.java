@@ -160,7 +160,7 @@ public abstract class BaseMachineMenu extends BaseMenu {
     public ItemStack quickMoveStack(Player player, int index) {
 
         //TODO maybe visual?
-        // LogUtils.getLogger().info("i: " + index);
+        // com.mojang.logging.LogUtils.getLogger().info("i: " + index);
 
         if (index < 0 || index >= this.slots.size()) 
             return ItemStack.EMPTY;
