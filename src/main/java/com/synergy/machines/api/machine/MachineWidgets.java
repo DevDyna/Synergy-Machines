@@ -428,7 +428,7 @@ public interface MachineWidgets {
                 renderDebugSlotTooltip(graphics, xo + 7 + 4 - 16, yo + 7 + 4 - 16, 26, 26, tooltipKey, mouseX, mouseY);
         }
 
-        private boolean isDebugHover(int xo, int yo, int width, int height, int mouseX, int mouseY) {
+        default boolean isDebugHover(int xo, int yo, int width, int height, int mouseX, int mouseY) {
                 return getDebug() && Pos.of(getLeftPos() + xo, getTopPos() + yo).setSize(width, height).test(mouseX,
                                 mouseY);
         }
