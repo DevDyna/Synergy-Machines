@@ -1,0 +1,12 @@
+{
+  "type": "machines:macerator",
+  "energy": 50,
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:deepslate"
+  },
+  "output": {
+    "id": "minecraft:cobbled_deepslate"
+  },
+  "ticks": 100
+}

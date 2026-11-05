@@ -1,0 +1,12 @@
+{
+  "type": "machines:macerator",
+  "energy": 50,
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:cobblestone"
+  },
+  "output": {
+    "id": "minecraft:gravel"
+  },
+  "ticks": 100
+}

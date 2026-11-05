@@ -1,0 +1,16 @@
+{
+  "type": "machines:framework",
+  "energy": 10,
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:sand"
+  },
+  "machine": {
+    "count": 1,
+    "ingredient": "machines:electric_furnace"
+  },
+  "result": {
+    "id": "minecraft:glass"
+  },
+  "ticks": 10
+}

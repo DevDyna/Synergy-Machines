@@ -1,0 +1,16 @@
+{
+  "type": "machines:framework",
+  "energy": 10,
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:deepslate"
+  },
+  "machine": {
+    "count": 1,
+    "ingredient": "machines:macerator"
+  },
+  "result": {
+    "id": "minecraft:cobbled_deepslate"
+  },
+  "ticks": 10
+}
