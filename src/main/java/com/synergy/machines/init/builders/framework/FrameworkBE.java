@@ -94,6 +94,9 @@ public class FrameworkBE extends BaseMachineBE {
         var fe = BASE_FE_COST;
         var tick = BASE_TICK_DELAY;
 
+        for (var _ : OUTPUT_SLOTS)
+            results.add(null);
+
         while (i < MACHINE_SLOTS.size() && !getStackInSlot(i).isEmpty()) {
 
             var input = i == 0 ? getInput() : getStackInSlot(OUTPUT_SLOTS.get(i - 1));
@@ -111,7 +114,7 @@ public class FrameworkBE extends BaseMachineBE {
             if (!checkSlot(output, recipe.getOutput().create()))
                 break;
 
-            results.add(recipe.getOutput());
+            results.set(i, recipe.getOutput());
             fe += recipe.getEnergy();
             tick += recipe.getTime();
             i++;
@@ -135,10 +138,11 @@ public class FrameworkBE extends BaseMachineBE {
     @Override
     public void result() {
 
-        if (!results.isEmpty())
+        if (!results.isEmpty() && results.size() > 0)
             for (int i = 0; i < results.size(); i++)
-                updateResource(ItemResource.of(results.get(i)), OUTPUT_SLOTS.get(i),
-                        results.get(i).count(), false);
+                if (results.get(i) != null)
+                    updateResource(ItemResource.of(results.get(i)), OUTPUT_SLOTS.get(i),
+                            results.get(i).count(), false);
 
         // updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
         // recipe.getInput().count(), true);
