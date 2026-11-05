@@ -29,6 +29,8 @@ public class FrameworkRecipeBuilder extends BaseMachineRecipeBuilder<FrameworkRe
     private FrameworkRecipeBuilder(HolderLookup.Provider p) {
         super(p);
         this.criteria = new LinkedHashMap<String, Criterion<?>>();
+        this.energy = 10;
+        this.ticks = 10;
     }
 
     public static FrameworkRecipeBuilder of(HolderLookup.Provider p) {
