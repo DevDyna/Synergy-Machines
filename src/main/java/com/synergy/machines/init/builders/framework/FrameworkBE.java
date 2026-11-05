@@ -77,7 +77,7 @@ public class FrameworkBE extends BaseMachineBE {
 
     // TODO config
     public static final int BASE_FE_COST = 100;
-    public static final int BASE_TICK_DELAY = 20;
+    public static final int BASE_TICK_DELAY = 40;
 
     private List<ItemStackTemplate> results = new ArrayList<>(5);
 
