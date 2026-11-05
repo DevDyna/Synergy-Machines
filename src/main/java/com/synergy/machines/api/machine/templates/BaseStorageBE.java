@@ -114,7 +114,20 @@ public abstract class BaseStorageBE extends BaseRecipeBE implements ResourceRest
                 return 0;
             }
 
+            @Override
+            protected void onContentsChanged(int index, ItemStack previousContents) {
+                BaseStorageBE.this.onContentsChanged(index, previousContents);
+                super.onContentsChanged(index, previousContents);
+            }
+
         };
+    }
+
+    /**
+     * Method extracted from {@link ItemStacksResourceHandler#onContentsChanged}
+     */
+    public void onContentsChanged(int index, ItemStack previousContents) {
+
     }
 
     // @Override
