@@ -1,10 +1,15 @@
 package com.synergy.machines.init.builders.framework;
 
+import static com.synergy.machines.Main.MODULE_ID;
+
 import com.devdyna.cakesticklib.api.primitive.Size;
+import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.machine.BaseMachineScreen;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 //TODO maybe i can unify screen-menu handling (?)
@@ -22,25 +27,85 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
 
                 renderInputSlot(graphics, 43, 8, mouseX, mouseY);
 
-                for (var slot : FrameworkBE.MACHINE_SLOTS)
+                renderStaticTexture(graphics,
+                                x.rl(MODULE_ID, "textures/gui/container/slot/tiny_arrow.png"),
+                                4 + 43, 31-4-2,
+                                7, 7);
+
+                for (var i = 0; i < FrameworkBE.MACHINE_SLOTS.size(); i++) {
                         renderExtraSlot(graphics,
-                                        43 + (FrameworkBE.MACHINE_SLOTS.indexOf(slot)  * 27),
+                                        43 + i * 27,
                                         35,
                                         mouseX, mouseY);
 
-                for (var slot : FrameworkBE.OUTPUT_SLOTS)
+                        renderStaticTexture(graphics,
+                                        x.rl(MODULE_ID, "textures/gui/container/slot/tiny_arrow.png"),
+                                        4 + 43 + i * 27, 35 - 4 + 20,
+                                        7, 7);
+
+                        // ignore last slot
+                        if (i + 1 >= FrameworkBE.MACHINE_SLOTS.size())
+                                break;
+
+                        renderStaticTexture(graphics,
+                                        x.rl(MODULE_ID, "textures/gui/container/slot/small_arrow.png"),
+                                        20 - 2 + 43 + i * 27, 60 - 21,
+                                        7, 7);
+
+                        if (!menu.getSlot(FrameworkBE.MACHINE_SLOTS.get(i) + 40 - 3).hasItem())
+                                renderStaticTexture(graphics,
+                                                x.rl(MODULE_ID, "textures/gui/container/slot/red_cross.png"),
+                                                20 - 2 + 43 + i * 27, 60 - 21,
+                                                7, 7);
+
+                }
+
+                for (var i = 0; i < FrameworkBE.OUTPUT_SLOTS.size(); i++) {
                         renderOutputSlot(graphics,
-                                        43 + (FrameworkBE.OUTPUT_SLOTS.indexOf(slot)  * 27),
+                                        43 + i * 27,
                                         60,
                                         mouseX, mouseY);
 
+                }
+
+                renderProgressBar(graphics, mouseX, mouseY, 32, 5);
+
         }
 
-        // @Override
-        // public boolean enableLeftLabel(GuiGraphicsExtractor g, int x, int y, float a)
-        // {
-        // return true;
-        // }
+        public void renderStaticTexture(GuiGraphicsExtractor graphics, Identifier rl, int xo, int yo, int width,
+                        int height) {
+                graphics.blit(RenderPipelines.GUI_TEXTURED, rl, getLeftPos() + xo, getTopPos() + yo, 0, 0, width,
+                                height, width, height);
+        }
+
+        public void renderProgressBar(GuiGraphicsExtractor graphics, int mouseX, int mouseY, int xo, int yo) {
+
+                graphics.blit(RenderPipelines.GUI_TEXTURED,
+                                x.rl(MODULE_ID, "textures/gui/container/slot/progress/base.png"),
+                                getLeftPos() + xo, getTopPos() + yo,
+                                0, 0,
+                                6, 72,
+                                36, 72);
+
+                if (this.whenAnimateArrow()) {
+                        var slice = getScaledProgress(72);
+                        graphics.blit(RenderPipelines.GUI_TEXTURED,
+                                        x.rl(MODULE_ID, "textures/gui/container/slot/progress/base.png"),
+                                        getLeftPos() + xo, getTopPos() + yo + (72 - slice),
+                                        18, 72 - slice,
+                                        6, slice,
+                                        36, 72);
+
+                }
+
+                if (isDebugHover(xo, yo, 6, 72, mouseX, mouseY))
+                        graphics.blit(RenderPipelines.GUI_TEXTURED,
+                                        x.rl(MODULE_ID, "textures/gui/container/slot/progress/debug.png"),
+                                        getLeftPos() + xo, getTopPos() + yo,
+                                        0, 0,
+                                        6, 72,
+                                        6, 72);
+        }
 
         @Override
         public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
@@ -53,13 +118,13 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
 
                 for (var slot : FrameworkBE.MACHINE_SLOTS)
                         renderExtraSlotTooltip(graphics,
-                                        43 + ((FrameworkBE.MACHINE_SLOTS.indexOf(slot) - 1) * 27),
+                                        43 + (FrameworkBE.MACHINE_SLOTS.indexOf(slot) * 27),
                                         35,
                                         mouseX, mouseY);
 
                 for (var slot : FrameworkBE.OUTPUT_SLOTS)
                         renderOutputSlotTooltip(graphics,
-                                        43 + ((FrameworkBE.OUTPUT_SLOTS.indexOf(slot) - 1) * 27),
+                                        43 + (FrameworkBE.OUTPUT_SLOTS.indexOf(slot) * 27),
                                         60,
                                         mouseX, mouseY);
 
@@ -72,8 +137,7 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
 
         @Override
         protected void renderArrow(GuiGraphicsExtractor guiGraphics) {
-        
-                //TODO change
+
         }
 
 }
