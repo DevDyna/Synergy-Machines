@@ -95,30 +95,7 @@ public class PluginJEI implements IModPlugin {
 
                 if (!Config.DISABLE_MACHINE_FURNACE_PROCESS_VANILLA.get())
                         r.addRecipes(ElectricFurnaceCategory.TYPE,
-                                        getRecipes(RecipeType.SMELTING)
-                                                        .stream()
-                                                        .map(s -> new RecipeHolder<ElectricFurnaceRecipeType>(
-                                                                        ResourceKey.create(Registries.RECIPE, x.rl(
-                                                                                        MODULE_ID,
-                                                                                        zMachines.ELECTRIC_FURNACE.id()
-                                                                                                        + "_generated_"
-                                                                                                        + s.id().identifier()
-                                                                                                                        .getPath()
-                                                                                                                        .replace("/",
-                                                                                                                                        "")))
-                                                                        // s.id()
-                                                                        , ElectricFurnaceRecipeType.of(
-                                                                                        ElectricFurnaceBE
-                                                                                                        .getCalculatedDelay(
-                                                                                                                        s.value().cookingTime()),
-                                                                                        Config.MACHINE_FURNACE_PROCESS_VANILLA_FE_COST
-                                                                                                        .get(),
-                                                                                        x.itemSized(s.value().input()),
-                                                                                        ((SingleItemRecipeMixin) s
-                                                                                                        .value())
-                                                                                                        .getResult()))
-
-                                                        ).toList());
+                                        ElectricFurnaceCategory.fromSmelting(getRecipes(RecipeType.SMELTING)));
 
                 r.addRecipes(ExtractorCategory.TYPE,
                                 getRecipes(zMachines.EXTRACTOR.recipe().getType()));
