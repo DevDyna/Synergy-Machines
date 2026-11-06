@@ -385,9 +385,58 @@ public interface MachineWidgets {
                                         mouseY);
         }
 
+        // progress bar
 
+        abstract int getScaledProgress(int v);
+
+        abstract boolean whenAnimateArrow();
+
+        public enum ProgressColor {
+                BLUE(0),
+                GREEN(1),
+                ORANGE(2),
+                PINK(3),
+                RED(4);
+
+                private int v;
+
+                private ProgressColor(int v) {
+                        this.v = v;
+                }
+
+                public int getUV() {
+                        return v;
+                }
         }
 
+        default void renderProgressBar(GuiGraphicsExtractor graphics, int mouseX, int mouseY, int xo, int yo,
+                        ProgressColor c) {
+
+                graphics.blit(RenderPipelines.GUI_TEXTURED,
+                                x.rl(MODULE_ID, "textures/gui/container/slot/progress/base.png"),
+                                getLeftPos() + xo, getTopPos() + yo,
+                                0, 0,
+                                6, 72,
+                                36, 72);
+
+                if (whenAnimateArrow()) {
+                        var slice = getScaledProgress(72);
+                        graphics.blit(RenderPipelines.GUI_TEXTURED,
+                                        x.rl(MODULE_ID, "textures/gui/container/slot/progress/base.png"),
+                                        getLeftPos() + xo, getTopPos() + yo + (72 - slice),
+                                        (c.getUV() + 1) * 6, 72 - slice,
+                                        6, slice,
+                                        36, 72);
+
+                }
+
+                if (isDebugHover(xo - 1, yo, 8, 72, mouseX, mouseY))
+                        graphics.blit(RenderPipelines.GUI_TEXTURED,
+                                        x.rl(MODULE_ID, "textures/gui/container/slot/progress/debug.png"),
+                                        getLeftPos() + xo - 1, getTopPos() + yo,
+                                        c.getUV() * 8, 72,
+                                        8, 72,
+                                        40, 72);
         }
 
         // misc
@@ -416,6 +465,12 @@ public interface MachineWidgets {
         default boolean isDebugHover(int xo, int yo, int width, int height, int mouseX, int mouseY) {
                 return getDebug() && Pos.of(getLeftPos() + xo, getTopPos() + yo).setSize(width, height).test(mouseX,
                                 mouseY);
+        }
+
+        default void renderStaticTexture(GuiGraphicsExtractor graphics, Identifier rl, int xo, int yo, int width,
+                        int height) {
+                graphics.blit(RenderPipelines.GUI_TEXTURED, rl, getLeftPos() + xo, getTopPos() + yo, 0, 0, width,
+                                height, width, height);
         }
 
 }
