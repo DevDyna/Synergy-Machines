@@ -463,13 +463,13 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 null,
                                 null);
 
-                createFactoryRecipe(output, zMachines.MACERATOR, Items.COBBLESTONE, Items.GRAVEL, false);
-                createFactoryRecipe(output, zMachines.MACERATOR, Items.GRAVEL, Items.SAND, false);
-                createFactoryRecipe(output, zMachines.ELECTRIC_FURNACE, Items.SAND, Items.GLASS, true);
-                createFactoryRecipe(output, zMachines.ELECTRIC_FURNACE, Items.COBBLESTONE, Items.STONE, true);
+                factoryRecipe(output, zMachines.MACERATOR, Items.COBBLESTONE, Items.GRAVEL, false);
+                factoryRecipe(output, zMachines.MACERATOR, Items.GRAVEL, Items.SAND, false);
+                factoryRecipe(output, zMachines.ELECTRIC_FURNACE, Items.SAND, Items.GLASS, true);
+                factoryRecipe(output, zMachines.ELECTRIC_FURNACE, Items.COBBLESTONE, Items.STONE, true);
 
-                createFactoryRecipe(output, zMachines.MACERATOR, Items.DEEPSLATE, Items.COBBLED_DEEPSLATE, false);
-                createFactoryRecipe(output, zMachines.ELECTRIC_FURNACE, Items.COBBLED_DEEPSLATE, Items.DEEPSLATE, true);
+                factoryRecipe(output, zMachines.MACERATOR, Items.DEEPSLATE, Items.COBBLED_DEEPSLATE, false);
+                factoryRecipe(output, zMachines.ELECTRIC_FURNACE, Items.COBBLED_DEEPSLATE, Items.DEEPSLATE, true);
 
         }
 
@@ -507,7 +507,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
         }
 
         @SuppressWarnings("unused")
-        private void createFactoryRecipe(RecipeOutput c, MachineType<?, ?, ?, ?> machine, TagKey<Item> input,
+        private void factoryRecipe(RecipeOutput c, MachineType<?, ?, ?, ?> machine, TagKey<Item> input,
                         ItemLike output, boolean onlyFrame) {
                 if (!onlyFrame) {
                         if (machine == zMachines.MACERATOR)
@@ -533,7 +533,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 .save(c);
         }
 
-        private void createFactoryRecipe(RecipeOutput c, MachineType<?, ?, ?, ?> machine, ItemLike input,
+        private void factoryRecipe(RecipeOutput c, MachineType<?, ?, ?, ?> machine, ItemLike input,
                         ItemLike output, boolean onlyFrame) {
                 if (!onlyFrame) {
                         if (machine == zMachines.MACERATOR)
@@ -573,6 +573,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                 MaceratorRecipeBuilder.of(registries)
                                 .input(ingot)
                                 .output(dust.asItem())
+                                .includeFramework()
                                 .unlockedBy(ingot)
                                 .save(output, "_from_ingot");
 
