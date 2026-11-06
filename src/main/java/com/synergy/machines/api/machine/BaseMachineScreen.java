@@ -230,8 +230,25 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                                 ClientUtils.defaultToolTipColor.getRGB(), false);
         }
 
+        /**
+         * default: [57, 0]
+         */
         public Size getContainerTitlePos() {
                 return Size.of(57, 0);
+        }
+
+        /**
+         * default: [68, 70]
+         */
+        public Size getTickDelayPos() {
+                return Size.of(68, 70);
+        }
+
+        /**
+         * default: [8, 5]
+         */
+        public Size getEnergyStoragePos() {
+                return Size.of(8, 5);
         }
 
         @Override

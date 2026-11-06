@@ -108,11 +108,13 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
         }
 
         @Override
+        public Size getContainerTitlePos() {
+                return Size.of(80, 0);
         }
 
         @Override
-        public Size getContainerTitlePos() {
-                return Size.of(60, 0);
+        public Size getTickDelayPos() {
+                return Size.of(90, 10);
         }
 
         @Override
