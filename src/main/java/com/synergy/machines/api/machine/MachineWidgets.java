@@ -14,6 +14,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -97,11 +98,16 @@ public interface MachineWidgets {
                                         0, 0,
                                         168, 82,
                                         168, 82);
+
+                renderDebugSlotTooltip(guiGraphics, xo + 5, yo + 81, 167, 82, "inventory.debug", mouseX, mouseY);
+
         }
 
+        @Deprecated
         default void renderMachineInventoryTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX,
                         int mouseY) {
-                renderDebugSlotTooltip(graphics, xo + 5, yo + 81, 167, 82, "inventory.debug", mouseX, mouseY);
+                // renderDebugSlotTooltip(graphics, xo + 5, yo + 81, 167, 82, "inventory.debug",
+                // mouseX, mouseY);
         }
 
         // upgrade slots
@@ -115,18 +121,21 @@ public interface MachineWidgets {
                                 18, 72,
                                 18, 72);
 
-                if (isDebugHover(xo + 7 -3, yo + 7 -3, 24, 78, mouseX, mouseY))
+                if (isDebugHover(xo + 7 - 3, yo + 7 - 3, 24, 78, mouseX, mouseY))
                         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
                                         x.rl(MODULE_ID, "textures/gui/container/slot/upgrade/debug.png"),
-                                        getLeftPos() + 7 -3+ xo ,
-                                        getTopPos() + 7 -3+ yo ,
+                                        getLeftPos() + 7 - 3 + xo,
+                                        getTopPos() + 7 - 3 + yo,
                                         0, 0,
                                         24, 78,
                                         24, 78);
+
+                renderDebugSlotTooltip(guiGraphics, xo + 7 - 3, yo + 7 - 3, 24, 78, "upgrade.debug", mouseX, mouseY);
+
         }
 
+        @Deprecated
         default void renderUpgradeTooltips(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX, int mouseY) {
-                renderDebugSlotTooltip(graphics, xo+ 7 - 3, yo+ 7 - 3, 24, 78, "upgrade.debug", mouseX, mouseY);
         }
 
         // input slots
@@ -148,6 +157,9 @@ public interface MachineWidgets {
                                         0, 0,
                                         18, 18,
                                         18, 18);
+
+                renderSlotTooltip(guiGraphics, xo, yo, "slot.input.debug", mouseX, mouseY);
+
         }
 
         default void renderLargeInputSlot(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
@@ -167,15 +179,18 @@ public interface MachineWidgets {
                                         0, 0,
                                         26, 26,
                                         26, 26);
+
+                renderLargeSlotTooltip(guiGraphics, xo, yo, "slot.input.debug", mouseX, mouseY);
+
         }
 
+        @Deprecated
         default void renderInputSlotTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX, int mouseY) {
-                renderSlotTooltip(graphics, xo, yo, "slot.input.debug", mouseX, mouseY);
         }
 
+        @Deprecated
         default void renderLargeInputSlotTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX,
                         int mouseY) {
-                renderLargeSlotTooltip(graphics, xo, yo, "slot.input.debug", mouseX, mouseY);
         }
 
         // output slots
@@ -197,6 +212,9 @@ public interface MachineWidgets {
                                         0, 0,
                                         18, 18,
                                         18, 18);
+
+                renderSlotTooltip(guiGraphics, xo, yo, "slot.output.debug", mouseX, mouseY);
+
         }
 
         default void renderLargeOutputSlot(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
@@ -216,15 +234,18 @@ public interface MachineWidgets {
                                         0, 0,
                                         26, 26,
                                         26, 26);
+
+                renderLargeSlotTooltip(guiGraphics, xo, yo, "slot.output.debug", mouseX, mouseY);
+
         }
 
+        @Deprecated
         default void renderOutputSlotTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX, int mouseY) {
-                renderSlotTooltip(graphics, xo, yo, "slot.output.debug", mouseX, mouseY);
         }
 
+        @Deprecated
         default void renderLargeOutputSlotTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX,
                         int mouseY) {
-                renderLargeSlotTooltip(graphics, xo, yo, "slot.output.debug", mouseX, mouseY);
         }
 
         // extra slots
@@ -246,6 +267,9 @@ public interface MachineWidgets {
                                         0, 0,
                                         18, 18,
                                         18, 18);
+
+                renderSlotTooltip(guiGraphics, xo, yo, "slot.extra.debug", mouseX, mouseY);
+
         }
 
         default void renderLargeExtraSlot(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
@@ -265,15 +289,18 @@ public interface MachineWidgets {
                                         0, 0,
                                         26, 26,
                                         26, 26);
+
+                renderLargeSlotTooltip(guiGraphics, xo, yo, "slot.extra.debug", mouseX, mouseY);
+
         }
 
+        @Deprecated
         default void renderExtraSlotTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX, int mouseY) {
-                renderSlotTooltip(graphics, xo, yo, "slot.extra.debug", mouseX, mouseY);
         }
 
+        @Deprecated
         default void renderLargeExtraSlotTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX,
                         int mouseY) {
-                renderLargeSlotTooltip(graphics, xo, yo, "slot.extra.debug", mouseX, mouseY);
         }
 
         // energy bar
@@ -304,14 +331,12 @@ public interface MachineWidgets {
                                         18, 72,
                                         18, 72);
 
-        }
 
-        default void renderEnergyTooltip(GuiGraphicsExtractor graphics, int x, int y, int x0, int y0, int mouseX,
-                        int mouseY) {
-                if (getDebug())
-                        renderDebugSlotTooltip(graphics, x, y, x0, y0, "energy.debug", mouseX, mouseY);
-                else if (Pos.of(getLeftPos() + x, getTopPos() + y).setSize(x0, y0).test(mouseX, mouseY))
-                        graphics.setComponentTooltipForNextFrame(
+
+ if (getDebug())
+                        renderDebugSlotTooltip(guiGraphics, xo, yo, 18, 72, "energy.debug", mouseX, mouseY);
+                else if (Pos.of(getLeftPos() + xo, getTopPos() + yo).setSize(18, 72).test(mouseX, mouseY))
+                        guiGraphics.setComponentTooltipForNextFrame(
                                         getFont(), List.of(Component.literal(
                                                         (Minecraft.getInstance().hasShiftDown()
                                                                         ? String.valueOf(
@@ -337,6 +362,13 @@ public interface MachineWidgets {
                                                                                                         + "§f FE/tick")),
                                         mouseX,
                                         mouseY);
+
+        }
+
+        @Deprecated
+        default void renderEnergyTooltip(GuiGraphicsExtractor graphics, int x, int y, int x0, int y0, int mouseX,
+                        int mouseY) {
+               
 
         }
 
@@ -374,15 +406,14 @@ public interface MachineWidgets {
                                         0, 0,
                                         18, 72,
                                         18, 72);
-        }
 
-        default void renderFluidTooltip(GuiGraphicsExtractor graphics, int index, int x, int y, int x0, int y0,
-                        int mouseX,
-                        int mouseY) {
-                if (getDebug())
-                        renderDebugSlotTooltip(graphics, x, y, x0, y0, "fluid.debug", mouseX, mouseY);
-                else if (Pos.of(getLeftPos() + x, getTopPos() + y).setSize(x0, y0).test(mouseX, mouseY))
-                        graphics.setComponentTooltipForNextFrame(getFont(), List.of(Component.literal(
+
+
+
+                                         if (getDebug())
+                        renderDebugSlotTooltip(guiGraphics, xo, yo, 18, 72, "fluid.debug", mouseX, mouseY);
+                else if (Pos.of(getLeftPos() + xo, getTopPos() + yo).setSize(18, 72).test(mouseX, mouseY))
+                        guiGraphics.setComponentTooltipForNextFrame(getFont(), List.of(Component.literal(
                                         (ClientUtils.hasShiftDown()
                                                         ? String.valueOf(getFluidAmount(
                                                                         index))
@@ -402,6 +433,15 @@ public interface MachineWidgets {
                                                         .append(getFluidStack(index).getHoverName())),
                                         mouseX,
                                         mouseY);
+        }
+
+        @Deprecated
+        default void renderFluidTooltip(GuiGraphicsExtractor graphics, int index, int x, int y, int x0, int y0,
+                        int mouseX,
+                        int mouseY) {
+               
+
+        }
 
         }
 
