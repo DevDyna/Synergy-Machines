@@ -24,11 +24,11 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 public abstract class BaseMachineMenu extends BaseMenu {
 
-    protected static final int PROGRESS_INDEX = 0;
-    protected static final int MAX_PROGRESS_INDEX = 1;
-    protected static final int STORED_ENERGY_INDEX = 2;
-    protected static final int MAX_ENERGY_INDEX = 3;
-    protected static final int RECIPE_ENERGY_USAGE = 4;
+    public static final int PROGRESS_INDEX = 0;
+    public static final int MAX_PROGRESS_INDEX = 1;
+    public static final int STORED_ENERGY_INDEX = 2;
+    public static final int MAX_ENERGY_INDEX = 3;
+    public static final int RECIPE_ENERGY_USAGE = 4;
 
     protected final ContainerData data;
     protected final Level level;
