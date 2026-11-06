@@ -148,7 +148,7 @@ public class FrameworkBE extends BaseMachineBE {
 
         if (checkSlot(getInput(), x.item(Items.COBBLESTONE))) {
             if (genTicker == null)
-                genTicker = Ticker.of(calculateMaxProgress(40));// TODO config
+                genTicker = Ticker.of(calculateMaxProgress(40));// TODO recipe
 
             if (genTicker.commit()) {
                 updateResource(ItemResource.of(Items.COBBLESTONE), INPUT_SLOT, 1, false);
