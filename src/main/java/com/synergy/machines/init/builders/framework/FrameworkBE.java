@@ -59,6 +59,7 @@ public class FrameworkBE extends BaseMachineBE {
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         return new FrameworkMenu(i, inventory, this, this.networkData);
+        return new FrameworkMenu(i, inventory, this, this.getContainerData());
     }
 
     public ItemStack getInput() {

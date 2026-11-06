@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -45,7 +44,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new ElectricFurnaceMenu(i, inventory, this, this.networkData);
+        return new ElectricFurnaceMenu(i, inventory, this, getContainerData());
     }
 
     public ItemStack getInput() {
@@ -134,10 +133,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
         updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, holder.amount_consumed, true);
     }
 
-    @Override
-    public ContainerData getContainerData() {
-        return networkData;
-    }
+  
 
     public static int getCalculatedDelay(int time) {
         return Config.DISABLE_MACHINE_FURNACE_VANILLA_TICK_REDUCER.get() ? time

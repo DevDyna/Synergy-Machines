@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -40,7 +39,7 @@ public class CompressorBE extends BaseMachineBE {
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new CompressorMenu(i, inventory, this, this.networkData);
+        return new CompressorMenu(i, inventory, this, getContainerData());
     }
 
     public ItemStack getInput() {
@@ -53,7 +52,7 @@ public class CompressorBE extends BaseMachineBE {
 
     @Override
     public List<Integer> getInputSlotIndex() {
-        return List.of(INPUT_SLOT,PLATE_SLOT);
+        return List.of(INPUT_SLOT, PLATE_SLOT);
     }
 
     @Override
@@ -107,11 +106,6 @@ public class CompressorBE extends BaseMachineBE {
         updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
                 recipe.getInput().count(), true);
 
-    }
-
-    @Override
-    public ContainerData getContainerData() {
-        return networkData;
     }
 
     public ItemStack getPlateSlot() {

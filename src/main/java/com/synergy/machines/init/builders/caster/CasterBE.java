@@ -59,7 +59,7 @@ public class CasterBE extends BaseMachineBE implements ResourceRestricted.Fluid 
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new CasterMenu(i, inventory, this, this.networkData);
+        return new CasterMenu(i, inventory, this, getContainerData());
     }
 
     @Override

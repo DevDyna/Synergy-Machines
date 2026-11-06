@@ -40,7 +40,7 @@ public class MelterBE extends BaseMachineBE implements ResourceRestricted.Fluid 
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new MelterMenu(i, inventory, this, this.networkData);
+        return new MelterMenu(i, inventory, this, getContainerData());
     }
 
     public ItemStack getInput() {

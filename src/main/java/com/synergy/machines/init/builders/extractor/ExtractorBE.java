@@ -42,7 +42,7 @@ public class ExtractorBE extends BaseMachineBE implements ResourceRestricted.Flu
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new ExtractorMenu(i, inventory, this, this.networkData);
+        return new ExtractorMenu(i, inventory, this, getContainerData());
     }
 
     public ItemStack getInput() {

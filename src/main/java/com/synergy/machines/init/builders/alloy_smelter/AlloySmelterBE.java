@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -43,7 +42,7 @@ public class AlloySmelterBE extends BaseMachineBE {
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new AlloySmelterMenu(i, inventory, this, this.networkData);
+        return new AlloySmelterMenu(i, inventory, this, getContainerData());
     }
 
     Optional<RecipeHolder<AlloySmelterRecipeType>> saved_recipe = null;
@@ -124,11 +123,6 @@ public class AlloySmelterBE extends BaseMachineBE {
         updateResource(getItemStorage().getResource(SECONDARY_INPUT), SECONDARY_INPUT,
                 recipe.getRightItem().count(), true);
 
-    }
-
-    @Override
-    public ContainerData getContainerData() {
-        return networkData;
     }
 
 }

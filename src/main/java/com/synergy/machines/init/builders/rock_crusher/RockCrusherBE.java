@@ -54,7 +54,7 @@ public class RockCrusherBE extends BaseMachineBE implements ResourceRestricted.F
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new RockCrusherMenu(i, inventory, this, this.networkData);
+        return new RockCrusherMenu(i, inventory, this, getContainerData());
     }
 
     public ItemStack getInput() {
