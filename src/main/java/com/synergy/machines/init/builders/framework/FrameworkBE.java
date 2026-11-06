@@ -97,7 +97,7 @@ public class FrameworkBE extends BaseMachineBE {
         for (var _ : OUTPUT_SLOTS)
             results.add(null);
 
-        while (i < MACHINE_SLOTS.size() && !getStackInSlot(i).isEmpty()) {
+        while (i < MACHINE_SLOTS.size() && !getStackInSlot(i+4).isEmpty()) {
 
             var input = i == 0 ? getInput() : getStackInSlot(OUTPUT_SLOTS.get(i - 1));
             var machine = getStackInSlot(MACHINE_SLOTS.get(i));
