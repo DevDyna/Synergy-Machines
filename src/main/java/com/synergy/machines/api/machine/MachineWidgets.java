@@ -103,13 +103,6 @@ public interface MachineWidgets {
 
         }
 
-        @Deprecated
-        default void renderMachineInventoryTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX,
-                        int mouseY) {
-                // renderDebugSlotTooltip(graphics, xo + 5, yo + 81, 167, 82, "inventory.debug",
-                // mouseX, mouseY);
-        }
-
         // upgrade slots
 
         default void renderUpgradeSlots(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
@@ -132,10 +125,6 @@ public interface MachineWidgets {
 
                 renderDebugSlotTooltip(guiGraphics, xo + 7 - 3, yo + 7 - 3, 24, 78, "upgrade.debug", mouseX, mouseY);
 
-        }
-
-        @Deprecated
-        default void renderUpgradeTooltips(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX, int mouseY) {
         }
 
         // input slots
@@ -184,15 +173,6 @@ public interface MachineWidgets {
 
         }
 
-        @Deprecated
-        default void renderInputSlotTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX, int mouseY) {
-        }
-
-        @Deprecated
-        default void renderLargeInputSlotTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX,
-                        int mouseY) {
-        }
-
         // output slots
 
         default void renderOutputSlot(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
@@ -237,15 +217,6 @@ public interface MachineWidgets {
 
                 renderLargeSlotTooltip(guiGraphics, xo, yo, "slot.output.debug", mouseX, mouseY);
 
-        }
-
-        @Deprecated
-        default void renderOutputSlotTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX, int mouseY) {
-        }
-
-        @Deprecated
-        default void renderLargeOutputSlotTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX,
-                        int mouseY) {
         }
 
         // extra slots
@@ -294,15 +265,6 @@ public interface MachineWidgets {
 
         }
 
-        @Deprecated
-        default void renderExtraSlotTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX, int mouseY) {
-        }
-
-        @Deprecated
-        default void renderLargeExtraSlotTooltip(GuiGraphicsExtractor graphics, int xo, int yo, int mouseX,
-                        int mouseY) {
-        }
-
         // energy bar
 
         default void renderEnergyStorage(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
@@ -331,9 +293,7 @@ public interface MachineWidgets {
                                         18, 72,
                                         18, 72);
 
-
-
- if (getDebug())
+                if (getDebug())
                         renderDebugSlotTooltip(guiGraphics, xo, yo, 18, 72, "energy.debug", mouseX, mouseY);
                 else if (Pos.of(getLeftPos() + xo, getTopPos() + yo).setSize(18, 72).test(mouseX, mouseY))
                         guiGraphics.setComponentTooltipForNextFrame(
@@ -362,13 +322,6 @@ public interface MachineWidgets {
                                                                                                         + "§f FE/tick")),
                                         mouseX,
                                         mouseY);
-
-        }
-
-        @Deprecated
-        default void renderEnergyTooltip(GuiGraphicsExtractor graphics, int x, int y, int x0, int y0, int mouseX,
-                        int mouseY) {
-               
 
         }
 
@@ -407,10 +360,7 @@ public interface MachineWidgets {
                                         18, 72,
                                         18, 72);
 
-
-
-
-                                         if (getDebug())
+                if (getDebug())
                         renderDebugSlotTooltip(guiGraphics, xo, yo, 18, 72, "fluid.debug", mouseX, mouseY);
                 else if (Pos.of(getLeftPos() + xo, getTopPos() + yo).setSize(18, 72).test(mouseX, mouseY))
                         guiGraphics.setComponentTooltipForNextFrame(getFont(), List.of(Component.literal(
@@ -435,11 +385,6 @@ public interface MachineWidgets {
                                         mouseY);
         }
 
-        @Deprecated
-        default void renderFluidTooltip(GuiGraphicsExtractor graphics, int index, int x, int y, int x0, int y0,
-                        int mouseX,
-                        int mouseY) {
-               
 
         }
 
