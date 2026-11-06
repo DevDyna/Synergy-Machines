@@ -26,6 +26,7 @@ public class Config {
         public static IntValue MACHINE_MAX_FE;// 100k
 
         public static BooleanValue ENABLE_SHIFT_INVERT_MACHINE_PLACEMENT;
+        public static BooleanValue MACHINE_SLOT_LOGGING;
 
         public static IntValue MACHINE_MAX_SPEED_UPGRADES_TYPE;// 4
         public static IntValue MACHINE_MAX_ENERGY_EFFICIENCY_UPGRADES_TYPE;// max
@@ -66,6 +67,10 @@ public class Config {
                 ENABLE_SHIFT_INVERT_MACHINE_PLACEMENT = bool(
                                 "Allow to place any machine on the opposite side when pressed shift during the placement",
                                 "enable_shift_invert_facing", false);
+
+                MACHINE_SLOT_LOGGING = bool(
+                                "Enable slot logging on quick-move action",
+                                "slot_logging", false);
 
                 MACHINE_MAX_FE = number("Base max energy stored",
                                 "base_machine_max_fe", 160_000);

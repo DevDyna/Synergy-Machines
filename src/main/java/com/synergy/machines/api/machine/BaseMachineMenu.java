@@ -6,6 +6,8 @@ import com.devdyna.cakesticklib.api.utils.FluidUtils;
 import com.devdyna.cakesticklib.api.utils.SlotBuilder;
 import com.devdyna.cakesticklib.api.utils.SlotBuilder.ResourceType;
 import com.devdyna.cakesticklib.api.utils.x;
+import com.mojang.logging.LogUtils;
+import com.synergy.machines.Config;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
 import net.minecraft.world.entity.player.Inventory;
@@ -163,12 +165,13 @@ public abstract class BaseMachineMenu extends BaseMenu {
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
 
-        //TODO maybe visual?
-        // com.mojang.logging.LogUtils.getLogger().info("i: " + index);
+        // TODO maybe visual?
+        if (Config.MACHINE_SLOT_LOGGING.get())
+            LogUtils.getLogger()
+                    .info("gui: " + index + (index - 36 <= 0 ? "" : " machine : " + (index - 36)));
 
-        if (index < 0 || index >= this.slots.size()) 
+        if (index < 0 || index >= this.slots.size())
             return ItemStack.EMPTY;
-        
 
         var slot = this.slots.get(index);
 
@@ -178,7 +181,7 @@ public abstract class BaseMachineMenu extends BaseMenu {
         var item = slot.getItem();
 
         // upgrades -> inventory (no machine)
-        if (index >= 0 && index <= 3 )
+        if (index >= 0 && index <= 3)
             return moveToInventory(item, slot, player);
 
         // player inv -> <?>
@@ -228,5 +231,8 @@ public abstract class BaseMachineMenu extends BaseMenu {
     }
 
     public abstract SlotBuilder getSlots();
+
+
+    
 
 }
