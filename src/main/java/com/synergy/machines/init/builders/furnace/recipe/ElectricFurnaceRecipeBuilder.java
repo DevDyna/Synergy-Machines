@@ -23,10 +23,12 @@ public class ElectricFurnaceRecipeBuilder extends BaseMachineRecipeBuilder<Elect
 
     private ItemStackTemplate output;
     private SizedIngredient input;
+    private boolean compatible;
 
     private ElectricFurnaceRecipeBuilder(HolderLookup.Provider p) {
         super(p);
         this.criteria = new LinkedHashMap<String, Criterion<?>>();
+        this.compatible = false;
     }
 
     public static ElectricFurnaceRecipeBuilder of(HolderLookup.Provider p) {
@@ -35,7 +37,7 @@ public class ElectricFurnaceRecipeBuilder extends BaseMachineRecipeBuilder<Elect
 
     @Override
     public Recipe<?> createRecipe() {
-        return new ElectricFurnaceRecipeType(ticks, energy, input, output);
+        return new ElectricFurnaceRecipeType(ticks, energy, compatible, input, output);
     }
 
     @Override
@@ -57,6 +59,11 @@ public class ElectricFurnaceRecipeBuilder extends BaseMachineRecipeBuilder<Elect
     @Override
     public ElectricFurnaceRecipeBuilder input(SizedIngredient input) {
         this.input = input;
+        return getBuilder();
+    }
+
+    public ElectricFurnaceRecipeBuilder includeFramework() {
+        this.compatible = true;
         return getBuilder();
     }
 

@@ -31,20 +31,21 @@ public class MaceratorRecipeType extends BaseMachineRecipeType<ItemInput.simple>
     private SizedIngredient input;
     private ItemStackTemplate output;
     private ChanceOutput.Item secondary;
-   
+    private boolean compat;
 
-    public MaceratorRecipeType(int ticks, int energy, SizedIngredient input,
+    public MaceratorRecipeType(int ticks, int energy,boolean compat, SizedIngredient input,
             ItemStackTemplate output, ChanceOutput.Item secondary) {
         this.input = input;
         this.ticks = ticks;
         this.output = output;
         this.energy = energy;
         this.secondary = secondary;
+        this.compat = compat;
     }
 
-    public static MaceratorRecipeType of(int ticks, int energy, SizedIngredient input,
+    public static MaceratorRecipeType of(int ticks, int energy, boolean compat, SizedIngredient input,
             ItemStackTemplate output, ChanceOutput.Item secondary) {
-        return new MaceratorRecipeType(ticks, energy, input, output, secondary);
+        return new MaceratorRecipeType(ticks, energy,compat, input, output, secondary);
     }
 
     public SizedIngredient getInput() {
@@ -57,6 +58,10 @@ public class MaceratorRecipeType extends BaseMachineRecipeType<ItemInput.simple>
 
     public ChanceOutput.Item getSecondaryOutput() {
         return secondary;
+    }
+
+    public boolean getFrameworkCompat() {
+        return compat;
     }
 
     @Override
@@ -101,22 +106,23 @@ public class MaceratorRecipeType extends BaseMachineRecipeType<ItemInput.simple>
     public static final MapCodec<MaceratorRecipeType> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Codec.intRange(1, Integer.MAX_VALUE).fieldOf("ticks").forGetter(MaceratorRecipeType::getTime),
             Codec.intRange(1, Integer.MAX_VALUE).fieldOf("energy").forGetter(MaceratorRecipeType::getEnergy),
-
+            Codec.BOOL.optionalFieldOf("framework_compatible").forGetter(r -> Optional.ofNullable(r.getFrameworkCompat())),
             SizedIngredient.NESTED_CODEC.fieldOf("input").forGetter(MaceratorRecipeType::getInput),
             ItemStackTemplate.CODEC.optionalFieldOf("output").forGetter(r -> Optional.ofNullable(r.getOutput())),
             ChanceOutput.Item.CODEC.optionalFieldOf("secondary_item")
                     .forGetter(r -> ChanceOutput.Item.optional(r.getSecondaryOutput())))
-            .apply(inst, (t, e, i, o, s) -> new MaceratorRecipeType(t, e, i, o.orElse(null), s.orElse(null))));
+            .apply(inst, (t, e,b, i, o, s) -> new MaceratorRecipeType(t, e,b.orElse(false), i, o.orElse(null), s.orElse(null))));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, MaceratorRecipeType> STREAM_CODEC = StreamCodec
             .composite(
                     ByteBufCodecs.INT, MaceratorRecipeType::getTime,
                     ByteBufCodecs.INT, MaceratorRecipeType::getEnergy,
+                    ByteBufCodecs.optional(ByteBufCodecs.BOOL), r -> Optional.ofNullable(r.getFrameworkCompat()),
                     SizedIngredient.STREAM_CODEC, MaceratorRecipeType::getInput,
                     ByteBufCodecs.optional(ItemStackTemplate.STREAM_CODEC),
                     r -> Optional.ofNullable(r.getOutput()),
                     ByteBufCodecs.optional(ChanceOutput.Item.STREAM_CODEC),
                     r -> ChanceOutput.Item.optional(r.getSecondaryOutput()),
-                    (t, e, i, o, s) -> new MaceratorRecipeType(t, e, i, o.orElse(null), s.orElse(null)));
+                    (t, e,b, i, o, s) -> new MaceratorRecipeType(t, e,b.orElse(false), i, o.orElse(null), s.orElse(null)));
 
 }

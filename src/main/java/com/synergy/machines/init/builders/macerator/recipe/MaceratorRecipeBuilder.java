@@ -27,10 +27,12 @@ public class MaceratorRecipeBuilder extends BaseMachineRecipeBuilder<MaceratorRe
     private ChanceOutput.Item secondary;
     private ItemStackTemplate output;
     private SizedIngredient input;
+    private boolean compatible;
 
     private MaceratorRecipeBuilder(HolderLookup.Provider p) {
         super(p);
         this.criteria = new LinkedHashMap<String, Criterion<?>>();
+        this.compatible = false;
     }
 
     public static MaceratorRecipeBuilder of(HolderLookup.Provider p) {
@@ -39,7 +41,7 @@ public class MaceratorRecipeBuilder extends BaseMachineRecipeBuilder<MaceratorRe
 
     @Override
     public Recipe<?> createRecipe() {
-        return new MaceratorRecipeType(ticks, energy, input, output, secondary);
+        return new MaceratorRecipeType(ticks, energy, compatible, input, output, secondary);
     }
 
     @Override
@@ -67,6 +69,11 @@ public class MaceratorRecipeBuilder extends BaseMachineRecipeBuilder<MaceratorRe
     @Override
     public MaceratorRecipeBuilder input(SizedIngredient input) {
         this.input = input;
+        return getBuilder();
+    }
+
+    public MaceratorRecipeBuilder includeFramework() {
+        this.compatible = true;
         return getBuilder();
     }
 
