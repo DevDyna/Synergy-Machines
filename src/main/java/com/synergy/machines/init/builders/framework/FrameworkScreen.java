@@ -108,26 +108,6 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
         }
 
         @Override
-        public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-
-                super.extractRenderState(graphics, mouseX, mouseY, a);
-
-                // renderFluidTooltip(graphics, 0, -22, +6, 18, 72, mouseX, mouseY);
-
-                renderInputSlotTooltip(graphics, 43, 8, mouseX, mouseY);
-
-                for (var slot : FrameworkBE.MACHINE_SLOTS)
-                        renderExtraSlotTooltip(graphics,
-                                        43 + (FrameworkBE.MACHINE_SLOTS.indexOf(slot) * 27),
-                                        35,
-                                        mouseX, mouseY);
-
-                for (var slot : FrameworkBE.OUTPUT_SLOTS)
-                        renderOutputSlotTooltip(graphics,
-                                        43 + (FrameworkBE.OUTPUT_SLOTS.indexOf(slot) * 27),
-                                        60,
-                                        mouseX, mouseY);
-
         }
 
         @Override

@@ -23,13 +23,4 @@ public class AlloySmelterScreen extends BaseMachineScreen<AlloySmelterMenu> {
 
     }
 
-    @Override
-    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        super.extractRenderState(graphics, mouseX, mouseY, a);
-
-        renderInputSlotTooltip(graphics, 34, 33, mouseX, mouseY);
-        renderInputSlotTooltip(graphics, 54, 33, mouseX, mouseY);
-        renderLargeOutputSlotTooltip(graphics, 119, 34, mouseX, mouseY);
-    }
-
 }

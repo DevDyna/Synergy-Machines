@@ -48,14 +48,4 @@ public class CompressorScreen extends BaseMachineScreen<CompressorMenu> {
         renderLargeOutputSlot(graphics, 119, 34, mouseX, mouseY);
     }
 
-    @Override
-    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-
-        super.extractRenderState(graphics, mouseX, mouseY, a);
-
-        renderInputSlotTooltip(graphics, 47, 15, mouseX, mouseY);
-        renderExtraSlotTooltip(graphics, 47, 51, mouseX, mouseY);
-        renderLargeOutputSlotTooltip(graphics, 119, 34, mouseX, mouseY);
-    }
-
 }

@@ -44,23 +44,6 @@ public class RockCrusherScreen extends BaseMachineScreen<RockCrusherMenu> {
         }
 
         @Override
-        public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-
-                super.extractRenderState(graphics, mouseX, mouseY, a);
-
-                renderFluidTooltip(graphics, 0, -22, +6, 18, 72, mouseX, mouseY);
-
-                renderInputSlotTooltip(graphics, 47, 33, mouseX, mouseY);
-
-                for (var slot : RockCrusherBE.OUTPUT_SLOTS)
-                        renderOutputSlotTooltip(graphics,
-                                        108 + (RockCrusherBE.OUTPUT_SLOTS.indexOf(slot) % 3 * 19),
-                                        15 + (RockCrusherBE.OUTPUT_SLOTS.indexOf(slot) / 3 * 19),
-                                        mouseX, mouseY);
-
-        }
-
-        @Override
         public Size getContainerTitlePos() {
                 return Size.of(47, 0);
         }

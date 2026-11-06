@@ -24,15 +24,6 @@ public class MelterScreen extends BaseMachineScreen<MelterMenu> {
         }
 
         @Override
-        public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-
-                super.extractRenderState(graphics, mouseX, mouseY, a);
-                renderFluidTooltip(graphics, 0, 150, 5, 18, 72, mouseX, mouseY);
-
-                renderInputSlotTooltip(graphics, 47, 33, mouseX, mouseY);
-        }
-
-        @Override
         public Size getContainerTitlePos() {
                 return Size.of(47, 0);
         }

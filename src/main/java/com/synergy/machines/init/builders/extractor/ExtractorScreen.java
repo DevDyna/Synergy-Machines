@@ -26,16 +26,6 @@ public class ExtractorScreen extends BaseMachineScreen<ExtractorMenu> {
     }
 
     @Override
-    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        super.extractRenderState(graphics, mouseX, mouseY, a);
-
-        renderFluidTooltip(graphics, 0, 150, 5, 18, 72, mouseX, mouseY);
-        renderInputSlotTooltip(graphics, 47, 33, mouseX, mouseY);
-        renderLargeOutputSlotTooltip(graphics, 119, 34, mouseX, mouseY);
-
-    }
-
-    @Override
     public List<UpgradeType> validUpgrades() {
         return ArrayUtils.concat(DEFAULT_UPGRADES, UpgradeType.LUCK);
     }

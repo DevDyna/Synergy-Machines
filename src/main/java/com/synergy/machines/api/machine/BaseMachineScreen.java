@@ -27,7 +27,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseScreen<T>
                 implements MachineWidgets, ScreenUpgradable {
 
-                        //TODO add a toggle on config?
+        // TODO add a toggle on config?
         private boolean DEBUG = false;
 
         public BaseMachineScreen(T menu, Inventory playerInventory, Component title) {
@@ -75,25 +75,25 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         }
 
         @Override
-        protected Identifier background() {
+        public Identifier background() {
                 return null;
         }
 
         @Override
         @Nullable
-        protected Identifier arrow() {
+        public Identifier arrow() {
                 return null;
         }
 
-        protected boolean whenAnimateArrow() {
+        public boolean whenAnimateArrow() {
                 return menu.isCrafting();
         }
 
-        protected int getScaledArrowProgress() {
+        public int getScaledArrowProgress() {
                 return menu.getScaledArrowProgress();
         }
-        
-        protected int getScaledProgress(int v) {
+
+        public int getScaledProgress(int v) {
                 return menu.getScaledProgress(v);
         }
 
@@ -152,8 +152,9 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
 
                 this.renderArrow(guiGraphics);
 
-                renderTickProgress(guiGraphics, 68, 70, mouseX, mouseY);
-                renderEnergyStorage(guiGraphics, 8, 5, mouseX, mouseY);
+                renderTickProgress(guiGraphics, getTickDelayPos().getX(), getTickDelayPos().getY(), mouseX, mouseY);
+                renderEnergyStorage(guiGraphics, getEnergyStoragePos().getX(), getEnergyStoragePos().getY(), mouseX,
+                                mouseY);
                 renderUpgradeSlots(guiGraphics, 172, 0, mouseX, mouseY);
         }
 
@@ -203,20 +204,21 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 this.extractCarriedItem(graphics, mouseX, mouseY);
                 this.extractSnapbackItem(graphics);
 
-                if (!DEBUG)
+                if (!DEBUG) {
                         this.extractTooltip(graphics, mouseX, mouseY);
 
-                renderEnergyTooltip(graphics, 8, 5, 18, 72, mouseX, mouseY);
+                        // renderEnergyTooltip(graphics, getEnergyStoragePos().getX(),
+                        // getEnergyStoragePos().getY(), 18, 72, mouseX, mouseY);
 
-                // if (DEBUG)
-                // renderToolTips(graphics, mouseX, mouseY);
+                        // if (DEBUG)
+                        // renderToolTips(graphics, mouseX, mouseY);
 
-                if (!DEBUG)
                         renderToolTips(graphics, mouseX, mouseY, true);
+                }
 
-                renderUpgradeTooltips(graphics, 172, 0, mouseX, mouseY);
+                // renderUpgradeTooltips(graphics, 172, 0, mouseX, mouseY);
 
-                renderMachineInventoryTooltip(graphics, 0, 0, mouseX, mouseY);
+                // renderMachineInventoryTooltip(graphics, 0, 0, mouseX, mouseY);
 
         }
 
