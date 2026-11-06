@@ -7,12 +7,9 @@ import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.machine.BaseMachineScreen;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
-//TODO maybe i can unify screen-menu handling (?)
 public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
 
         public FrameworkScreen(FrameworkMenu menu, Inventory playerInventory, Component title) {
@@ -23,13 +20,14 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
         public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 
                 super.extractBackground(graphics, mouseX, mouseY, a);
-                // renderFluidTank(graphics, 0, -22, +6, mouseX, mouseY);
 
                 renderInputSlot(graphics, 43, 8, mouseX, mouseY);
 
+                // renderExtraSlot(graphics, 20 + 43, 8, mouseX, mouseY);
+
                 renderStaticTexture(graphics,
                                 x.rl(MODULE_ID, "textures/gui/container/slot/tiny_arrow.png"),
-                                4 + 43, 31-4-2,
+                                4 + 43, 31 - 4 - 2,
                                 7, 7);
 
                 for (var i = 0; i < FrameworkBE.MACHINE_SLOTS.size(); i++) {
@@ -68,43 +66,17 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
 
                 }
 
-                renderProgressBar(graphics, mouseX, mouseY, 32, 5);
+                renderProgressBar(graphics, mouseX, mouseY, 32 - 6, 5, ProgressColor.BLUE,
+                                getMenu().isCrafting(),
+                                getMenu().getScaledProgress(72),
+                                "recipe",
+                                menu.getRemainProgress());
 
-        }
+                renderProgressBar(graphics, mouseX, mouseY, 32 - 6 + 8, 5, ProgressColor.GREEN,
+                                menu.isCrafting(menu.getGenProgress()),
+                                menu.getScaledProgress(72, menu.getMaxGenProgress(), menu.getGenProgress()),
+                                "gen", menu.getRemainGenProgress());
 
-        public void renderStaticTexture(GuiGraphicsExtractor graphics, Identifier rl, int xo, int yo, int width,
-                        int height) {
-                graphics.blit(RenderPipelines.GUI_TEXTURED, rl, getLeftPos() + xo, getTopPos() + yo, 0, 0, width,
-                                height, width, height);
-        }
-
-        public void renderProgressBar(GuiGraphicsExtractor graphics, int mouseX, int mouseY, int xo, int yo) {
-
-                graphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/progress/base.png"),
-                                getLeftPos() + xo, getTopPos() + yo,
-                                0, 0,
-                                6, 72,
-                                36, 72);
-
-                if (this.whenAnimateArrow()) {
-                        var slice = getScaledProgress(72);
-                        graphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/progress/base.png"),
-                                        getLeftPos() + xo, getTopPos() + yo + (72 - slice),
-                                        18, 72 - slice,
-                                        6, slice,
-                                        36, 72);
-
-                }
-
-                if (isDebugHover(xo, yo, 6, 72, mouseX, mouseY))
-                        graphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/progress/debug.png"),
-                                        getLeftPos() + xo, getTopPos() + yo,
-                                        0, 0,
-                                        6, 72,
-                                        6, 72);
         }
 
         @Override
@@ -114,7 +86,7 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
 
         @Override
         public Size getTickDelayPos() {
-                return Size.of(90, 10);
+                return Size.of(90, 20);
         }
 
         @Override
