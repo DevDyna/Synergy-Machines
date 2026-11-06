@@ -102,7 +102,7 @@ public class ElectricFurnaceCategory extends BaseMachineRecipeCategory<ElectricF
                                         .getCalculatedDelay(
                                                 s.value().cookingTime()),
                                 Config.MACHINE_FURNACE_PROCESS_VANILLA_FE_COST
-                                        .get(),
+                                        .get(),false,
                                 x.itemSized(s.value().input()),
                                 ((SingleItemRecipeMixin) s
                                         .value())
