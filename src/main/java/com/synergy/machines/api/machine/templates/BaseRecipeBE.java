@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-public abstract class BaseRecipeBE extends BaseEnergyBE implements TickerDelay , Tickable{
+public abstract class BaseRecipeBE extends BaseEnergyBE implements TickerDelay, Tickable {
 
     private Ticker ticker = null;
 
@@ -61,8 +61,8 @@ public abstract class BaseRecipeBE extends BaseEnergyBE implements TickerDelay ,
     }
 
     public void enableProgress() {
-        if(isRecipeCancelled())
-        ticker = Ticker.of(1);
+        if (isRecipeCancelled())
+            ticker = Ticker.of(1);
     }
 
     @Override
@@ -73,8 +73,8 @@ public abstract class BaseRecipeBE extends BaseEnergyBE implements TickerDelay ,
 
     @Override
     protected void loadAdditional(ValueInput input) {
-        if(ticker != null)
-        input.getInt("progress").ifPresent(ticker::setValue);
+        if (ticker != null)
+            input.getInt("progress").ifPresent(ticker::setValue);
         super.loadAdditional(input);
     }
 
@@ -124,10 +124,10 @@ public abstract class BaseRecipeBE extends BaseEnergyBE implements TickerDelay ,
         ticker = null;
 
         // if (progress > 0)
-            // progress--;
+        // progress--;
 
         // if (progress == 0)
-            // progress_cancel = false;
+        // progress_cancel = false;
 
         update(false);
         setChanged();
@@ -139,7 +139,7 @@ public abstract class BaseRecipeBE extends BaseEnergyBE implements TickerDelay ,
      * {@link BaseMachineBE#init}
      */
     public boolean succed() {
-        //  maybe pointless
+        // maybe pointless
         return true;
     }
 
@@ -172,7 +172,7 @@ public abstract class BaseRecipeBE extends BaseEnergyBE implements TickerDelay ,
             return;
 
         // if (progress_cancel)
-        //     return;
+        // return;
 
         // this.progress++;
 
@@ -189,7 +189,7 @@ public abstract class BaseRecipeBE extends BaseEnergyBE implements TickerDelay ,
         // progress = 0;
     }
 
-    protected void ejection(){
+    protected void ejection() {
 
     }
 
