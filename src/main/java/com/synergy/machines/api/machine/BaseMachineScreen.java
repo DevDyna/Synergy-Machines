@@ -19,13 +19,11 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.fluids.FluidStack;
 
 public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseScreen<T>
-                implements MachineWidgets, ScreenUpgradable {
+                implements MachineWidgets<T>, ScreenUpgradable {
 
         // TODO add a toggle on config?
         private boolean DEBUG = false;
@@ -85,49 +83,8 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 return null;
         }
 
-        public boolean whenAnimateArrow() {
-                return menu.isCrafting();
-        }
+        
 
-        public int getScaledArrowProgress() {
-                return menu.getScaledArrowProgress();
-        }
-
-        public int getScaledProgress(int v) {
-                return menu.getScaledProgress(v);
-        }
-
-        public int getEnergyStored() {
-                return menu.getEnergyStored();
-        }
-
-        public int getMaxEnergy() {
-                return menu.getMaxEnergy();
-        }
-
-        public int getRemainProgress() {
-                return menu.getRemainProgress();
-        }
-
-        public int getFluidAmount(int i) {
-                return menu.getFluidAmount(i);
-        }
-
-        public Fluid getFluid(int i) {
-                return menu.getFluid(i);
-        }
-
-        public FluidStack getFluidStack(int i) {
-                return menu.getFluidStack(i);
-        }
-
-        public int getMaxFluidAmount(int i) {
-                return menu.getMaxFluidAmount(i);
-        }
-
-        public int getEnergyUsage() {
-                return menu.getEnergyUsage();
-        }
 
         @Override
         public Font getFont() {

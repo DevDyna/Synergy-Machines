@@ -69,20 +69,32 @@ public abstract class BaseMachineMenu extends BaseMenu {
         return blockEntity;
     }
 
+    public ContainerData getData() {
+        return data;
+    }
+
     public boolean isCrafting() {
-        return data.get(PROGRESS_INDEX) > 0;
+        return isCrafting(data.get(PROGRESS_INDEX));
+    }
+
+    public boolean isCrafting(int index) {
+        return index > 0;
     }
 
     public int getScaledArrowProgress() {
         return getScaledProgress(24);
     }
 
-    public int getScaledProgress(int size) {
-        int progress = data.get(PROGRESS_INDEX);
-        int maxProgress = data.get(MAX_PROGRESS_INDEX);
+    public int getScaledProgress(int texture_size, int max, int value) {
+        int progress = value;
+        int maxProgress = max;
         return maxProgress != 0 && progress != 0
-                ? progress * size / maxProgress
+                ? progress * texture_size / maxProgress
                 : 0;
+    }
+
+    public int getScaledProgress(int size) {
+        return getScaledProgress(size, data.get(MAX_PROGRESS_INDEX), data.get(PROGRESS_INDEX));
     }
 
     public int getEnergyStored() {
@@ -130,8 +142,16 @@ public abstract class BaseMachineMenu extends BaseMenu {
 
     public int getRemainProgress() {
         return isCrafting()
-                ? data.get(MAX_PROGRESS_INDEX) - data.get(PROGRESS_INDEX)
+                ? getMaxProgress() - getProgress()
                 : 0;
+    }
+
+    public int getMaxProgress() {
+        return data.get(MAX_PROGRESS_INDEX);
+    }
+
+    public int getProgress() {
+        return data.get(PROGRESS_INDEX);
     }
 
     public abstract MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<?>> getMachine();
@@ -231,8 +251,5 @@ public abstract class BaseMachineMenu extends BaseMenu {
     }
 
     public abstract SlotBuilder getSlots();
-
-
-    
 
 }
