@@ -404,16 +404,13 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
                                 6, 72,
                                 36, 72);
 
-                if (whenRender) {
-
+                if (whenRender)
                         graphics.blit(RenderPipelines.GUI_TEXTURED,
                                         x.rl(MODULE_ID, "textures/gui/container/slot/progress/base.png"),
                                         getLeftPos() + xo, getTopPos() + yo + (72 - scaledProgress),
                                         (c.getUV() + 1) * 6, 72 - scaledProgress,
                                         6, scaledProgress,
                                         36, 72);
-
-                }
 
                 if (isDebugHover(xo - 1, yo, 8, 72, mouseX, mouseY))
                         graphics.blit(RenderPipelines.GUI_TEXTURED,
