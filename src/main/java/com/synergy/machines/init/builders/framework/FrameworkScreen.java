@@ -97,6 +97,12 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
                 return Size.of(90, 20);
         }
 
+        //TODO API : Size.move(x,y)
+        @Override
+        public Size getEnergyStoragePos() {
+        return Size.of(7, 5);
+        }
+
         @Override
         protected void renderArrow(GuiGraphicsExtractor guiGraphics) {
 
