@@ -232,4 +232,13 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 return Pos.of(-30, -10).setSize(32 + 172 + 30 + 30, 86 + 20 + 10 + 20);
         }
 
+        @Override
+        protected boolean hasClickedOutside(double mx, double my, int xo, int yo) {
+                return super.hasClickedOutside(mx, my, xo, yo)
+                                && !Pos.of(172 + xo, yo).setSize(32, 86).test(mx, my)
+                                && (enableLeftLabel((int) mx, (int) my)
+                                                ? !Pos.of(xo - 30, yo).setSize(32, 86).test(mx, my)
+                                                : true);
+        }
+
 }
