@@ -2,7 +2,6 @@ package com.synergy.machines.init.builders.framework;
 
 import com.devdyna.cakesticklib.api.utils.SlotBuilder;
 import com.devdyna.cakesticklib.api.utils.SlotBuilder.ResourceType;
-import com.mojang.logging.LogUtils;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.BaseMachineBlock;
@@ -35,7 +34,7 @@ public class FrameworkMenu extends BaseMachineMenu {
 
     public FrameworkMenu(int i, Inventory inv, BlockEntity be, ContainerData data) {
         super(zMachines.FRAMEWORK.menu().get(), i, be, inv, data);
-        LogUtils.getLogger().info("a " + data.getCount());
+
         // addMachineSlot(blockEntity.getItemStorage(),
         // FrameworkBE.GENERATOR_UPGRADE_SLOT, 1, 20 + 43, 8);
 
