@@ -5,9 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;
 
+import com.devdyna.cakesticklib.api.aspect.logic.ResourceRestricted;
 import com.devdyna.cakesticklib.api.primitive.Ticker;
 import com.devdyna.cakesticklib.api.recipe.recipeInput.ItemInput;
+import com.devdyna.cakesticklib.api.utils.FluidUtils;
 import com.devdyna.cakesticklib.api.utils.x;
+import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.BaseMachineMenu;
 import com.synergy.machines.init.types.zMachines;
@@ -24,9 +27,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-public class FrameworkBE extends BaseMachineBE {
+public class FrameworkBE extends BaseMachineBE implements ResourceRestricted.Fluid {
 
     public static final int INPUT_SLOT = 4;
 
@@ -69,7 +73,9 @@ public class FrameworkBE extends BaseMachineBE {
         return new FrameworkMenu(i, inventory, this, this.getContainerData());
     }
 
-    public static final int EXTRA = 2;
+    public static final int EXTRA_DATA_SIZE = 2;
+
+    public static final int FRAMEWORK_FLUID_DATA_SIZE = FLUID_DATA_SIZE * 2;
 
     @Override
     public ContainerData getContainerData() {
@@ -77,12 +83,13 @@ public class FrameworkBE extends BaseMachineBE {
 
             @Override
             public int getCount() {
-                return ENERGY_DATA_SIZE + PROGRESS_DATA_SIZE + EXTRA;
-
+                return ENERGY_DATA_SIZE + PROGRESS_DATA_SIZE + EXTRA_DATA_SIZE + FRAMEWORK_FLUID_DATA_SIZE;
             }
 
             @Override
             public int get(int i) {
+
+                var fluid = ((ResourceRestricted.Fluid) FrameworkBE.this);
 
                 return switch (i) {
                     case BaseMachineMenu.PROGRESS_INDEX -> getProgress();
@@ -90,8 +97,18 @@ public class FrameworkBE extends BaseMachineBE {
                     case BaseMachineMenu.STORED_ENERGY_INDEX -> getEnergyStorage().getAmountAsInt();
                     case BaseMachineMenu.MAX_ENERGY_INDEX -> getMaxEnergy();
                     case BaseMachineMenu.RECIPE_ENERGY_USAGE -> getEnergyUsage();
+
+                    case 5 -> fluid.getFluidStorage().getAmountAsInt(0);
+                    case 6 -> fluid.getTankCapacity();
+                    case 7 -> FluidUtils.getFluidToID(fluid.getAsStack(0));
+
+                    case 8 -> fluid.getFluidStorage().getAmountAsInt(1);
+                    case 9 -> fluid.getTankCapacity();
+                    case 10 -> FluidUtils.getFluidToID(fluid.getAsStack(1));
+
                     case FrameworkMenu.MAX_GEN_PROGRESS_INDEX -> getGenTicker() == null ? 0 : getGenTicker().max();
                     case FrameworkMenu.GEN_PROGRESS_INDEX -> getGenTicker() == null ? 0 : getGenTicker().value();
+
                     default -> 0;
                 };
 
@@ -142,7 +159,7 @@ public class FrameworkBE extends BaseMachineBE {
         super.loadAdditional(input);
     }
 
-    //TODO rework
+    // TODO rework
     @Override
     public boolean init() {
 
@@ -230,6 +247,21 @@ public class FrameworkBE extends BaseMachineBE {
         updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
                 1, true);
 
+    }
+
+    @Override
+    public FluidStacksResourceHandler getFluidStorage() {
+        return getData(LibHandlers.FLUID_STORAGE);
+    }
+
+    @Override
+    public int getTankCapacity() {
+        return 1000;
+    }
+
+    @Override
+    public int getTanks() {
+        return 2;
     }
 
 }

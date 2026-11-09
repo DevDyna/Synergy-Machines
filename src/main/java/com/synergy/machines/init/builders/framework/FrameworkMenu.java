@@ -20,16 +20,13 @@ import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 public class FrameworkMenu extends BaseMachineMenu {
 
-    public static final int MAX_GEN_PROGRESS_INDEX = 5;
-    public static final int GEN_PROGRESS_INDEX = 6;
+    public static final int MAX_GEN_PROGRESS_INDEX = 11;
+    public static final int GEN_PROGRESS_INDEX = 12;
 
     public FrameworkMenu(int c, Inventory i, FriendlyByteBuf d) {
-        this(c, i, i.player.level().getBlockEntity(d.readBlockPos()), framework());
-    }
-
-    public static final SimpleContainerData framework() {
-        return new SimpleContainerData(
-                BaseMachineBE.PROGRESS_DATA_SIZE + BaseMachineBE.ENERGY_DATA_SIZE + FrameworkBE.EXTRA);
+        this(c, i, i.player.level().getBlockEntity(d.readBlockPos()),
+                new SimpleContainerData(BaseMachineBE.PROGRESS_DATA_SIZE + BaseMachineBE.ENERGY_DATA_SIZE
+                        + FrameworkBE.EXTRA_DATA_SIZE + FrameworkBE.FRAMEWORK_FLUID_DATA_SIZE));
     }
 
     public FrameworkMenu(int i, Inventory inv, BlockEntity be, ContainerData data) {

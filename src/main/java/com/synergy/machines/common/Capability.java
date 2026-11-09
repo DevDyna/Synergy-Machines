@@ -32,6 +32,8 @@ public class Capability {
                 zMachines.CASTING_FACTORY.block().get(),
                 zMachines.ELECTRIC_MELTER.block().get(),
                 zMachines.EXTRACTOR.block().get(),
-                zMachines.ROCK_CRUSHER.block().get());
+                zMachines.ROCK_CRUSHER.block().get(),
+                zMachines.FRAMEWORK.block().get()
+                );
     }
 }

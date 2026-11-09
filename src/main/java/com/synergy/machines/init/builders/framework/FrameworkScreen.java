@@ -77,6 +77,14 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
                                 menu.getScaledProgress(72, menu.getMaxGenProgress(), menu.getGenProgress()),
                                 "gen", menu.getRemainGenProgress());
 
+                renderFluidTank(graphics, 0, -22, 6, 2, mouseX, mouseY);
+                renderFluidTank(graphics, 1, -22, 44, 2, mouseX, mouseY);
+
+        }
+
+        @Override
+        public boolean enableLeftLabel(GuiGraphicsExtractor g, int x, int y, float a) {
+                return true;
         }
 
         @Override
