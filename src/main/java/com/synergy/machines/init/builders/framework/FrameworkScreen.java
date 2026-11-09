@@ -26,7 +26,7 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
                 // renderExtraSlot(graphics, 20 + 43, 8, mouseX, mouseY);
 
                 renderStaticTexture(graphics,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/tiny_arrow.png"),
+                                x.rl(MODULE_ID, "textures/gui/container/widgets/tiny_arrow.png"),
                                 4 + 43, 31 - 4 - 2,
                                 7, 7);
 
@@ -37,7 +37,7 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
                                         mouseX, mouseY);
 
                         renderStaticTexture(graphics,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/tiny_arrow.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/tiny_arrow.png"),
                                         4 + 43 + i * 27, 35 - 4 + 20,
                                         7, 7);
 
@@ -46,13 +46,13 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
                                 break;
 
                         renderStaticTexture(graphics,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/small_arrow.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/small_arrow.png"),
                                         20 - 2 + 43 + i * 27, 60 - 21,
                                         7, 7);
 
                         if (!menu.getSlot(FrameworkBE.MACHINE_SLOTS.get(i) + 40 - 3).hasItem())
                                 renderStaticTexture(graphics,
-                                                x.rl(MODULE_ID, "textures/gui/container/slot/red_cross.png"),
+                                                x.rl(MODULE_ID, "textures/gui/container/widgets/red_cross.png"),
                                                 20 - 2 + 43 + i * 27, 60 - 21,
                                                 7, 7);
 

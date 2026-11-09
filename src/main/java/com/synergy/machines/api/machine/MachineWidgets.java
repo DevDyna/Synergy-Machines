@@ -93,7 +93,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
         default void renderUpgradeSlots(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
                 guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/upgrade/base.png"),
+                                x.rl(MODULE_ID, "textures/gui/container/widgets/upgrade/base.png"),
                                 getLeftPos() + xo + 7,
                                 getTopPos() + yo + 7,
                                 0, 0,
@@ -102,7 +102,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
                 if (isDebugHover(xo + 7 - 3, yo + 7 - 3, 24, 78, mouseX, mouseY))
                         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/upgrade/debug.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/upgrade/debug.png"),
                                         getLeftPos() + 7 - 3 + xo,
                                         getTopPos() + 7 - 3 + yo,
                                         0, 0,
@@ -117,7 +117,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
         default void renderInputSlot(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
                 guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/input/small/base.png"),
+                                x.rl(MODULE_ID, "textures/gui/container/widgets/input/small/base.png"),
                                 getLeftPos() + xo + 7 - 8,
                                 getTopPos() + yo + 7 - 8,
                                 0, 0,
@@ -126,7 +126,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
                 if (isDebugHover(xo + 7 - 8, yo + 7 - 8, 18, 18, mouseX, mouseY))
                         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/input/small/debug.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/input/small/debug.png"),
                                         getLeftPos() + xo + 7 - 8,
                                         getTopPos() + yo + 7 - 8,
                                         0, 0,
@@ -139,7 +139,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
         default void renderLargeInputSlot(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
                 guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/input/large/base.png"),
+                                x.rl(MODULE_ID, "textures/gui/container/widgets/input/large/base.png"),
                                 getLeftPos() + xo + 7 + 4 - 16,
                                 getTopPos() + yo + 7 + 4 - 16,
                                 0, 0,
@@ -148,7 +148,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
                 if (isDebugHover(xo + 7 + 4 - 16, yo + 7 + 4 - 16, 26, 26, mouseX, mouseY))
                         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/input/large/debug.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/input/large/debug.png"),
                                         getLeftPos() + xo + 7 + 4 - 16,
                                         getTopPos() + yo + 7 + 4 - 16,
                                         0, 0,
@@ -163,7 +163,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
         default void renderOutputSlot(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
                 guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/output/small/base.png"),
+                                x.rl(MODULE_ID, "textures/gui/container/widgets/output/small/base.png"),
                                 getLeftPos() + xo + 7 - 8,
                                 getTopPos() + yo + 7 - 8,
                                 0, 0,
@@ -172,7 +172,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
                 if (isDebugHover(xo + 7 - 8, yo + 7 - 8, 18, 18, mouseX, mouseY))
                         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/output/small/debug.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/output/small/debug.png"),
                                         getLeftPos() + xo + 7 - 8,
                                         getTopPos() + yo + 7 - 8,
                                         0, 0,
@@ -185,7 +185,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
         default void renderLargeOutputSlot(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
                 guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/output/large/base.png"),
+                                x.rl(MODULE_ID, "textures/gui/container/widgets/output/large/base.png"),
                                 getLeftPos() + xo + 7 + 4 - 16,
                                 getTopPos() + yo + 7 + 4 - 16,
                                 0, 0,
@@ -194,7 +194,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
                 if (isDebugHover(xo + 7 + 4 - 16, yo + 7 + 4 - 16, 26, 26, mouseX, mouseY))
                         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/output/large/debug.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/output/large/debug.png"),
                                         getLeftPos() + xo + 7 + 4 - 16,
                                         getTopPos() + yo + 7 + 4 - 16,
                                         0, 0,
@@ -209,7 +209,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
         default void renderExtraSlot(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
                 guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/extra/small/base.png"),
+                                x.rl(MODULE_ID, "textures/gui/container/widgets/extra/small/base.png"),
                                 getLeftPos() + xo + 7 - 8,
                                 getTopPos() + yo + 7 - 8,
                                 0, 0,
@@ -218,7 +218,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
                 if (isDebugHover(xo + 7 - 8, yo + 7 - 8, 18, 18, mouseX, mouseY))
                         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/extra/small/debug.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/extra/small/debug.png"),
                                         getLeftPos() + xo + 7 - 8,
                                         getTopPos() + yo + 7 - 8,
                                         0, 0,
@@ -231,7 +231,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
         default void renderLargeExtraSlot(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
                 guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/extra/large/base.png"),
+                                x.rl(MODULE_ID, "textures/gui/container/widgets/extra/large/base.png"),
                                 getLeftPos() + xo + 7 + 4 - 16,
                                 getTopPos() + yo + 7 + 4 - 16,
                                 0, 0,
@@ -240,7 +240,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
                 if (isDebugHover(xo + 7 + 4 - 16, yo + 7 + 4 - 16, 26, 26, mouseX, mouseY))
                         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/extra/large/debug.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/extra/large/debug.png"),
                                         getLeftPos() + xo + 7 + 4 - 16,
                                         getTopPos() + yo + 7 + 4 - 16,
                                         0, 0,
@@ -255,7 +255,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
         default void renderEnergyStorage(GuiGraphicsExtractor guiGraphics, int xo, int yo, int mouseX, int mouseY) {
                 guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/energy/base.png"),
+                                x.rl(MODULE_ID, "textures/gui/container/widgets/energy/base.png"),
                                 getLeftPos() + xo, getTopPos() + yo,
                                 0, 0,
                                 18, 72,
@@ -265,7 +265,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
                 if (getMenu().getMaxEnergy() > 0 && getMenu().getEnergyStored() > 0) {
                         var slice = Math.min(72, (getMenu().getEnergyStored() * 72) / getMenu().getMaxEnergy());
                         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/energy/base.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/energy/base.png"),
                                         getLeftPos() + xo, getTopPos() + yo + (72 - slice),
                                         18, 72 - slice,
                                         18, slice,
@@ -274,7 +274,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
                 if (isDebugHover(xo, yo, 18, 72, mouseX, mouseY))
                         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/energy/debug.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/energy/debug.png"),
                                         getLeftPos() + xo, getTopPos() + yo,
                                         0, 0,
                                         18, 72,
@@ -338,7 +338,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
                         TankSegment segment,
                         boolean isDebug, boolean isOverlay) {
                 guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/" + id + "/" + (isDebug ? "debug" : "base")
+                                x.rl(MODULE_ID, "textures/gui/container/widgets/" + id + "/" + (isDebug ? "debug" : "base")
                                                 + ".png"),
                                 getLeftPos() + xo, getTopPos() + yo,
                                 segment.value(), (isOverlay ? 18 : 0),
@@ -434,7 +434,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
                         ProgressColor c, boolean whenRender, int scaledProgress, String id, int getRemainProgress) {
 
                 graphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/progress/base.png"),
+                                x.rl(MODULE_ID, "textures/gui/container/widgets/progress/base.png"),
                                 getLeftPos() + xo, getTopPos() + yo,
                                 0, 0,
                                 6, 72,
@@ -442,7 +442,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
                 if (whenRender)
                         graphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/progress/base.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/progress/base.png"),
                                         getLeftPos() + xo, getTopPos() + yo + (72 - scaledProgress),
                                         (c.getUV() + 1) * 6, 72 - scaledProgress,
                                         6, scaledProgress,
@@ -450,7 +450,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
                 if (isDebugHover(xo - 1, yo, 8, 72, mouseX, mouseY))
                         graphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/progress/debug.png"),
+                                        x.rl(MODULE_ID, "textures/gui/container/widgets/progress/debug.png"),
                                         getLeftPos() + xo - 1, getTopPos() + yo,
                                         c.getUV() * 8, 72,
                                         8, 72,
