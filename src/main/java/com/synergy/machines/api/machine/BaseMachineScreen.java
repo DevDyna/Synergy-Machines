@@ -83,9 +83,6 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 return null;
         }
 
-        
-
-
         @Override
         public Font getFont() {
                 return font;
