@@ -401,12 +401,10 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
                                                         + " mB / "
                                                         + (ClientUtils.hasShiftDown()
                                                                         ? String.valueOf(
-                                                                                        getMenu().getFluidAmount(
-                                                                                                        index))
+                                                                                        getMenu().getMaxFluidAmount(index))
                                                                         : StringUtil.getFormatNoRound()
                                                                                         .format(getMenu()
-                                                                                                        .getFluidAmount(
-                                                                                                                        index)))
+                                                                                                        .getMaxFluidAmount(index)))
                                                         + " mB"),
                                         Component.literal("Fluid: ")
                                                         .append(getMenu().getFluidStack(index).getHoverName())),
