@@ -39,7 +39,7 @@ public class RockCrusherScreen extends BaseMachineScreen<RockCrusherMenu> {
         }
 
         @Override
-        public boolean enableLeftLabel(GuiGraphicsExtractor g, int x, int y, float a) {
+        public boolean enableLeftLabel(int x, int y) {
                 return true;
         }
 

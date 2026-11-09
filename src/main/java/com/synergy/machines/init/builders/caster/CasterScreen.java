@@ -23,7 +23,7 @@ public class CasterScreen extends BaseMachineScreen<CasterMenu> {
         }
 
         @Override
-        public boolean enableLeftLabel(GuiGraphicsExtractor g, int x, int y, float a) {
+        public boolean enableLeftLabel(int x, int y) {
                 return true;
         }
 

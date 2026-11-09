@@ -97,7 +97,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
         public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
                 extractBaseBackground(guiGraphics, mouseX, mouseY, a);
 
-                if (enableLeftLabel(guiGraphics, mouseX, mouseY, a))
+                if (enableLeftLabel(mouseX, mouseY))
                         renderLeftLabel(guiGraphics);
 
                 renderRightLabel(guiGraphics, 172, 0, mouseX, mouseY);
@@ -112,7 +112,7 @@ public abstract class BaseMachineScreen<T extends BaseMachineMenu> extends BaseS
                 renderUpgradeSlots(guiGraphics, 172, 0, mouseX, mouseY);
         }
 
-        public boolean enableLeftLabel(GuiGraphicsExtractor g, int x, int y, float a) {
+        public boolean enableLeftLabel(int x, int y) {
                 return false;
         }
 

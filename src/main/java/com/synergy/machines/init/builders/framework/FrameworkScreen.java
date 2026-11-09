@@ -83,7 +83,7 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
         }
 
         @Override
-        public boolean enableLeftLabel(GuiGraphicsExtractor g, int x, int y, float a) {
+        public boolean enableLeftLabel(int x, int y) {
                 return true;
         }
 
@@ -97,10 +97,10 @@ public class FrameworkScreen extends BaseMachineScreen<FrameworkMenu> {
                 return Size.of(90, 20);
         }
 
-        //TODO API : Size.move(x,y)
+        // TODO API : Size.move(x,y)
         @Override
         public Size getEnergyStoragePos() {
-        return Size.of(7, 5);
+                return Size.of(7, 5);
         }
 
         @Override
