@@ -261,6 +261,7 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
                                 18, 72,
                                 36, 72);
 
+                                //TODO rework to use segments?
                 if (getMenu().getMaxEnergy() > 0 && getMenu().getEnergyStored() > 0) {
                         var slice = Math.min(72, (getMenu().getEnergyStored() * 72) / getMenu().getMaxEnergy());
                         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
@@ -316,14 +317,61 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
 
         // fluid bar
 
+        public enum TankSegment {
+                SINGLE(0 * 18),
+                BOTTOM(1 * 18),
+                TOP(2 * 18),
+                MIDDLE(3 * 18);
+
+                private int v;
+
+                private TankSegment(int v) {
+                        this.v = v;
+                }
+
+                public int value() {
+                        return v;
+                }
+        }
+
+        default void renderSegment(GuiGraphicsExtractor guiGraphics, int xo, int yo, String id,
+                        TankSegment segment,
+                        boolean isDebug, boolean isOverlay) {
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
+                                x.rl(MODULE_ID, "textures/gui/container/slot/" + id + "/" + (isDebug ? "debug" : "base")
+                                                + ".png"),
+                                getLeftPos() + xo, getTopPos() + yo,
+                                segment.value(), (isOverlay ? 18 : 0),
+                                18, 18,
+                                72, (isDebug ? 18 : 36));
+        }
+
+        default void renderTankSegmented(GuiGraphicsExtractor guiGraphics, int xo, int yo, int size, String id,
+                        boolean isDebug, boolean isOverlay) {
+                if (size > 1) {
+                        renderSegment(guiGraphics, xo, yo, id, TankSegment.TOP, isDebug, isOverlay);
+
+                        for (var i = 0; i < size - 2; i++)
+                                renderSegment(guiGraphics, xo, yo + (18 * (i + 1)), id, TankSegment.MIDDLE,
+                                                isDebug, isOverlay);
+
+                        renderSegment(guiGraphics, xo, yo + (18 * (size - 1)), id, TankSegment.BOTTOM, isDebug,
+                                        isOverlay);
+
+                } else
+                        renderSegment(guiGraphics, xo, yo, id, TankSegment.SINGLE, isDebug, isOverlay);
+
+        }
+
         default void renderFluidTank(GuiGraphicsExtractor guiGraphics, int index, int xo, int yo, int mouseX,
                         int mouseY) {
-                guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/fluid/base.png"),
-                                getLeftPos() + xo, getTopPos() + yo,
-                                0, 0,
-                                18, 72,
-                                36, 72);
+                renderFluidTank(guiGraphics, index, xo, yo, 4, mouseX, mouseY);
+        }
+
+        default void renderFluidTank(GuiGraphicsExtractor guiGraphics, int index, int xo, int yo, int size,
+                        int mouseX, int mouseY) {
+
+                renderTankSegmented(guiGraphics, xo, yo, size, "fluid", false, false);
 
                 if (getMenu().getMaxFluidAmount(index) > 0 && getMenu().getFluidAmount(index) > 0
                                 && getMenu().getFluid(index) != null)
@@ -331,28 +379,18 @@ public interface MachineWidgets<T extends BaseMachineMenu> {
                                         .setFluid(getMenu().getFluid(index))
                                         .setMaxCapacity(getMenu().getMaxFluidAmount(index))
                                         .setAmount(getMenu().getFluidAmount(index))
-                                        .size(16, 70)
+                                        .size(16, (size * 18) - 2)
                                         .offset(getLeftPos() + xo + 1, getTopPos() + yo + 1)
                                         .render(guiGraphics);
 
-                guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                x.rl(MODULE_ID, "textures/gui/container/slot/fluid/base.png"),
-                                getLeftPos() + xo, getTopPos() + yo,
-                                18, 0,
-                                18, 72,
-                                36, 72);
+                renderTankSegmented(guiGraphics, xo, yo, size, "fluid", false, true);
 
-                if (isDebugHover(xo, yo, 18, 72, mouseX, mouseY))
-                        guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                                        x.rl(MODULE_ID, "textures/gui/container/slot/fluid/debug.png"),
-                                        getLeftPos() + xo, getTopPos() + yo,
-                                        0, 0,
-                                        18, 72,
-                                        18, 72);
+                if (isDebugHover(xo, yo, 18, size * 18, mouseX, mouseY))
+                        renderTankSegmented(guiGraphics, xo, yo, size, "fluid", true, false);
 
                 if (getDebug())
-                        renderDebugSlotTooltip(guiGraphics, mouseX, mouseY, xo, yo, 18, 72, "fluid.debug");
-                else if (Pos.of(getLeftPos() + xo, getTopPos() + yo).setSize(18, 72).test(mouseX, mouseY))
+                        renderDebugSlotTooltip(guiGraphics, mouseX, mouseY, xo, yo, 18, size * 18, "fluid.debug");
+                else if (Pos.of(getLeftPos() + xo, getTopPos() + yo).setSize(18, size * 18).test(mouseX, mouseY))
                         guiGraphics.setComponentTooltipForNextFrame(getFont(), List.of(Component.literal(
                                         (ClientUtils.hasShiftDown()
                                                         ? String.valueOf(getMenu().getFluidAmount(
