@@ -4,7 +4,6 @@ import static com.synergy.machines.Main.MODULE_ID;
 
 import javax.annotation.Nullable;
 
-import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
@@ -13,15 +12,15 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import net.neoforged.neoforge.fluids.FluidStackTemplate;
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
+
 import com.devdyna.cakesticklib.api.recipe.recipeBuilder.*;
 
-public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilder<T>> extends BaseRecipeBuilder
-        implements ItemAttach.Input.ItemCounted<T>, ItemAttach.Output.SimpleOutputItem<T> {
+public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilder<T>> extends BaseRecipeBuilder {
 
     protected BaseMachineRecipeBuilder(Provider provider) {
         super(provider);
@@ -34,24 +33,25 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
 
     protected int ticks = DEFAULT_TICK_DURATION;
     protected int energy = DEFAULT_FE_COST;
-    protected SizedIngredient input;
-    protected SizedIngredient optional_input;
-    protected ItemStackTemplate output;
-    protected ChanceOutput.Item optional_output_item;
-    protected SizedIngredient extra_input;
-    protected boolean consumeCatalyst = false;
-    protected SizedFluidIngredient fluid_input;
-    protected FluidStackTemplate fluid_output;
 
-    public T input(SizedIngredient input) {
-        this.input = input;
-        return getBuilder();
-    }
+    // protected SizedIngredient input;
+    // protected SizedIngredient optional_input;
+    // protected ItemStackTemplate output;
+    // protected ChanceOutput.Item optional_output_item;
+    // protected SizedIngredient extra_input;
+    // protected boolean consumeCatalyst = false;
+    // protected SizedFluidIngredient fluid_input;
+    // protected FluidStackTemplate fluid_output;
 
-    public T output(ItemStackTemplate output) {
-        this.output = output;
-        return getBuilder();
-    }
+    // public T input(SizedIngredient input) {
+    // this.input = input;
+    // return getBuilder();
+    // }
+
+    // public T output(ItemStackTemplate output) {
+    // this.output = output;
+    // return getBuilder();
+    // }
 
     /**
      * base value -> 100t
@@ -140,44 +140,38 @@ public abstract class BaseMachineRecipeBuilder<T extends BaseMachineRecipeBuilde
         return getBuilder();
     }
 
+    public abstract String defineID();
+
     @Override
     public Identifier getSuffix(String extra) {
-
-        if (output != null && output.item().value() != null)
-            return x.rl(MODULE_ID, getMachinePath() + x.name(output.item().value()) + extra);
-
-        if (this instanceof FluidAttach.Output.OutputFluid
-                && fluid_output != null
-                && fluid_output.fluid().value() != null)
-            return x.rl(MODULE_ID, getMachinePath() + x.name(fluid_output.fluid().value()) + extra);
-
-        if (ChanceOutput.Item.itemValid(optional_output_item))
-            return x.rl(MODULE_ID, getMachinePath() + x.name(optional_output_item.item().item().value()) + extra);
-
-        if (optional_input != null)
-            if (optional_input.ingredient().getValues().unwrapKey().isPresent())
-                return x.rl(MODULE_ID, getMachinePath()
-                        + optional_input.ingredient().getValues().unwrapKey().get().location().getPath() + extra);
-
-        if (input != null) {
-
-            var a = input.ingredient().getValues();
-
-            if (a.isImmediatelyResolvable())
-                return x.rl(MODULE_ID, getMachinePath()
-                        + x.name(a.stream().findFirst().get().value()) + extra);
-
-            if (a.unwrapKey().isPresent())
-                return x.rl(MODULE_ID, getMachinePath()
-                        + a.unwrapKey().get().location().getPath() + extra);
-
-        }
-
-        throw new IllegalStateException("No valid ID found for " + getMachine().id() + "details: " + output + " - "
-                + optional_output_item + " - " + optional_input + " - " + input);
-
+        return x.rl(MODULE_ID, getMachinePath() + defineID() + extra);
     }
 
     public abstract T getBuilder();
+
+    // TODO API : move to api
+    protected String name(Ingredient i) {
+        var v = i.getValues();
+
+        if (v.isImmediatelyResolvable())
+            return x.name(v.stream().findFirst().get().value());
+
+        if (v.unwrapKey().isPresent())
+            return v.unwrapKey().get().location().getPath();
+
+        return null;
+    }
+
+    protected String name(SizedIngredient i) {
+        return name(i.ingredient());
+    }
+
+    protected String name(FluidIngredient i) {
+        return x.name(i.fluids().stream().findFirst().get().value());
+    }
+
+    protected String name(SizedFluidIngredient i) {
+        return name(i.ingredient());
+    }
 
 }

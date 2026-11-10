@@ -1,5 +1,6 @@
 package com.synergy.machines.init.builders.furnace;
 
+import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
@@ -13,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -24,6 +24,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class ElectricFurnaceBE extends BaseMachineBE {
+
+    public static final int INPUT_SLOT = 4;
+    public static final int OUTPUT_SLOT = 5;
 
     public ElectricFurnaceBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -41,10 +44,28 @@ public class ElectricFurnaceBE extends BaseMachineBE {
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new ElectricFurnaceMenu(i, inventory, this, this.networkData);
+        return new ElectricFurnaceMenu(i, inventory, this, getContainerData());
     }
 
-    private MixedRecipeHolder recipeHolder;
+    public ItemStack getInput() {
+        return getStackInSlot(INPUT_SLOT);
+    }
+
+    public ItemStack getOutput() {
+        return getStackInSlot(OUTPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getInputSlotIndex() {
+        return List.of(INPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getOutputSlotIndex() {
+        return List.of(OUTPUT_SLOT);
+    }
+
+    private MixedRecipeHolder holder;
 
     @Override
     public boolean init() {
@@ -72,7 +93,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
         } else
             electric = r.get().value();
 
-        recipeHolder = new MixedRecipeHolder(
+        holder = new MixedRecipeHolder(
 
                 (r.isEmpty()
                         ? getCalculatedDelay(smelting.cookingTime())
@@ -83,19 +104,23 @@ public class ElectricFurnaceBE extends BaseMachineBE {
                         : electric.getEnergy()),
 
                 (r.isEmpty()
+                        ? 1
+                        : electric.getInput().count()),
+
+                (r.isEmpty()
                         ? smelting.assemble(new SingleRecipeInput(getInput())).copy()
-                        : electric.getOutputItem().create()));
+                        : electric.getOutput().create()));
 
-        if (!checkSlot(getOutput(), recipeHolder.result_item)) {
+        if (!checkSlot(getOutput(), holder.output)) 
             return cancel();
-        }
+        
 
-        if (!calculateAndConsumeFE(recipeHolder.energy_every_tick))
+        if (!calculateAndConsumeFE(holder.fe))
             return cancel();
 
         update(true);
 
-        setMaxProgress(calculateMaxProgress(recipeHolder.tick_delay));
+        setMaxProgress(calculateMaxProgress(holder.tick));
 
         return true;
 
@@ -104,14 +129,11 @@ public class ElectricFurnaceBE extends BaseMachineBE {
     @Override
     public void result() {
 
-        updateResource(ItemResource.of(recipeHolder.result_item), OUTPUT_SLOT, recipeHolder.result_item.count(), false);
-        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, 1, true);
+        updateResource(ItemResource.of(holder.output), OUTPUT_SLOT, holder.output.count(), false);
+        updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT, holder.amount_consumed, true);
     }
 
-    @Override
-    public ContainerData getContainerData() {
-        return networkData;
-    }
+  
 
     public static int getCalculatedDelay(int time) {
         return Config.DISABLE_MACHINE_FURNACE_VANILLA_TICK_REDUCER.get() ? time
@@ -119,7 +141,7 @@ public class ElectricFurnaceBE extends BaseMachineBE {
                         * Config.MACHINE_FURNACE_PROCESS_VANILLA_PERCENTUAGE_TICK_DELAY.get() / 100);
     }
 
-    private record MixedRecipeHolder(int tick_delay, int energy_every_tick, ItemStack result_item) {
+    private record MixedRecipeHolder(int tick, int fe, int amount_consumed, ItemStack output) {
 
     }
 

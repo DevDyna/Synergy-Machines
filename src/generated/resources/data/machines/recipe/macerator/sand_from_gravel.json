@@ -1,0 +1,13 @@
+{
+  "type": "machines:macerator",
+  "energy": 50,
+  "framework_compatible": false,
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:gravel"
+  },
+  "output": {
+    "id": "minecraft:sand"
+  },
+  "ticks": 100
+}

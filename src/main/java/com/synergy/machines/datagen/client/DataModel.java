@@ -67,6 +67,13 @@ public class DataModel extends ModelProvider {
 
                 createMachineFrame(blockModels, zBlocks.MACHINE_FRAME.get());
 
+                blockModels.blockStateOutput
+                                .accept(BlockModelGenerators.createSimpleBlock(zMachines.FRAMEWORK.block().get(),
+                                                BlockModelGenerators.plainVariant(x.rl(MODULE_ID, "block/framework"))));
+
+                itemModels.itemModelOutput.accept(zMachines.FRAMEWORK.block().get().asItem(),
+                                ItemModelUtils.plainModel(x.rl(MODULE_ID, "block/framework")));
+
         }
 
         public void createMachineFrame(BlockModelGenerators b, Block block) {

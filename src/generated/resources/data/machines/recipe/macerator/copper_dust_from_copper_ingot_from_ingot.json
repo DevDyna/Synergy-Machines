@@ -1,0 +1,13 @@
+{
+  "type": "machines:macerator",
+  "energy": 50,
+  "framework_compatible": true,
+  "input": {
+    "count": 1,
+    "ingredient": "minecraft:copper_ingot"
+  },
+  "output": {
+    "id": "cakesticklib:copper_dust"
+  },
+  "ticks": 100
+}

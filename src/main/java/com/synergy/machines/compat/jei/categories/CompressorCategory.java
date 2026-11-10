@@ -48,18 +48,18 @@ public class CompressorCategory extends BaseMachineRecipeCategory<CompressorReci
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, CompressorRecipeType recipe, IFocusGroup focuses) {
 
-                builder.addInputSlot(2, 2).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
+                builder.addInputSlot(2, 2).addItemStacks(x.getItemStacksFromIngredient(recipe.getInput()));
 
-                if (recipe.getCatalystItem() != null) {
+                if (recipe.getMold() != null) {
                         var catalyst = builder.addInputSlot(2, 38)
-                                        .addItemStacks(x.getItemStacksFromIngredient(recipe.getCatalystItem()));
+                                        .addItemStacks(x.getItemStacksFromIngredient(recipe.getMold()));
 
                         if (!recipe.consumeCatalyst())
                                 catalyst.addRichTooltipCallback(
                                                 (v, t) -> t.add(Component.translatable(
                                                                 CakeStickLib.MODULE_ID + ".ui.dont_consume")));
                 }
-                builder.addOutputSlot(74, 21).add(recipe.getOutputItem());
+                builder.addOutputSlot(74, 21).add(recipe.getOutput());
 
         }
 

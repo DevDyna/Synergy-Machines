@@ -42,7 +42,7 @@ public abstract class SolarPanelBE extends BlockEntity implements EnergyProvider
         }
 
         if (canExtract()) {
-            providePowerAdjacent(level, getBlockPos(), cache, getFERate());
+            providePowerAdjacent(level, getBlockPos(), cache, getFERate()); // TODO BUG : dir blacklist
         }
     }
 

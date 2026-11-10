@@ -14,6 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -22,9 +23,12 @@ import com.devdyna.cakesticklib.api.recipe.recipeOutput.ChanceOutput;
 import com.devdyna.cakesticklib.api.utils.x;
 
 public class RockCrusherRecipeBuilder extends BaseMachineRecipeBuilder<RockCrusherRecipeBuilder>
-        implements FluidAttach.Input.SizedFluid<RockCrusherRecipeBuilder> {
+        implements FluidAttach.Input.SizedFluid<RockCrusherRecipeBuilder>,
+        ItemAttach.Input.ItemCounted<RockCrusherRecipeBuilder> {
 
     private List<ChanceOutput.Item> result;
+    private SizedFluidIngredient fluid;
+    private SizedIngredient input;
 
     private RockCrusherRecipeBuilder(HolderLookup.Provider p) {
         super(p);
@@ -40,7 +44,7 @@ public class RockCrusherRecipeBuilder extends BaseMachineRecipeBuilder<RockCrush
 
     @Override
     public Recipe<?> createRecipe() {
-        return new RockCrusherRecipeType(ticks, energy, fluid_input, input, result);
+        return new RockCrusherRecipeType(ticks, energy, fluid, input, result);
     }
 
     @Override
@@ -55,7 +59,7 @@ public class RockCrusherRecipeBuilder extends BaseMachineRecipeBuilder<RockCrush
 
     @Override
     public RockCrusherRecipeBuilder fluid(SizedFluidIngredient fluid) {
-        this.fluid_input = fluid;
+        this.fluid = fluid;
         return getBuilder();
     }
 
@@ -79,6 +83,17 @@ public class RockCrusherRecipeBuilder extends BaseMachineRecipeBuilder<RockCrush
 
     public RockCrusherRecipeBuilder addResult(DeferredHolder<Item, Item> item, int count, float chance) {
         return addResult(item.get(), count, chance);
+    }
+
+    @Override
+    public RockCrusherRecipeBuilder input(SizedIngredient input) {
+        this.input = input;
+        return getBuilder();
+    }
+
+    @Override
+    public String defineID() {
+        return name(input);
     }
 
 }

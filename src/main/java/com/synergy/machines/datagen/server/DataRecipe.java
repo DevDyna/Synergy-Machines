@@ -7,10 +7,13 @@ import com.devdyna.cakesticklib.api.datagen.RecipeGenerators;
 import com.devdyna.cakesticklib.api.utils.FluidUtils;
 import com.devdyna.cakesticklib.api.utils.x;
 import com.devdyna.cakesticklib.setup.registry.*;
+import com.synergy.machines.api.MachineType;
 import com.synergy.machines.init.builders.alloy_smelter.recipe.AlloySmelterRecipeBuilder;
 import com.synergy.machines.init.builders.caster.recipe.CasterRecipeBuilder;
 import com.synergy.machines.init.builders.compressor.recipe.CompressorRecipeBuilder;
 import com.synergy.machines.init.builders.extractor.recipe.ExtractorRecipeBuilder;
+import com.synergy.machines.init.builders.framework.recipe.FrameworkRecipeBuilder;
+import com.synergy.machines.init.builders.furnace.recipe.ElectricFurnaceRecipeBuilder;
 import com.synergy.machines.init.builders.macerator.recipe.MaceratorRecipeBuilder;
 import com.synergy.machines.init.builders.melter.recipe.MelterRecipeBuilder;
 import com.synergy.machines.init.builders.rock_crusher.recipe.RockCrusherRecipeBuilder;
@@ -460,6 +463,14 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                                 null,
                                 null);
 
+                factoryRecipe(output, zMachines.MACERATOR, Items.COBBLESTONE, Items.GRAVEL, false);
+                factoryRecipe(output, zMachines.MACERATOR, Items.GRAVEL, Items.SAND, false);
+                factoryRecipe(output, zMachines.ELECTRIC_FURNACE, Items.SAND, Items.GLASS, true);
+                factoryRecipe(output, zMachines.ELECTRIC_FURNACE, Items.COBBLESTONE, Items.STONE, true);
+
+                factoryRecipe(output, zMachines.MACERATOR, Items.DEEPSLATE, Items.COBBLED_DEEPSLATE, false);
+                factoryRecipe(output, zMachines.ELECTRIC_FURNACE, Items.COBBLED_DEEPSLATE, Items.DEEPSLATE, true);
+
         }
 
         public static final class RecipeRunner extends RecipeProvider.Runner {
@@ -495,6 +506,59 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                 return registries;
         }
 
+        @SuppressWarnings("unused")
+        private void factoryRecipe(RecipeOutput c, MachineType<?, ?, ?, ?> machine, TagKey<Item> input,
+                        ItemLike output, boolean onlyFrame) {
+                if (!onlyFrame) {
+                        if (machine == zMachines.MACERATOR)
+                                MaceratorRecipeBuilder.of(registries)
+                                                .input(input)
+                                                .output(output)
+                                                .unlockedBy(input, items)
+                                                .save(c);
+
+                        if (machine == zMachines.ELECTRIC_FURNACE)
+                                ElectricFurnaceRecipeBuilder.of(registries)
+                                                .input(input)
+                                                .output(output)
+                                                .unlockedBy(input, items)
+                                                .save(c);
+                }
+
+                FrameworkRecipeBuilder.of(registries)
+                                .input(input)
+                                .machine(machine)
+                                .output(output)
+                                .unlockedBy(input, items)
+                                .save(c);
+        }
+
+        private void factoryRecipe(RecipeOutput c, MachineType<?, ?, ?, ?> machine, ItemLike input,
+                        ItemLike output, boolean onlyFrame) {
+                if (!onlyFrame) {
+                        if (machine == zMachines.MACERATOR)
+                                MaceratorRecipeBuilder.of(registries)
+                                                .input(input)
+                                                .output(output)
+                                                .unlockedBy(input)
+                                                .save(c);
+
+                        if (machine == zMachines.ELECTRIC_FURNACE)
+                                ElectricFurnaceRecipeBuilder.of(registries)
+                                                .input(input)
+                                                .output(output)
+                                                .unlockedBy(input)
+                                                .save(c);
+                }
+
+                FrameworkRecipeBuilder.of(registries)
+                                .input(input)
+                                .machine(machine)
+                                .output(output)
+                                .unlockedBy(input)
+                                .save(c);
+        }
+
         private void oreProcessing(ItemLike raw, ItemLike dust, ItemLike ingot, ItemLike nugget, ItemLike block,
                         ItemLike gear,
                         ItemLike plate, ItemLike foil, ItemLike coil, Fluid molten) {
@@ -509,6 +573,7 @@ public class DataRecipe extends RecipeProvider implements RecipeGenerators {
                 MaceratorRecipeBuilder.of(registries)
                                 .input(ingot)
                                 .output(dust.asItem())
+                                .includeFramework()
                                 .unlockedBy(ingot)
                                 .save(output, "_from_ingot");
 

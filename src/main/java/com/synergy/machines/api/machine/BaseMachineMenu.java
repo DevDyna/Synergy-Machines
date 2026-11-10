@@ -6,6 +6,8 @@ import com.devdyna.cakesticklib.api.utils.FluidUtils;
 import com.devdyna.cakesticklib.api.utils.SlotBuilder;
 import com.devdyna.cakesticklib.api.utils.SlotBuilder.ResourceType;
 import com.devdyna.cakesticklib.api.utils.x;
+import com.mojang.logging.LogUtils;
+import com.synergy.machines.Config;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeType;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,11 +24,11 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 public abstract class BaseMachineMenu extends BaseMenu {
 
-    protected static final int PROGRESS_INDEX = 0;
-    protected static final int MAX_PROGRESS_INDEX = 1;
-    protected static final int STORED_ENERGY_INDEX = 2;
-    protected static final int MAX_ENERGY_INDEX = 3;
-    protected static final int RECIPE_ENERGY_USAGE = 4;
+    public static final int PROGRESS_INDEX = 0;
+    public static final int MAX_PROGRESS_INDEX = 1;
+    public static final int STORED_ENERGY_INDEX = 2;
+    public static final int MAX_ENERGY_INDEX = 3;
+    public static final int RECIPE_ENERGY_USAGE = 4;
 
     protected final ContainerData data;
     protected final Level level;
@@ -67,16 +69,32 @@ public abstract class BaseMachineMenu extends BaseMenu {
         return blockEntity;
     }
 
+    public ContainerData getData() {
+        return data;
+    }
+
     public boolean isCrafting() {
-        return data.get(PROGRESS_INDEX) > 0;
+        return isCrafting(data.get(PROGRESS_INDEX));
+    }
+
+    public boolean isCrafting(int index) {
+        return index > 0;
     }
 
     public int getScaledArrowProgress() {
-        int progress = data.get(PROGRESS_INDEX);
-        int maxProgress = data.get(MAX_PROGRESS_INDEX);
+        return getScaledProgress(24);
+    }
+
+    public int getScaledProgress(int texture_size, int max, int value) {
+        int progress = value;
+        int maxProgress = max;
         return maxProgress != 0 && progress != 0
-                ? progress * 24 / maxProgress
+                ? progress * texture_size / maxProgress
                 : 0;
+    }
+
+    public int getScaledProgress(int size) {
+        return getScaledProgress(size, data.get(MAX_PROGRESS_INDEX), data.get(PROGRESS_INDEX));
     }
 
     public int getEnergyStored() {
@@ -124,8 +142,16 @@ public abstract class BaseMachineMenu extends BaseMenu {
 
     public int getRemainProgress() {
         return isCrafting()
-                ? data.get(MAX_PROGRESS_INDEX) - data.get(PROGRESS_INDEX)
+                ? getMaxProgress() - getProgress()
                 : 0;
+    }
+
+    public int getMaxProgress() {
+        return data.get(MAX_PROGRESS_INDEX);
+    }
+
+    public int getProgress() {
+        return data.get(PROGRESS_INDEX);
     }
 
     public abstract MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<?>> getMachine();
@@ -159,9 +185,13 @@ public abstract class BaseMachineMenu extends BaseMenu {
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
 
-        if (index < 0 || index >= this.slots.size()) {
+        // TODO maybe visual?
+        if (Config.MACHINE_SLOT_LOGGING.get())
+            LogUtils.getLogger()
+                    .info("gui: " + index + (index - 36 <= 0 ? "" : " machine : " + (index - 36)));
+
+        if (index < 0 || index >= this.slots.size())
             return ItemStack.EMPTY;
-        }
 
         var slot = this.slots.get(index);
 
@@ -171,7 +201,7 @@ public abstract class BaseMachineMenu extends BaseMenu {
         var item = slot.getItem();
 
         // upgrades -> inventory (no machine)
-        if (index >= 0 && index <= 3 + 1)
+        if (index >= 0 && index <= 3)
             return moveToInventory(item, slot, player);
 
         // player inv -> <?>
@@ -183,11 +213,7 @@ public abstract class BaseMachineMenu extends BaseMenu {
                 slot.onTake(player, item);
                 return copy;
             }
-            // // player -> machine input
-            // if (moveItemStackTo(item, 40, 40 + 1, true)) {
-            // slot.onTake(player, item);
-            // return copy;
-            // }
+
             // player -> machine
             for (var i = 0; i < getSlots().get().size(); i++) {
                 if (getSlots().get(i).equals(ResourceType.INPUT) || getSlots().get(i).equals(ResourceType.BUFFER))
@@ -214,11 +240,6 @@ public abstract class BaseMachineMenu extends BaseMenu {
             }
         }
 
-        // base slots
-        // if (index == 40 || index == 41) {
-        // return moveToInventory(item, slot, player);
-        // }
-
         // machine -> <?>
         if (index >= 40) {
             if (!getSlots().get(index - 40).equals(SlotBuilder.ResourceType.NONE))
@@ -229,10 +250,6 @@ public abstract class BaseMachineMenu extends BaseMenu {
 
     }
 
-    public SlotBuilder getSlots() {
-        return SlotBuilder.of(blockEntity.getMachineSlots())
-                .set(BaseMachineBE.INPUT_SLOT - 4, ResourceType.INPUT)
-                .set(BaseMachineBE.OUTPUT_SLOT - 4, ResourceType.OUTPUT);
-    }
+    public abstract SlotBuilder getSlots();
 
 }

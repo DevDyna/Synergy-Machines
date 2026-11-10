@@ -14,12 +14,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class CasterBE extends BaseMachineBE implements ResourceRestricted.Fluid {
+
+    public static final int INPUT_SLOT = 4;
+    public static final int OUTPUT_SLOT = 5;
 
     public CasterBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -34,10 +38,28 @@ public class CasterBE extends BaseMachineBE implements ResourceRestricted.Fluid 
         this(zMachines.CASTING_FACTORY.blockentity().get(), pos, blockState);
     }
 
+    public ItemStack getInput() {
+        return getStackInSlot(INPUT_SLOT);
+    }
+
+    public ItemStack getOutput() {
+        return getStackInSlot(OUTPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getInputSlotIndex() {
+        return List.of(INPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getOutputSlotIndex() {
+        return List.of(OUTPUT_SLOT);
+    }
+
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new CasterMenu(i, inventory, this, this.networkData);
+        return new CasterMenu(i, inventory, this, getContainerData());
     }
 
     @Override
@@ -61,11 +83,11 @@ public class CasterBE extends BaseMachineBE implements ResourceRestricted.Fluid 
 
         var recipe = r.get().value();
 
-        if (getFluidStorage().getAmountAsInt(0) < recipe.getFluidInput().amount()) {
+        if (getFluidStorage().getAmountAsInt(0) < recipe.getFluid().amount()) {
             return cancel();
         }
 
-        if (!(checkSlot(getOutput(), recipe.getOutputItem().create()))) {
+        if (!(checkSlot(getOutput(), recipe.getOutput().create()))) {
             return cancel();
         }
 
@@ -87,13 +109,13 @@ public class CasterBE extends BaseMachineBE implements ResourceRestricted.Fluid 
                 new ItemFluidInput(getFluidStorage().getResource(0).toStack(getFluidStorage().getAmountAsInt(0)),
                         getInput()));
 
-        updateResource(ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT, recipe.getOutputItem().count(), false);
+        updateResource(ItemResource.of(recipe.getOutput()), OUTPUT_SLOT, recipe.getOutput().count(), false);
 
-        updateResource(getFluidStorage().getResource(0), 0, recipe.getFluidInput().amount(), true);
+        updateResource(getFluidStorage().getResource(0), 0, recipe.getFluid().amount(), true);
 
         if (!getInput().isEmpty() && recipe.consumeCatalyst())
             updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
-                    recipe.getInputItem().count(), true);
+                    recipe.getMold().count(), true);
     }
 
     @Override

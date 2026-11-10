@@ -46,16 +46,16 @@ public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRe
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, RockCrusherRecipeType recipe, IFocusGroup focuses) {
 
-                if (recipe.getInputItem() != null && !x.getItemStacksFromIngredient(recipe.getInputItem()).isEmpty())
+                if (recipe.getInput() != null && !x.getItemStacksFromIngredient(recipe.getInput()).isEmpty())
                         builder.addInputSlot(2 + 21, 5 + 28)
-                                        .addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
+                                        .addItemStacks(x.getItemStacksFromIngredient(recipe.getInput()));
 
                 for (ChanceOutput.Item output : recipe.getResult())
                         builder.addOutputSlot(68 - 1 + (recipe.getResult().indexOf(output) % 3 * (18 + 1)),
                                         9 + (recipe.getResult().indexOf(output) / 3 * 24)).add(output.item());
 
                 JEIFluidTankHelper.of()
-                                .fluid(recipe.getFluidInput())
+                                .fluid(recipe.getFluid())
                                 .offset(3, 21 + 28)
                                 .build((x, y) -> builder.addInputSlot(x, y));
 
@@ -63,9 +63,7 @@ public class RockCrusherCategory extends BaseMachineRecipeCategory<RockCrusherRe
 
         @Override
         public void draw(RockCrusherRecipeType recipe, IRecipeSlotsView recipeSlotsView,
-                        GuiGraphicsExtractor guiGraphics,
-                        double mouseX,
-                        double mouseY) {
+                        GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
                 super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
 
                 arrow.draw(guiGraphics, 43 - 1, 35);

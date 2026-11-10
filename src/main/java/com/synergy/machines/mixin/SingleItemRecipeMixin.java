@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.SingleItemRecipe;
-
+//TODO API : move to api
 @Mixin(SingleItemRecipe.class)
 public interface SingleItemRecipeMixin {
     @Accessor("result")

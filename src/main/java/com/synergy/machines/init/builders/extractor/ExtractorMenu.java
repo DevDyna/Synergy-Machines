@@ -2,6 +2,8 @@ package com.synergy.machines.init.builders.extractor;
 
 
 
+import com.devdyna.cakesticklib.api.utils.SlotBuilder;
+import com.devdyna.cakesticklib.api.utils.SlotBuilder.ResourceType;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.BaseMachineBE;
 import com.synergy.machines.api.machine.BaseMachineBlock;
@@ -29,6 +31,13 @@ public class ExtractorMenu extends BaseMachineMenu {
     @Override
     public MachineType<? extends BaseMachineBlock, ? extends BaseMachineBE, ? extends BaseMachineMenu, ? extends BaseMachineRecipeType<?>> getMachine() {
         return zMachines.EXTRACTOR;
+    }
+
+    @Override
+    public SlotBuilder getSlots() {
+        return SlotBuilder.of(blockEntity.getMachineSlots())
+                .set(ExtractorBE.INPUT_SLOT - 4, ResourceType.INPUT)
+                .set(ExtractorBE.OUTPUT_SLOT - 4, ResourceType.OUTPUT);
     }
 
 }

@@ -14,12 +14,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class ExtractorBE extends BaseMachineBE implements ResourceRestricted.Fluid {
+
+    public static final int INPUT_SLOT = 4;
+    public static final int OUTPUT_SLOT = 5;
 
     public ExtractorBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -37,7 +42,25 @@ public class ExtractorBE extends BaseMachineBE implements ResourceRestricted.Flu
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new ExtractorMenu(i, inventory, this, this.networkData);
+        return new ExtractorMenu(i, inventory, this, getContainerData());
+    }
+
+    public ItemStack getInput() {
+        return getStackInSlot(INPUT_SLOT);
+    }
+
+    public ItemStack getOutput() {
+        return getStackInSlot(OUTPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getInputSlotIndex() {
+        return List.of(INPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getOutputSlotIndex() {
+        return List.of(OUTPUT_SLOT);
     }
 
     @Override
@@ -59,13 +82,14 @@ public class ExtractorBE extends BaseMachineBE implements ResourceRestricted.Flu
 
         var recipe = r.get().value();
 
-        if (recipe.getSecondaryOutputItem() != null)
-            if (!checkSlot(getOutput(), recipe.getSecondaryOutputItem().item().create()))
+        if (recipe.getOutput() != null)
+            if (!checkSlot(getOutput(), recipe.getOutput().item().create()))
                 return cancel();
 
-        if (!(checkTank(getFluidStorage().getResource(0).toStack(getFluidStorage().getAmountAsInt(0)),
-                recipe.getFluidOutput().create(), getTankCapacity())))
-            return cancel();
+        if (recipe.getFluid() != null)
+            if (!checkTank(getFluidStorage().getResource(0).toStack(getFluidStorage().getAmountAsInt(0)),
+                    recipe.getFluid().create(), getTankCapacity()))
+                return cancel();
 
         if (!calculateAndConsumeFE(recipe.getEnergy()))
             return cancel();
@@ -83,17 +107,17 @@ public class ExtractorBE extends BaseMachineBE implements ResourceRestricted.Flu
 
         var recipe = getUnsafeRecipes(level, zMachines.EXTRACTOR, new ItemInput.simple(getInput()));
 
-        if (recipe.getSecondaryOutputItem() != null)
-            if (!recipe.getSecondaryOutputItem().item().create().isEmpty()
-                    && calculateSecondarySuccess(recipe.getSecondaryOutputItem().chance()))
-                updateResource(ItemResource.of(recipe.getSecondaryOutputItem().item()), OUTPUT_SLOT,
-                        recipe.getSecondaryOutputItem().item().count(), false);
+        if (recipe.getOutput() != null)
+            if (!recipe.getOutput().item().create().isEmpty()
+                    && calculateSecondarySuccess(recipe.getOutput().chance()))
+                updateResource(ItemResource.of(recipe.getOutput().item()), OUTPUT_SLOT,
+                        recipe.getOutput().item().count(), false);
 
-        if (recipe.getFluidOutput() != null)
-            updateResource(getFluidStorage().getResource(0), 0, recipe.getFluidOutput().amount(), false);
+        if (recipe.getFluid() != null)
+            updateResource(FluidResource.of(recipe.getFluid().create()), 0, recipe.getFluid().amount(), false);
 
         updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
-                recipe.getInputItem().count(), true);
+                recipe.getInput().count(), true);
 
     }
 

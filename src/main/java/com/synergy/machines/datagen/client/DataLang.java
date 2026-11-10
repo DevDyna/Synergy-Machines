@@ -74,6 +74,9 @@ public class DataLang extends LanguageProvider implements LangGenerators {
                 add(MODULE_ID + ".configuration.enable_shift_invert_facing",
                                 "Allow to place any machine on the opposite side when pressed shift during the placement");
 
+                add(MODULE_ID + ".configuration.slot_logging",
+                                "Enable slot logging on quick-move action");
+
                 add(MODULE_ID + ".configuration.base_machine_max_fe", "Base max energy stored");
 
                 add(MODULE_ID + ".configuration.max_speed_upgrades",
@@ -117,6 +120,16 @@ public class DataLang extends LanguageProvider implements LangGenerators {
                 add(MODULE_ID + ".gui.slot.input.debug", TipColors.GREEN + "Machine input slot");
                 add(MODULE_ID + ".gui.slot.extra.debug", TipColors.YELLOW + "Machine extra slot");
                 add(MODULE_ID + ".gui.slot.output.debug", TipColors.CYAN + "Machine output slot");
+
+                add(MODULE_ID + ".gui.progress.gen.debug", TipColors.GREEN + "Machine gen progress");
+
+                add(MODULE_ID + ".gui.progress.recipe.debug", TipColors.LIGHT_BLUE + "Machine recipe progress");
+
+                add(MODULE_ID + ".gui.progress.gen.title", "Generator Crafting");
+
+                add(MODULE_ID + ".gui.progress.recipe.title", "Recipe Crafting");
+
+                add(MODULE_ID + ".gui.progress.eta", "ETA : %s");
 
         }
 

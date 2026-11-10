@@ -2,6 +2,8 @@ package com.synergy.machines.init.builders.furnace.recipe;
 
 import java.util.LinkedHashMap;
 
+import com.devdyna.cakesticklib.api.recipe.recipeBuilder.ItemAttach;
+import com.devdyna.cakesticklib.api.utils.x;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.api.machine.*;
 import com.synergy.machines.api.machine.recipe.BaseMachineRecipeBuilder;
@@ -10,14 +12,23 @@ import com.synergy.machines.init.types.zMachines;
 
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
-public class ElectricFurnaceRecipeBuilder extends BaseMachineRecipeBuilder<ElectricFurnaceRecipeBuilder> {
+public class ElectricFurnaceRecipeBuilder extends BaseMachineRecipeBuilder<ElectricFurnaceRecipeBuilder>
+        implements ItemAttach.Input.ItemCounted<ElectricFurnaceRecipeBuilder>,
+        ItemAttach.Output.SimpleOutputItem<ElectricFurnaceRecipeBuilder> {
+
+    private ItemStackTemplate output;
+    private SizedIngredient input;
+    private boolean compatible;
 
     private ElectricFurnaceRecipeBuilder(HolderLookup.Provider p) {
         super(p);
         this.criteria = new LinkedHashMap<String, Criterion<?>>();
+        this.compatible = false;
     }
 
     public static ElectricFurnaceRecipeBuilder of(HolderLookup.Provider p) {
@@ -26,7 +37,7 @@ public class ElectricFurnaceRecipeBuilder extends BaseMachineRecipeBuilder<Elect
 
     @Override
     public Recipe<?> createRecipe() {
-        return new ElectricFurnaceRecipeType(ticks, energy, input, output);
+        return new ElectricFurnaceRecipeType(ticks, energy, compatible, input, output);
     }
 
     @Override
@@ -37,6 +48,28 @@ public class ElectricFurnaceRecipeBuilder extends BaseMachineRecipeBuilder<Elect
     @Override
     public ElectricFurnaceRecipeBuilder getBuilder() {
         return this;
+    }
+
+    @Override
+    public ElectricFurnaceRecipeBuilder output(ItemStackTemplate output) {
+        this.output = output;
+        return getBuilder();
+    }
+
+    @Override
+    public ElectricFurnaceRecipeBuilder input(SizedIngredient input) {
+        this.input = input;
+        return getBuilder();
+    }
+
+    public ElectricFurnaceRecipeBuilder includeFramework() {
+        this.compatible = true;
+        return getBuilder();
+    }
+
+    @Override
+    public String defineID() {
+        return x.name(output) + "_from_" + name(input);
     }
 
 }

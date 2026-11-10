@@ -1,12 +1,20 @@
 package com.synergy.machines.compat.jei.categories;
 
+import static com.synergy.machines.Main.MODULE_ID;
+
+import java.util.List;
+
 import com.devdyna.cakesticklib.api.primitive.Size;
 import com.devdyna.cakesticklib.api.utils.ClientUtils;
 import com.devdyna.cakesticklib.api.utils.x;
+import com.synergy.machines.Config;
 import com.synergy.machines.api.MachineType;
 import com.synergy.machines.compat.jei.categories.api.BaseMachineRecipeCategory;
+import com.synergy.machines.init.builders.furnace.ElectricFurnaceBE;
 import com.synergy.machines.init.builders.furnace.recipe.ElectricFurnaceRecipeType;
 import com.synergy.machines.init.types.zMachines;
+import com.synergy.machines.mixin.SingleItemRecipeMixin;
+
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -14,10 +22,13 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -43,8 +54,8 @@ public class ElectricFurnaceCategory extends BaseMachineRecipeCategory<ElectricF
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ElectricFurnaceRecipeType recipe, IFocusGroup focuses) {
 
-        builder.addInputSlot(2, 5).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
-        builder.addOutputSlot(74, 6).add(recipe.getOutputItem());
+        builder.addInputSlot(2, 5).addItemStacks(x.getItemStacksFromIngredient(recipe.getInput()));
+        builder.addOutputSlot(74, 6).add(recipe.getOutput());
 
     }
 
@@ -73,6 +84,31 @@ public class ElectricFurnaceCategory extends BaseMachineRecipeCategory<ElectricF
     @Override
     public MachineType<? extends Block, ? extends BlockEntity, ? extends AbstractContainerMenu, ? extends Recipe<?>> getMachine() {
         return zMachines.ELECTRIC_FURNACE;
+    }
+
+    public static List<RecipeHolder<ElectricFurnaceRecipeType>> fromSmelting(List<RecipeHolder<SmeltingRecipe>> h) {
+        return h.stream()
+                .map(s -> new RecipeHolder<ElectricFurnaceRecipeType>(
+                        ResourceKey.create(Registries.RECIPE, x.rl(
+                                MODULE_ID,
+                                zMachines.ELECTRIC_FURNACE.id()
+                                        + "_generated_"
+                                        + s.id().identifier()
+                                                .getPath()
+                                                .replace("/",
+                                                        "")))
+                        , ElectricFurnaceRecipeType.of(
+                                ElectricFurnaceBE
+                                        .getCalculatedDelay(
+                                                s.value().cookingTime()),
+                                Config.MACHINE_FURNACE_PROCESS_VANILLA_FE_COST
+                                        .get(),false,
+                                x.itemSized(s.value().input()),
+                                ((SingleItemRecipeMixin) s
+                                        .value())
+                                        .getResult()))
+                ).toList();
+
     }
 
 }

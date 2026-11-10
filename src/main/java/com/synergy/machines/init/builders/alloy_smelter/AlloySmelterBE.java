@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -23,6 +22,8 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class AlloySmelterBE extends BaseMachineBE {
 
+    public static final int INPUT_SLOT = 4;
+    public static final int OUTPUT_SLOT = 5;
     public static final int SECONDARY_INPUT = 6;
 
     public AlloySmelterBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
@@ -34,11 +35,6 @@ public class AlloySmelterBE extends BaseMachineBE {
         return 7;
     }
 
-    @Override
-    public List<Integer> getInputSlotIndex() {
-        return List.of(INPUT_SLOT, SECONDARY_INPUT);
-    }
-
     public AlloySmelterBE(BlockPos pos, BlockState blockState) {
         this(zMachines.ALLOY_SMELTER.blockentity().get(), pos, blockState);
     }
@@ -46,22 +42,35 @@ public class AlloySmelterBE extends BaseMachineBE {
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new AlloySmelterMenu(i, inventory, this, this.networkData);
+        return new AlloySmelterMenu(i, inventory, this, getContainerData());
     }
 
     Optional<RecipeHolder<AlloySmelterRecipeType>> saved_recipe = null;
 
     @Override
+    public List<Integer> getInputSlotIndex() {
+        return List.of(INPUT_SLOT, SECONDARY_INPUT);
+    }
+
+    public ItemStack getOutput() {
+        return getStackInSlot(OUTPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getOutputSlotIndex() {
+        return List.of(OUTPUT_SLOT);
+    }
+
     public ItemStack getInput() {
         return invertedRecipe
-                ? super.getInput()
+                ? getStackInSlot(INPUT_SLOT)
                 : getStackInSlot(SECONDARY_INPUT);
     }
 
     public ItemStack getSecondaryInput() {
         return invertedRecipe
                 ? getStackInSlot(SECONDARY_INPUT)
-                : super.getInput();
+                : getStackInSlot(INPUT_SLOT);
     }
 
     boolean invertedRecipe = false;
@@ -82,9 +91,7 @@ public class AlloySmelterBE extends BaseMachineBE {
             return cancel();
         }
 
-        AlloySmelterRecipeType recipe;
-
-        recipe = saved_recipe.get().value();
+        var recipe = saved_recipe.get().value();
 
         if (!checkSlot(getOutput(), recipe.getOutputItem().create()))
             return cancel();
@@ -111,16 +118,11 @@ public class AlloySmelterBE extends BaseMachineBE {
                 recipe.getOutputItem().count(), false);
 
         updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
-                recipe.getInputItem().count(), true);
+                recipe.getLeftItem().count(), true);
 
         updateResource(getItemStorage().getResource(SECONDARY_INPUT), SECONDARY_INPUT,
-                recipe.getCatalystItem().count(), true);
+                recipe.getRightItem().count(), true);
 
-    }
-
-    @Override
-    public ContainerData getContainerData() {
-        return networkData;
     }
 
 }

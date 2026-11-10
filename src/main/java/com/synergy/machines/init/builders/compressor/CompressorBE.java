@@ -1,5 +1,7 @@
 package com.synergy.machines.init.builders.compressor;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import com.synergy.machines.api.machine.BaseMachineBE;
@@ -10,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,7 +19,9 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class CompressorBE extends BaseMachineBE {
 
-    public static final int PLATE_SLOT = 6;
+    public static final int INPUT_SLOT = 4;
+    public static final int PLATE_SLOT = 5;
+    public static final int OUTPUT_SLOT = 6;
 
     public CompressorBE(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -36,7 +39,25 @@ public class CompressorBE extends BaseMachineBE {
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new CompressorMenu(i, inventory, this, this.networkData);
+        return new CompressorMenu(i, inventory, this, getContainerData());
+    }
+
+    public ItemStack getInput() {
+        return getStackInSlot(INPUT_SLOT);
+    }
+
+    public ItemStack getOutput() {
+        return getStackInSlot(OUTPUT_SLOT);
+    }
+
+    @Override
+    public List<Integer> getInputSlotIndex() {
+        return List.of(INPUT_SLOT, PLATE_SLOT);
+    }
+
+    @Override
+    public List<Integer> getOutputSlotIndex() {
+        return List.of(OUTPUT_SLOT);
     }
 
     @Override
@@ -55,7 +76,7 @@ public class CompressorBE extends BaseMachineBE {
 
         var recipe = r.get().value();
 
-        if (!checkSlot(getOutput(), recipe.getOutputItem().create()))
+        if (!checkSlot(getOutput(), recipe.getOutput().create()))
             return cancel();
 
         if (!calculateAndConsumeFE(recipe.getEnergy()))
@@ -75,21 +96,16 @@ public class CompressorBE extends BaseMachineBE {
         var recipe = getUnsafeRecipes(level, zMachines.COMPRESSOR,
                 new BiItemInput(getInput(), getPlateSlot()));
 
-        updateResource(ItemResource.of(recipe.getOutputItem()), OUTPUT_SLOT,
-                recipe.getOutputItem().count(), false);
+        updateResource(ItemResource.of(recipe.getOutput()), OUTPUT_SLOT,
+                recipe.getOutput().count(), false);
 
         if (recipe.consumeCatalyst())
             updateResource(getItemStorage().getResource(PLATE_SLOT), PLATE_SLOT,
-                    recipe.getCatalystItem().count(), true);
+                    recipe.getMold().count(), true);
 
         updateResource(getItemStorage().getResource(INPUT_SLOT), INPUT_SLOT,
-                recipe.getInputItem().count(), true);
+                recipe.getInput().count(), true);
 
-    }
-
-    @Override
-    public ContainerData getContainerData() {
-        return networkData;
     }
 
     public ItemStack getPlateSlot() {

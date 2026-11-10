@@ -1,9 +1,8 @@
 package com.synergy.machines.common;
 
-import java.util.List;
-
 import com.devdyna.cakesticklib.api.CapabilityUtils;
 import com.synergy.machines.api.MachineType;
+import com.synergy.machines.init.Material;
 import com.synergy.machines.init.types.zBlocks;
 import com.synergy.machines.init.types.zMachines;
 
@@ -17,9 +16,7 @@ public class Capability {
     @SubscribeEvent
     public static void register(RegisterCapabilitiesEvent event) {
 
-        var machines = List.of(zMachines.ALLOY_SMELTER, zMachines.CASTING_FACTORY, zMachines.COMPRESSOR,
-                                zMachines.ELECTRIC_FURNACE, zMachines.ELECTRIC_MELTER, zMachines.EXTRACTOR,
-                                zMachines.MACERATOR, zMachines.ROCK_CRUSHER)
+        var machines = Material.getAllMachineTypes()
                                 .stream()
                                 .map(MachineType::block)
                                 .map(DeferredHolder::get)
@@ -35,6 +32,8 @@ public class Capability {
                 zMachines.CASTING_FACTORY.block().get(),
                 zMachines.ELECTRIC_MELTER.block().get(),
                 zMachines.EXTRACTOR.block().get(),
-                zMachines.ROCK_CRUSHER.block().get());
+                zMachines.ROCK_CRUSHER.block().get(),
+                zMachines.FRAMEWORK.block().get()
+                );
     }
 }

@@ -3,49 +3,22 @@ package com.synergy.machines.compat.jei;
 import static com.synergy.machines.Main.MODULE_ID;
 
 import java.util.List;
-import java.util.function.Function;
-
 import com.devdyna.cakesticklib.api.utils.x;
-import com.synergy.machines.Client;
-import com.synergy.machines.Config;
-import com.synergy.machines.api.machine.BaseMachineScreen;
-import com.synergy.machines.compat.jei.categories.AlloySmelterCategory;
-import com.synergy.machines.compat.jei.categories.CasterCategory;
-import com.synergy.machines.compat.jei.categories.CompressorCategory;
-import com.synergy.machines.compat.jei.categories.ElectricFurnaceCategory;
-import com.synergy.machines.compat.jei.categories.ExtractorCategory;
-import com.synergy.machines.compat.jei.categories.MaceratorCategory;
-import com.synergy.machines.compat.jei.categories.MelterCategory;
-import com.synergy.machines.compat.jei.categories.RockCrusherCategory;
+import com.synergy.machines.*;
+import com.synergy.machines.compat.jei.categories.*;
 import com.synergy.machines.init.builders.alloy_smelter.AlloySmelterScreen;
 import com.synergy.machines.init.builders.caster.CasterScreen;
 import com.synergy.machines.init.builders.compressor.CompressorScreen;
 import com.synergy.machines.init.builders.extractor.ExtractorScreen;
-import com.synergy.machines.init.builders.furnace.ElectricFurnaceBE;
 import com.synergy.machines.init.builders.furnace.ElectricFurnaceScreen;
-import com.synergy.machines.init.builders.furnace.recipe.ElectricFurnaceRecipeType;
 import com.synergy.machines.init.builders.macerator.MaceratorScreen;
 import com.synergy.machines.init.builders.melter.MelterScreen;
 import com.synergy.machines.init.builders.rock_crusher.RockCrusherScreen;
 import com.synergy.machines.init.types.zMachines;
-import com.synergy.machines.mixin.SingleItemRecipeMixin;
-
-import mezz.jei.api.IModPlugin;
-import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.gui.handlers.IGuiContainerHandler;
-import mezz.jei.api.registration.IGuiHandlerRegistration;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.Rect2i;
-import net.minecraft.core.registries.Registries;
+import mezz.jei.api.*;
+import mezz.jei.api.registration.*;
 import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeInput;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 
 @JeiPlugin
 public class PluginJEI implements IModPlugin {
@@ -57,7 +30,6 @@ public class PluginJEI implements IModPlugin {
 
         @Override
         public void registerRecipeCatalysts(IRecipeCatalystRegistration r) {
-
                 r.addCraftingStation(AlloySmelterCategory.TYPE, x.item(zMachines.ALLOY_SMELTER.item().get()));
                 r.addCraftingStation(CasterCategory.TYPE, x.item(zMachines.CASTING_FACTORY.item().get()));
                 r.addCraftingStation(CompressorCategory.TYPE, x.item(zMachines.COMPRESSOR.item().get()));
@@ -66,6 +38,7 @@ public class PluginJEI implements IModPlugin {
                 r.addCraftingStation(MaceratorCategory.TYPE, x.item(zMachines.MACERATOR.item().get()));
                 r.addCraftingStation(MelterCategory.TYPE, x.item(zMachines.ELECTRIC_MELTER.item().get()));
                 r.addCraftingStation(RockCrusherCategory.TYPE, x.item(zMachines.ROCK_CRUSHER.item().get()));
+                r.addCraftingStation(FrameworkCategory.TYPE, x.item(zMachines.FRAMEWORK.item().get()));
         }
 
         @Override
@@ -80,9 +53,8 @@ public class PluginJEI implements IModPlugin {
                                 new ExtractorCategory(helper),
                                 new MaceratorCategory(helper),
                                 new MelterCategory(helper),
-                                new RockCrusherCategory(helper)
-
-                );
+                                new RockCrusherCategory(helper),
+                                new FrameworkCategory(helper));
         }
 
         @Override
@@ -101,30 +73,7 @@ public class PluginJEI implements IModPlugin {
 
                 if (!Config.DISABLE_MACHINE_FURNACE_PROCESS_VANILLA.get())
                         r.addRecipes(ElectricFurnaceCategory.TYPE,
-                                        getRecipes(RecipeType.SMELTING)
-                                                        .stream()
-                                                        .map(s -> new RecipeHolder<ElectricFurnaceRecipeType>(
-                                                                        ResourceKey.create(Registries.RECIPE, x.rl(
-                                                                                        MODULE_ID,
-                                                                                        zMachines.ELECTRIC_FURNACE.id()
-                                                                                                        + "_generated_"
-                                                                                                        + s.id().identifier()
-                                                                                                                        .getPath()
-                                                                                                                        .replace("/",
-                                                                                                                                        "")))
-                                                                        // s.id()
-                                                                        , ElectricFurnaceRecipeType.of(
-                                                                                        ElectricFurnaceBE
-                                                                                                        .getCalculatedDelay(
-                                                                                                                        s.value().cookingTime()),
-                                                                                        Config.MACHINE_FURNACE_PROCESS_VANILLA_FE_COST
-                                                                                                        .get(),
-                                                                                        x.itemSized(s.value().input()),
-                                                                                        ((SingleItemRecipeMixin) s
-                                                                                                        .value())
-                                                                                                        .getResult()))
-
-                                                        ).toList());
+                                        ElectricFurnaceCategory.fromSmelting(getRecipes(RecipeType.SMELTING)));
 
                 r.addRecipes(ExtractorCategory.TYPE,
                                 getRecipes(zMachines.EXTRACTOR.recipe().getType()));
@@ -137,6 +86,10 @@ public class PluginJEI implements IModPlugin {
 
                 r.addRecipes(RockCrusherCategory.TYPE,
                                 getRecipes(zMachines.ROCK_CRUSHER.recipe().getType()));
+
+                r.addRecipes(FrameworkCategory.TYPE,
+                                getRecipes(zMachines.FRAMEWORK.recipe().getType()));
+
         }
 
         @Override
@@ -162,28 +115,6 @@ public class PluginJEI implements IModPlugin {
                                 MelterCategory.TYPE);
                 r.addRecipeClickArea(RockCrusherScreen.class, 75, 35, 22, 15,
                                 RockCrusherCategory.TYPE);
-
-                
-                addExclusionJEIArea(r, BaseMachineScreen.class, screen -> {
-                        var shape = screen.getScreenUsage();
-                        return new Rect2i(
-                                        screen.getLeftPos() + shape.getX0(),
-                                        screen.getTopPos() + shape.getY0(),
-                                        shape.getX1(),
-                                        shape.getY1());
-                });
-        }
-
-       @Deprecated
-        private <T extends AbstractContainerScreen<?>> void addExclusionJEIArea(IGuiHandlerRegistration r,
-                        Class<T> clazz, Function<T, Rect2i> shape) {
-
-                r.addGuiContainerHandler(clazz, new IGuiContainerHandler<T>() {
-                        @Override
-                        public List<Rect2i> getGuiExtraAreas(T screen) {
-                                return List.of(shape.apply(screen));
-                        }
-                });
 
         }
 

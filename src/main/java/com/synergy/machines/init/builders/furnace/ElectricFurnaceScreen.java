@@ -22,15 +22,6 @@ public class ElectricFurnaceScreen extends BaseMachineScreen<ElectricFurnaceMenu
     }
 
     @Override
-    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-
-        super.extractRenderState(graphics, mouseX, mouseY, a);
-
-        renderInputSlotTooltip(graphics, 47, 33, mouseX, mouseY);
-        renderLargeOutputSlotTooltip(graphics, 119, 34, mouseX, mouseY);
-    }
-
-    @Override
     public Size getContainerTitlePos() {
         return Size.of(47, 0);
     }

@@ -1,6 +1,5 @@
 package com.synergy.machines.api.machine.templates;
 
-import java.util.List;
 import com.devdyna.cakesticklib.api.aspect.logic.*;
 import com.devdyna.cakesticklib.setup.registry.LibHandlers;
 
@@ -18,11 +17,7 @@ import net.neoforged.neoforge.transfer.resource.Resource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
-public abstract class BaseStorageBE extends BaseRecipeBE
-        implements ResourceRestricted.Item, MenuProvider {
-
-    public static final int INPUT_SLOT = 4;
-    public static final int OUTPUT_SLOT = 5;
+public abstract class BaseStorageBE extends BaseRecipeBE implements ResourceRestricted.Item, MenuProvider {
 
     public static final int FLUID_DATA_SIZE = 3;
 
@@ -38,24 +33,6 @@ public abstract class BaseStorageBE extends BaseRecipeBE
     @Override
     public ItemStacksResourceHandler getItemStorage() {
         return getData(LibHandlers.ITEM_STORAGE);
-    }
-
-    public ItemStack getInput() {
-        return getStackInSlot(INPUT_SLOT);
-    }
-
-    public ItemStack getOutput() {
-        return getStackInSlot(OUTPUT_SLOT);
-    }
-
-    @Override
-    public List<Integer> getInputSlotIndex() {
-        return List.of(INPUT_SLOT);
-    }
-
-    @Override
-    public List<Integer> getOutputSlotIndex() {
-        return List.of(OUTPUT_SLOT);
     }
 
     @Override
@@ -137,7 +114,20 @@ public abstract class BaseStorageBE extends BaseRecipeBE
                 return 0;
             }
 
+            @Override
+            protected void onContentsChanged(int index, ItemStack previousContents) {
+                BaseStorageBE.this.onContentsChanged(index, previousContents);
+                super.onContentsChanged(index, previousContents);
+            }
+
         };
+    }
+
+    /**
+     * Method extracted from {@link ItemStacksResourceHandler#onContentsChanged}
+     */
+    public void onContentsChanged(int index, ItemStack previousContents) {
+
     }
 
     // @Override
@@ -176,7 +166,7 @@ public abstract class BaseStorageBE extends BaseRecipeBE
 
         try (Transaction tx = Transaction.openRoot()) {
             if (consume)
-                storage.extract(slot,resource, amount, tx);
+                storage.extract(slot, resource, amount, tx);
             else
                 storage.insert(slot, resource, amount, tx);
             tx.commit();

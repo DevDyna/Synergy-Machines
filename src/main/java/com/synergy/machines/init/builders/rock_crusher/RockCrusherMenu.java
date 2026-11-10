@@ -40,7 +40,7 @@ public class RockCrusherMenu extends BaseMachineMenu {
     public SlotBuilder getSlots() {
         return SlotBuilder.of(blockEntity.getMachineSlots())
                 .set(RockCrusherBE.INPUT_SLOT - 4, ResourceType.INPUT)
-                .setAll(ResourceType.OUTPUT, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+                .setAll(ResourceType.OUTPUT, 1, 2, 3, 4, 5, 6, 7, 8, 9);// TODO API : BUG -> invert / use Size
     }
 
 }

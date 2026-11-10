@@ -28,16 +28,6 @@ public class MaceratorScreen extends BaseMachineScreen<MaceratorMenu> {
     }
 
     @Override
-    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-
-        super.extractRenderState(graphics, mouseX, mouseY, a);
-
-        renderInputSlotTooltip(graphics, 47, 33, mouseX, mouseY);
-        renderLargeOutputSlotTooltip(graphics, 119, 25, mouseX, mouseY);
-        renderOutputSlotTooltip(graphics, 119, 50, mouseX, mouseY);
-    }
-
-    @Override
     public List<UpgradeType> validUpgrades() {
         return ArrayUtils.concat(DEFAULT_UPGRADES, UpgradeType.LUCK);
     }

@@ -45,13 +45,13 @@ public class ExtractorCategory extends BaseMachineRecipeCategory<ExtractorRecipe
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, ExtractorRecipeType recipe, IFocusGroup focuses) {
 
-                builder.addInputSlot(2, 5).addItemStacks(x.getItemStacksFromIngredient(recipe.getInputItem()));
-                if (recipe.hasSecondaryOutput())
-                        builder.addOutputSlot(81, 5).add(recipe.getSecondaryOutputItem().item());
+                builder.addInputSlot(2, 5).addItemStacks(x.getItemStacksFromIngredient(recipe.getInput()));
+                if (recipe.getOutput() != null)
+                        builder.addOutputSlot(81, 5).add(recipe.getOutput().item());
 
-                if (recipe.getFluidOutput() != null)
+                if (recipe.getFluid() != null)
                         JEIFluidTankHelper.of()
-                                        .fluid(recipe.getFluidOutput().create())
+                                        .fluid(recipe.getFluid().create())
                                         .offset(102, 21)
                                         .build((x, y) -> builder.addOutputSlot(x, y));
 
@@ -71,10 +71,10 @@ public class ExtractorCategory extends BaseMachineRecipeCategory<ExtractorRecipe
                                 24, -2,
                                 ClientUtils.defaultToolTipColor.getRGB(), false);
 
-                if (recipe.hasSecondaryOutput())
+                if (recipe.getOutput() != null)
                 drawCenteredString(guiGraphics, font,
                                         Component.literal(
-                                                        ((int) (recipe.getSecondaryOutputItem().chance() * 100)) + "%"),
+                                                        ((int) (recipe.getOutput().chance() * 100)) + "%"),
                                         65, 10,
                                         ClientUtils.defaultToolTipColor.getRGB(), false);
 
